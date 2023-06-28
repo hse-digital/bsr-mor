@@ -8,8 +8,8 @@ import { TitleService } from '../../services/title.service';
 })
 export class HomeComponent {
   public static route: string = "";
-  continueLink: string = '/'
-  static title: string = "Mandatory Occurrence Reporting";
+  continueLink: string = 'request-about'
+  static title: string = "Contact the Building Safety Regulator";
 
   constructor(private applicationService: ApplicationService, private router: Router, private titleService: TitleService) {    
   }
