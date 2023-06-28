@@ -1,0 +1,8 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()">
+  <span class="govuk-caption-l">About the request</span>
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="How can the Building Safety Regulator help you?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-complaint-or-advice" [errorText]="getErrorDescription(hasErrors, 'Select what would you want to do')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="complaint-or-advice-advice" value="advice" label="I want to ask a question" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="complaint-or-advice-complaint" value="complaint" label="I want to complain" />
+  </govuk-radio-group>
+  <govuk-body class="govuk-!-margin-bottom-4">You can contact BSR about a building from when it is being designed or constructed as well as when it is in use and occupied.</govuk-body>
+</govuk-formpage>

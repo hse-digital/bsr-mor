@@ -1,0 +1,11 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()">
+  <span class="govuk-caption-l">About the request</span>
+  <govuk-radio-group title="How big is the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-number-of-floors" [errorText]="getErrorDescription(hasErrors, 'You need to tell us how big the building is')">
+    <div id="number-of-floors-hint" class="govuk-hint">
+      Do not count basement levels, the roof, or floors that contain only machinery such as lift equipment
+    </div>
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="number-of-floors-seven-or-more" value="seven_or_more" label="7 floors or more, or 18m or more high" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="number-of-floors-seven-or-more" value="seven_or_less" label="fewer than 7 floors, or less than 18m high" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="number-of-floors-dont-know" value="dont_know" label="I don&#39;t know" />
+  </govuk-radio-group>
+</govuk-formpage>

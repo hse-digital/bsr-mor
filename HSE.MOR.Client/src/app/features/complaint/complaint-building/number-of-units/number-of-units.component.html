@@ -1,0 +1,10 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()">
+  <govuk-radio-group title="Are there 2 or more residences in the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-number-of-units" [errorText]="getErrorDescription(hasErrors, '	You need to tell us how many residential units the building has')">
+    <div id="number-of-units-hint" class="govuk-hint">
+      A residence is a self-contained flat, apartment or maisonette
+    </div>
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="number-of-units-yes" value="yes" label="Yes" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="number-of-units-no" value="no" label="No" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="number-of-units-dont-know" value="dont_know" label="I don&#39;t know" />
+  </govuk-radio-group>
+</govuk-formpage>

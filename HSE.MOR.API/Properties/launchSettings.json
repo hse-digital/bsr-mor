@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "HSE.MOR.API": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7117",
+      "launchBrowser": false
+    }
+  }
+}
