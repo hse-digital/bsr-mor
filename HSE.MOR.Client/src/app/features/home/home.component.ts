@@ -9,7 +9,7 @@ import { TitleService } from '../../services/title.service';
 export class HomeComponent {
   public static route: string = "";
   continueLink: string = '/'
-  static title: string = "Mandatory Occurrence Reporting";
+  static title: string = "Make a mandatory occurrence report";
 
   constructor(private applicationService: ApplicationService, private router: Router, private titleService: TitleService) {    
   }
