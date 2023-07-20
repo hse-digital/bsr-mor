@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class PrivacyNoticeComponent {
   public static route: string = "privacy-notice";
-  static title: string = "Privacy notice - Register a high-rise building - GOV.UK";
+  static title: string = "Privacy notice – Make a mandatory occurrence report – GOV.UK";
 
   constructor() { }
 }
