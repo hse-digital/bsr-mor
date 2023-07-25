@@ -18,6 +18,7 @@ import { GetInjector } from './helpers/injector.helper';
 import { CookiesBannerService } from './services/cookies-banner.service';
 //import { RequestAboutComponent } from './features/request-about/request-about.component';
 import { HomeComponent } from './features/home/home.component';
+import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
 //import { ComplaintOrAdviceComponent } from './features/complaint-or-advice/complaint-or-advice.component';
 //import { WhoAreYouComponent } from './features/who-are-you/who-are-you.component';
 //import { ComplaintModule } from './features/complaint/complaint.module';
@@ -25,6 +26,7 @@ import { HomeComponent } from './features/home/home.component';
 
 const routes = new HseRoutes([
   HseRoute.unsafe(HomeComponent.route, HomeComponent, undefined, HomeComponent.title),
+  HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
   //HseRoute.protected('', SampleComponent, SampleComponent.title),
   //HseRoute.protected(ComplaintOrAdviceComponent.route, ComplaintOrAdviceComponent, ComplaintOrAdviceComponent.title),
   //HseRoute.protected(WhoAreYouComponent.route, WhoAreYouComponent, WhoAreYouComponent.title),
@@ -43,6 +45,7 @@ const routes = new HseRoutes([
     TimeoutComponent,
     TimeoutModalComponent,
     NotFoundComponent,
+    WhatToSubmitComponent,
   //  SampleComponent,
   //  RequestAboutComponent,
   //  ComplaintOrAdviceComponent,
