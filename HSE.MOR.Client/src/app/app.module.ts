@@ -30,10 +30,11 @@ const routes = new HseRoutes([
   //HseRoute.protected('', SampleComponent, SampleComponent.title),
   //HseRoute.protected(ComplaintOrAdviceComponent.route, ComplaintOrAdviceComponent, ComplaintOrAdviceComponent.title),
   //HseRoute.protected(WhoAreYouComponent.route, WhoAreYouComponent, WhoAreYouComponent.title),
-  //HseRoute.protected(SampleComponent.route, SampleComponent, SampleComponent.title), 
+  //HseRoute.protected(SampleComponent.route, SampleComponent, SampleComponent.title),
   //HseRoute.protected(RequestAboutComponent.route, RequestAboutComponent, RequestAboutComponent.title),
   //HseRoute.forLoadChildren(ComplaintModule.baseRoute, () => import('./features/complaint/complaint.module').then(m => m.ComplaintModule)),
   //HseRoute.forLoadChildren(AdviceModule.baseRoute, () => import('./features/advice/advice.module').then(m => m.AdviceModule)),
+  HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),
   HseRoute.unsafe(NotFoundComponent.route, NotFoundComponent, undefined, NotFoundComponent.title),
   HseRoute.unsafe('**', undefined, NotFoundComponent.route)
 ]);
