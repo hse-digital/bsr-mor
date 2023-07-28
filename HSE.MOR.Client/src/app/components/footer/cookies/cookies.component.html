@@ -6,83 +6,50 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">Cookies on the Register a high-rise building service</h1>
+      <h1 class="govuk-heading-xl">Cookies on Notify BSR of a mandatory occurrence service</h1>
 
       <govuk-body>Cookies are small files saved on your phone, tablet or computer when you visit a website.</govuk-body>
 
-      <govuk-body>We use cookies to:</govuk-body>
-      <govuk-list classes='govuk-list--bullet'>
-        <govuk-list-item text="make the service work" />
-        <govuk-list-item text="collect information about how you use our service" />
-      </govuk-list>
+      <govuk-body>We use cookies to make this site work and collect informaitn about how you use our service.</govuk-body>
 
-      <h2 class="govuk-heading-m">Essential cookies</h2>
 
-      <govuk-body>Essential cookies keep your information secure while you use our service. We do not need to ask permission to use them.</govuk-body>
+      <h2 class="govuk-heading-m">Cookie Settings</h2>
+      <div class="govuk-form-group">
 
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Name</th>
-            <th scope="col" class="govuk-table__header">Purpose</th>
-            <th scope="col" class="govuk-table__header">Expires</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">nonEsentialCookies</td>
-            <td class="govuk-table__cell">Saves your cookie consent settings</td>
-            <td class="govuk-table__cell">1 year</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">application_data</td>
-            <td class="govuk-table__cell">Browser local storage</td>
-            <td class="govuk-table__cell">User session</td>
-          </tr>
-        </tbody>
-      </table>
+        <fieldset class="govuk-fieldset" aria-describedby="functional-cookies-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Cookies that measure website use</legend>
+          <div id="functional-cookies-hint" class="govuk-hint">
+            <govuk-body>We use Google Analytics to measure how you use the Notify BSR of a mandatory occurrence service so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</govuk-body>
 
-      <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
-      <govuk-body>With your permission, we use Google Analytics to collect data about how you use our service. This information helps us to improve our service.</govuk-body>
-      <govuk-body>Google is not allowed to use or share our analytics data with anyone.</govuk-body>
-      <govuk-body>Google Analytics stores anonymised information about:</govuk-body>
+            <govuk-list classes='govuk-list--bullet'>
+              <govuk-list-item text="how you got to the service" />
+              <govuk-list-item text="the pages you visit on the service, and how long you spend on each page" />
+              <govuk-list-item text="what you click on while you’re using the service" />
+            </govuk-list>
 
-      <govuk-list classes='govuk-list--bullet'>
-        <govuk-list-item text="how you got to Register a high-rise building" />
-        <govuk-list-item text="the pages you visit on the service and how long you spend on them" />
-        <govuk-list-item text="any errors you see while using the service" />
-      </govuk-list>
+            <govuk-body>We do not allow Google to use or share the data about how you use this site.</govuk-body>
+          </div>
 
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Name</th>
-            <th scope="col" class="govuk-table__header">Purpose</th>
-            <th scope="col" class="govuk-table__header">Expires</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">_ga</td>
-            <td class="govuk-table__cell">Checks which pages you've visited on Register a high-rise building. This helps us work out how people use our service.</td>
-            <td class="govuk-table__cell">2 years</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">_ga_#</td>
-            <td class="govuk-table__cell">Checks if you've visited Register a high-rise building before and when. This helps us count how many people visit our service.</td>
-            <td class="govuk-table__cell">1 year</td>
-          </tr>
-        </tbody>
-      </table>
+          <govuk-radio-group title="Do you want to accept analytics cookies?" class="govuk-!-margin-bottom-4" [(model)]="cookieModel">
+            <govuk-radio name="cookies" id="cookies-yes" value="true" label="Yes" (onKeyupEnter)="saveCookieSettings()" [model]="cookieModel" />
+            <govuk-radio name="cookies" id="cookies-no" value="false" label="No" (onKeyupEnter)="saveCookieSettings()" [model]="cookieModel" />
+          </govuk-radio-group>
+        </fieldset>
 
-      <govuk-radio-group title="Do you want to accept analytics cookies?" class="govuk-!-margin-bottom-4" [(model)]="cookieModel">
-        <govuk-radio name="cookies" id="cookies-yes" value="true" label="Yes" (onKeyupEnter)="saveCookieSettings()" [model]="cookieModel" />
-        <govuk-radio name="cookies" id="cookies-no" value="false" label="No" (onKeyupEnter)="saveCookieSettings()" [model]="cookieModel" />
-      </govuk-radio-group>
+        <h2 class="govuk-heading-m">Strictly necessary cookies</h2>
+        <govuk-body>
+          These essential cookies do things like remember your progress through the application form.
+        </govuk-body>
+        <govuk-body>
+          They always need to be on.
+        </govuk-body>
 
-      <govuk-button (onClick)="saveCookieSettings()">Save cookie settings</govuk-button>
+        <govuk-body><a href="help/cookie-details" class="govuk-link" role="link">Find out more about cookies on the Notify BSR of a mandatory occurence service</a></govuk-body>
+
+        <govuk-button (onClick)="saveCookieSettings()">Save changes</govuk-button>
+
+      </div>
 
     </div>
-
   </div>
 </div>

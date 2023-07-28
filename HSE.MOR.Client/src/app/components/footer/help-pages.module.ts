@@ -7,12 +7,14 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
 import { AccessibilityComponent } from './accessibility/accessibility.component';
 import { CookiesComponent } from './cookies/cookies.component';
 import { HseRoute, HseRoutes } from 'src/app/helpers/hse.route';
+import { CookieDetailsComponent } from './cookies/cookie-details/cookie-details.component';
 
 const routes = new HseRoutes([
   HseRoute.unsafe(PrivacyNoticeComponent.route, PrivacyNoticeComponent, undefined, PrivacyNoticeComponent.title),
   HseRoute.unsafe(TermsConditionsComponent.route, TermsConditionsComponent, undefined, TermsConditionsComponent.title),
   HseRoute.unsafe(AccessibilityComponent.route, AccessibilityComponent, undefined, AccessibilityComponent.title),
   HseRoute.unsafe(CookiesComponent.route, CookiesComponent, undefined, CookiesComponent.title),
+  HseRoute.unsafe(CookieDetailsComponent.route, CookieDetailsComponent, undefined, CookieDetailsComponent.title),
 ]);
 
 @NgModule({
@@ -21,6 +23,7 @@ const routes = new HseRoutes([
     TermsConditionsComponent,
     AccessibilityComponent,
     CookiesComponent,
+    CookieDetailsComponent
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
