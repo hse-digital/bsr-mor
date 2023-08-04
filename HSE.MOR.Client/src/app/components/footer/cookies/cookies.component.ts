@@ -7,7 +7,7 @@ import { Cookies, CookiesBannerService } from 'src/app/services/cookies-banner.s
 })
 export class CookiesComponent implements OnInit {
   public static route: string = "cookies";
-  static title: string = "Cookies - Register a high-rise building - GOV.UK";
+  static title: string = "Cookies - Notify BSR of a mandatory occurrence - GOV.UK";
 
   cookieModel?: string;
 

@@ -1,20 +1,29 @@
 <govuk-cookie-banner [viewCookiesLink]="viewCookiesLink"
-                     title="ENTER TITLE"
+                     title="Notify BSR of a mandatory occurrence"
                      class="govuk-width-container"
                      [showCookieBanner]="cookieBannerModel.showCookies"
                      [showConfirmBanner]="cookieBannerModel.showConfirmBanner"
                      [cookiesAccepted]="cookieBannerModel.cookiesAccepted"
                      (onChangeCookies)="cookiesChanged()"
                      (onCookiesAccepted)="cookiesAccepted()"
-                     (onCookiesRejected)="cookiesRejected()" />
+                     (onCookiesRejected)="cookiesRejected()"
+                     acceptCookiesText="Accept analytics cookies"
+                     rejectCookiesText="Reject analytics cookies"
+                     viewCookiesText="View cookie preferences">
 
-<govuk-page headerTitle="" [govukLogoLink]="govukLogoLink" [headerTitleLink]="appHeaderLink" [footerLinks]="footerLinks">
-  <govuk-phase-banner tag="Beta">
-    This is a new service - your <a href="https://forms.office.com/e/dRsZyPur6S" role="link" tabindex="0" target="_blank">feedback</a> will help us to improve it.
-  </govuk-phase-banner>
-  <router-outlet />
-</govuk-page>
+  <div class="govuk-cookie-banner__content">
+    <p class="govuk-body">We’d like to use analytics cookies so we can understand how you use this site.</p>
+    <p class="govuk-body">We also use essential cookies to remember if you’ve accepted analytics cookies.</p>
+  </div>
+  </govuk-cookie-banner>
+
+  <govuk-page headerTitle="Mandatory Occurrence Reporting" [govukLogoLink]="govukLogoLink" [headerTitleLink]="appHeaderLink" [footerLinks]="footerLinks">
+    <govuk-phase-banner tag="Beta">
+      This is a new service - your <a href="https://forms.office.com/e/dRsZyPur6S" role="link" tabindex="0" target="_blank">feedback</a> will help us to improve it.
+    </govuk-phase-banner>
+    <router-outlet />
+  </govuk-page>
 
 
-<timeout-modal *ngIf="showTimeoutDialog" [delayToTimeout]="120" (onContinueClicked)="timeoutContinue()" (onSaveAndComebackClicked)="timeoutSaveAndComeBack()" (onTimeout)="timeout()" />
-<div id="hiddenAlertContainer" role="alert" class="visually-hidden"></div>
+  <timeout-modal *ngIf="showTimeoutDialog" [delayToTimeout]="120" (onContinueClicked)="timeoutContinue()" (onSaveAndComebackClicked)="timeoutSaveAndComeBack()" (onTimeout)="timeout()" />
+  <div id="hiddenAlertContainer" role="alert" class="visually-hidden"></div>
