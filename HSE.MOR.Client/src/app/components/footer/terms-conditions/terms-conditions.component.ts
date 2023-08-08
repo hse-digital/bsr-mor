@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class TermsConditionsComponent {
   public static route: string = "terms-conditions";
-  static title: string = "Terms and conditions - Register a high-rise building - GOV.UK";
+  static title: string = "Terms and conditions – Make a mandatory occurrence report - GOV.UK";
 
   constructor() { }
 }
