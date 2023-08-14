@@ -6,7 +6,7 @@ import { LocalStorage } from "src/app/helpers/local-storage";
 @Injectable()
 export class ApplicationService {
   // replace this any to a specific type
-  model: ContactRequestModel;
+  model: ReportModel;
 
   constructor(private httpClient: HttpClient) {
     this.model = LocalStorage.getJSON('application_data') ?? {};
@@ -14,7 +14,7 @@ export class ApplicationService {
 
   newApplication() {
     LocalStorage.remove('application_data');
-    this.model = new ContactRequestModel();
+    this.model = new ReportModel();
   }
 
   updateLocalStorage() {
@@ -22,7 +22,7 @@ export class ApplicationService {
   }
 
   clearApplication() {
-    this.model = new ContactRequestModel();
+    this.model = new ReportModel();
     this.updateLocalStorage();
   }
 
@@ -47,6 +47,7 @@ export class ApplicationService {
   }
 }
 
+/*
 export class ContactRequestModel {
   id?: string;
   Reason?: string;
@@ -70,4 +71,9 @@ export class AdviceModel {
   BuildingHeight?: number;
   FirstName?: string;
   LastName?: string
+}
+*/
+export class ReportModel {
+  id?: string;
+  NoticeReference?: string;
 }

@@ -18,11 +18,15 @@ import { GetInjector } from './helpers/injector.helper';
 import { CookiesBannerService } from './services/cookies-banner.service';
 import { HomeComponent } from './features/home/home.component';
 import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
+import { ReportModule } from './features/report/report.module';
+import { EnterReferenceComponent } from './features/report/enter-reference/enter-reference.component';
 
 
 const routes = new HseRoutes([
   HseRoute.unsafe(HomeComponent.route, HomeComponent, undefined, HomeComponent.title),
   HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
+//  HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
+  HseRoute.forLoadChildren(ReportModule.baseRoute, () => import('./features/report/report.module').then(m => m.ReportModule)),
   
   HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),
   HseRoute.unsafe(NotFoundComponent.route, NotFoundComponent, undefined, NotFoundComponent.title),
