@@ -1,0 +1,18 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+    <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+        <govuk-error-link anchorId="notice-reference" message="{{ErrorMessage}}" />
+    </govuk-error-summary>
+
+    <govuk-input id="notice-reference" label="Enter mandatory occurrence notice reference" labelClass="govuk-label--l" [isPageHeading]=true
+                 [(model)]="model" #field [govukRequired]="field" [maxlength]="12"
+                 [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
+                 class="govuk-input--width-20 govuk-!-margin-bottom-5"
+                 hint="The reference number is in the email or text message acknowledging we have received your mandatory occurrence notice"
+                 (onKeyupEnter)="saveAndContinue()" />
+
+    <govuk-body>
+        <a href="" class="govuk-link">I don't have a notice reference</a>
+    </govuk-body>
+
+</govuk-formpage>
