@@ -47,33 +47,8 @@ export class ApplicationService {
   }
 }
 
-/*
-export class ContactRequestModel {
-  id?: string;
-  Reason?: string;
-  ReasonOther?: string;
-  RequestType?: string;
-  WhoAreYou?: string;
-  WhoAreYouOther?: string;
-  Complaint: ComplaintModel = {};
-  Advice: AdviceModel = {};
-}
-
-export class ComplaintModel {
-  NumberOfFloors?: string;
-  NumberOfUnits?: string;
-  FirstName?: string;
-  LastName?: string
-}
-export class AdviceModel {
-  NumberOfFloors?: number;
-  NumberOfUnits?: number;
-  BuildingHeight?: number;
-  FirstName?: string;
-  LastName?: string
-}
-*/
 export class ReportModel {
   id?: string;
   NoticeReference?: string;
+  IsBuilding?: string;
 }
