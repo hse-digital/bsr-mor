@@ -1,0 +1,13 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <span class="govuk-caption-l">About the building</span>
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasIdentifyBuildingErrors" anchorId="identify-building-input" message="You need to tell us how you want to identify the building" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="How can you identify your building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-identify-building" [errorText]="getErrorDescription(hasErrors, 'You need to tell us how you want to identify the building')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="identify-building-building-reference" value="building-reference" label="By building control application reference" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="identify-building-building-registration" value="building-registration" label="By high-rise residential building registration" />
+  </govuk-radio-group>
+
+</govuk-formpage>
