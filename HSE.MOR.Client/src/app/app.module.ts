@@ -16,24 +16,18 @@ import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './components/components.module';
 import { GetInjector } from './helpers/injector.helper';
 import { CookiesBannerService } from './services/cookies-banner.service';
-//import { RequestAboutComponent } from './features/request-about/request-about.component';
 import { HomeComponent } from './features/home/home.component';
 import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
-//import { ComplaintOrAdviceComponent } from './features/complaint-or-advice/complaint-or-advice.component';
-//import { WhoAreYouComponent } from './features/who-are-you/who-are-you.component';
-//import { ComplaintModule } from './features/complaint/complaint.module';
-//import { AdviceModule } from './features/advice/advice.module';
+import { ReportModule } from './features/report/report.module';
+import { EnterReferenceComponent } from './features/report/enter-reference/enter-reference.component';
+
 
 const routes = new HseRoutes([
   HseRoute.unsafe(HomeComponent.route, HomeComponent, undefined, HomeComponent.title),
   HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
-  //HseRoute.protected('', SampleComponent, SampleComponent.title),
-  //HseRoute.protected(ComplaintOrAdviceComponent.route, ComplaintOrAdviceComponent, ComplaintOrAdviceComponent.title),
-  //HseRoute.protected(WhoAreYouComponent.route, WhoAreYouComponent, WhoAreYouComponent.title),
-  //HseRoute.protected(SampleComponent.route, SampleComponent, SampleComponent.title),
-  //HseRoute.protected(RequestAboutComponent.route, RequestAboutComponent, RequestAboutComponent.title),
-  //HseRoute.forLoadChildren(ComplaintModule.baseRoute, () => import('./features/complaint/complaint.module').then(m => m.ComplaintModule)),
-  //HseRoute.forLoadChildren(AdviceModule.baseRoute, () => import('./features/advice/advice.module').then(m => m.AdviceModule)),
+//  HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
+  HseRoute.forLoadChildren(ReportModule.baseRoute, () => import('./features/report/report.module').then(m => m.ReportModule)),
+  
   HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),
   HseRoute.unsafe(NotFoundComponent.route, NotFoundComponent, undefined, NotFoundComponent.title),
   HseRoute.unsafe('**', undefined, NotFoundComponent.route)
@@ -47,10 +41,6 @@ const routes = new HseRoutes([
     TimeoutModalComponent,
     NotFoundComponent,
     WhatToSubmitComponent,
-  //  SampleComponent,
-  //  RequestAboutComponent,
-  //  ComplaintOrAdviceComponent,
-  //  WhoAreYouComponent,
   ],
   imports: [
     RouterModule.forRoot(routes.getRoutes(), { initialNavigation: 'enabledBlocking', scrollPositionRestoration: 'enabled' }),
