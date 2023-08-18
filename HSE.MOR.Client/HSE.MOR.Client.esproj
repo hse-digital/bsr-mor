@@ -18,6 +18,7 @@
     <Folder Include="src\app\components\timeout\" />
     <Folder Include="src\app\components\not-found\" />
     <Folder Include="src\app\features\home\" />
+    <Folder Include="src\app\features\verify-email\" />
     <Folder Include="src\app\features\notice\" />
     <Folder Include="src\app\features\report\enter-reference\" />
     <Folder Include="src\app\features\what-to-submit\" />
