@@ -51,4 +51,5 @@ export class ReportModel {
   id?: string;
   NoticeReference?: string;
   IdentifyBuilding?: string;
+  WhatToReport?: string;
 }

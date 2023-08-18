@@ -1,0 +1,12 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+    <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+        <govuk-error-link anchorId="what-to-report-incident" message="{{ErrorMessage}}" />
+    </govuk-error-summary>
+
+    <span class="govuk-caption-l">About the occurrence</span>
+    <govuk-radio-group class="govuk-!-margin-bottom-4" title="What do you want to report?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-what-to-report" [errorText]="getErrorDescription(hasErrors, ErrorMessage)">
+        <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="what-to-report" id="what-to-report-incident" value="incident" label="Incident" />
+        <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="what-to-report" id="what-to-report-risk" value="risk" label="Risk of an incident" />
+    </govuk-radio-group>
+</govuk-formpage>
