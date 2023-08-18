@@ -17,6 +17,7 @@
     <Folder Include="src\app\components\footer\privacy-notice\" />
     <Folder Include="src\app\components\timeout\" />
     <Folder Include="src\app\components\not-found\" />
+    <Folder Include="src\app\features\building\identify-building\" />
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\" />
     <Folder Include="src\app\features\report\enter-reference\" />
