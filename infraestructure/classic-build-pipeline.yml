@@ -21,18 +21,17 @@ stages:
         path : /AngularTools
   - job: Build Angular Tools
   steps:
-  - step: DotNetCoreCLI@2
+  - task: DotNetCoreCLI@2
     inputs:
       command: 'restore'
       projects: 'BuildToolsRepo/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
     displayName: 'Restore AngularTools Dependencies'
-  - step: DotNetCoreCLI@2
+  - task: DotNetCoreCLI@2
     inputs:
       command: 'build'
       projects: 'BuildToolsRepo/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
     displayName: 'Build AngularTools Project'
-  - step: DotNetCoreCLI@2
-  - task: 
+  - task: DotNetCoreCLI@2
     inputs:
       command: 'publish'
       publishWebProjects: false
@@ -42,32 +41,31 @@ stages:
   - script: /bin/AddGoogleTagManager /HSE.MOR.Client/src/index.html' MyGoogleTagId
   - job:
     steps:
-    - step:
-      - task: NodeTool@0
-        inputs:
-        versionSpec: '18.16.x'
-      - task: Npm@1
-        inputs:
-        command: 'install'
-        workingDir: 'AngularTools'
-      - task: Npm@1
-        inputs:
-        command: 'run'
-        workingDir: 'AngularTools'
-        arguments: 'build'
-      - task: CopyFiles@2
-        inputs:
-        SourceFolder: 'AngularTools/dist'
-        Contents: '**'
-        TargetFolder: 'HSE.MOR.Client'
-        CleanTargetFolder: true
-        OverWrite: true
-        flattenFolders: true
-        preserveTimestamp: true
-      - task: PublishBuildArtifacts@1
-        inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
-        ArtifactName: HSE.MOR.Client
+    - task: NodeTool@0
+      inputs:
+      versionSpec: '18.16.x'
+    - task: Npm@1
+      inputs:
+      command: 'install'
+      workingDir: 'AngularTools'
+    - task: Npm@1
+      inputs:
+      command: 'run'
+      workingDir: 'AngularTools'
+      arguments: 'build'
+    - task: CopyFiles@2
+      inputs:
+      SourceFolder: 'AngularTools/dist'
+      Contents: '**'
+      TargetFolder: 'HSE.MOR.Client'
+      CleanTargetFolder: true
+      OverWrite: true
+      flattenFolders: true
+      preserveTimestamp: true
+    - task: PublishBuildArtifacts@1
+      inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
+      ArtifactName: HSE.MOR.Client
 
 - stage: UnitTest
   jobs:
