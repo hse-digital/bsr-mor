@@ -19,7 +19,7 @@ stages:
       path: /
     - checkout: AngularTools
       path : /AngularTools
-  - job: Build Angular Tools
+  - job: BuildAngularTools
     steps:
     - task: DotNetCoreCLI@2
       inputs:
