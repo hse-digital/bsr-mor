@@ -26,8 +26,6 @@ stages:
     - checkout: Self
     - checkout: AngularTools
       path : s/AngularTools
-  - job: BuildAngularTools
-    steps:
     - script: ls /home/vsts/work/1
     - script: ls /home/vsts/work/1/s
       displayName: 'List Root Directory'
@@ -49,8 +47,6 @@ stages:
         arguments: '--configuration $(BuildConfiguration) --output bin'
       displayName: 'Publish AngularTools Project'
     - script: bin/AddGoogleTagManager home/vsts/work/1/s/HSE.MOR.Client/src/index.html' MyGoogleTagId
-  - job:
-    steps:
     - task: NodeTool@0
       inputs:
         versionSpec: '18.16.x'
