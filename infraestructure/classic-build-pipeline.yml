@@ -31,21 +31,21 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
+        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager.sln'  # Adjust path as needed
       displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
+        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager.sln'  # Adjust path as needed
       displayName: 'Build AngularTools Project'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'publish'
         publishWebProjects: false
         projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
-        arguments: '--configuration $(BuildConfiguration) --output /bin'
+        arguments: '--configuration $(BuildConfiguration) --output bin'
       displayName: 'Publish AngularTools Project'
-    - script: /bin/AddGoogleTagManager /HSE.MOR.Client/src/index.html' MyGoogleTagId
+    - script: bin/AddGoogleTagManager HSE.MOR.Client/src/index.html' MyGoogleTagId
   - job:
     steps:
     - task: NodeTool@0
@@ -54,15 +54,15 @@ stages:
     - task: Npm@1
       inputs:
         command: 'install'
-        workingDir: 'AngularTools'
+        workingDir: 'HSE.MOR.Client'
     - task: Npm@1
       inputs:
         command: 'run'
-        workingDir: 'AngularTools'
+        workingDir: 'HSE.MOR.Client'
         arguments: 'build'
     - task: CopyFiles@2
       inputs:
-        SourceFolder: 'AngularTools/dist'
+        SourceFolder: 'HSE.MOR.Client/dist'
         Contents: '**'
         TargetFolder: 'HSE.MOR.Client'
         CleanTargetFolder: true
