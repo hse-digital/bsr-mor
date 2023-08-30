@@ -28,7 +28,7 @@ stages:
       path : AngularTools
   - job: BuildAngularTools
     steps:
-    - script: ls /
+    - script: ls /home/vsts/work/1/AngularTools
       displayName: 'List Root Directory'
     - task: DotNetCoreCLI@2
       inputs:
@@ -44,7 +44,7 @@ stages:
       inputs:
         command: 'publish'
         publishWebProjects: false
-        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
+        projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
         arguments: '--configuration $(BuildConfiguration) --output bin'
       displayName: 'Publish AngularTools Project'
     - script: bin/AddGoogleTagManager home/vsts/work/1/s/HSE.MOR.Client/src/index.html' MyGoogleTagId
