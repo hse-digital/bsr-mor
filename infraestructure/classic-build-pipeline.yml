@@ -29,6 +29,7 @@ stages:
       path : s/AngularTools
     - script: ls /home/vsts/work/1
     - script: ls /home/vsts/work/1/s
+    - script: ls /home/vsts/work/1/s/AngularTools
     - script: ls $(Build.SourcesDirectory)
       displayName: 'List Root Directory'
     - task: DotNetCoreCLI@2
