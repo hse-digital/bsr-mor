@@ -33,12 +33,12 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: 'home/vsts/work/1/AngularTools/AddGoogleTagManager/AddGoogleTagManager.sln'  # Adjust path as needed
+        projects: '**/AddGoogleTagManager.sln'  # Adjust path as needed
       displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager.sln'  # Adjust path as needed
+        projects: '**/AddGoogleTagManager.sln'  # Adjust path as needed
       displayName: 'Build AngularTools Project'
     - task: DotNetCoreCLI@2
       inputs:
@@ -47,7 +47,7 @@ stages:
         projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
         arguments: '--configuration $(BuildConfiguration) --output bin'
       displayName: 'Publish AngularTools Project'
-    - script: bin/AddGoogleTagManager HSE.MOR.Client/src/index.html' MyGoogleTagId
+    - script: bin/AddGoogleTagManager home/vsts/work/1/s/HSE.MOR.Client/src/index.html' MyGoogleTagId
   - job:
     steps:
     - task: NodeTool@0
