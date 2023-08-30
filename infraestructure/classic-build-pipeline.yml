@@ -15,11 +15,10 @@ stages:
   jobs:
   - job: Checkout
     steps:
-    - task:
-      - checkout: Self
-        path: /
-      - checkout: AngularTools
-        path : /AngularTools
+    - checkout: Self
+      path: /
+    - checkout: AngularTools
+      path : /AngularTools
   - job: Build Angular Tools
   steps:
   - task: DotNetCoreCLI@2
