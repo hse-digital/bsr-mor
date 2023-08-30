@@ -43,11 +43,11 @@ stages:
     - task: NodeTool@0
       inputs:
         versionSpec: '18.16.x'
-    - task: Npm@1
+    - task: Npm@2
       inputs:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-    - task: Npm@1
+    - task: Npm@2
       inputs:
         command: 'run'
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
