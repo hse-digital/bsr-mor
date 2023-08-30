@@ -17,6 +17,7 @@ stages:
     steps:
     - task:
       - checkout: Self
+        path: /
       - checkout: AngularTools
         path : /AngularTools
   - job: Build Angular Tools
