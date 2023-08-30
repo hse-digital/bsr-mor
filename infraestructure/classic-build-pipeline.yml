@@ -38,14 +38,15 @@ stages:
       inputs:
         command: 'build'
         projects: '**/AddGoogleTagManager.sln'  # Adjust path as needed
+        arguments: '--configuration $(BuildConfiguration) --runtime linux-x64 --output $(Build.SourcesDirectory)/bin'
       displayName: 'Build AngularTools Project'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'publish'
-        publishWebProjects: false
-        projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.SourcesDirectory)/bin'
-      displayName: 'Publish AngularTools Project'
+    # - task: DotNetCoreCLI@2
+    #   inputs:
+    #     command: 'publish'
+    #     publishWebProjects: false
+    #     projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
+    #     arguments: '--configuration $(BuildConfiguration) --output $(Build.SourcesDirectory)/bin'
+    #   displayName: 'Publish AngularTools Project'
     - script: ls $(Build.SourcesDirectory)/bin
     - script: $(Build.SourcesDirectory)/bin/AddGoogleTagManager $(Build.SourcesDirectory)/HSE.MOR.Client/src/index.html MyGoogleTagId
     - task: NodeTool@0
