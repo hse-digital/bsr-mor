@@ -62,6 +62,7 @@ stages:
           ArtifactName: HSE.MOR.API
   - job: BuildClient
     dependsOn:
+      - InstallNet7
       - InstallNode
       - Checkout
     steps:
