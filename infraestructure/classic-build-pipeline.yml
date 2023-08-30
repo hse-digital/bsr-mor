@@ -43,29 +43,29 @@ stages:
     steps:
     - task: NodeTool@0
       inputs:
-      versionSpec: '18.16.x'
+        versionSpec: '18.16.x'
     - task: Npm@1
       inputs:
-      command: 'install'
-      workingDir: 'AngularTools'
+        command: 'install'
+        workingDir: 'AngularTools'
     - task: Npm@1
       inputs:
-      command: 'run'
-      workingDir: 'AngularTools'
-      arguments: 'build'
+        command: 'run'
+        workingDir: 'AngularTools'
+        arguments: 'build'
     - task: CopyFiles@2
       inputs:
-      SourceFolder: 'AngularTools/dist'
-      Contents: '**'
-      TargetFolder: 'HSE.MOR.Client'
-      CleanTargetFolder: true
-      OverWrite: true
-      flattenFolders: true
-      preserveTimestamp: true
+        SourceFolder: 'AngularTools/dist'
+        Contents: '**'
+        TargetFolder: 'HSE.MOR.Client'
+        CleanTargetFolder: true
+        OverWrite: true
+        flattenFolders: true
+        preserveTimestamp: true
     - task: PublishBuildArtifacts@1
       inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
-      ArtifactName: HSE.MOR.Client
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
+        ArtifactName: HSE.MOR.Client
 
 - stage: UnitTest
   jobs:
