@@ -5,10 +5,10 @@ pool:
   vmImage: ubuntu-latest
 
 resources:
-    repositories:
-    - repository: AngularTools
-      type: git
-      name: 'BSR-AlphaBetaImplementation/AngularTools'
+  repositories:
+  - repository: AngularTools
+    type: git
+    name: 'BSR-AlphaBetaImplementation/AngularTools'
 
 stages:
 - stage: BuildTools
@@ -33,7 +33,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager.sln'  # Adjust path as needed
+        projects: 'home/vsts/work/1/AngularTools/AddGoogleTagManager/AddGoogleTagManager.sln'  # Adjust path as needed
       displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
