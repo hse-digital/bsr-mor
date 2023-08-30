@@ -22,6 +22,7 @@ stages:
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
   - job: Checkout
+    dependsOn: InstallNet7
     steps:
     - checkout: Self
       path: s
@@ -58,7 +59,6 @@ stages:
     dependsOn:
       - BuildApi
     steps:
-    - script: ls -l -r 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
