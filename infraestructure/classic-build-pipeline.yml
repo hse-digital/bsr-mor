@@ -44,10 +44,10 @@ stages:
         command: 'publish'
         publishWebProjects: false
         projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
-        arguments: '--configuration $(BuildConfiguration) --output bin'
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.SourcesDirectory)/bin'
       displayName: 'Publish AngularTools Project'
-    - script: ls home/vsts/work/1/s/bin
-    - script: home/vsts/work/1/s/bin/AddGoogleTagManager home/vsts/work/1/s/HSE.MOR.Client/src/index.html MyGoogleTagId
+    - script: ls $(Build.SourcesDirectory)/bin
+    - script: $(Build.SourcesDirectory)/bin/AddGoogleTagManager $(Build.SourcesDirectory)/HSE.MOR.Client/src/index.html MyGoogleTagId
     - task: NodeTool@0
       inputs:
         versionSpec: '18.16.x'
