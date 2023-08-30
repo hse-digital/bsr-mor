@@ -21,6 +21,11 @@ stages:
         packageType: sdk
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
+  - job: InstallNode
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.16.x'
   - job: Checkout
     steps:
     - checkout: Self
@@ -29,6 +34,9 @@ stages:
       path : s/AngularTools
       displayName: 'List Root Directory'
   - job: BuildApi
+    dependsOn:
+      - InstallNet7
+      - Checkout
     steps:
       - task: DotNetCoreCLI@2
         displayName: 'Run Unit Tests'
@@ -53,6 +61,9 @@ stages:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
           ArtifactName: HSE.MOR.API
   - job: BuildClient
+    dependsOn:
+      - InstallNode
+      - Checkout
     steps:
     - task: DotNetCoreCLI@2
       inputs:
@@ -65,9 +76,6 @@ stages:
         projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
         arguments: '--configuration $(BuildConfiguration) --self-contained --runtime linux-x64 --output $(Build.SourcesDirectory)/HSE.MOR.Client/HseTools'
       displayName: 'Build AngularTools Project'
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '18.16.x'
     - task: Npm@1
       inputs:
         command: 'install'
