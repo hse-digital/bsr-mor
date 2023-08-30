@@ -21,11 +21,6 @@ stages:
         packageType: sdk
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
-  - job: InstallNode
-    steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '18.16.x'
   - job: Checkout
     steps:
     - checkout: Self
@@ -63,7 +58,6 @@ stages:
   - job: BuildClient
     dependsOn:
       - InstallNet7
-      - InstallNode
       - Checkout
     steps:
     - task: DotNetCoreCLI@2
@@ -77,6 +71,9 @@ stages:
         projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
         arguments: '--configuration $(BuildConfiguration) --self-contained --runtime linux-x64 --output $(Build.SourcesDirectory)/HSE.MOR.Client/HseTools'
       displayName: 'Build AngularTools Project'
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.16.x'
     - task: Npm@1
       inputs:
         command: 'install'
