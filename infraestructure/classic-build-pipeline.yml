@@ -21,6 +21,14 @@ steps:
 stages:
 - stage: BuildTools
   jobs:
+  - job: InstallNet7
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 7.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
   - job: Checkout
     steps:
     - checkout: Self
@@ -31,18 +39,18 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: 'BuildToolsRepo/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
+        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
       displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: 'BuildToolsRepo/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
+        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
       displayName: 'Build AngularTools Project'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'publish'
         publishWebProjects: false
-        projects: 'BuildToolsRepo/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
+        projects: 'AngularTools/AddGoogleTagManager/AddGoogleTagManager/AddGoogleTagManager.csproj'  # Adjust path as needed
         arguments: '--configuration $(BuildConfiguration) --output /bin'
       displayName: 'Publish AngularTools Project'
     - script: /bin/AddGoogleTagManager /HSE.MOR.Client/src/index.html' MyGoogleTagId
