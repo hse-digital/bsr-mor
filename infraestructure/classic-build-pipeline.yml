@@ -50,17 +50,12 @@ stages:
       inputs:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-    - task: Npm@1
-      inputs:
-        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-        command: 'run'
-        arguments: 'build'
     - task: CopyFiles@2
       inputs:
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-        SourceFolder: '$(Build.SourcesDirectory)MOR/HSE.MOR.Client/dist'
+        SourceFolder: '$(Build.SourcesDirectory)/HSE.MOR.Client/dist'
         Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)MOR/HSE.MOR.Client'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         CleanTargetFolder: true
         OverWrite: true
         flattenFolders: true
