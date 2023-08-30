@@ -37,7 +37,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: '**/AddGoogleTagManager.proj'  # Adjust path as needed
+        projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
         arguments: '--configuration $(BuildConfiguration) --runtime linux-x64 --output $(Build.SourcesDirectory)/bin'
       displayName: 'Build AngularTools Project'
     # - task: DotNetCoreCLI@2
