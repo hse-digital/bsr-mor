@@ -56,8 +56,7 @@ stages:
           ArtifactName: HSE.MOR.API
   - job: BuildClient
     dependsOn:
-      - InstallNet7
-      - Checkout
+      - BuildApi
     steps:
     - task: DotNetCoreCLI@2
       inputs:
