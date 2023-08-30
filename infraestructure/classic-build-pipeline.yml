@@ -24,7 +24,7 @@ stages:
   - job: Checkout
     steps:
     - checkout: Self
-      path: MOR
+      path: s/MOR
     - checkout: AngularTools
       path : s/AngularTools
     - script: ls /home/vsts/work/1
