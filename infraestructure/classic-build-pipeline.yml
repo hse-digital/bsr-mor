@@ -24,7 +24,7 @@ stages:
   - job: Checkout
     steps:
     - checkout: Self
-      path: s/MOR
+      path: s
     - checkout: AngularTools
       path : s/AngularTools
     - script: ls /home/vsts/work/1
@@ -48,18 +48,18 @@ stages:
     - task: Npm@1
       inputs:
         command: 'install'
-        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
+        workingDir: '$(Build.SourcesDirectory)/MOR/HSE.MOR.Client'
     - task: Npm@1
       inputs:
-        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
+        workingDir: '$(Build.SourcesDirectory)/MOR/HSE.MOR.Client'
         command: 'run'
         arguments: 'build'
     - task: CopyFiles@2
       inputs:
-        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-        SourceFolder: '$(Build.SourcesDirectory)HSE.MOR.Client/dist'
+        workingDir: '$(Build.SourcesDirectory)/MOR/HSE.MOR.Client'
+        SourceFolder: '$(Build.SourcesDirectory)MOR/HSE.MOR.Client/dist'
         Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)HSE.MOR.Client'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)MOR/HSE.MOR.Client'
         CleanTargetFolder: true
         OverWrite: true
         flattenFolders: true
