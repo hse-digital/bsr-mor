@@ -58,12 +58,12 @@ stages:
     dependsOn:
       - BuildApi
     steps:
+    - script: ls -l -r 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
         projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
-      displayName: 'Restore AngularTools Dependencies'
-    - script: ls -l -r 
+      displayName: 'Restore AddGoogleTagManager Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
