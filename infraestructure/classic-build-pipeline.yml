@@ -28,6 +28,7 @@ stages:
       path : s/AngularTools
     - script: ls /home/vsts/work/1
     - script: ls /home/vsts/work/1/s
+    - script: ls $(Build.SourcesDirectory)
       displayName: 'List Root Directory'
     - task: DotNetCoreCLI@2
       inputs:
@@ -43,14 +44,14 @@ stages:
     - task: NodeTool@0
       inputs:
         versionSpec: '18.16.x'
-    - task: Npm@2
+    - task: Npm@1
       inputs:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-    - task: Npm@2
+    - task: Npm@1
       inputs:
-        command: 'run'
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
+        command: 'run'
         arguments: 'build'
     - task: CopyFiles@2
       inputs:
