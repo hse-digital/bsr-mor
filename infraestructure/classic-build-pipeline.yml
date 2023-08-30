@@ -27,7 +27,6 @@ stages:
       path: s
     - checkout: AngularTools
       path : s/AngularTools
-      displayName: 'List Root Directory'
   - job: BuildApi
     dependsOn:
       - InstallNet7
@@ -42,7 +41,7 @@ stages:
         displayName: 'Build API'
         inputs:
           command: 'build'
-          projects: 'HSE.MOR.API/HSE.MOR.API.csproj'
+          projects: '**/HSE.MOR.API/HSE.MOR.API.csproj'
           arguments: '--output publish_output --configuration Release'
       - task: ArchiveFiles@2
         displayName: 'Archive API files'
@@ -63,7 +62,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/AddGoogleTagManager.sln'  # Adjust path as needed
+        projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
       displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
