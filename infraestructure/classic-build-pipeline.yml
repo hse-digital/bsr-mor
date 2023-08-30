@@ -29,6 +29,7 @@ stages:
   - job: BuildAngularTools
     steps:
     - script: ls /home/vsts/work/1
+    - script: ls /home/vsts/work/1/s
       displayName: 'List Root Directory'
     - task: DotNetCoreCLI@2
       inputs:
