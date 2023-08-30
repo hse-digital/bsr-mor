@@ -11,7 +11,7 @@ resources:
     name: 'BSR-AlphaBetaImplementation/AngularTools'
 
 stages:
-- stage: BuildTools
+- stage: 
   jobs:
   - job: InstallNet7
     steps:
@@ -28,7 +28,7 @@ stages:
     - checkout: AngularTools
       path : s/AngularTools
       displayName: 'List Root Directory'
-  - job: Build Api
+  - job: BuildApi
     steps:
       - task: DotNetCoreCLI@2
         displayName: 'Run Unit Tests'
@@ -52,7 +52,7 @@ stages:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
           ArtifactName: HSE.MOR.API
-  - job: Build Client
+  - job: BuildClient
     steps:
     - task: DotNetCoreCLI@2
       inputs:
