@@ -56,9 +56,9 @@ stages:
 
 - stage: BuildClient
   jobs:
-  - job: Build Angular Tools
+  - job: BuildAngularTools
     steps:
-    - script: ls -l ../.
+    - script: 'ls -l ../.'
       displayName: 'List files in AngularTools'
     - task: DotNetCoreCLI@2
       inputs:
