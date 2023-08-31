@@ -32,8 +32,8 @@ stages:
     - script: 'ls -l ../.'
     - script: 'ls -l ../r'
 
-- stage: BuildClient
-  jobs:
+# - stage: BuildClient
+#   jobs:
   - job: BuildAngularTools
     steps: 
     - script: 'pwd'
@@ -74,8 +74,8 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         ArtifactName: HSE.MOR.Client
 
-- stage: UnitTest
-  jobs:
+# - stage: UnitTest
+#   jobs:
   - job: 
     steps:
       - task: DotNetCoreCLI@2
