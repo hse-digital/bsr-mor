@@ -24,7 +24,7 @@ stages:
   - job: CheckoutSelf
     steps:
     - checkout: AngularTools
-      path : s/AngularTools
+      path : s
     - checkout: Self
       path: s
 - stage: UnitTest
