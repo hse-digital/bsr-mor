@@ -63,7 +63,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/AddGoogleTagManager.sln'  # Adjust path as needed
+        projects: '../**/AddGoogleTagManager.sln'  # Adjust path as needed
       displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
