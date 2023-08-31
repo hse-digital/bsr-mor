@@ -27,6 +27,8 @@ stages:
       path: s
     - checkout: AngularTools
       path : r
+    - script: 'ls -l'
+    - script: 'ls -l ..'
 - stage: UnitTest
   jobs:
   - job: 
@@ -60,7 +62,7 @@ stages:
     steps: 
     - script: 'ls -l ../s'
       displayName: 'List files in s'
-    - script: 'ls -l ../r'
+    - script: 'ls -l ..'
       displayName: 'List files in s'
     - task: DotNetCoreCLI@2
       inputs:
