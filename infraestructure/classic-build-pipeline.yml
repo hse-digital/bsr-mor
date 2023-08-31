@@ -60,8 +60,6 @@ stages:
       path : s/AngularTools
     - script: ls -l
       displayName: 'List files in AngularTools'
-  - job: 
-    steps:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
