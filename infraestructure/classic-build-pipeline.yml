@@ -23,10 +23,10 @@ stages:
         installationPath: $(Agent.ToolsDirectory)/dotnet
   - job: CheckoutSelf
     steps:
-    - checkout: AngularTools
-      path : s
     - checkout: Self
       path: s
+    - checkout: AngularTools
+      path : s
 - stage: UnitTest
   jobs:
   - job: 
@@ -57,7 +57,7 @@ stages:
 - stage: BuildClient
   jobs:
   - job: BuildAngularTools
-    steps:
+    steps: 
     - script: 'ls -l ../s'
       displayName: 'List files in AngularTools'
     - task: DotNetCoreCLI@2
