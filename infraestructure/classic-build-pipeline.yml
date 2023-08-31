@@ -23,10 +23,10 @@ stages:
         installationPath: $(Agent.ToolsDirectory)/dotnet
   - job: CheckoutSelf
     steps:
-    - checkout: Self
-      path: s
     - checkout: AngularTools
       path : s/AngularTools
+    - checkout: Self
+      path: s
 - stage: UnitTest
   jobs:
   - job: 
