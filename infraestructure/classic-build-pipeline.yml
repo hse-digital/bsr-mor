@@ -63,6 +63,7 @@ stages:
 - stage: BuildClient
   jobs:
   - job: 
+    steps:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
