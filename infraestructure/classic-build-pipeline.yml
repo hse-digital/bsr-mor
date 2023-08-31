@@ -28,7 +28,7 @@ stages:
     - checkout: AngularTools
       path : r
     - script: 'ls -l'
-    - script: 'ls -l ..'
+    - script: 'ls -l ../r'
 - stage: UnitTest
   jobs:
   - job: 
