@@ -26,7 +26,7 @@ stages:
     - checkout: Self
       path: s
     - checkout: AngularTools
-      path : s
+      path : r
 - stage: UnitTest
   jobs:
   - job: 
@@ -59,7 +59,9 @@ stages:
   - job: BuildAngularTools
     steps: 
     - script: 'ls -l ../s'
-      displayName: 'List files in AngularTools'
+      displayName: 'List files in s'
+    - script: 'ls -l ../r'
+      displayName: 'List files in s'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
