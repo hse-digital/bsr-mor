@@ -4,12 +4,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-resources:
-  repositories:
-  - repository: AngularTools
-    type: git
-    name: 'BSR-AlphaBetaImplementation/AngularTools'
-
 stages:
 - stage: BuildTools
   jobs:
@@ -21,48 +15,19 @@ stages:
         packageType: sdk
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
-  - job: CheckoutSelf
-    steps:
-    - checkout: Self
-      path: s
-    - checkout: AngularTools
-      path : r
-    - script: 'pwd'
-    - script: 'ls -l'
-    - script: 'ls -l ../.'
-    - script: 'ls -l ../r'
-
-# - stage: BuildClient
-#   jobs:
-  - job: BuildAngularTools
+  - job: BuildClient
     steps: 
-    - script: 'pwd'
-    - script: 'ls -l ../s'
-      displayName: 'List files in s'
-    - script: 'ls -l ..'
-      displayName: 'List files in s'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'restore'
-        projects: '../**/AddGoogleTagManager.sln'  # Adjust path as needed
-      displayName: 'Restore AngularTools Dependencies'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'build'
-        projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
-        arguments: '--configuration $(BuildConfiguration) --self-contained --runtime linux-x64 --output $(Build.SourcesDirectory)/HSE.MOR.Client/HseTools'
-      displayName: 'Build AngularTools Project'
     - task: NodeTool@0
       inputs:
         versionSpec: '18.16.x'
     - task: Npm@1
       inputs:
         command: 'install'
-        workingDir: '$(Build.SourcesDirectory)/../HSE.MOR.Client'
+        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
     - task: CopyFiles@2
       inputs:
-        workingDir: '$(Build.SourcesDirectory)/../HSE.MOR.Client'
-        SourceFolder: '$(Build.SourcesDirectory)/../HSE.MOR.Client'
+        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
+        SourceFolder: '$(Build.SourcesDirectory)/HSE.MOR.Client'
         Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         CleanTargetFolder: true
