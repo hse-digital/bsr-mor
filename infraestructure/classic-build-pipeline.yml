@@ -27,6 +27,7 @@ stages:
       path: s
     - checkout: AngularTools
       path : r
+    - script: 'pwd'
     - script: 'ls -l'
     - script: 'ls -l ../r'
 - stage: UnitTest
@@ -60,6 +61,7 @@ stages:
   jobs:
   - job: BuildAngularTools
     steps: 
+    - script: 'pwd'
     - script: 'ls -l ../s'
       displayName: 'List files in s'
     - script: 'ls -l ..'
