@@ -11,7 +11,7 @@ resources:
     name: 'BSR-AlphaBetaImplementation/AngularTools'
 
 stages:
-- stage: 
+- stage: BuildTools
   jobs:
   - job: InstallNet7
     steps:
@@ -22,48 +22,21 @@ stages:
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
   - job: Checkout
-    dependsOn: InstallNet7
     steps:
     - checkout: Self
       path: s
     - checkout: AngularTools
       path : s/AngularTools
-  - job: BuildApi
-    dependsOn:
-      - InstallNet7
-      - Checkout
-    steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Run Unit Tests'
-        inputs:
-          command: 'test'
-          projects: '**/HSE.MOR.API.UnitTests.csproj'
-      - task: DotNetCoreCLI@2
-        displayName: 'Build API'
-        inputs:
-          command: 'build'
-          projects: '**/HSE.MOR.API/HSE.MOR.API.csproj'
-          arguments: '--output publish_output --configuration Release'
-      - task: ArchiveFiles@2
-        displayName: 'Archive API files'
-        inputs:
-          rootFolderOrFile: 'publish_output/'
-          includeRootFolder: false 
-          archiveFile: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish API artifact'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-          ArtifactName: HSE.MOR.API
-  - job: BuildClient
-    dependsOn:
-      - BuildApi
-    steps:
+    - script: ls /home/vsts/work/1
+    - script: ls /home/vsts/work/1/s
+    - script: ls /home/vsts/work/1/s/AngularTools
+    - script: ls $(Build.SourcesDirectory)
+      displayName: 'List Root Directory'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/AddGoogleTagManager.csproj'  # Adjust path as needed
-      displayName: 'Restore AddGoogleTagManager Dependencies'
+        projects: '**/AddGoogleTagManager.sln'  # Adjust path as needed
+      displayName: 'Restore AngularTools Dependencies'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
@@ -91,4 +64,31 @@ stages:
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         ArtifactName: HSE.MOR.Client
+
+- stage: UnitTest
+  jobs:
+  - job: 
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          command: 'test'
+          projects: '**/HSE.MOR.API.UnitTests.csproj'
+      - task: DotNetCoreCLI@2
+        displayName: 'Build API'
+        inputs:
+          command: 'build'
+          projects: 'HSE.MOR.API/HSE.MOR.API.csproj'
+          arguments: '--output publish_output --configuration Release'
+      - task: ArchiveFiles@2
+        displayName: 'Archive API files'
+        inputs:
+          rootFolderOrFile: 'publish_output/'
+          includeRootFolder: false 
+          archiveFile: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish API artifact'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
+          ArtifactName: HSE.MOR.API
       
