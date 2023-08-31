@@ -21,16 +21,10 @@ stages:
         packageType: sdk
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
-  - job: Checkout
+  - job: CheckoutSelf
     steps:
     - checkout: Self
       path: s
-    - script: ls /home/vsts/work/1
-    - script: ls /home/vsts/work/1/s
-    - script: ls /home/vsts/work/1/s/AngularTools
-    - script: ls $(Build.SourcesDirectory)
-      displayName: 'List Root Directory'
-
 - stage: UnitTest
   jobs:
   - job: 
@@ -60,7 +54,7 @@ stages:
 
 - stage: BuildClient
   jobs:
-  - job: Checkout
+  - job: CheckoutAngularTools
     steps:
     - checkout: AngularTools
       path : s/AngularTools
