@@ -32,6 +32,37 @@ stages:
     - script: ls /home/vsts/work/1/s/AngularTools
     - script: ls $(Build.SourcesDirectory)
       displayName: 'List Root Directory'
+
+- stage: UnitTest
+  jobs:
+  - job: 
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          command: 'test'
+          projects: '**/HSE.MOR.API.UnitTests.csproj'
+      - task: DotNetCoreCLI@2
+        displayName: 'Build API'
+        inputs:
+          command: 'build'
+          projects: 'HSE.MOR.API/HSE.MOR.API.csproj'
+          arguments: '--output publish_output --configuration Release'
+      - task: ArchiveFiles@2
+        displayName: 'Archive API files'
+        inputs:
+          rootFolderOrFile: 'publish_output/'
+          includeRootFolder: false 
+          archiveFile: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish API artifact'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
+          ArtifactName: HSE.MOR.API
+
+- stage: BuildClient
+  jobs:
+  - job: 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
@@ -65,30 +96,4 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         ArtifactName: HSE.MOR.Client
 
-- stage: UnitTest
-  jobs:
-  - job: 
-    steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Run Unit Tests'
-        inputs:
-          command: 'test'
-          projects: '**/HSE.MOR.API.UnitTests.csproj'
-      - task: DotNetCoreCLI@2
-        displayName: 'Build API'
-        inputs:
-          command: 'build'
-          projects: 'HSE.MOR.API/HSE.MOR.API.csproj'
-          arguments: '--output publish_output --configuration Release'
-      - task: ArchiveFiles@2
-        displayName: 'Archive API files'
-        inputs:
-          rootFolderOrFile: 'publish_output/'
-          includeRootFolder: false 
-          archiveFile: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish API artifact'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-          ArtifactName: HSE.MOR.API
       
