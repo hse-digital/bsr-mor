@@ -40,7 +40,7 @@ stages:
         displayName: 'Build API'
         inputs:
           command: 'build'
-          projects: '../**/HSE.MOR.API/HSE.MOR.API.csproj'
+          projects: '../**/HSE.MOR.API.csproj'
           arguments: '--output publish_output --configuration Release'
       - task: ArchiveFiles@2
         displayName: 'Archive API files'
