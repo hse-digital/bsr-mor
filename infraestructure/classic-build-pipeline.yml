@@ -28,16 +28,36 @@ stages:
       inputs:
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
         SourceFolder: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-        Contents: '**'
+        Contents: | 
+            **
+            !**/package.lock.json
         TargetFolder: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         CleanTargetFolder: true
         OverWrite: true
         flattenFolders: false
         preserveTimestamp: true
+        displayName: 'Copy Client files'
+    - task: CopyFiles@2
+      inputs:
+        workingDir: '$(Build.SourcesDirectory)/packages'
+        SourceFolder: '$(Build.SourcesDirectory)/packages'
+        Contents: **
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/packages'
+        CleanTargetFolder: true
+        OverWrite: true
+        flattenFolders: false
+        preserveTimestamp: true
+      displayName: 'Copy Packages'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         ArtifactName: HSE.MOR.Client
+      displayName: 'Public Client Artifact'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
+        ArtifactName: packages
+      displayName: 'Publish Packages Artifact'
 
 # - stage: UnitTest
 #   jobs:
