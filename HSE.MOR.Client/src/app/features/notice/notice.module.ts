@@ -8,7 +8,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ApplicationService } from 'src/app/services/application.service';
 import { HseRoute, HseRoutes } from 'src/app/helpers/hse.route';
 
-
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
 ]);
@@ -27,5 +26,5 @@ const routes = new HseRoutes([
   providers: [HttpClient, ApplicationService, ...routes.getProviders()]
 })
 export class NoticeModule {
-  static baseRoute: string = "building";
+  static baseRoute: string = "notice";
 }

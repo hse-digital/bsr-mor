@@ -9,7 +9,7 @@ import { ApplicationService } from 'src/app/services/application.service';
   templateUrl: './briefly-describe-risk-incident.component.html'
 })
 export class BrieflyDescribeRiskIncidentComponent extends PageComponent<string>  {
-  public static route: string = '';
+  public static route: string = 'briefly-describe-risk-incident';
   static title: string = "";
 
   override onInit(applicationService: ApplicationService): void {
@@ -29,7 +29,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<string> 
   }
 
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    throw new Error('Method not implemented.');
+    return true;
   }
 
   override isValid(): boolean {

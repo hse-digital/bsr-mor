@@ -1,5 +1,4 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
-  <span class="govuk-caption-l">About the question</span>
 
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
     <govuk-error-link *ngIf="hasErrors" anchorId="textarea-advice-ask-question" message="You need to briefly describe the risk or incident" />
