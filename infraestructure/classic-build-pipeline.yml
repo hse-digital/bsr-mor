@@ -1,6 +1,9 @@
 trigger:
 - template-build
 
+pool:
+  vmImage: ubuntu-latest
+
 resources:
   repositories:
   - repository: AngularTools
