@@ -57,4 +57,13 @@ export class ReportModel {
 
 export class NoticeModel {
   DescribeRiskIncident?: string;
+  WhenBecomeAware?: TimeModel;
+}
+
+export class TimeModel {
+  Day?: number;
+  Month?: number;
+  Year?: number;
+  Hour?: number;
+  Minute?: number;
 }

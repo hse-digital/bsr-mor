@@ -1,0 +1,15 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+    <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+      <govuk-error-link *ngIf="hasErrors" anchorId="textarea-advice-ask-question" message="You need to briefly describe the risk or incident" />
+    </govuk-error-summary>
+  
+    <span class="govuk-caption-l">About the occurrence</span>
+
+    <govuk-input id="time" label="Time" labelClass="govuk-label--s" [isPageHeading]=false
+                 [(model)]="inputTimeModel" #field [govukRequired]="field" [maxlength]="5"
+                 [errorText]="getErrorDescription(hasErrors, '')"
+                 class="govuk-input--width-20 govuk-!-margin-bottom-5"
+                 hint="The reference number is in the email or text message acknowledging we have received your mandatory occurrence notice"
+                 (onKeyupEnter)="saveAndContinue()" />
+</govuk-formpage>

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ApplicationService } from 'src/app/services/application.service';
 import { HseRoute, HseRoutes } from 'src/app/helpers/hse.route';
+import { WhenBecomeAwareComponent } from './when-become-aware/when-become-aware.component';
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
@@ -14,7 +15,8 @@ const routes = new HseRoutes([
 
 @NgModule({
   declarations: [
-    BrieflyDescribeRiskIncidentComponent
+    BrieflyDescribeRiskIncidentComponent,
+    WhenBecomeAwareComponent
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
