@@ -41,7 +41,7 @@ stages:
       inputs:
         workingDir: '$(Build.SourcesDirectory)/packages'
         SourceFolder: '$(Build.SourcesDirectory)/packages'
-        Contents: **
+        Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/packages'
         CleanTargetFolder: true
         OverWrite: true
