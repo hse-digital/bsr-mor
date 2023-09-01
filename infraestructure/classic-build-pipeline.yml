@@ -1,96 +1,14 @@
 trigger:
-  - hybrid-build
+- template-build
 
-pool:
-  vmImage: ubuntu-latest
+resources:
+  repositories:
+  - repository: AzureTools
+    type: git
+    name: 'BSR-AlphaBetaImplementation/AzureTools'
+    ref: refs/heads/main
 
-stages:
-- stage: BuildTools
-  jobs:
-  - job: InstallNet7
-    steps:
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk'
-      inputs:
-        packageType: sdk
-        version: 7.x
-        installationPath: $(Agent.ToolsDirectory)/dotnet
-    - task: CopyFiles@2
-      displayName: 'Copy Client files'
-      inputs:
-        workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-        SourceFolder: '$(Build.SourcesDirectory)/HSE.MOR.Client'
-        Contents: | 
-            **
-            !**/package.lock.json
-        TargetFolder: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
-        CleanTargetFolder: true
-        OverWrite: true
-        flattenFolders: false
-        preserveTimestamp: true
-    - task: CopyFiles@2
-      displayName: 'Copy Packages'
-      inputs:
-        workingDir: '$(Build.SourcesDirectory)/packages'
-        SourceFolder: '$(Build.SourcesDirectory)/packages'
-        Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)/packages'
-        CleanTargetFolder: true
-        OverWrite: true
-        flattenFolders: false
-        preserveTimestamp: true
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Client Artifact'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
-        ArtifactName: HSE.MOR.Client
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Packages Artifact'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
-        ArtifactName: packages
-
-# - stage: UnitTest
-#   jobs:
-  - job: 
-    steps:
-    - task: DotNetCoreCLI@2
-      displayName: 'Run Unit Tests'
-      inputs:
-        command: 'test'
-        projects: '**/HSE.MOR.API.UnitTests.csproj'
-    - task: DotNetCoreCLI@2
-      displayName: 'Build API'
-      inputs:
-        command: 'build'
-        projects: '**/HSE.MOR.API.csproj'
-        arguments: '--output publish_output --configuration Release'
-    - task: ArchiveFiles@2
-      displayName: 'Archive API files'
-      inputs:
-        rootFolderOrFile: 'publish_output/'
-        includeRootFolder: false 
-        archiveFile: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish API artifact'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-        ArtifactName: HSE.MOR.API      
-  - job: 
-    steps:
-    - task: CopyFiles@2
-      displayName: 'Copy infraestructure files'
-      inputs:
-        workingDir: '$(Build.SourcesDirectory)/infraestructure'
-        SourceFolder: '$(Build.SourcesDirectory)/infraestructure'
-        Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)/infrastructure'
-        CleanTargetFolder: true
-        OverWrite: true
-        flattenFolders: true
-        preserveTimestamp: true
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Infrastructure artifacts'
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/infrastructure'
-        ArtifactName: infrastructure
+extends:
+  template: 'pipelines/swa_template.yml@AzureTools'  # Replace with the actual path
+  parameters:
+    projectName: 'MOR'
