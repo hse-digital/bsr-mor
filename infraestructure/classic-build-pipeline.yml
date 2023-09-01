@@ -32,7 +32,7 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         CleanTargetFolder: true
         OverWrite: true
-        flattenFolders: true
+        flattenFolders: false
         preserveTimestamp: true
     - task: PublishBuildArtifacts@1
       inputs:
