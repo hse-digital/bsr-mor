@@ -9,6 +9,6 @@ resources:
     ref: refs/heads/main
 
 extends:
-  template: pipelines/swa_template.yml@AngularTools  # Replace with the actual path
+  template: /pipelines/swa_template.yml@AngularTools  # Replace with the actual path
   parameters:
     projectName: 'MOR'
