@@ -3,12 +3,12 @@ trigger:
 
 resources:
   repositories:
-  - repository: AzureTools
+  - repository: AngularTools
     type: git
-    name: 'BSR-AlphaBetaImplementation/AzureTools'
+    name: 'BSR-AlphaBetaImplementation/AngularTools'
     ref: refs/heads/main
 
 extends:
-  template: 'pipelines/swa_template.yml@AzureTools'  # Replace with the actual path
+  template: pipelines/swa_template.yml@AngularTools  # Replace with the actual path
   parameters:
     projectName: 'MOR'
