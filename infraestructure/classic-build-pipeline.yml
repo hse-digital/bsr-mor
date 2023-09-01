@@ -52,7 +52,7 @@ stages:
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         ArtifactName: HSE.MOR.Client
-      displayName: 'Public Client Artifact'
+      displayName: 'Publish Client Artifact'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
