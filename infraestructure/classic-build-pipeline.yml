@@ -16,6 +16,7 @@ stages:
         version: 7.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
     - task: CopyFiles@2
+      displayName: 'Copy Client files'
       inputs:
         workingDir: '$(Build.SourcesDirectory)/HSE.MOR.Client'
         SourceFolder: '$(Build.SourcesDirectory)/HSE.MOR.Client'
@@ -27,8 +28,8 @@ stages:
         OverWrite: true
         flattenFolders: false
         preserveTimestamp: true
-        displayName: 'Copy Client files'
     - task: CopyFiles@2
+      displayName: 'Copy Packages'
       inputs:
         workingDir: '$(Build.SourcesDirectory)/packages'
         SourceFolder: '$(Build.SourcesDirectory)/packages'
@@ -38,17 +39,16 @@ stages:
         OverWrite: true
         flattenFolders: false
         preserveTimestamp: true
-      displayName: 'Copy Packages'
     - task: PublishBuildArtifacts@1
+      displayName: 'Publish Client Artifact'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.Client'
         ArtifactName: HSE.MOR.Client
-      displayName: 'Publish Client Artifact'
     - task: PublishBuildArtifacts@1
+      displayName: 'Publish Packages Artifact'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
         ArtifactName: packages
-      displayName: 'Publish Packages Artifact'
 
 # - stage: UnitTest
 #   jobs:
