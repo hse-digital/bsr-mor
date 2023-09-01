@@ -71,7 +71,7 @@ stages:
       displayName: 'Copy infraestructure files'
       inputs:
         workingDir: '$(Build.SourcesDirectory)/infraestructure'
-        SourceFolder: '$(Build.SourcesDirectory)/infrastructure'
+        SourceFolder: '$(Build.SourcesDirectory)/infraestructure'
         Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/infrastructure'
         CleanTargetFolder: true
