@@ -17,6 +17,13 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   inputDateModel?: InputDateModel;
   inputTimeModel?: string;
 
+  dateErrorMessage?: string;
+  timeErrorMessage?: string;
+
+  inputDateHasError: boolean = false;
+  inputTimeHasError: boolean = false;
+  inputIsEmpty?: boolean = false;
+  
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Notice?.WhenBecomeAware) {
       applicationService.model.Notice!.WhenBecomeAware = {};
@@ -44,17 +51,27 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   private transformToTimeModel(inputDate?: InputDateModel, inputTime?: string): TimeModel {
+    let hour = inputTime?.split(':')[0];
+    let minute = inputTime?.split(':')[1];
     return  {
       Day: Number(inputDate?.day),
       Month: Number(inputDate?.month),
       Year: Number(inputDate?.year),
-      Hour: Number(inputTime?.split(':')[0]),
-      Minute: Number(inputTime?.split(':')[1])
+      Hour: FieldValidations.IsNotNullOrWhitespace(hour) ? Number(hour) : -1,
+      Minute: FieldValidations.IsNotNullOrWhitespace(minute) ? Number(minute) : -1
     }
   }
 
   private transformToInputTime(timeModel: TimeModel): string {
-    return `${timeModel.Hour}:${timeModel.Minute}`;
+    if(timeModel.Hour == undefined && timeModel.Minute == undefined) return "";
+
+    timeModel.Hour = timeModel?.Hour ?? 0;
+    timeModel.Minute = timeModel?.Minute ?? 0;
+
+    let hour = timeModel?.Hour < 10 ? `0${timeModel.Hour}` : timeModel.Hour;
+    let minute = timeModel.Minute < 10 ? `0${timeModel.Minute}` : timeModel.Hour;
+    
+    return `${hour}:${minute}`;
   }
 
   private transformToInputDate(timeModel: TimeModel): InputDateModel {
@@ -69,42 +86,50 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     return true;
   }
 
-  errorMessage?: string;
   override isValid(): boolean {
-    this.errorMessage = "";
-    this.model = this.transformToTimeModel(this.inputDateModel, this.inputTimeModel);
-    if (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel) && this.InputDateModelIsNotNullOrWhitespace()) {
-      this.errorMessage = "You need to tell us when you were made aware of the occurrence";
-    } else if (this.InputDateModelIsNotNullOrWhitespace()) {
-      this.errorMessage = "You need to tell us the date you were made aware of the occurrence";
-    } else if (!this.inputDateModel?.day) {
-      this.errorMessage = "You need to tell us the day you were made aware of the occurrence";
-    } else if (!this.inputDateModel?.month) {
-      this.errorMessage = "You need to tell us the month you were made aware of the occurrence";
-    } else if (!this.inputDateModel?.year) {
-      this.errorMessage = "You need to tell us the year you were made aware of the occurrence";
-    } else if (!Number.isNaN(this.getDate(this.model).getTime())) {
-      this.errorMessage = "You need to enter a date that exists";
-    } else if (Date.now() < this.getDate(this.model).getTime()) {
-      this.errorMessage = "You need to enter a date in the past";
-    } else if (this.model?.Year! < 1900) {
-      this.errorMessage = "you need to enter a date that is after 1900";
-    } else if (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel)) {
-      this.errorMessage = "You need to tell us the time you were made aware of the occurrence";
-    } else if (!Number.isNaN(this.getTime(this.model).getTime())) {
-      this.errorMessage = "You need to enter a valid time";
-    }
-    return this.errorMessage == "";
+    this.model = this.transformToTimeModel(this.inputDateModel, this.inputTimeModel);    
+
+    this.inputIsEmpty = !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel) && this.InputDateModelIsNullOrWhitespace();
+
+    let dateIsValid = this.isDateValid();
+    let timeIsValid = this.isTimeValid();
+
+    return dateIsValid && timeIsValid;
   }
 
-  private getFullDate(model?: TimeModel) {
-    let date: Date = new Date();
-    date.setDate(this.model?.Day ?? -1);
-    date.setMonth(this.model?.Month ?? -1);
-    date.setFullYear(this.model?.Year ?? -1);
-    date.setHours(this.model?.Hour ?? -1);
-    date.setMinutes(this.model?.Minute ?? -1);
-    return date;
+  private isDateValid() {
+    this.dateErrorMessage = "";
+    if (this.InputDateModelIsNullOrWhitespace()) {
+      this.dateErrorMessage = "You need to tell us the date you were made aware of the occurrence";
+    } else if (!this.inputDateModel?.day) {
+      this.dateErrorMessage = "You need to tell us the day you were made aware of the occurrence";
+    } else if (!this.inputDateModel?.month) {
+      this.dateErrorMessage = "You need to tell us the month you were made aware of the occurrence";
+    } else if (!this.inputDateModel?.year) {
+      this.dateErrorMessage = "You need to tell us the year you were made aware of the occurrence";
+    } else if (Number.isNaN(this.getDate(this.model).getTime())) {
+      this.dateErrorMessage = "You need to enter a date that exists";
+    } else if (Date.now() < this.getDate(this.model).getTime()) {
+      this.dateErrorMessage = "You need to enter a date in the past";
+    } else if (this.model?.Year! < 1900) {
+      this.dateErrorMessage = "you need to enter a date that is after 1900";
+    }
+    this.inputDateHasError = this.dateErrorMessage != "";
+    return !this.inputDateHasError;
+  }
+
+  private isTimeValid() {
+    let isHourValid = FieldValidations.IsWholeNumber(this.model?.Hour) && FieldValidations.IsAPositiveNumber(this.model?.Hour) && this.model!.Hour! < 24;
+    let isMinuteValid = FieldValidations.IsWholeNumber(this.model?.Minute) && FieldValidations.IsAPositiveNumber(this.model?.Minute) && this.model!.Minute! < 60;
+    
+    this.timeErrorMessage = "";
+    if (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel)) {
+      this.timeErrorMessage = "You need to tell us the time you were made aware of the occurrence";
+    } else if (!isHourValid || !isMinuteValid || Number.isNaN(this.getTime(this.model).getTime())) {
+      this.timeErrorMessage = "You need to enter a valid time";
+    }
+    this.inputTimeHasError = this.timeErrorMessage != "";
+    return !this.inputTimeHasError;
   }
 
   private getDate(model?: TimeModel) {
@@ -122,14 +147,14 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     return date;
   }
 
-  private InputDateModelIsNotNullOrWhitespace() {
-    return FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.day) &&
-      FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.month) &&
-      FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.year);
+  private InputDateModelIsNullOrWhitespace() {
+    return !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.day) &&
+      !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.month) &&
+      !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.year);
   }
 
-  override navigateNext(): Promise<boolean> {
-    throw new Error('Method not implemented.');
+  override async navigateNext(): Promise<boolean> {
+    return true;
   }
 
 }

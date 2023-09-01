@@ -11,6 +11,7 @@ import { WhenBecomeAwareComponent } from './when-become-aware/when-become-aware.
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
+  HseRoute.protected(WhenBecomeAwareComponent.route, WhenBecomeAwareComponent, WhenBecomeAwareComponent.title),
 ]);
 
 @NgModule({
