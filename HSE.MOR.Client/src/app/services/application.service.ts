@@ -53,11 +53,20 @@ export class MORModel {
   Building?: BuildingModel;
   NoticeReference?: string;  
   WhatToReport?: string;
-  SubmittedDesignBca?:string
 }
 
 export class NoticeModel {
   DescribeRiskIncident?: string;
+  WhenBecomeAware?: TimeModel;
+}
+
+export class TimeModel {
+  Day?: number;
+  Month?: number;
+  Year?: number;
+  Hour?: number;
+  Minute?: number;
+}
 }
 
 export class BuildingModel {
