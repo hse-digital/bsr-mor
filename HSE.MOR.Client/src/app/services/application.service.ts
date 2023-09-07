@@ -71,7 +71,6 @@ export class TimeModel {
   Hour?: number;
   Minute?: number;
 }
-}
 
 export class BuildingModel {
   SubmittedDesignBca?: string;
