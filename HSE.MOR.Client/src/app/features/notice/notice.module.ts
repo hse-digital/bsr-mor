@@ -6,19 +6,17 @@ import { HseAngularModule } from "hse-angular";
 import { ApplicationService } from "src/app/services/application.service";
 import { ComponentsModule } from "../../components/components.module";
 import { HseRoute, HseRoutes } from "../../helpers/hse.route";
-import { EnterReferenceComponent } from "./enter-reference/enter-reference.component";
-import { ReportYourDetailsComponent } from "./report-your-details/report-your-details.component";
+import { NoticeYourDetailsComponent } from "./notice-your-details/notice-your-details.component";
 
 
 const routes = new HseRoutes([
-  HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
-  HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
+  HseRoute.protected(NoticeYourDetailsComponent.route, NoticeYourDetailsComponent, NoticeYourDetailsComponent.title),
 
 ]);
 
 @NgModule({
   declarations: [
-    EnterReferenceComponent, ReportYourDetailsComponent
+    NoticeYourDetailsComponent
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
@@ -29,6 +27,6 @@ const routes = new HseRoutes([
   ],
   providers: [HttpClient, ApplicationService, ...routes.getProviders()]
 })
-export class ReportModule {
-  static baseRoute: string = "report";
+export class NoticeModule {
+  static baseRoute: string = "notice";
 }

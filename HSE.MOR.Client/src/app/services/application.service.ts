@@ -76,4 +76,8 @@ export class AdviceModel {
 export class ReportModel {
   id?: string;
   NoticeReference?: string;
+  FirstName?: string;
+  LastName?: string;
 }
+
+
