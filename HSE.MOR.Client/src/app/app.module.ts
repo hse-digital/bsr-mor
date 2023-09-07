@@ -20,12 +20,14 @@ import { HomeComponent } from './features/home/home.component';
 import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
 import { ReportModule } from './features/report/report.module';
 import { BuildingModule } from './features/building/building.module';
+import { NoticeModule } from './features/notice/notice.module';
 
 
 const routes = new HseRoutes([
   HseRoute.unsafe(HomeComponent.route, HomeComponent, undefined, HomeComponent.title),
   HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
   HseRoute.forLoadChildren(ReportModule.baseRoute, () => import('./features/report/report.module').then(m => m.ReportModule)),
+  HseRoute.forLoadChildren(NoticeModule.baseRoute, () => import('./features/notice/notice.module').then(m => m.NoticeModule)),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('./features/building/building.module').then(m => m.BuildingModule)),
   HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),
   HseRoute.unsafe(NotFoundComponent.route, NotFoundComponent, undefined, NotFoundComponent.title),

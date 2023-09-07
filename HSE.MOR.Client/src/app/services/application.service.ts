@@ -49,7 +49,12 @@ export class ApplicationService {
 
 export class ReportModel {
   id?: string;
+  Notice?: NoticeModel;
   NoticeReference?: string;
   IdentifyBuilding?: string;
   WhatToReport?: string;
+}
+
+export class NoticeModel {
+  DescribeRiskIncident?: string;
 }
