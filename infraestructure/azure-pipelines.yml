@@ -1,77 +1,17 @@
 trigger:
-  - main
+- main
 
 pool:
   vmImage: ubuntu-latest
 
-stages:
-- stage: UnitTest
-  jobs:
-  - job: 
-    steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Run Unit Tests'
-        inputs:
-          command: 'test'
-          projects: '**/HSE.MOR.API.UnitTests.csproj'
-      - task: DotNetCoreCLI@2
-        displayName: 'Build API'
-        inputs:
-          command: 'build'
-          projects: 'HSE.MOR.API/HSE.MOR.API.csproj'
-          arguments: '--output publish_output --configuration Release'
-      - task: ArchiveFiles@2
-        displayName: 'Archive API files'
-        inputs:
-          rootFolderOrFile: 'publish_output/'
-          includeRootFolder: false 
-          archiveFile: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish API artifact'
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)/HSE.MOR.API.zip'
-          ArtifactName: HSE.MOR.API
+resources:
+  repositories:
+  - repository: AngularTools
+    type: git
+    name: 'BSR-AlphaBetaImplementation/AngularTools'
+    ref: refs/heads/main
 
-- stage: DEV
-  dependsOn: UnitTest
-  variables: 
-  - group: HSE-BsrHelp-DEV
-  jobs:
-    - template: deploy.yml
-      parameters:
-        subscription: 's118-dev-bsr-acs-services'
-        appBuildCommand: 'npm run buildnonprod'
-    - job: IntegrationTesting
-      dependsOn: Deploy
-      steps:
-      - task: FileTransform@1
-        displayName: 'Set variables for integration testing'
-        inputs:
-          folderPath: '**/HSE.MOR.API.IntegrationTests'
-          fileType: 'json'
-          targetFiles: 'appsettings.json'
-      - task: DotNetCoreCLI@2
-        displayName: 'Run Integration Tests'
-        inputs:
-          command: 'test'
-          projects: '**/HSE.MOR.API.IntegrationTests.csproj'
-        
-- stage: QA
-  dependsOn: DEV
-  variables: 
-  - group: HSE-BsrHelp-QA
-  jobs:
-    - template: deploy.yml
-      parameters:
-        subscription: 's118-test-bsr-acs-services'
-        appBuildCommand: 'npm run buildnonprod'
-        
-- stage: UAT
-  dependsOn: QA
-  variables: 
-  - group: HSE-BsrHelp-UAT
-  jobs:
-    - template: deploy.yml
-      parameters:
-        subscription: 's118-test-bsr-acs-services'
-        appBuildCommand: 'npm run buildnonprod'
+extends:
+  template: /pipelines/swa_template.yml@AngularTools  
+  parameters:
+    projectName: 'MOR'
