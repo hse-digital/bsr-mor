@@ -50,14 +50,18 @@ export class ApplicationService {
 export class MORModel {
   id?: string;
   Notice?: NoticeModel;
-  Building?: BuildingModel;
-  NoticeReference?: string;  
-  WhatToReport?: string;
+  Report?: ReportModel;
+  Building?: BuildingModel;  
 }
 
 export class NoticeModel {
   DescribeRiskIncident?: string;
   WhenBecomeAware?: TimeModel;
+}
+
+export class ReportModel {
+  NoticeReference?: string;
+  WhatToReport?: string;
 }
 
 export class TimeModel {
