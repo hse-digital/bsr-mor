@@ -14,10 +14,16 @@ export class WhatToReportComponent extends PageComponent<string> {
 
 
   override onInit(applicationService: ApplicationService): void {
-    this.model = applicationService.model.WhatToReport;
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {};
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.WhatToReport)) {
+      applicationService.model.Report.WhatToReport = "";
+    }
+    this.model = applicationService.model.Report?.WhatToReport;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.WhatToReport = this.model;
+    applicationService.model.Report!.WhatToReport = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

@@ -6,7 +6,7 @@ import { LocalStorage } from "src/app/helpers/local-storage";
 @Injectable()
 export class ApplicationService {
   // replace this any to a specific type
-  model: ReportModel;
+  model: MORModel;
 
   constructor(private httpClient: HttpClient) {
     this.model = LocalStorage.getJSON('application_data') ?? {};
@@ -14,7 +14,7 @@ export class ApplicationService {
 
   newApplication() {
     LocalStorage.remove('application_data');
-    this.model = new ReportModel();
+    this.model = new MORModel();
   }
 
   updateLocalStorage() {
@@ -22,7 +22,7 @@ export class ApplicationService {
   }
 
   clearApplication() {
-    this.model = new ReportModel();
+    this.model = new MORModel();
     this.updateLocalStorage();
   }
 
@@ -47,17 +47,21 @@ export class ApplicationService {
   }
 }
 
-export class ReportModel {
+export class MORModel {
   id?: string;
   Notice?: NoticeModel;
-  NoticeReference?: string;
-  IdentifyBuilding?: string;
-  WhatToReport?: string;
+  Report?: ReportModel;
+  Building?: BuildingModel;  
 }
 
 export class NoticeModel {
   DescribeRiskIncident?: string;
   WhenBecomeAware?: TimeModel;
+}
+
+export class ReportModel {
+  NoticeReference?: string;
+  WhatToReport?: string;
 }
 
 export class TimeModel {
@@ -66,4 +70,9 @@ export class TimeModel {
   Year?: number;
   Hour?: number;
   Minute?: number;
+}
+
+export class BuildingModel {
+  SubmittedDesignBca?: string;
+  IdentifyBuilding?: string;
 }

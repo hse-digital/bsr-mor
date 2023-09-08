@@ -28,7 +28,6 @@ const routes = new HseRoutes([
   HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
   HseRoute.forLoadChildren(ReportModule.baseRoute, () => import('./features/report/report.module').then(m => m.ReportModule)),
   HseRoute.forLoadChildren(NoticeModule.baseRoute, () => import('./features/notice/notice.module').then(m => m.NoticeModule)),
-  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('./features/building/building.module').then(m => m.BuildingModule)),
   HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),
   HseRoute.unsafe(NotFoundComponent.route, NotFoundComponent, undefined, NotFoundComponent.title),
   HseRoute.unsafe('**', undefined, NotFoundComponent.route)
