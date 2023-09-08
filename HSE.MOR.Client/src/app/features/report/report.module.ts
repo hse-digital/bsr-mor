@@ -6,6 +6,7 @@ import { HseAngularModule } from "hse-angular";
 import { ApplicationService } from "src/app/services/application.service";
 import { ComponentsModule } from "../../components/components.module";
 import { HseRoute, HseRoutes } from "../../helpers/hse.route";
+import { BuildingModule } from "../building/building.module";
 import { EnterReferenceComponent } from "./enter-reference/enter-reference.component";
 import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
 
@@ -13,6 +14,7 @@ import { WhatToReportComponent } from "./what-to-report/what-to-report.component
 const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
+  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 
 ]);
 

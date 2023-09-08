@@ -5,37 +5,35 @@ import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
 
 @Component({
-  templateUrl: './identify-building.component.html'
+  templateUrl: './submitted-design-bca.component.html'
 })
 
-export class IdentifyBuildingComponent extends PageComponent<string> {
-  public static route: string = 'identify-building';
-  static title: string = "How can you identify your building?";
+export class SubmittedDesignBcaComponent extends PageComponent<string> {
+  public static route: string = 'submitted-design-bca';
+  static title: string = "Have you submitted the design to building control approval?";
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Building) {
-      applicationService.model.Building = {}
+      applicationService.model.Building = {};
     }
-
-    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.IdentifyBuilding)) {
-      applicationService.model.Building.IdentifyBuilding = "";
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.SubmittedDesignBca)) {
+      applicationService.model.Building.SubmittedDesignBca = "";
     }
-
-    this.model = applicationService.model.Building?.IdentifyBuilding;
+    this.model = applicationService.model.Building?.SubmittedDesignBca;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.Building!.IdentifyBuilding = this.model;
+    applicationService.model.Building!.SubmittedDesignBca = this.model;
   }
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
   }
 
-  hasIdentifyBuildingErrors: boolean = false;
+  hasSubmittedDesignBcaErrors: boolean = false;
   modelValid: boolean = false;
 
   isValid(): boolean {
     this.modelValid = !FieldValidations.IsNotNullOrWhitespace(this.model);
-    this.hasIdentifyBuildingErrors = this.modelValid;
+    this.hasSubmittedDesignBcaErrors = this.modelValid;
     return !this.modelValid;
   }
   navigateNext(): Promise<boolean> {
