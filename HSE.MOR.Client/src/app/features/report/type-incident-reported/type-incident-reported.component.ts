@@ -8,35 +8,34 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
   templateUrl: './type-incident-reported.component.html'
 })
 
-export class TypeIncidentReportedComponent extends PageComponent<string> {
+export class TypeIncidentReportedComponent extends PageComponent<string[]> {
   public static route: string = 'type-incident-reported';
   static title: string = "What type of incident are you reporting?";
+  isOccupiedComplete: boolean = false
 
 
   override onInit(applicationService: ApplicationService): void {
-    this.model = applicationService.model.WhatToReport;
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {};
+    }
+    this.isOccupiedComplete = applicationService.model.Building?.BuildingType == "occupied" || applicationService.model.Building?.BuildingType == "complete_not_occupied" ? true : false;
+    this.model = applicationService.model.Report.IncidentReported ?? [];
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.WhatToReport = this.model;
+    applicationService.model.Report!.IncidentReported = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
   }
 
   modelValid: boolean = false;
-  ErrorMessage: string = "You need to tell us if it's an incident or a risk of an incident";
 
   override isValid(): boolean {
-    this.modelValid = FieldValidations.IsNotNullOrWhitespace(this.model);
+    this.modelValid = this.model!.length > 0;
     return this.modelValid;
   }
 
   override navigateNext(): Promise<boolean> {
-    if (this.model == "incident") {
-      return this.navigationService.navigate('');
-    }
-    else {
-      return this.navigationService.navigate('');
-    }
+    return this.navigationService.navigate('');
   }
 }

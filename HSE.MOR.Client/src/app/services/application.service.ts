@@ -62,6 +62,8 @@ export class NoticeModel {
 export class ReportModel {
   NoticeReference?: string;
   WhatToReport?: string;
+  IncidentReported?: string[];
+  RiskReported?: string[];
 }
 
 export class TimeModel {
@@ -75,4 +77,5 @@ export class TimeModel {
 export class BuildingModel {
   SubmittedDesignBca?: string;
   IdentifyBuilding?: string;
+  BuildingType?: string;
 }

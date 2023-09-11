@@ -8,12 +8,16 @@ import { ComponentsModule } from "../../components/components.module";
 import { HseRoute, HseRoutes } from "../../helpers/hse.route";
 import { BuildingModule } from "../building/building.module";
 import { EnterReferenceComponent } from "./enter-reference/enter-reference.component";
+import { TypeIncidentReportedComponent } from "./type-incident-reported/type-incident-reported.component";
+import { TypeRiskReportedComponent } from "./type-risk-reported/type-risk-reported.component";
 import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
 
 
 const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
+  HseRoute.protected(TypeIncidentReportedComponent.route, TypeIncidentReportedComponent, TypeIncidentReportedComponent.title),
+  HseRoute.protected(TypeRiskReportedComponent.route, TypeRiskReportedComponent, TypeRiskReportedComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 
 ]);
@@ -21,7 +25,9 @@ const routes = new HseRoutes([
 @NgModule({
   declarations: [
     EnterReferenceComponent,
-    WhatToReportComponent
+    WhatToReportComponent,
+    TypeIncidentReportedComponent,
+    TypeRiskReportedComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
