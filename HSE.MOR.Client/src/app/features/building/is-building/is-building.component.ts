@@ -13,10 +13,18 @@ export class IsBuildingComponent extends PageComponent<string> {
   static title: string = "Is the building";
 
   override onInit(applicationService: ApplicationService): void {
-    this.model = applicationService.model.IsBuilding;
+    if (!applicationService.model.Building) {
+      applicationService.model.Building = {}
+    }
+
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.IsBuilding)) {
+      applicationService.model.Building.IsBuilding = "";
+    }
+
+    this.model = applicationService.model.Building?.IsBuilding;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.IsBuilding = this.model;
+    applicationService.model.Building!.IsBuilding = this.model;
   }
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
