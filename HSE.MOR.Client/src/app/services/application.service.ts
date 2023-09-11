@@ -75,5 +75,5 @@ export class TimeModel {
 export class BuildingModel {
   SubmittedDesignBca?: string;
   IdentifyBuilding?: string;
-  IsBuilding?: string;
+  BuildingType?: string;
 }

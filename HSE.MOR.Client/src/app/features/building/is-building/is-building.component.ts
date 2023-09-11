@@ -17,14 +17,14 @@ export class IsBuildingComponent extends PageComponent<string> {
       applicationService.model.Building = {}
     }
 
-    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.IsBuilding)) {
-      applicationService.model.Building.IsBuilding = "";
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.BuildingType)) {
+      applicationService.model.Building.BuildingType = "";
     }
 
-    this.model = applicationService.model.Building?.IsBuilding;
+    this.model = applicationService.model.Building?.BuildingType;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.Building!.IsBuilding = this.model;
+    applicationService.model.Building!.BuildingType = this.model;
   }
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
