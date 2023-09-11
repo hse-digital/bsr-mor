@@ -17,10 +17,13 @@
     <Folder Include="src\app\components\footer\privacy-notice\" />
     <Folder Include="src\app\components\timeout\" />
     <Folder Include="src\app\components\not-found\" />
+    <Folder Include="src\app\features\building\identify-building\" />
+    <Folder Include="src\app\features\building\submitted-design-bca\" />
     <Folder Include="src\app\features\building\is-building\" />
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\" />
     <Folder Include="src\app\features\report\enter-reference\" />
+    <Folder Include="src\app\features\report\what-to-report\" />
     <Folder Include="src\app\features\what-to-submit\" />
     <Folder Include="src\app\helpers\validators\" />
     <Folder Include="src\app\services\" />

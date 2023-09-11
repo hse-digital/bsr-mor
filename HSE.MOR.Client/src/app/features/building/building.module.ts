@@ -6,14 +6,20 @@ import { HseAngularModule } from "hse-angular";
 import { ComponentsModule } from "../../components/components.module";
 import { HseRoute, HseRoutes } from "../../helpers/hse.route";
 import { ApplicationService } from "../../services/application.service";
+import { IdentifyBuildingComponent } from "./identify-building/identify-building.component";
+import { SubmittedDesignBcaComponent } from "./submitted-design-bca/submitted-design-bca.component";
 import { IsBuildingComponent } from "./is-building/is-building.component";
 
 const routes = new HseRoutes([
   HseRoute.protected(IsBuildingComponent.route, IsBuildingComponent, IsBuildingComponent.title),
+  HseRoute.protected(IdentifyBuildingComponent.route, IdentifyBuildingComponent, IdentifyBuildingComponent.title),
+  HseRoute.protected(SubmittedDesignBcaComponent.route, SubmittedDesignBcaComponent, SubmittedDesignBcaComponent.title),
 ]);
 
 @NgModule({
   declarations: [
+    IdentifyBuildingComponent,
+    SubmittedDesignBcaComponent,
     IsBuildingComponent
   ],
   imports: [

@@ -1,0 +1,14 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasErrors" anchorId="textarea-advice-ask-question" message="You need to briefly describe the risk or incident" />
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">About the occurrence</span>
+  <govuk-textarea label="Briefly describe the risk or incident" labelClass="govuk-label--l" 
+    [enableCharacterCount]="true" [maxCharacterRemaining]="500" [isPageHeading]=true 
+    [(model)]="model" #field [govukRequired]="field" id="advice-ask-question" 
+    [errorText]="getErrorDescription(hasErrors, 'You need to briefly describe the risk or incident')" />
+
+  <govuk-body class="govuk-!-margin-top-5">You must submit a full mandatory occurrence report within 10 days of the occurrence being identified.</govuk-body>
+</govuk-formpage>
