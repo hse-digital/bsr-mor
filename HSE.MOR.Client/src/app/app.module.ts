@@ -19,7 +19,6 @@ import { CookiesBannerService } from './services/cookies-banner.service';
 import { HomeComponent } from './features/home/home.component';
 import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
 import { ReportModule } from './features/report/report.module';
-import { BuildingModule } from './features/building/building.module';
 import { NoticeModule } from './features/notice/notice.module';
 
 
