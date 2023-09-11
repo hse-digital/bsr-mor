@@ -1,0 +1,15 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <span class="govuk-caption-l">About the building</span>
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasSubmittedDesignBcaErrors" anchorId="submitted-design-bca-input" message="You need to tell us what design stage the building is at" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Have you submitted the design to building control approval?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-submitted-design-bca" [errorText]="getErrorDescription(hasErrors, 'You need to tell us what design stage the building is at')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="submitted-design-bca-yes-reference" value="yes_reference" label="Yes, and we have a building control application reference" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="submitted-design-bca-yes-no-response" value="yes_no_response" label="Yes, but we have not received a response from building control" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="submitted-design-bca-no-design-not-ready" value="no_design_not_ready" label="No, the design is not ready for submission" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="submitted-design-bca-not-started" value="not_started" label="Not started" />
+  </govuk-radio-group>
+
+</govuk-formpage>

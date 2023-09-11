@@ -26,7 +26,6 @@ import { EnterReferenceComponent } from './features/report/enter-reference/enter
 const routes = new HseRoutes([
   HseRoute.unsafe(HomeComponent.route, HomeComponent, undefined, HomeComponent.title),
   HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
-//  HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.forLoadChildren(ReportModule.baseRoute, () => import('./features/report/report.module').then(m => m.ReportModule)),
   HseRoute.forLoadChildren(NoticeModule.baseRoute, () => import('./features/notice/notice.module').then(m => m.NoticeModule)),
   HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),

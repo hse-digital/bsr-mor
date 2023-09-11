@@ -6,7 +6,7 @@ import { LocalStorage } from "src/app/helpers/local-storage";
 @Injectable()
 export class ApplicationService {
   // replace this any to a specific type
-  model: ReportModel;
+  model: MORModel;
 
   constructor(private httpClient: HttpClient) {
     this.model = LocalStorage.getJSON('application_data') ?? {};
@@ -14,7 +14,7 @@ export class ApplicationService {
 
   newApplication() {
     LocalStorage.remove('application_data');
-    this.model = new ReportModel();
+    this.model = new MORModel();
   }
 
   updateLocalStorage() {
@@ -22,7 +22,7 @@ export class ApplicationService {
   }
 
   clearApplication() {
-    this.model = new ReportModel();
+    this.model = new MORModel();
     this.updateLocalStorage();
   }
 
@@ -47,37 +47,33 @@ export class ApplicationService {
   }
 }
 
-/*
-export class ContactRequestModel {
+export class MORModel {
   id?: string;
-  Reason?: string;
-  ReasonOther?: string;
-  RequestType?: string;
-  WhoAreYou?: string;
-  WhoAreYouOther?: string;
-  Complaint: ComplaintModel = {};
-  Advice: AdviceModel = {};
+  Notice?: NoticeModel;
+  Report?: ReportModel;
+  Building?: BuildingModel;  
 }
 
-export class ComplaintModel {
-  NumberOfFloors?: string;
-  NumberOfUnits?: string;
-  FirstName?: string;
-  LastName?: string
+export class NoticeModel {
+  DescribeRiskIncident?: string;
+  WhenBecomeAware?: TimeModel;
 }
-export class AdviceModel {
-  NumberOfFloors?: number;
-  NumberOfUnits?: number;
-  BuildingHeight?: number;
-  FirstName?: string;
-  LastName?: string
-}
-*/
+
 export class ReportModel {
-  id?: string;
   NoticeReference?: string;
-  FirstName?: string;
-  LastName?: string;
+  WhatToReport?: string;
 }
 
+export class TimeModel {
+  Day?: number;
+  Month?: number;
+  Year?: number;
+  Hour?: number;
+  Minute?: number;
+}
 
+export class BuildingModel {
+  SubmittedDesignBca?: string;
+  IdentifyBuilding?: string;
+  BuildingType?: string;
+}

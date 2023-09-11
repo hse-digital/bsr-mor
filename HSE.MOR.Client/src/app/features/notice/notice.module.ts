@@ -1,21 +1,25 @@
-import { CommonModule } from "@angular/common";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { HseAngularModule } from "hse-angular";
-import { ApplicationService } from "src/app/services/application.service";
-import { ComponentsModule } from "../../components/components.module";
-import { HseRoute, HseRoutes } from "../../helpers/hse.route";
-import { NoticeYourDetailsComponent } from "./notice-your-details/notice-your-details.component";
-
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BrieflyDescribeRiskIncidentComponent } from './briefly-describe-risk-incident/briefly-describe-risk-incident.component';
+import { HseAngularModule } from 'hse-angular';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { ApplicationService } from 'src/app/services/application.service';
+import { HseRoute, HseRoutes } from 'src/app/helpers/hse.route';
+import { WhenBecomeAwareComponent } from './when-become-aware/when-become-aware.component';
+import { BuildingModule } from '../building/building.module';
 
 const routes = new HseRoutes([
-  HseRoute.protected(NoticeYourDetailsComponent.route, NoticeYourDetailsComponent, NoticeYourDetailsComponent.title),
-
+  HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
+  HseRoute.protected(WhenBecomeAwareComponent.route, WhenBecomeAwareComponent, WhenBecomeAwareComponent.title),
+  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 ]);
 
 @NgModule({
   declarations: [
+    BrieflyDescribeRiskIncidentComponent,
+    WhenBecomeAwareComponent
     NoticeYourDetailsComponent
   ],
   imports: [
