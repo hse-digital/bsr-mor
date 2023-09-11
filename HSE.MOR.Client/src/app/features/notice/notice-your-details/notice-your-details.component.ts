@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, ReportModel} from "../../../services/application.service";
+import { ApplicationService, NoticeModel, ReportModel} from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
@@ -8,20 +8,29 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
   templateUrl: './notice-your-details.component.html'
 })
 
-export class NoticeYourDetailsComponent extends PageComponent<ReportModel> {
+export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
   public static route: string = 'your-details';
   static title: string = "Your details";
-  override model: ReportModel = new ReportModel();
+  override model: NoticeModel = new NoticeModel();
 
 
   override onInit(applicationService: ApplicationService): void {
-    this.model = applicationService.model;
-    this.model.FirstName = applicationService.model.FirstName;
-    this.model.LastName = applicationService.model.LastName;
+    if (!applicationService.model.Notice) {
+      applicationService.model.Notice = {}
+    }
+    this.model = applicationService.model.Notice;
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.FirstName)) {
+      applicationService.model.Notice.FirstName = "";
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.LastName)) {
+      applicationService.model.Notice.LastName = "";
+    }
+    this.model.FirstName = applicationService.model.Notice?.FirstName;
+    this.model.LastName = applicationService.model.Notice?.LastName;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.FirstName = this.model.FirstName;
-    applicationService.model.LastName = this.model.LastName;
+    applicationService.model.Notice!.FirstName = this.model.FirstName;
+    applicationService.model.Notice!.LastName = this.model.LastName;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

@@ -15,13 +15,22 @@ export class ReportYourDetailsComponent extends PageComponent<ReportModel> {
 
 
   override onInit(applicationService: ApplicationService): void {
-    this.model = applicationService.model;
-    this.model.FirstName = applicationService.model.FirstName;
-    this.model.LastName = applicationService.model.LastName;
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {}
+    }
+    this.model = applicationService.model.Report;
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.FirstName)) {
+      applicationService.model.Report.FirstName = "";
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.LastName)) {
+      applicationService.model.Report.LastName = "";
+    }
+    this.model.FirstName = applicationService.model.Report?.FirstName;
+    this.model.LastName = applicationService.model.Report?.LastName;  
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.FirstName = this.model.FirstName;
-    applicationService.model.LastName = this.model.LastName;
+    applicationService.model.Report!.FirstName = this.model.FirstName;
+    applicationService.model.Report!.LastName = this.model.LastName;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

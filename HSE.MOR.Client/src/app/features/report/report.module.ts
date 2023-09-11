@@ -15,7 +15,7 @@ import { ReportYourDetailsComponent } from "./report-your-details/report-your-de
 const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
-  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
+  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
 
 ]);
@@ -23,7 +23,8 @@ const routes = new HseRoutes([
 @NgModule({
   declarations: [
     EnterReferenceComponent,
-    WhatToReportComponent
+    WhatToReportComponent,
+    ReportYourDetailsComponent
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

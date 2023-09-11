@@ -9,17 +9,19 @@ import { ApplicationService } from 'src/app/services/application.service';
 import { HseRoute, HseRoutes } from 'src/app/helpers/hse.route';
 import { WhenBecomeAwareComponent } from './when-become-aware/when-become-aware.component';
 import { BuildingModule } from '../building/building.module';
+import { NoticeYourDetailsComponent } from './notice-your-details/notice-your-details.component';
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
   HseRoute.protected(WhenBecomeAwareComponent.route, WhenBecomeAwareComponent, WhenBecomeAwareComponent.title),
+  HseRoute.protected(NoticeYourDetailsComponent.route, NoticeYourDetailsComponent, NoticeYourDetailsComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 ]);
 
 @NgModule({
   declarations: [
     BrieflyDescribeRiskIncidentComponent,
-    WhenBecomeAwareComponent
+    WhenBecomeAwareComponent,
     NoticeYourDetailsComponent
   ],
   imports: [
