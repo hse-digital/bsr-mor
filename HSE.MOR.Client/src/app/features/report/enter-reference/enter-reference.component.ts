@@ -14,10 +14,16 @@ export class EnterReferenceComponent extends PageComponent<string> {
 
 
   override onInit(applicationService: ApplicationService): void {
-    this.model = applicationService.model.NoticeReference;
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {};
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.NoticeReference)) {
+      applicationService.model.Report.NoticeReference = "";
+    }
+    this.model = applicationService.model.Report?.NoticeReference;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.NoticeReference = this.model;
+    applicationService.model.Report!.NoticeReference = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

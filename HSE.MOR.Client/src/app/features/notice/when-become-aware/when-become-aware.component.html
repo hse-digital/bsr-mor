@@ -1,0 +1,22 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+    <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+      <govuk-error-link *ngIf="this.inputIsEmpty" anchorId="textarea-advice-ask-question" message="You need to tell us when you were made aware of the occurrence" />
+      <govuk-error-link *ngIf="this.inputDateHasError" anchorId="textarea-advice-ask-question" [message]="this.dateErrorMessage" />
+      <govuk-error-link *ngIf="this.inputTimeHasError" anchorId="textarea-advice-ask-question" [message]="this.timeErrorMessage" />
+    </govuk-error-summary>
+  
+    <span class="govuk-caption-l">About the occurrence</span>
+
+    <govuk-date-input title="When did you identify the risk or incident?" titleClass="govuk-label--l" [isPageHeading]="true"
+        hint="Be as accurate as you can. For example, 27 05 2023" [(model)]="inputDateModel" id="input-time"
+        [errorText]="getErrorDescription(this.inputDateHasError, this.dateErrorMessage ?? '')">
+    </govuk-date-input>
+
+    <govuk-input id="time" label="Time" labelClass="govuk-label--s govuk-!-margin-top-5" [isPageHeading]=false
+                 [(model)]="inputTimeModel" #field [govukRequired]="field" [maxlength]="5"
+                 [errorText]="getErrorDescription(this.inputTimeHasError, this.timeErrorMessage ?? '')"
+                 class="govuk-input--width-20 govuk-input--width-4"
+                 hint="For example, 23:59"
+                 (onKeyupEnter)="saveAndContinue()" />
+</govuk-formpage>
