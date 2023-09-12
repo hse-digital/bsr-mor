@@ -8,16 +8,30 @@ import { ApplicationService } from '../../services/application.service';
   templateUrl: './verify-email.component.html'
 })
 
-export class VerifyEmailComponent extends PageComponent<string> {
+export class VerifyEmailComponent extends PageComponent<number> {
   public static route: string = 'verify-email';
   static title: string = "Verify your email address";
-
+  otpError = false;
+  isOtpNotNumber = false;
+  isOtpInvalidLength = false;
+  isOtpEmpty = false;
+  email: string = "";
 
   override onInit(applicationService: ApplicationService): void {
 
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    await await applicationService.validateOTPToken(this.model!, applicationService.model.EmailAddress!);
+    try {
+      this.email = applicationService.model.EmailAddress! ?? '';
+      await await applicationService.validateOTPToken(this.model!.toString() ?? '', this.email);
+    } catch (error) {
+      this.processing = false;
+      this.otpError = true;
+      this.hasErrors = true;
+      //this.focusAndUpdateErrors();
+      throw error;
+    }
+    
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
@@ -26,10 +40,32 @@ export class VerifyEmailComponent extends PageComponent<string> {
   modelValid: boolean = false;
 
   override isValid(): boolean {
-    return false;
+    var otp = this.model?.toString() ?? ''
+    this.isOtpEmpty = otp.length == 0;
+    this.isOtpInvalidLength = (otp.trim().length < 6 || otp.trim().length > 6)
+    this.isOtpNotNumber = this.model !== undefined && isNaN(this.model)
+
+    return !(this.isOtpInvalidLength || this.isOtpNotNumber);
   }
 
   override navigateNext(): Promise<boolean> {
     return this.navigationService.navigate('');
   }
+
+  getOtpError() {
+    if (!this.isOtpEmpty && this.isOtpNotNumber) {
+      return 'Your 6-digit security code must be a number, like 123456';
+    }
+    else if (this.isOtpInvalidLength) {
+      return 'You must enter your 6 digit security code'
+    }
+
+    else if (this.otpError) {
+      return 'The security code you entered is incorrect or may have expired. Check you have entered the correct code, or generate a new code.';
+    }
+    else {
+      return 'You must enter your 6 digit security code'
+    }
+  }
+
 }

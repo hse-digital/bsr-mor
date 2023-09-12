@@ -17,7 +17,7 @@ export class EnterEmailComponent extends PageComponent<string> {
     this.model = applicationService.model.EmailAddress;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    await applicationService.validateOTPToken(this.otpToken, this.applicationService.model.ContactEmailAddress!);
+    await applicationService.sendVerificationEmail(this.model!);
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
