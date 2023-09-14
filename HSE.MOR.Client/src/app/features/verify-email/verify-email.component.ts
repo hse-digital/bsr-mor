@@ -28,7 +28,6 @@ export class VerifyEmailComponent extends PageComponent<number> {
       this.processing = false;
       this.otpError = true;
       this.hasErrors = true;
-      //this.focusAndUpdateErrors();
       throw error;
     }
     
