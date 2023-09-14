@@ -14,11 +14,8 @@ export class EnterEmailComponent extends PageComponent<string> {
   static title: string = "Your email address";
   emailValid: boolean = true;
   errorMessage: string = '';
-  email?: string;
-
 
   override onInit(applicationService: ApplicationService): void {
-    this.email = applicationService.model.EmailAddress;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.EmailAddress = this.model;
@@ -41,12 +38,7 @@ export class EnterEmailComponent extends PageComponent<string> {
     if (!this.emailValid) {
       this.errorMessage = 'You need to enter a real email address';
       return false;
-    }
-    this.emailValid = this.model?.toLowerCase() === this.email?.toLowerCase() ? true : false;
-    if (!this.emailValid) {
-      this.errorMessage = 'You need to enter a real email address';
-      return false;
-    };
+    }   
     return true; 
   }
 

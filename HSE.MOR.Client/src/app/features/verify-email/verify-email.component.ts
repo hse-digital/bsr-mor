@@ -33,7 +33,7 @@ export class VerifyEmailComponent extends PageComponent<number> {
     
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model?.EmailAddress);
   }
 
   modelValid: boolean = false;
@@ -48,7 +48,7 @@ export class VerifyEmailComponent extends PageComponent<number> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigate('what-to-submit');
   }
 
   getOtpError() {
