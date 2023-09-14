@@ -62,6 +62,7 @@ export class NoticeModel {
 export class ReportModel {
   NoticeReference?: string;
   WhatToReport?: string;
+  SubmittedNotice?: string;
 }
 
 export class TimeModel {

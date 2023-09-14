@@ -1,0 +1,12 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasSubmittedNoticeErrors" anchorId="submitted-me" message="You need to tell us who submitted the notice" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Who submitted the notice?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-who-submitted" [errorText]="getErrorDescription(hasErrors, 'You need to tell us who submitted the notice')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="submitted-group" id="submitted-me" value="yes" label="Me" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="submitted-group" id="submitted-other" value="no" label="Someone else" />
+  </govuk-radio-group>
+
+</govuk-formpage>
