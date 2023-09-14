@@ -17,6 +17,7 @@ export class EnterEmailComponent extends PageComponent<string> {
     this.model = applicationService.model.EmailAddress;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
+    applicationService.model.EmailAddress = this.model;
     await applicationService.sendVerificationEmail(this.model!);
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
@@ -26,7 +27,7 @@ export class EnterEmailComponent extends PageComponent<string> {
   modelValid: boolean = false;
 
   override isValid(): boolean {
-    return false;
+    return true;
   }
 
   override navigateNext(): Promise<boolean> {

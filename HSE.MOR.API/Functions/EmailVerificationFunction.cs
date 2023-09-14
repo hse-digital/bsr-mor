@@ -9,10 +9,10 @@ namespace HSE.MOR.API.Functions;
 
 public class EmailVerificationFunction
 {
-    private readonly DynamicsService dynamicsService;
+    private readonly IDynamicsService dynamicsService;
     private readonly OTPService otpService;
 
-    public EmailVerificationFunction(DynamicsService dynamicsService, OTPService otpService)
+    public EmailVerificationFunction(IDynamicsService dynamicsService, OTPService otpService)
     {
         this.dynamicsService = dynamicsService;
         this.otpService = otpService;
@@ -55,16 +55,39 @@ public class EmailVerificationFunction
             return await request.BuildValidationErrorResponseDataAsync(keyValidation);
         }
 
-        var emailVerificationModel = new EmailVerificationModel(request.GetQueryParameters()["email"]);
-        var validation = emailVerificationModel.Validate();
-        if (!validation.IsValid)
+        if (request.GetQueryParameters()["email"] != null)
         {
-            return await request.BuildValidationErrorResponseDataAsync(validation);
+            var emailVerificationModel = new EmailVerificationModel(request.GetQueryParameters()["email"]);
+            var validation = emailVerificationModel.Validate();
+            if (!validation.IsValid)
+            {
+                return await request.BuildValidationErrorResponseDataAsync(validation);
+            }
+
+            var otpToken = await otpService.GenerateToken(emailVerificationModel.EmailAddress);
+
+            return await request.CreateObjectResponseAsync(new { OTPCode = otpToken });
         }
+        else if (request.GetQueryParameters()["phone"] != null)
+        {
+            var phoneVerificationModel = new PhoneNumberVerificationModel(request.GetQueryParameters()["phone"]);
 
-        var otpToken = await otpService.GenerateToken(emailVerificationModel.EmailAddress);
+            var validation = phoneVerificationModel.Validate();
+            if (!validation.IsValid)
+            {
+                return await request.BuildValidationErrorResponseDataAsync(validation);
+            }
 
-        return await request.CreateObjectResponseAsync(new { OTPCode = otpToken }) ;
+            var otpToken = await otpService.GenerateToken(phoneVerificationModel.PhoneNumber);
+
+            return await request.CreateObjectResponseAsync(new { OTPCode = otpToken });
+        }
+        else
+        {
+            var errors = new List<string>();
+            errors.Add("Invalid Request, an email address or phone number required to generate OTP");
+            return await request.BuildValidationErrorResponseDataAsync(new ValidationSummary(!errors.Any(), errors.ToArray()));
+        }
     }
 
     [Function(nameof(ValidateOTPToken))]
@@ -83,5 +106,5 @@ public class EmailVerificationFunction
         }
 
         return request.CreateResponse(returnStatusCode);
-    }
+    }   
 }
