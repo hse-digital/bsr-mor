@@ -22,6 +22,7 @@ import { ReportModule } from './features/report/report.module';
 import { NoticeModule } from './features/notice/notice.module';
 import { VerifyEmailComponent } from './features/verify-email/verify-email.component';
 import { EnterEmailComponent } from './features/verify-email/enter-email.component';
+import { EnterReferenceComponent } from './features/report/enter-reference/enter-reference.component';
 
 
 const routes = new HseRoutes([
