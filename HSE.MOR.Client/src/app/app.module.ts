@@ -20,6 +20,7 @@ import { HomeComponent } from './features/home/home.component';
 import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
 import { ReportModule } from './features/report/report.module';
 import { NoticeModule } from './features/notice/notice.module';
+import { EnterReferenceComponent } from './features/report/enter-reference/enter-reference.component';
 
 
 const routes = new HseRoutes([

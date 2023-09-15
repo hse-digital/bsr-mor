@@ -57,11 +57,15 @@ export class MORModel {
 export class NoticeModel {
   DescribeRiskIncident?: string;
   WhenBecomeAware?: TimeModel;
+  FirstName?: string;
+  LastName?: string;
 }
 
 export class ReportModel {
   NoticeReference?: string;
   WhatToReport?: string;
+  FirstName?: string;
+  LastName?: string;
 }
 
 export class TimeModel {
