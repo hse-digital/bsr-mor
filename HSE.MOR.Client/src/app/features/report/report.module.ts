@@ -10,11 +10,13 @@ import { BuildingModule } from "../building/building.module";
 import { EnterReferenceComponent } from "./enter-reference/enter-reference.component";
 import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
 import { ReportYourDetailsComponent } from "./report-your-details/report-your-details.component";
+import { WhoSubmittedNoticeComponent } from "./who-submitted-notice/who-submitted-notice.component";
 
 
 const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
+  HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
 
@@ -24,7 +26,8 @@ const routes = new HseRoutes([
   declarations: [
     EnterReferenceComponent,
     WhatToReportComponent,
-    ReportYourDetailsComponent
+    ReportYourDetailsComponent,
+    WhoSubmittedNoticeComponent
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

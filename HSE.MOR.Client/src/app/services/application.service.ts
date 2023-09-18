@@ -65,6 +65,7 @@ export class NoticeModel {
 export class ReportModel {
   NoticeReference?: string;
   WhatToReport?: string;
+  SubmittedNotice?: string;
   FirstName?: string;
   LastName?: string;
 }
