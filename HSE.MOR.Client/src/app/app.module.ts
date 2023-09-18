@@ -20,12 +20,16 @@ import { HomeComponent } from './features/home/home.component';
 import { WhatToSubmitComponent } from './features/what-to-submit/what-to-submit.component';
 import { ReportModule } from './features/report/report.module';
 import { NoticeModule } from './features/notice/notice.module';
+import { VerifyEmailComponent } from './features/verify-email/verify-email.component';
+import { EnterEmailComponent } from './features/verify-email/enter-email.component';
 import { EnterReferenceComponent } from './features/report/enter-reference/enter-reference.component';
 
 
 const routes = new HseRoutes([
   HseRoute.unsafe(HomeComponent.route, HomeComponent, undefined, HomeComponent.title),
   HseRoute.protected(WhatToSubmitComponent.route, WhatToSubmitComponent, WhatToSubmitComponent.title),
+  HseRoute.protected(EnterEmailComponent.route, EnterEmailComponent, EnterEmailComponent.title),
+  HseRoute.protected(VerifyEmailComponent.route, VerifyEmailComponent, VerifyEmailComponent.title),
   HseRoute.forLoadChildren(ReportModule.baseRoute, () => import('./features/report/report.module').then(m => m.ReportModule)),
   HseRoute.forLoadChildren(NoticeModule.baseRoute, () => import('./features/notice/notice.module').then(m => m.NoticeModule)),
   HseRoute.forLoadChildren(HelpPagesModule.baseRoute, () => import('./components/footer/help-pages.module').then(m => m.HelpPagesModule)),
@@ -41,6 +45,8 @@ const routes = new HseRoutes([
     TimeoutModalComponent,
     NotFoundComponent,
     WhatToSubmitComponent,
+    VerifyEmailComponent,
+    EnterEmailComponent
   ],
   imports: [
     RouterModule.forRoot(routes.getRoutes(), { initialNavigation: 'enabledBlocking', scrollPositionRestoration: 'enabled' }),
