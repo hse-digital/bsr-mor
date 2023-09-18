@@ -51,7 +51,8 @@ export class MORModel {
   id?: string;
   Notice?: NoticeModel;
   Report?: ReportModel;
-  Building?: BuildingModel;  
+  Building?: BuildingModel;
+  EmailAddress?: string;
 }
 
 export class NoticeModel {
@@ -79,5 +80,5 @@ export class TimeModel {
 export class BuildingModel {
   SubmittedDesignBca?: string;
   IdentifyBuilding?: string;
-  BuildingType?: string;
+  BuildingType?: string; 
 }
