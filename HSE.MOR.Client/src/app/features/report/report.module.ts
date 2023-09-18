@@ -11,6 +11,8 @@ import { EnterReferenceComponent } from "./enter-reference/enter-reference.compo
 import { TypeIncidentReportedComponent } from "./type-incident-reported/type-incident-reported.component";
 import { TypeRiskReportedComponent } from "./type-risk-reported/type-risk-reported.component";
 import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
+import { ReportYourDetailsComponent } from "./report-your-details/report-your-details.component";
+import { WhoSubmittedNoticeComponent } from "./who-submitted-notice/who-submitted-notice.component";
 
 
 const routes = new HseRoutes([
@@ -19,12 +21,18 @@ const routes = new HseRoutes([
   HseRoute.protected(TypeIncidentReportedComponent.route, TypeIncidentReportedComponent, TypeIncidentReportedComponent.title),
   HseRoute.protected(TypeRiskReportedComponent.route, TypeRiskReportedComponent, TypeRiskReportedComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
+  HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
+  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
+  HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
 
 ]);
 
 @NgModule({
   declarations: [
     EnterReferenceComponent,
+    WhatToReportComponent,
+    ReportYourDetailsComponent,
+    WhoSubmittedNoticeComponent
     WhatToReportComponent,
     TypeIncidentReportedComponent,
     TypeRiskReportedComponent,

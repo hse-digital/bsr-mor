@@ -51,17 +51,23 @@ export class MORModel {
   id?: string;
   Notice?: NoticeModel;
   Report?: ReportModel;
-  Building?: BuildingModel;  
+  Building?: BuildingModel;
+  EmailAddress?: string;
 }
 
 export class NoticeModel {
   DescribeRiskIncident?: string;
   WhenBecomeAware?: TimeModel;
+  FirstName?: string;
+  LastName?: string;
 }
 
 export class ReportModel {
   NoticeReference?: string;
   WhatToReport?: string;
+  SubmittedNotice?: string;
+  FirstName?: string;
+  LastName?: string;
   IncidentReported?: string[];
   RiskReported?: string[];
 }
@@ -77,5 +83,5 @@ export class TimeModel {
 export class BuildingModel {
   SubmittedDesignBca?: string;
   IdentifyBuilding?: string;
-  BuildingType?: string;
+  BuildingType?: string; 
 }
