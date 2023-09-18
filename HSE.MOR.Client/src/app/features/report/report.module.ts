@@ -17,7 +17,6 @@ const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
   HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
-  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
 
@@ -27,8 +26,7 @@ const routes = new HseRoutes([
   declarations: [
     EnterReferenceComponent,
     WhatToReportComponent,
-    ReportYourDetailsComponent
-    WhatToReportComponent,
+    ReportYourDetailsComponent,
     WhoSubmittedNoticeComponent
   ],
   imports: [
