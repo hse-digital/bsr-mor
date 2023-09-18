@@ -20,11 +20,9 @@ const routes = new HseRoutes([
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
   HseRoute.protected(TypeIncidentReportedComponent.route, TypeIncidentReportedComponent, TypeIncidentReportedComponent.title),
   HseRoute.protected(TypeRiskReportedComponent.route, TypeRiskReportedComponent, TypeRiskReportedComponent.title),
-  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
   HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
-  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
-
+  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
 ]);
 
 @NgModule({
@@ -32,8 +30,7 @@ const routes = new HseRoutes([
     EnterReferenceComponent,
     WhatToReportComponent,
     ReportYourDetailsComponent,
-    WhoSubmittedNoticeComponent
-    WhatToReportComponent,
+    WhoSubmittedNoticeComponent,
     TypeIncidentReportedComponent,
     TypeRiskReportedComponent,
   ],
