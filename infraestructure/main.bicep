@@ -116,7 +116,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 }
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
-    name: 's118-${environment}-bsr-acs-portal-fa'
+    name: 's118-${environment}-bsr-acs-sq4swa-fa'
     location: location
     sku: {
         name: 'Y1'
