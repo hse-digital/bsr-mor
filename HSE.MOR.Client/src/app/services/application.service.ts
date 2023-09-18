@@ -68,6 +68,8 @@ export class ReportModel {
   SubmittedNotice?: string;
   FirstName?: string;
   LastName?: string;
+  IncidentReported?: string[];
+  RiskReported?: string[];
 }
 
 export class TimeModel {

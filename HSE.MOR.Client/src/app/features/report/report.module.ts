@@ -8,6 +8,8 @@ import { ComponentsModule } from "../../components/components.module";
 import { HseRoute, HseRoutes } from "../../helpers/hse.route";
 import { BuildingModule } from "../building/building.module";
 import { EnterReferenceComponent } from "./enter-reference/enter-reference.component";
+import { TypeIncidentReportedComponent } from "./type-incident-reported/type-incident-reported.component";
+import { TypeRiskReportedComponent } from "./type-risk-reported/type-risk-reported.component";
 import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
 import { ReportYourDetailsComponent } from "./report-your-details/report-your-details.component";
 import { WhoSubmittedNoticeComponent } from "./who-submitted-notice/who-submitted-notice.component";
@@ -16,10 +18,11 @@ import { WhoSubmittedNoticeComponent } from "./who-submitted-notice/who-submitte
 const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
   HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
+  HseRoute.protected(TypeIncidentReportedComponent.route, TypeIncidentReportedComponent, TypeIncidentReportedComponent.title),
+  HseRoute.protected(TypeRiskReportedComponent.route, TypeRiskReportedComponent, TypeRiskReportedComponent.title),
   HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
-  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
-
+  HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
 ]);
 
 @NgModule({
@@ -27,7 +30,9 @@ const routes = new HseRoutes([
     EnterReferenceComponent,
     WhatToReportComponent,
     ReportYourDetailsComponent,
-    WhoSubmittedNoticeComponent
+    WhoSubmittedNoticeComponent,
+    TypeIncidentReportedComponent,
+    TypeRiskReportedComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
