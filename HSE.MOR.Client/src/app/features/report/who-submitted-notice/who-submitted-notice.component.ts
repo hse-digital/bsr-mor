@@ -39,10 +39,7 @@ export class WhoSubmittedNoticeComponent extends PageComponent<string> {
     return !this.modelValid;
   }
   navigateNext(): Promise<boolean> {
-    if (this.model == "yes")
-      return this.navigationService.navigate('');
-    else
-      return this.navigationService.navigate('');
+    return this.navigationService.navigate('');
   }
 
 }
