@@ -21,7 +21,7 @@ export class WhatToSubmitComponent extends PageComponent<string> {
 
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.EmailAddress);
+    return applicationService.model.IsEmailVerified!;
   }
 
   hasSubmitNoticeReportErrors: boolean = false;

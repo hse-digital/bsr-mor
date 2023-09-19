@@ -54,6 +54,7 @@ export class MORModel {
   Building?: BuildingModel;
   EmailAddress?: string;
   WhatToSubmit?: string;
+  IsEmailVerified?: boolean;
 }
 
 export class NoticeModel {
