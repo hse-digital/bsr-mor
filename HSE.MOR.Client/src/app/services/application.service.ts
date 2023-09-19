@@ -72,6 +72,16 @@ export class ReportModel {
   LastName?: string;
   IncidentReported?: string[];
   RiskReported?: string[];
+  AboutRisk?: string;
+  AboutIncident?: string;
+  CauseOfRisk?: string;
+  CauseOfIncident?: string;
+  WhoAffectedByIncident?: string;
+  WhoAffectedByRisk?: string;
+  RiskKeepPeopleSafe?: string;
+  IncidentKeepPeopleSafe?: string;
+  OrganisationFindOut?: string;
+  OccurrenceDiscovered?: string;
 }
 
 export class TimeModel {
