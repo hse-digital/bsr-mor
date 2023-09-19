@@ -1,3 +1,12 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
-  <h1 class="govuk-heading-xl">What do you want to submit?</h1>
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasSubmitNoticeReportErrors" anchorId="what-to-submit-notice-input" message="You need to tell us if you need to notify BSR about the occurrence" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Do you want to submit a notice or a report about an occurrence?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-what-to-submit" [errorText]="getErrorDescription(hasErrors, 'You need to tell us if you need to notify BSR about the occurrence')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="what-to-submit-notice" value="notice" label="Submit a notice" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="what-to-submit-report" value="report" label="Submit a report" />
+
+  </govuk-radio-group>
 </govuk-formpage>

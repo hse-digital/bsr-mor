@@ -23,13 +23,15 @@ export class VerifyEmailComponent extends PageComponent<number> {
   override async onSave(applicationService: ApplicationService): Promise<void> {
     try {
       this.email = applicationService.model.EmailAddress! ?? '';
-      await await applicationService.validateOTPToken(this.model!.toString() ?? '', this.email);
+      await applicationService.validateOTPToken(this.model!.toString() ?? '', this.email);
+      applicationService.model.IsEmailVerified = true;
     } catch (error) {
       this.processing = false;
       this.otpError = true;
       this.hasErrors = true;
+      applicationService.model.IsEmailVerified = false;
       throw error;
-    }
+    } 
     
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {

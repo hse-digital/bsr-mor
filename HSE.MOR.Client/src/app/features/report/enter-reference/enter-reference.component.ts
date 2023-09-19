@@ -51,6 +51,6 @@ export class EnterReferenceComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative('building/identify-building', this.activatedRoute);
   }
 }
