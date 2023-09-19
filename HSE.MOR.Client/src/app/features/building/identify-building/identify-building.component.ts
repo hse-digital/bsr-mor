@@ -27,7 +27,13 @@ export class IdentifyBuildingComponent extends PageComponent<string> {
     applicationService.model.Building!.IdentifyBuilding = this.model;
   }
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    if (applicationService.model.WhatToSubmit && applicationService.model.WhatToSubmit == "notice") {
+      return true;
+    } else if (applicationService.model.WhatToSubmit && applicationService.model.WhatToSubmit == "report" && applicationService.model?.Report?.NoticeReference) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   hasIdentifyBuildingErrors: boolean = false;
