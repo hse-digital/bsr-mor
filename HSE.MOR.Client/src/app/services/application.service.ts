@@ -53,6 +53,7 @@ export class MORModel {
   Report?: ReportModel;
   Building?: BuildingModel;
   EmailAddress?: string;
+  WhatToSubmit?: string;
 }
 
 export class NoticeModel {
