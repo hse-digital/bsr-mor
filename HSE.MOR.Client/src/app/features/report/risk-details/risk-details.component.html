@@ -1,0 +1,36 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link id="error-textarea-risk-details-about-risk" *ngIf="aboutRiskInError" anchorId="textarea-risk-details-about-risk" message="{{aboutRiskErrorMessage}}" />
+    <govuk-error-link id="error-textarea-risk-details-what-caused-it" *ngIf="whatCausedItInError" anchorId="textarea-risk-details-what-caused-it" message="{{whatCausedItErrorMessage}}" />
+    <govuk-error-link id="error-textarea-risk-details-who-affected" *ngIf="whoAffectedItInError" anchorId="textarea-risk-details-who-affected" message="{{whoAffectedErrorMessage}}" />
+    <govuk-error-link id="error-textarea-risk-details-keep-people-safe" *ngIf="keepPeopleSafeItInError" anchorId="textarea-risk-details-keep-people-safe" message="{{keepPeopleSafeErrorMessage}}" />
+    <govuk-error-link id="error-textarea-risk-details-organisation-find-out" *ngIf="organisationFindOutItInError" anchorId="textarea-risk-details-organisation-find-out" message="{{organisationFindOutErrorMessage}}" />   
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">About the occurrence</span>
+  <h1 class="govuk-heading-xl">Details of the risk</h1>
+
+  <div class="govuk-!-margin-bottom-5">
+    <govuk-textarea aria-describedby="error-textarea-risk-details-about-risk" labelFor="textarea-risk-details-about-risk" label="What is the risk?" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="500" [isPageHeading]=false [(model)]="model.AboutRisk" #field [govukRequired]="field" id="risk-details-about-risk" [errorText]="getErrorDescription(aboutRiskInError, aboutRiskErrorMessage)" />
+  </div>
+
+  <div class="govuk-!-margin-bottom-5">
+    <govuk-textarea aria-describedby="error-textarea-risk-details-what-caused-it" labelFor="textarea-risk-details-what-caused-it" label="What caused it?" hint="Tell us if anything has changed, for example, recent building work" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="300" [isPageHeading]=false [(model)]="model.CauseOfRisk" #field [govukRequired]="field" id="risk-details-what-caused-it" [errorText]="getErrorDescription(whatCausedItInError, whatCausedItErrorMessage)" />
+  </div>
+
+  <div class="govuk-!-margin-bottom-5">
+    <govuk-textarea aria-describedby="error-textarea-risk-details-who-affected" labelFor="textarea-risk-details-who-affected" label="Who could be affected and in what way?" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="250" [isPageHeading]=false [(model)]="model.WhoAffectedByRisk" #field [govukRequired]="field" id="risk-details-who-affected" [errorText]="getErrorDescription(whoAffectedItInError, whoAffectedErrorMessage)" />
+  </div>
+
+  <div class="govuk-!-margin-bottom-5">
+    <govuk-textarea aria-describedby="error-textarea-risk-details-keep-people-safe" labelFor="textarea-risk-details-keep-people-safe" label="What have you done to keep people safe?" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="750" [isPageHeading]=false [(model)]="model.RiskKeepPeopleSafe" #field [govukRequired]="field" id="risk-details-keep-people-safe" [errorText]="getErrorDescription(keepPeopleSafeItInError, keepPeopleSafeErrorMessage)" />
+  </div>
+
+  <div class="govuk-!-margin-bottom-5">
+    <govuk-textarea aria-describedby="error-textarea-risk-details-organisation-find-out" labelFor="textarea-risk-details-organisation-find-out" hint="How did your organisation find out?" label="How was the occurrence discovered?" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="250" [isPageHeading]=false [(model)]="model.OrganisationFindOut" #field [govukRequired]="field" id="risk-details-organisation-find-out" [errorText]="getErrorDescription(organisationFindOutItInError, organisationFindOutErrorMessage)" />
+  </div>
+
+  <govuk-body>Next we will ask you to upload supporting information, such as documents or photographs.</govuk-body>
+
+</govuk-formpage>
