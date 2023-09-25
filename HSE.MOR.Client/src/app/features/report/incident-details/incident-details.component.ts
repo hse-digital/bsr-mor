@@ -48,7 +48,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     applicationService.model.Report!.OccurrenceDiscovered = this.model.OccurrenceDiscovered;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return applicationService.model.Report!.IncidentReported!.length > 0;
   }
 
   errorMessage: string = "You need to tell us about the occurrence";
