@@ -20,7 +20,7 @@
   </div>
 
   <div class="govuk-!-margin-bottom-5">
-    <govuk-textarea aria-describedby="error-textarea-risk-details-who-affected" labelFor="textarea-risk-details-who-affected" label="Who could be affected and in what way?" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="250" [isPageHeading]=false [(model)]="model.WhoAffected" #field [govukRequired]="field" id="risk-details-who-affected" [errorText]="getErrorDescription(whoAffectedItInError, whoAffectedErrorMessage)" />
+    <govuk-textarea aria-describedby="error-textarea-risk-details-who-affected" labelFor="textarea-risk-details-who-affected" label="Who could be affected and in what way?" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="250" [isPageHeading]=false [(model)]="model.WhoAffectedByRisk" #field [govukRequired]="field" id="risk-details-who-affected" [errorText]="getErrorDescription(whoAffectedItInError, whoAffectedErrorMessage)" />
   </div>
 
   <div class="govuk-!-margin-bottom-5">

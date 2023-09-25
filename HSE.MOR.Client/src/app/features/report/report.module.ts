@@ -13,6 +13,8 @@ import { TypeRiskReportedComponent } from "./type-risk-reported/type-risk-report
 import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
 import { ReportYourDetailsComponent } from "./report-your-details/report-your-details.component";
 import { WhoSubmittedNoticeComponent } from "./who-submitted-notice/who-submitted-notice.component";
+import { IncidentDetailsComponent } from "./incident-details/incident-details.component";
+import { RiskDetailsComponent } from "./risk-details/risk-details.component";
 
 
 const routes = new HseRoutes([
@@ -22,6 +24,8 @@ const routes = new HseRoutes([
   HseRoute.protected(TypeRiskReportedComponent.route, TypeRiskReportedComponent, TypeRiskReportedComponent.title),
   HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
+  HseRoute.protected(IncidentDetailsComponent.route, IncidentDetailsComponent, IncidentDetailsComponent.title),
+  HseRoute.protected(RiskDetailsComponent.route, RiskDetailsComponent, RiskDetailsComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
 ]);
 
@@ -33,6 +37,8 @@ const routes = new HseRoutes([
     WhoSubmittedNoticeComponent,
     TypeIncidentReportedComponent,
     TypeRiskReportedComponent,
+    IncidentDetailsComponent,
+    RiskDetailsComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

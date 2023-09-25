@@ -52,12 +52,12 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
   }
 
   errorMessage: string = "You need to tell us about the occurrence";
-  aboutRiskErrorMessage: string = "You need to tell us what happened / is the risk";
+  aboutIncidentErrorMessage: string = "You need to tell us what happened / is the risk";
   whatCausedItErrorMessage: string = "You need to tell us what caused it";
   whoAffectedErrorMessage: string = "You need to tell us who has been / could have been affected";
   keepPeopleSafeErrorMessage: string = "You need to tell us what you have done to keep people safe";
   occurrenceDiscoveredErrorMessage: string = "You need to tell us how the occurrence was discovered";
-  aboutRiskInError: boolean = false;
+  aboutIncidentInError: boolean = false;
   whatCausedItInError: boolean = false;
   whoAffectedItInError: boolean = false;
   keepPeopleSafeItInError: boolean = false;
@@ -66,54 +66,54 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
 
   override isValid(): boolean {
     this.modelValid = false;
-    this.aboutRiskInError = false;
+    this.aboutIncidentInError = false;
     this.whatCausedItInError = false;
     this.whoAffectedItInError = false;
     this.keepPeopleSafeItInError = false;
     this.occurrenceDiscoveredItInError = false;
 
-    if (!FieldValidations.IsNotNullOrWhitespace(this.model.AboutRisk)) {
-      this.aboutRiskInError = true;
+    if (!FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident)) {
+      this.aboutIncidentInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutRisk) && this.model.AboutRisk?.length! > 500) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident) && this.model.AboutIncident?.length! > 500) {
 
-      this.aboutRiskErrorMessage = "You need to tell us what happened / is the risk using fewer words";
-      this.aboutRiskInError = true;
+      this.aboutIncidentErrorMessage = "You need to tell us what happened / is the risk using fewer words";
+      this.aboutIncidentInError = true;
 
-    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfRisk)) {
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident)) {
       this.whatCausedItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfRisk) && this.model.CauseOfRisk?.length! > 300) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident) && this.model.CauseOfIncident?.length! > 300) {
 
       this.whatCausedItErrorMessage = "You need to tell us what caused it using fewer words";
       this.whatCausedItInError = true;
 
-    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByRisk)) {
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident)) {
       this.whoAffectedItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByRisk) && this.model.WhoAffectedByRisk?.length! > 250) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident) && this.model.WhoAffectedByIncident?.length! > 250) {
 
       this.whoAffectedErrorMessage = "You need to tell us who has been / could have been affected using fewer words";
       this.whoAffectedItInError = true;
 
-    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.RiskKeepPeopleSafe)) {
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe)) {
       this.keepPeopleSafeItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.RiskKeepPeopleSafe) && this.model.RiskKeepPeopleSafe?.length! > 750) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe) && this.model.IncidentKeepPeopleSafe?.length! > 750) {
 
       this.keepPeopleSafeErrorMessage = "You need to tell us what you have done to keep people safe using fewer words";
       this.keepPeopleSafeItInError = true;
 
-    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.OrganisationFindOut)) {
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered)) {
       this.occurrenceDiscoveredItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.OrganisationFindOut) && this.model.OrganisationFindOut?.length! > 250) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered) && this.model.OccurrenceDiscovered?.length! > 250) {
 
       this.occurrenceDiscoveredErrorMessage = "You need to tell us how the occurrence was discovered using fewer words";
       this.occurrenceDiscoveredItInError = true;
 
     }
-    this.modelValid = this.aboutRiskInError || this.whatCausedItInError || this.whoAffectedItInError || this.keepPeopleSafeItInError || this.occurrenceDiscoveredItInError ? false : true;
+    this.modelValid = this.aboutIncidentInError || this.whatCausedItInError || this.whoAffectedItInError || this.keepPeopleSafeItInError || this.occurrenceDiscoveredItInError ? false : true;
     return this.modelValid;
   }
 
