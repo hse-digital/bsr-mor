@@ -48,7 +48,11 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
     applicationService.model.Report!.OrganisationFindOut = this.model.OrganisationFindOut;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return applicationService.model.Report!.RiskReported!.length > 0;
+    if (applicationService.model.Report?.RiskReported) {
+      return applicationService.model.Report!.RiskReported!.length > 0 ? true : false;
+    } else {
+      return false;
+    }
   }
 
   errorMessage: string = "You need to tell us about the occurrence";

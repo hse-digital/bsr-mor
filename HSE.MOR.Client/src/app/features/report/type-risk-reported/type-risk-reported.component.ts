@@ -40,6 +40,6 @@ export class TypeRiskReportedComponent extends PageComponent<string[]> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative('risk-details', this.activatedRoute);
   }
 }

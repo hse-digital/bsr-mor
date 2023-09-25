@@ -40,6 +40,6 @@ export class TypeIncidentReportedComponent extends PageComponent<string[]> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative('incident-details', this.activatedRoute);
   }
 }
