@@ -1,0 +1,13 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <span class="govuk-caption-l">About the building</span>
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+      <govuk-error-link *ngIf="hasLocateBuildingErrors" anchorId="locate-building-input" message="You need to tell us how you want to locate the building" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Choose how to locate building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-locate-building" [errorText]="getErrorDescription(hasErrors, 'You need to tell us how you want to locate the building')">
+      <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="locate-building-northing" value="northing" label="Easting / northing coordinates" />
+      <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="locate-building-building-control" value="building-control" label="Building control application number" />
+  </govuk-radio-group>
+
+</govuk-formpage>
