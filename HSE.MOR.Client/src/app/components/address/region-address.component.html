@@ -1,0 +1,17 @@
+<div class="govuk-form-group">
+
+  <govuk-error-summary *ngIf="addressHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link anchorId="address-0-input" message="Select an address" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="In which part of the UK is the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-complaint-or-advice" [errorText]="getErrorDescription(addressHasErrors, 'Select address region')">
+    <div class="govuk-hint">We need to know this as the Building Safety Regulator does not operate in all parts of the UK.</div>
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-england" value="england" label="England" />
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-scotland" value="scotland" label="Scotland" />
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-wales" value="wales" label="Wales" />
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-northern-ireland" value="northern-ireland" label="Northern Ireland" />
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-jersey" value="jersey" label="Jersey, Guernsey, the Isle of Man or Gibraltar" />
+  </govuk-radio-group>
+</div>
+
+<govuk-button (onClick)="continue()">Continue</govuk-button>

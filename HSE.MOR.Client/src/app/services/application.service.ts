@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { LocalStorage } from "src/app/helpers/local-storage";
+import { AddressModel } from "./address.service";
 
 @Injectable()
 export class ApplicationService {
@@ -37,13 +38,16 @@ export class ApplicationService {
     }));
   }
 
-
   async updateApplication(): Promise<void> {
     this.updateLocalStorage();
 
     if (this.model.id) {
       await firstValueFrom(this.httpClient.put(`api/UpdateApplication/${this.model.id}`, this.model));
     }
+  }
+
+  async getBuildigsInformation(uprnList: string[]): Promise<BuildingInformationDynamicsModel[]> {
+    return await firstValueFrom(this.httpClient.post<BuildingInformationDynamicsModel[]>(`api/GetBuildingInformationUsingUPRN`, uprnList));
   }
 }
 
@@ -95,5 +99,49 @@ export class TimeModel {
 export class BuildingModel {
   SubmittedDesignBca?: string;
   IdentifyBuilding?: string;
-  BuildingType?: string; 
+  BuildingType?: string;
+  Address?: AddressModel;
+  BuildingName?: string;
+  NumberOfFloors?: string;
+  NumberOfUnits?: string;
+  NumberOfFloorsProf?: number;
+  NumberOfUnitsProf?: number;
+  BuildingHeight?: number;
+  AddressRegion?: string;
+}
+
+export class BuildingsInformationResponse {
+  BuildingsInformation: BuildingInformationDynamicsModel[] = []
+}
+
+export class BuildingInformationDynamicsModel {
+  bsr_uprn?: string;
+  bsr_usrn?: string;
+  bsr_name?: string;
+  bsr_addressline1?: string;
+  bsr_city?: string;
+  bsr_postcode?: string;
+  _bsr_buildingid_value?: string;
+  bsr_blockid?: string;
+  bsr_numberofresidentialunits?: number;
+  bsr_nooffloorsabovegroundlevel?: number;
+  bsr_sectionheightinmetres?: number;
+  bsr_BuildingApplicationID?: BuildingDynamicsModel;
+
+}
+
+export class BuildingDynamicsModel {
+  bsr_applicationid?: string;
+  bsr_papid_contact?: ContactDynamicsModel;
+  bsr_papid_account?: AccountDyncamicsModel;
+}
+
+export class ContactDynamicsModel {
+  firstname?: string;
+  lastname?: string;
+  contactid?: string;
+}
+export class AccountDyncamicsModel {
+  name?: string;
+  accountid?: string;
 }
