@@ -19,8 +19,8 @@ public class BuildingInformationFunction
         this.logger = logger;
     }
 
-    [Function(nameof(GetBuildingInformationUsingPostcode))]
-    public async Task<HttpResponseData> GetBuildingInformationUsingPostcode([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = $"{nameof(GetBuildingInformationUsingPostcode)}")] HttpRequestData request)
+    [Function(nameof(GetBuildingInformationUsingPostcodeAsync))]
+    public async Task<HttpResponseData> GetBuildingInformationUsingPostcodeAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = $"{nameof(GetBuildingInformationUsingPostcodeAsync)}")] HttpRequestData request)
     {
         var response = default(HttpResponseData);
         var returnBuildingInfoList = new List<DynamicsBuildingInformation>();
@@ -43,7 +43,7 @@ public class BuildingInformationFunction
         }
         catch (Exception ex)
         {
-            logger.LogError("{methodName} returned EXCEPTION : {ex}", nameof(GetBuildingInformationUsingPostcode), ex);
+            logger.LogError("{methodName} returned EXCEPTION : {ex}", nameof(GetBuildingInformationUsingPostcodeAsync), ex);
             throw;
         }
         return response;
