@@ -1,7 +1,7 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
 
     <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-        <govuk-error-link anchorId="notice-reference" message="{{ErrorMessage}}" />
+        <govuk-error-link anchorId="input-notice-reference" message="{{ErrorMessage}}" />
     </govuk-error-summary>
 
     <govuk-input id="notice-reference" label="Enter mandatory occurrence notice reference" labelClass="govuk-label--l" [isPageHeading]=true

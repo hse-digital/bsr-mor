@@ -25,10 +25,15 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   inputIsEmpty?: boolean = false;
   
   override onInit(applicationService: ApplicationService): void {
-    if (!applicationService.model.Notice?.WhenBecomeAware) {
-      applicationService.model.Notice!.WhenBecomeAware = {};
+    if (!applicationService.model.Notice) {
+      applicationService.model.Notice = {
+      };
     }
-
+    if (!applicationService.model.Notice?.WhenBecomeAware) {
+      applicationService.model.Notice!.WhenBecomeAware = {       
+      };
+    }
+    this.model = applicationService.model.Notice?.WhenBecomeAware;   
     this.model = { 
       Day: applicationService.model.Notice?.WhenBecomeAware?.Day,
       Month: applicationService.model.Notice?.WhenBecomeAware?.Month,
