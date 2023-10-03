@@ -2,7 +2,7 @@
 
   <span class="govuk-caption-l">About the building</span>
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link *ngIf="hasIsBuildingErrors" anchorId="is-building-input" message="You need to tell us more about the building " />
+    <govuk-error-link *ngIf="hasIsBuildingErrors" anchorId="is-building-occupied-input" message="You need to tell us more about the building " />
   </govuk-error-summary>
 
   <govuk-radio-group class="govuk-!-margin-bottom-4" title="Is the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-is-building" [errorText]="getErrorDescription(hasErrors, 'You need to tell us more about the building ')">
