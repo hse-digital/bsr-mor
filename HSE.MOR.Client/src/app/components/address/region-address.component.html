@@ -1,7 +1,7 @@
 <div class="govuk-form-group">
 
   <govuk-error-summary *ngIf="addressHasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link anchorId="address-0-input" message="Select an address" />
+    <govuk-error-link anchorId="region-address-england-input" message="Select an address" />
   </govuk-error-summary>
 
   <govuk-radio-group class="govuk-!-margin-bottom-4" title="In which part of the UK is the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-region-address" [errorText]="getErrorDescription(addressHasErrors, 'Select address region')">

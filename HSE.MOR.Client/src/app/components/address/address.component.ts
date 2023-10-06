@@ -67,14 +67,11 @@ export class AddressComponent implements OnInit {
   }
 
   addressRegion(region: string) {
-    //if (region == "england" && this.applicationService.model.WhoAreYou == "building_professional") {
-    //  this.changeStepTo('prof-number-of-floors');
-    //} else if (region == "england" && this.applicationService.model.WhoAreYou != "building_professional") {
-    //  this.changeStepTo('number-of-floors');
-    //} else {
-    //  this.changeStepTo("not-in-scope");
-    //}
-
+    if (region == "england") {
+      this.changeStepTo('prof-number-of-floors');
+    } else {
+      this.changeStepTo("not-in-scope");
+    }
   }
   hasAddress(hasAddress: string) {
     if (hasAddress == "yes") {
