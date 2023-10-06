@@ -9,6 +9,7 @@ namespace HSE.MOR.API.Services;
 public interface IDynamicsService {
     Task SendVerificationEmail(string emailAddress, string otpToken);
     Task<List<DynamicsBuildingInformation>> GetBuildingInformationUsingPostcode_Async(string postcode);
+    Task<List<DynamicsBuildingDetails>> GetBuildingDetailsUsingPostcode_Async(string postcode);
 }
 
 public class DynamicsService : IDynamicsService
@@ -33,6 +34,16 @@ public class DynamicsService : IDynamicsService
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsBuildingInformation>>("bsr_blocks", new[]
         {
             ("$filter", $"bsr_postcode eq '{postcode}'")
+        });
+
+        return response.value.ToList();
+    }
+
+    public async Task<List<DynamicsBuildingDetails>> GetBuildingDetailsUsingPostcode_Async(string postcode)
+    {
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsBuildingDetails>>("bsr_buildingdetailses", new[]
+        {
+            ("$filter", $"bsr_address1_postalcode eq '{postcode}'")
         });
 
         return response.value.ToList();

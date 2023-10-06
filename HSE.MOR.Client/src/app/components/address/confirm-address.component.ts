@@ -17,12 +17,11 @@ export class ConfirmAddressComponent implements OnInit {
   @Output() onAddressConfirmed = new EventEmitter<boolean | undefined>();
   @Output() onSearchAgain = new EventEmitter();
   @Output() onEnterManualAddress = new EventEmitter();
+  @Output() onIdentifyBuilding = new EventEmitter();
 
   private injector: Injector = GetInjector();
   private applicationService: ApplicationService = this.injector.get(ApplicationService);
-
-  constructor(public navigationService: NavigationService) {
-  }
+  private navigationService: NavigationService = this.injector.get(NavigationService);
 
   ngOnInit(): void {
     this.contactRequest = this.applicationService.model.Building!;
@@ -38,6 +37,7 @@ export class ConfirmAddressComponent implements OnInit {
   getTitle() {
     return this.selfAddress ? 'Confirm your address' : `Confirm the address of ${this.addressName}`;
   }
+
 
   returnManualAddress(model: AddressModel): string {
     var addressArray = [];

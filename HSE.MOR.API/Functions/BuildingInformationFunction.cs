@@ -38,7 +38,7 @@ public class BuildingInformationFunction
             {
                 returnBuildingInfoList.AddRange(listBuildings);
             }
-            response = await BuildResponseObjectAsync(request, returnBuildingInfoList.Distinct().ToList());
+            response = await BuildBuildingInfoResponseObjectAsync(request, returnBuildingInfoList.Distinct().ToList());
 
         }
         catch (Exception ex)
@@ -48,7 +48,41 @@ public class BuildingInformationFunction
         }
         return response;
     }
-    private async Task<HttpResponseData> BuildResponseObjectAsync(HttpRequestData request, List<DynamicsBuildingInformation> response)
+
+    [Function(nameof(GetBuildingDetailsUsingPostcodeAsync))]
+    public async Task<HttpResponseData> GetBuildingDetailsUsingPostcodeAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = $"{nameof(GetBuildingDetailsUsingPostcodeAsync)}")] HttpRequestData request)
+    {
+        var response = default(HttpResponseData);
+        var returnBuildingInfoList = new List<DynamicsBuildingDetails>();
+
+        try
+        {
+            var poscodeVerificationModel = await request.ReadAsJsonAsync<PostcodeValidationModel>();
+            var validation = poscodeVerificationModel.Validate();
+            if (!validation.IsValid)
+            {
+                return await request.BuildValidationErrorResponseDataAsync(validation);
+            }
+            var listBuildings = await dynamicsService.GetBuildingDetailsUsingPostcode_Async(poscodeVerificationModel.Postcode);
+            if (listBuildings != null || listBuildings?.Count > 0)
+            {
+                returnBuildingInfoList.AddRange(listBuildings);
+            }
+            response = await BuildBuildingDetailsResponseObjectAsync(request, returnBuildingInfoList.Distinct().ToList());
+
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("{methodName} returned EXCEPTION : {ex}", nameof(GetBuildingDetailsUsingPostcodeAsync), ex);
+            throw;
+        }
+        return response;
+    }
+    private async Task<HttpResponseData> BuildBuildingInfoResponseObjectAsync(HttpRequestData request, List<DynamicsBuildingInformation> response)
+    {
+        return await request.CreateObjectResponseAsync(response);
+    }
+    private async Task<HttpResponseData> BuildBuildingDetailsResponseObjectAsync(HttpRequestData request, List<DynamicsBuildingDetails> response)
     {
         return await request.CreateObjectResponseAsync(response);
     }

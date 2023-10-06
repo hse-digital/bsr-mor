@@ -46,8 +46,11 @@ export class ApplicationService {
     }
   }
 
-  async getBuildigsInformation(uprnList: string[]): Promise<BuildingInformationDynamicsModel[]> {
-    return await firstValueFrom(this.httpClient.post<BuildingInformationDynamicsModel[]>(`api/GetBuildingInformationUsingUPRN`, uprnList));
+  async getBuildigsInformation(postcode: string): Promise<BuildingInformationDynamicsModel[]> {
+    return await firstValueFrom(this.httpClient.post<BuildingInformationDynamicsModel[]>(`api/GetBuildingInformationUsingPostcodeAsync`, { "Postcode": postcode } ));
+  }
+  async getBuildigsDetails(postcode: string): Promise<BuildingInformationDynamicsModel[]> {
+    return await firstValueFrom(this.httpClient.post<BuildingInformationDynamicsModel[]>(`api/GetBuildingDetailsUsingPostcodeAsync`, { "Postcode": postcode }));
   }
 }
 
@@ -108,10 +111,18 @@ export class BuildingModel {
   NumberOfUnitsProf?: number;
   BuildingHeight?: number;
   AddressRegion?: string;
+  HasAddress?: string;
+  LocateBuilding?: string;
+  Easting?: string;
+  Northing?: string;
 }
 
 export class BuildingsInformationResponse {
   BuildingsInformation: BuildingInformationDynamicsModel[] = []
+}
+
+export class BuildingsDetailsResponse {
+  BuildingsInformation: BuildingDetailsDynamicsModel[] = []
 }
 
 export class BuildingInformationDynamicsModel {
@@ -123,25 +134,15 @@ export class BuildingInformationDynamicsModel {
   bsr_postcode?: string;
   _bsr_buildingid_value?: string;
   bsr_blockid?: string;
-  bsr_numberofresidentialunits?: number;
-  bsr_nooffloorsabovegroundlevel?: number;
-  bsr_sectionheightinmetres?: number;
-  bsr_BuildingApplicationID?: BuildingDynamicsModel;
 
 }
 
-export class BuildingDynamicsModel {
-  bsr_applicationid?: string;
-  bsr_papid_contact?: ContactDynamicsModel;
-  bsr_papid_account?: AccountDyncamicsModel;
+export class BuildingDetailsDynamicsModel {
+  bsr_address1_line1?: string;
+  bsr_address1_postalcode?: string;
+  bsr_name?: string;
+  bsr_address1_city?: string;
+  bsr_address1_line2?: string;
+
 }
 
-export class ContactDynamicsModel {
-  firstname?: string;
-  lastname?: string;
-  contactid?: string;
-}
-export class AccountDyncamicsModel {
-  name?: string;
-  accountid?: string;
-}

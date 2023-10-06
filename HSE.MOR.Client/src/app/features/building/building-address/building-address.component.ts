@@ -6,6 +6,7 @@ import { ApplicationService } from "src/app/services/application.service";
 import { NavigationService } from "src/app/services/navigation.service";
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from "../../../helpers/injector.helper";
+import { NavigationHelper } from "../../../helpers/navigation.helper";
 
 @Component({
   templateUrl: './building-address.component.html'
@@ -32,6 +33,9 @@ export class BuildingAddressComponent implements OnInit {
       this.addressIndex = query['address'];
       this.returnUrl = query['return'];
       if (this.addressIndex) {
+        if (this.applicationService.model.Building) {
+          this.applicationService.model.Building = {};
+        }
         this.address = this.applicationService.model.Building!.Address;
       } else {
         this.address = new AddressModel();
@@ -51,11 +55,21 @@ export class BuildingAddressComponent implements OnInit {
     if (this.returnUrl) {
       this.navigationService.navigateRelative(`../${this.returnUrl}`, this.activatedRoute);
     } else {
-      this.navigationService.navigateRelative('', this.activatedRoute);
+      this.navigationService.navigate('');
+    }
+  }
+  goToIdentifyBuilding(isGoodToGo: boolean) {
+    if (isGoodToGo) {
+      var routeKey = this.applicationService.model.WhatToSubmit == "notice" ? "notice-identify-building" : "report-identify-building";
+      let route = NavigationHelper.getRoute(routeKey);
+      this.navigationService.navigate(route);
     }
   }
 
   getAddressSectionName() {
+    if (!this.applicationService.model.Building) {
+      this.applicationService.model.Building = {};
+    }   
     return this.applicationService.model.Building!.BuildingName!;
   }
   async changeStep(event: any) {

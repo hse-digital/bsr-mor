@@ -20,6 +20,9 @@ import { AddressNumberOfUnitsComponent } from "./address/address-number-of-units
 import { AddressProfNumberOfFloorsComponent } from "./address/address-prof-number-of-floors.component";
 import { AddressProfNumberOfUnitsComponent } from "./address/address-prof-number-of-units.component";
 import { AddressBuildingHeightComponent } from "./address/address-building-height.component";
+import { HasAddressComponent } from "./address/has-address.component";
+import { LocateBuildingAddressComponent } from "./address/locate-building-address.component";
+import { AddressCoordinatesComponent } from "./address/address-coordinates.component";
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { AddressBuildingHeightComponent } from "./address/address-building-heigh
     AddressProfNumberOfUnitsComponent,
     AddressBuildingHeightComponent,
     AddressBuildingNotInScopeComponent,
+    HasAddressComponent,
+    LocateBuildingAddressComponent,
+    AddressCoordinatesComponent,
   ],
   imports: [
     HseAngularModule,

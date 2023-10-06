@@ -2,15 +2,11 @@
 <h1 class="govuk-heading-l">Confirm the building</h1>
 
 <govuk-summary-list>
-  <govuk-summary-list-row *ngIf="address.BuildingApplicationId && contactRequest.WhoAreYou == 'building_professional'" key="Building application registration number">{{address.BuildingApplicationId}}</govuk-summary-list-row>
+  
   <govuk-summary-list-row *ngIf="address.BuildingName" key="Building name">{{address.BuildingName}}</govuk-summary-list-row>
   <govuk-summary-list-row key="Building address">{{getAddressLineOne()}}</govuk-summary-list-row>
-  <govuk-summary-list-row *ngIf="address.NumberOfFloors" key="Number of floors">{{address.NumberOfFloors}}</govuk-summary-list-row>
-  <govuk-summary-list-row *ngIf="contactRequest.WhoAreYou == 'building_professional' && address.BuildingHeight" key="Building height">{{address.BuildingHeight}}m</govuk-summary-list-row>
-  <govuk-summary-list-row *ngIf="contactRequest.WhoAreYou == 'building_professional' && address.ResidentialUnits" key="Number of residential units">{{address.ResidentialUnits}}</govuk-summary-list-row>
-  <govuk-summary-list-row *ngIf="address.AccountablePerson" key="Principal accountable person">{{address.AccountablePerson}}</govuk-summary-list-row>
+  
 </govuk-summary-list>
 
-<govuk-body><a class="govuk-link" (keyup.enter)="onSearchAgain.emit()" (click)="onSearchAgain.emit()" role="link" tabindex="0">Search again</a></govuk-body>
-<govuk-body><a class="govuk-link" (keyup.enter)="onEnterManualAddress.emit()" (click)="onEnterManualAddress.emit()" role="link" tabindex="0">Enter address manually</a></govuk-body>
+<govuk-body>If this isn't the correct building,<a class="govuk-link" (keyup.enter)="onSearchAgain.emit()" (click)="onSearchAgain.emit()" role="link" tabindex="0">re-enter your post code</a> or <a class="govuk-link" (keyup.enter)="onIdentifyBuilding.emit()" (click)="onIdentifyBuilding.emit()" role="link" >choose another means of finding your building</a></govuk-body>
 <govuk-button (onClick)="onAddressConfirmed.emit()">Confirm</govuk-button>

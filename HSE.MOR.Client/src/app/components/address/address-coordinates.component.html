@@ -1,0 +1,26 @@
+<div class="govuk-form-group">
+
+  <span class="govuk-caption-l">About the building</span>
+  <govuk-error-summary *ngIf="hasCoordinatesErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasBothCoorninatesErrors" anchorId="input-address-coordinates-easting" message="You need to tell us the location of the proposed building" />
+    <govuk-error-link *ngIf="hasEastingErrors" anchorId="input-address-coordinates-easting" message="{{eastingErrorMessage}}" />
+    <govuk-error-link *ngIf="hasNorthingErrors" anchorId="input-address-coordinates-northing" message="{{northingErrorMessage}}" />
+  </govuk-error-summary>
+
+  <h1 class="govuk-heading-l">Tell us the easting and northing for the proposed building</h1>
+
+  <govuk-input id="address-coordinates-easting" label="Easting"
+               [(model)]="model.Easting"
+               [errorText]="getErrorDescription(hasEastingErrors, eastingErrorMessage)"
+               class="govuk-!-margin-bottom-5 govuk-input--width-20"
+               (onKeyupEnter)="continue()" />
+
+  <govuk-input id="address-coordinates-northing" label="Northing"
+               [(model)]="model.Northing"
+               [errorText]="getErrorDescription(hasNorthingErrors, northingErrorMessage)"
+               class="govuk-!-margin-bottom-5 govuk-input--width-20"
+               (onKeyupEnter)="continue()" />
+
+</div>
+
+<govuk-button (onClick)="continue()">Continue</govuk-button>

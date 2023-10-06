@@ -9,6 +9,7 @@ public class DynamicsModelDefinitionFactory
     private readonly Dictionary<Type, IDynamicsModelDefinition> definitions = new()
     {
         [typeof(BuildingInformation)] = new BuildingInformationModelDefinition(),
+        [typeof(BuildingDetails)] = new BuildingDetailsModelDefinition(),
     };
 
     public DynamicsModelDefinition<TEntity, TDynamicsEntity> GetDefinitionFor<TEntity, TDynamicsEntity>() where TEntity : Entity

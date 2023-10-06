@@ -1,4 +1,4 @@
-<govuk-formpage saveAndContinueText="Send verification email" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+<govuk-formpage saveAndContinueText="Send verification email" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true" [processing]="processing">
 
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
     <govuk-error-link *ngIf="hasErrors" anchorId="input-email" message="{{errorMessage}}" />

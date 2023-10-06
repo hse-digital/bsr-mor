@@ -4,6 +4,7 @@ namespace HSE.MOR.API.Models;
 
 public record PostcodeValidationModel(string Postcode) : IValidatableModel
 {
+    
     public ValidationSummary Validate()
     {
         var errors = new List<string>();

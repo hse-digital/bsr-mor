@@ -8,8 +8,9 @@
       <not-found-address *ngIf="step == 'not-found'" [addressName]="addressName" [selfAddress]="selfAddress" [searchModel]="searchModel" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
       <too-many-address *ngIf="step == 'too-many'" [addressName]="addressName" [selfAddress]="selfAddress" [searchModel]="searchModel" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
       <manual-address *ngIf="step == 'manual'" [addressName]="addressName" [selfAddress]="selfAddress" [searchMode]="searchMode" (onSearchAgain)="searchAgain()" (onAddressEntered)="manualAddressEntered($event)" />
-      <confirm-address *ngIf="step == 'confirm'" [addressName]="addressName" [selfAddress]="selfAddress" (onAddressConfirmed)="addressConfirmed()" [address]="address!" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
+      <confirm-address *ngIf="step == 'confirm'" [addressName]="addressName" [selfAddress]="selfAddress" (onAddressConfirmed)="addressConfirmed()" [address]="address!" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" (onIdentifyBuilding)="goToIdenityBuilding()" />
       <region-address *ngIf="step == 'region'" (onAddressRegion)="addressRegion($event)" />
+      <has-address *ngIf="step == 'has-address'" (onHasAddress)="hasAddress($event)" />
       <not-in-scope-address *ngIf="step == 'not-in-scope'" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
       <number-of-floors *ngIf="step == 'number-of-floors'" (onNumberOfFloors)="numberOfFloors($event)" />
       <number-of-units *ngIf="step == 'number-of-units'" (onNumberOfUnits)="numberOfUnits($event)" />
@@ -17,6 +18,8 @@
       <building-height *ngIf="step == 'building-height'" (onBuildingHeight)="buildingHeight($event)" />
       <prof-number-of-units *ngIf="step == 'prof-number-of-units'" (onProfNumberOfUnits)="profNumberOfUnits($event)" />
       <building-not-in-scope *ngIf="step == 'building-not-in-scope'" />
+      <locate-building-address *ngIf="step == 'locate-building-address'" (onLocateBuildingAddress)="locateBuildingAddress($event)" />
+      <address-coordinates *ngIf="step == 'address-coordinates'" (onAddressCoordinates)="addressCoordines($event)" />
     </div>
   </div>
 </div>

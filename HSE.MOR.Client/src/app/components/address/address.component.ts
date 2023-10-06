@@ -24,11 +24,13 @@ export class AddressComponent implements OnInit {
   @Output() onAddressConfirmed = new EventEmitter();
   @Output() onChangeStep = new EventEmitter();
   @Output() onManualEnter = new EventEmitter();
+  @Output() onGoToIdentifyBuilding = new EventEmitter();
+
 
   searchModel: { postcode?: string } = {};
   addressResponse?: AddressResponseModel;
 
-  step = 'find';
+  step = 'has-address';
   private history: string[] = [];
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class AddressComponent implements OnInit {
       this.changeStepTo('confirm');
       this.history = [];
     } else {
-      this.changeStepTo('find');
+      this.changeStepTo('has-address');
       this.history = [];
     }
   }
@@ -74,6 +76,23 @@ export class AddressComponent implements OnInit {
     //}
 
   }
+  hasAddress(hasAddress: string) {
+    if (hasAddress == "yes") {
+      this.changeStepTo('find');
+    } else {
+      this.changeStepTo('locate-building-address');
+    }
+  }
+  locateBuildingAddress(locateBuilding: string) {
+    if (locateBuilding == "coordinates") {
+      this.changeStepTo('address-coordinates');
+    } 
+  }
+
+  addressCoordines(model: BuildingModel) {
+
+  }
+
   numberOfFloors(floors: string) {
     this.applicationService.model.Building!.NumberOfFloors = floors;
     if (floors == 'seven_or_less') {
@@ -129,6 +148,10 @@ export class AddressComponent implements OnInit {
 
   enterManualAddress() {
     this.changeStepTo('region');
+  }
+
+  goToIdenityBuilding() {
+    this.onGoToIdentifyBuilding.emit(true);
   }
 
   navigateBack() {

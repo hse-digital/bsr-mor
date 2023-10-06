@@ -10,6 +10,8 @@ export class NavigationHelper {
   static route: any = {
     "notice": `/${NoticeModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
     "report": `/${ReportModule.baseRoute}/${EnterReferenceComponent.route}`,
+    "report-identify-building": `/${ReportModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
+    "notice-identify-building": `/${NoticeModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
   };
 
   static getRoute(key: string): string {
