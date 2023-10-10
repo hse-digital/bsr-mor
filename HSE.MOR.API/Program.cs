@@ -5,6 +5,9 @@ using Microsoft.Extensions.Hosting;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using HSE.MOR.API.Services;
+using HSE.MOR.Domain.DynamicsDefinitions;
+using AutoMapper;
+using HSE.MOR.API.Models.OrdnanceSurvey;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
@@ -22,8 +25,16 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.Configure<SwaOptions>(builderContext.Configuration.GetSection(SwaOptions.Swa));
     serviceCollection.Configure<IntegrationsOptions>(builderContext.Configuration.GetSection(IntegrationsOptions.Integrations));
     serviceCollection.AddTransient<OTPService>();
-    serviceCollection.Configure<IntegrationsOptions>(builderContext.Configuration.GetSection(IntegrationsOptions.Integrations));
     serviceCollection.AddTransient<IDynamicsService, DynamicsService>();
+    serviceCollection.AddTransient<DynamicsModelDefinitionFactory>();
+    serviceCollection.AddTransient<DynamicsApi>();
+    serviceCollection.AddLogging();
+
+    serviceCollection.AddSingleton(_ => new MapperConfiguration(config =>
+    {
+        config.AddProfile<OrdnanceSurveyPostcodeResponseProfile>();
+
+    }).CreateMapper());
 }
 
 public class SystemTextJsonSerializer : ISerializer

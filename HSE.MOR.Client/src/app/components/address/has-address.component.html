@@ -1,0 +1,14 @@
+<div class="govuk-form-group">
+
+  <span class="govuk-caption-l">About the building</span>
+  <govuk-error-summary *ngIf="addressHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link anchorId="has-address-yes-input" message="Select an address" />
+  </govuk-error-summary>
+
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Does your building or site have an address?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-has-address" [errorText]="getErrorDescription(addressHasErrors, 'Select address region')">
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="has-address-yes" value="yes" label="Yes" />
+    <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="has-address-no" value="no" label="No" />
+  </govuk-radio-group>
+</div>
+
+<govuk-button (onClick)="continue()">Continue</govuk-button>

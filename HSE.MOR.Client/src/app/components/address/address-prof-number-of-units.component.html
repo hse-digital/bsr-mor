@@ -1,0 +1,19 @@
+<div class="govuk-form-group">
+
+  <h1 class="govuk-heading-l">Number of residential units</h1>
+
+  <govuk-body>A residential unit is a flat, maisonette, student bedroom, room or any other place where someone could live.</govuk-body>
+
+  <govuk-error-summary *ngIf="unitsHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="unitsHasErrors" anchorId="input-prof-number-of-units" message="You need to tell us how many residential units the building has" />
+  </govuk-error-summary>
+
+  <govuk-input label="Number of residential units"
+               hint="Count all of the residential units, whether someone is living in them or not."
+               labelClass="govuk-label--s" id="prof-number-of-units" #field [govukRequired]="field"
+               [(model)]="profNumberOfUnits"
+               [errorText]="getErrorDescription(unitsHasErrors, errorMessage)"
+               class="govuk-input--width-3"
+               (onKeyupEnter)="continue()" />
+</div>
+<govuk-button (onClick)="continue()">Continue</govuk-button>

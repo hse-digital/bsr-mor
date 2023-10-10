@@ -1,0 +1,25 @@
+<a (click)="navigateBack()" (keyup.enter)="navigateBack()" class="govuk-back-link cursor" role="link" tabindex="0" #backButton>Back</a>
+
+<div class="govuk-main-wrapper">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <find-address *ngIf="step == 'find'" [addressName]="addressName" [selfAddress]="selfAddress" [searchMode]="searchMode" [searchModel]="searchModel" (onSearchPerformed)="searchPerformed($event)" (onEnterManualAddress)="enterManualAddress()" />
+      <select-address *ngIf="step == 'select'" [addressName]="addressName" [selfAddress]="selfAddress" [addressResponse]="addressResponse" [searchModel]="searchModel" (onAddressSelected)="addressSelected($event)" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
+      <not-found-address *ngIf="step == 'not-found'" [addressName]="addressName" [selfAddress]="selfAddress" [searchModel]="searchModel" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
+      <too-many-address *ngIf="step == 'too-many'" [addressName]="addressName" [selfAddress]="selfAddress" [searchModel]="searchModel" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
+      <manual-address *ngIf="step == 'manual'" [addressName]="addressName" [selfAddress]="selfAddress" [searchMode]="searchMode" (onSearchAgain)="searchAgain()" (onAddressEntered)="manualAddressEntered($event)" />
+      <confirm-address *ngIf="step == 'confirm'" [addressName]="addressName" [selfAddress]="selfAddress" (onAddressConfirmed)="addressConfirmed()" [address]="address!" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" (onIdentifyBuilding)="goToIdenityBuilding()" />
+      <region-address *ngIf="step == 'region'" (onAddressRegion)="addressRegion($event)" />
+      <has-address *ngIf="step == 'has-address'" (onHasAddress)="hasAddress($event)" />
+      <not-in-scope-address *ngIf="step == 'not-in-scope'" (onSearchAgain)="searchAgain()" (onEnterManualAddress)="enterManualAddress()" />
+      <number-of-floors *ngIf="step == 'number-of-floors'" (onNumberOfFloors)="numberOfFloors($event)" />
+      <number-of-units *ngIf="step == 'number-of-units'" (onNumberOfUnits)="numberOfUnits($event)" />
+      <prof-number-of-floors *ngIf="step == 'prof-number-of-floors'" (onProfNumberOfFloors)="profNumberOfFloors($event)" />
+      <building-height *ngIf="step == 'building-height'" (onBuildingHeight)="buildingHeight($event)" />
+      <prof-number-of-units *ngIf="step == 'prof-number-of-units'" (onProfNumberOfUnits)="profNumberOfUnits($event)" />
+      <building-not-in-scope *ngIf="step == 'building-not-in-scope'" />
+      <locate-building-address *ngIf="step == 'locate-building-address'" (onLocateBuildingAddress)="locateBuildingAddress($event)" />
+      <address-coordinates *ngIf="step == 'address-coordinates'" (onAddressCoordinates)="addressCoordines($event)" />
+    </div>
+  </div>
+</div>

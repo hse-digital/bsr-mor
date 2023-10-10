@@ -1,0 +1,24 @@
+<div class="govuk-form-group">
+
+  <h1 class="govuk-heading-l">Building height</h1>
+
+  <govuk-body>Measure the height in metres from ground level to the top floor.</govuk-body>
+  <govuk-body>Do not measure the roof, unless there is a residential unit on it.</govuk-body>
+
+  <govuk-details summaryText="Help with ground level">
+    <govuk-body>Ground level is the level of land immediately next to. If that land is uneven, count from the lowest part of the land immediately next to.</govuk-body>
+  </govuk-details>
+
+  <govuk-error-summary *ngIf="heightHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="heightHasErrors" anchorId="input-building-height" message="You need to tell us how tall the building is in metres" />
+  </govuk-error-summary>
+
+  <div class="govuk-hint">For example, &#39;18&#39;.</div>
+  <govuk-input label="Height in metres"
+               labelClass="govuk-label--s" id="building-height" #field [govukRequired]="field"
+               [(model)]="buildingHeight"
+               [errorText]="getErrorDescription(heightHasErrors, errorMessage)"
+               class="govuk-input--width-4"
+               (onKeyupEnter)="continue()" />
+</div>
+<govuk-button (onClick)="continue()">Continue</govuk-button>
