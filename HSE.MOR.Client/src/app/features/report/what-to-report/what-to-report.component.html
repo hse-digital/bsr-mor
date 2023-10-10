@@ -1,7 +1,7 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
 
     <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-        <govuk-error-link anchorId="what-to-report-incident" message="{{ErrorMessage}}" />
+        <govuk-error-link anchorId="what-to-report-incident-input" message="{{ErrorMessage}}" />
     </govuk-error-summary>
 
     <span class="govuk-caption-l">About the occurrence</span>
