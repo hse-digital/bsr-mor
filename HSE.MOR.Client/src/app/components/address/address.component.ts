@@ -86,8 +86,10 @@ export class AddressComponent implements OnInit {
     } 
   }
 
-  addressCoordines(model: BuildingModel) {
-
+  addressCoordines(isCoordinatesProvided: boolean) {
+    if (isCoordinatesProvided) {
+      this.changeStepTo('prof-number-of-floors');
+    }
   }
 
   numberOfFloors(floors: string) {

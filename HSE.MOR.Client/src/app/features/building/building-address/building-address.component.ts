@@ -55,7 +55,9 @@ export class BuildingAddressComponent implements OnInit {
     if (this.returnUrl) {
       this.navigationService.navigateRelative(`../${this.returnUrl}`, this.activatedRoute);
     } else {
-      this.navigationService.navigate('');
+      var routeKey = this.applicationService.model.WhatToSubmit == "notice" ? "notice-your-details" : "report-your-details";
+      let route = NavigationHelper.getRoute(routeKey);
+      this.navigationService.navigate(route);
     }
   }
   goToIdentifyBuilding(isGoodToGo: boolean) {

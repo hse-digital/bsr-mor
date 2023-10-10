@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, QueryList, ViewChildren, Inject
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { ApplicationService, BuildingModel } from 'src/app/services/application.service';
 import { GetInjector } from '../../helpers/injector.helper';
+import { CoorinatesValidator } from '../../helpers/validators/coordinates-validator';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
 import { TitleService } from '../../services/title.service';
 
@@ -19,7 +20,7 @@ export class AddressCoordinatesComponent implements OnInit {
   @Input() addressName!: string;
   @Input() selfAddress = false;
   @Input() model: BuildingModel = new BuildingModel();
-  @Output() onAddressCoordinates = new EventEmitter<BuildingModel>();
+  @Output() onAddressCoordinates = new EventEmitter<boolean>();
 
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
 
@@ -62,12 +63,22 @@ export class AddressCoordinatesComponent implements OnInit {
       this.eastingErrorMessage = "You need to tell us the easting coordinates using 6 numbers ";
       this.hasEastingErrors = true;
 
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.Easting) && !CoorinatesValidator.isValid(this.model.Easting!)) {
+
+      this.eastingErrorMessage = "You need to tell us the easting coordinates using 6 numbers ";
+      this.hasEastingErrors = true;
+
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.Northing)) {
+      this.hasNorthingErrors = true;
+
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.Northing) && !CoorinatesValidator.isValid(this.model.Northing!)) {
+
+      this.northingErrorMessage = "You need to tell us the northing coordinates using 6 numbers";
       this.hasNorthingErrors = true;
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.Northing) && (this.model.Northing?.length! < 12 && this.model.Northing?.length! > 6)) {
 
-      this.northingErrorMessage = "You need to tell us the easting coordinates using 6 numbers ";
+      this.northingErrorMessage = "You need to tell us the northing coordinates using 6 numbers";
       this.hasNorthingErrors = true;
     } 
     this.hasCoordinatesErrors = this.hasBothCoorninatesErrors || this.hasEastingErrors || this.hasNorthingErrors  ? true : false;
@@ -75,7 +86,7 @@ export class AddressCoordinatesComponent implements OnInit {
     if (!this.hasCoordinatesErrors) {
       this.applicationService.model.Building!.Easting = this.model.Easting;
       this.applicationService.model.Building!.Northing = this.model.Northing;
-      this.onAddressCoordinates.emit(this.model);
+      this.onAddressCoordinates.emit(true);
     } else {
       this.summaryError?.first?.focus();
       this.titleService.setTitleError();
