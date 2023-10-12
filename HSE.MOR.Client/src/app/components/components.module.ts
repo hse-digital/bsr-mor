@@ -23,6 +23,12 @@ import { AddressBuildingHeightComponent } from "./address/address-building-heigh
 import { HasAddressComponent } from "./address/has-address.component";
 import { LocateBuildingAddressComponent } from "./address/locate-building-address.component";
 import { AddressCoordinatesComponent } from "./address/address-coordinates.component";
+import { FindBcaReferenceComponent } from "./bca-reference/find-bca-reference.component";
+import { SelectBcaAddressComponent } from "./bca-reference/select-bca-address.component";
+import { TooManyBcaAddressComponent } from "./bca-reference/too-many-bca-address.component";
+import { NotFoundBcaAddressComponent } from "./bca-reference/not-found-bca-address.component";
+import { ConfirmBcaAddressComponent } from "./bca-reference/confirm-bca-address.component";
+import { BcaReferenceComponent } from "./bca-reference/bca-reference.component";
 
 @NgModule({
   declarations: [
@@ -47,6 +53,12 @@ import { AddressCoordinatesComponent } from "./address/address-coordinates.compo
     HasAddressComponent,
     LocateBuildingAddressComponent,
     AddressCoordinatesComponent,
+    FindBcaReferenceComponent,
+    SelectBcaAddressComponent,
+    TooManyBcaAddressComponent,
+    NotFoundBcaAddressComponent,
+    ConfirmBcaAddressComponent,
+    BcaReferenceComponent,
   ],
   imports: [
     HseAngularModule,
@@ -57,6 +69,7 @@ import { AddressCoordinatesComponent } from "./address/address-coordinates.compo
     GovukRequiredDirective,
     AddressComponent,
     AddressDescriptionComponent,
+    BcaReferenceComponent,
   ],
   providers: [HttpClient]
 })

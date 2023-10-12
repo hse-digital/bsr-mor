@@ -1,4 +1,5 @@
 import { NotFoundComponent } from "../components/not-found/not-found.component";
+import { BcaReferenceNumberComponent } from "../features/building/bca-reference-number/bca-reference-number.component";
 import { BuildingModule } from "../features/building/building.module";
 import { IdentifyBuildingComponent } from "../features/building/identify-building/identify-building.component";
 import { NoticeYourDetailsComponent } from "../features/notice/notice-your-details/notice-your-details.component";
@@ -12,6 +13,7 @@ export class NavigationHelper {
   static route: any = {
     "notice": `/${NoticeModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
     "report": `/${ReportModule.baseRoute}/${EnterReferenceComponent.route}`,
+    "bca-reference-number": `/${ReportModule.baseRoute}/${BuildingModule.baseRoute}/${BcaReferenceNumberComponent.route}`,
     "report-identify-building": `/${ReportModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
     "notice-identify-building": `/${NoticeModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
     "notice-your-details": `/${NoticeModule.baseRoute}/${NoticeYourDetailsComponent.route}`,

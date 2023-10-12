@@ -49,8 +49,11 @@ export class ApplicationService {
   async getBuildigsInformation(postcode: string): Promise<BuildingInformationDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.post<BuildingInformationDynamicsModel[]>(`api/GetBuildingInformationUsingPostcodeAsync`, { "Postcode": postcode } ));
   }
-  async getBuildigsDetails(postcode: string): Promise<BuildingInformationDynamicsModel[]> {
-    return await firstValueFrom(this.httpClient.post<BuildingInformationDynamicsModel[]>(`api/GetBuildingDetailsUsingPostcodeAsync`, { "Postcode": postcode }));
+  async getBuildigsDetails(postcode: string): Promise<BuildingDetailsDynamicsModel[]> {
+    return await firstValueFrom(this.httpClient.post<BuildingDetailsDynamicsModel[]>(`api/GetBuildingDetailsUsingPostcodeAsync`, { "Postcode": postcode }));
+  }
+  async getBuildigsDetailsByBcaReferenceNumber(referenceNumber: string): Promise<BuildingDetailsDynamicsModel[]> {
+    return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsBuildingDetailsByBcaReferenceAsync/${referenceNumber}`));
   }
 }
 
