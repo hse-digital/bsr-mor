@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
@@ -44,8 +45,11 @@ export class IdentifyBuildingComponent extends PageComponent<string> {
     this.hasIdentifyBuildingErrors = this.modelValid;
     return !this.modelValid;
   }
+
   navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    var routeKey = this.model == "building_reference" ? "bca-reference-number" : "not-found";
+    let route = NavigationHelper.getRoute(routeKey);
+    return this.navigationService.navigate(route);
   }
 
 }

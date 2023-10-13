@@ -1,0 +1,14 @@
+<a (click)="navigateBack()" (keyup.enter)="navigateBack()" class="govuk-back-link cursor" role="link" tabindex="0" #backButton>Back</a>
+
+<div class="govuk-main-wrapper">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <find-bca-reference *ngIf="step == 'find'" [addressName]="addressName" [selfAddress]="selfAddress" (onSearchPerformed)="searchPerformed($event)" [searchModel]="searchModel" />
+      <select-bca-address *ngIf="step == 'select'" [addressName]="addressName" [selfAddress]="selfAddress" [addressResponse]="addressResponse" [searchModel]="searchModel" (onAddressSelected)="addressSelected($event)" (onSearchAgain)="searchAgain()" />
+      <not-found-bca-address *ngIf="step == 'not-found'" [addressName]="addressName" [selfAddress]="selfAddress" [searchModel]="searchModel" (onSearchAgain)="searchAgain()" />
+      <too-many-bca-address *ngIf="step == 'too-many'" [addressName]="addressName" [selfAddress]="selfAddress" [searchModel]="searchModel" (onSearchAgain)="searchAgain()" />
+      <confirm-bca-address *ngIf="step == 'confirm'" [addressName]="addressName" [selfAddress]="selfAddress" (onAddressConfirmed)="addressConfirmed()" [address]="address!" (onSearchAgain)="searchAgain()" (onIdentifyBuilding)="goToIdenityBuilding()" />
+      
+    </div>
+  </div>
+</div>

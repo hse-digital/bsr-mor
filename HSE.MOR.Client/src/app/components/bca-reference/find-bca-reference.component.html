@@ -1,0 +1,18 @@
+<div class="govuk-form-group">
+
+  <span class="govuk-caption-l">About the building</span>
+
+  <govuk-error-summary *ngIf="referenceNumberHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link anchorId="input-bca-reference" message="{{referenceNumberErrorText}}" />
+  </govuk-error-summary>
+
+  <govuk-input id="bca-reference" label="Building control application reference" 
+               labelClass="govuk-label--l" [isPageHeading]=true
+               [(model)]="searchModel.referenceNumber"
+               hint="This is the reference number given by the building control body on your application"
+               [errorText]="getErrorDescription(referenceNumberHasErrors, referenceNumberErrorText)"
+               class="govuk-!-margin-bottom-5 govuk-input--width-20"
+               (onKeyupEnter)="findAddress()" />
+
+  <govuk-button [isLoading]="loading" loadingText="Searching..." [disabled]="loading" (onClick)="findAddress()">Continue</govuk-button>
+</div>

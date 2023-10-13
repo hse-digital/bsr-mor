@@ -10,12 +10,14 @@ import { IdentifyBuildingComponent } from "./identify-building/identify-building
 import { SubmittedDesignBcaComponent } from "./submitted-design-bca/submitted-design-bca.component";
 import { IsBuildingComponent } from "./is-building/is-building.component";
 import { BuildingAddressComponent } from "./building-address/building-address.component";
+import { BcaReferenceNumberComponent } from "./bca-reference-number/bca-reference-number.component";
 
 const routes = new HseRoutes([
   HseRoute.protected(IsBuildingComponent.route, IsBuildingComponent, IsBuildingComponent.title),
   HseRoute.protected(IdentifyBuildingComponent.route, IdentifyBuildingComponent, IdentifyBuildingComponent.title),
   HseRoute.protected(SubmittedDesignBcaComponent.route, SubmittedDesignBcaComponent, SubmittedDesignBcaComponent.title),
   HseRoute.protected(BuildingAddressComponent.route, BuildingAddressComponent, BuildingAddressComponent.title),
+  HseRoute.protected(BcaReferenceNumberComponent.route, BcaReferenceNumberComponent, BcaReferenceNumberComponent.title),
 ]);
 
 @NgModule({
@@ -23,7 +25,8 @@ const routes = new HseRoutes([
     IdentifyBuildingComponent,
     SubmittedDesignBcaComponent,
     IsBuildingComponent,
-    BuildingAddressComponent
+    BuildingAddressComponent,
+    BcaReferenceNumberComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
