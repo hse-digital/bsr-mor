@@ -1,0 +1,15 @@
+<div class="govuk-form-group">
+
+  <govuk-error-summary *ngIf="hrbrAddressHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link anchorId="hrbr-address-0-input" message="Select an address" />
+  </govuk-error-summary>
+
+  <govuk-radio-group title="Select the address of the building" [isPageHeading]=true [(model)]="selectedAddress" id="radios-hrbr-addresses" [errorText]="getErrorDescription(hrbrAddressHasErrors, 'Select an address.')">
+    <govuk-body>{{addressResponse?.Results?.length}} {{(addressResponse?.Results?.length ?? 0) > 1 ? "addresses" : "address"}} found for <b>{{ searchModel.hrbrNumber }}</b>.</govuk-body>
+
+    <govuk-radio *ngFor="let item of addressResponse?.Results; let i = index" (onKeyupEnter)="continue()" name="application-group" id="hrbr-address-{{i}}" [value]="item" label="{{ item.Address }}" />
+  </govuk-radio-group>
+</div>
+
+<govuk-body><a class="govuk-link" (keyup.enter)="onSearchAgain.emit()" (click)="onSearchAgain.emit()" role="link" tabindex="0">Search again</a></govuk-body>
+<govuk-button (onClick)="continue()">Continue</govuk-button>

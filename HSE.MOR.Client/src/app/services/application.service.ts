@@ -55,6 +55,9 @@ export class ApplicationService {
   async getBuildigsDetailsByBcaReferenceNumber(referenceNumber: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsBuildingDetailsByBcaReferenceAsync/${referenceNumber}`));
   }
+  async getStructureByHrbrNumber(hrbrNumber: string): Promise<StructureDynamicsModel[]> {
+    return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsStructureByHrbrNumberAsync/${hrbrNumber}`));
+  }
 }
 
 export class MORModel {
@@ -147,5 +150,14 @@ export class BuildingDetailsDynamicsModel {
   bsr_address1_city?: string;
   bsr_address1_line2?: string;
 
+}
+
+export class StructureDynamicsModel {
+  bsr_blockid?: string;
+  bsr_name?: string;
+  bsr_addressline1?: string;
+  bsr_addressline2?: string;
+  bsr_city?: string;
+  bsr_postcode?: string;
 }
 

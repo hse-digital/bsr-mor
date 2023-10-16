@@ -1,0 +1,12 @@
+<span class="govuk-caption-l">About the building</span>
+<h1 class="govuk-heading-l">Confirm the building</h1>
+
+<govuk-summary-list>
+
+  <govuk-summary-list-row *ngIf="address.BuildingName" key="Building name">{{address.BuildingName}}</govuk-summary-list-row>
+  <govuk-summary-list-row key="Building address">{{getAddressLineOne()}}</govuk-summary-list-row>
+
+</govuk-summary-list>
+
+<govuk-body>If this isn't the correct building,<a class="govuk-link" (keyup.enter)="onSearchAgain.emit()" (click)="onSearchAgain.emit()" role="link" tabindex="0">re-enter your Building control application reference</a> or <a class="govuk-link" (keyup.enter)="onIdentifyBuilding.emit()" (click)="onIdentifyBuilding.emit()" role="link">choose another means of finding your building</a></govuk-body>
+<govuk-button (onClick)="onAddressConfirmed.emit()">Confirm</govuk-button>

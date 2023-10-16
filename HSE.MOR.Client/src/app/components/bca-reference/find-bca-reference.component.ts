@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, ViewChildren, QueryList, Injector } from '@angular/core';
-import { ApplicationService, BuildingDetailsDynamicsModel, BuildingInformationDynamicsModel } from 'src/app/services/application.service';
+import { ApplicationService, BuildingDetailsDynamicsModel } from 'src/app/services/application.service';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
@@ -49,9 +49,9 @@ export class FindBcaReferenceComponent {
     let referenceNumber = this.searchModel.referenceNumber?.replace(' ', '');
     this.referenceNumberHasErrors = true;
     if (!referenceNumber) {
-      this.referenceNumberErrorText = 'Enter a postcode';
+      this.referenceNumberErrorText = "Enter a reference number";
     } else if (referenceNumber.length < 5 || referenceNumber.length > 12) {
-      this.referenceNumberErrorText = "Enter a real postcode, like 'EC3A 8BF'.";
+      this.referenceNumberErrorText = "Enter a reference number, like 'BCA01001P1Z1'";
     } else {
       this.referenceNumberHasErrors = false;
     }
@@ -63,8 +63,8 @@ export class FindBcaReferenceComponent {
     return this.referenceNumberHasErrors && showError ? errorMessage : undefined;
   }
 
-  mapBuildingDetailsToAddressModel(buildingInformationModelArray: BuildingDetailsDynamicsModel[]) {
-    buildingInformationModelArray.forEach(x => {
+  mapBuildingDetailsToAddressModel(buildingDetailsModelArray: BuildingDetailsDynamicsModel[]) {
+    buildingDetailsModelArray.forEach(x => {
       this.addressModel = {};
       this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode}`;
       this.addressModel.BuildingName = x.bsr_name;
@@ -75,7 +75,7 @@ export class FindBcaReferenceComponent {
       this.addressResponseModel.Results.push(this.addressModel);
     });
 
-    this.addressResponseModel.TotalResults = buildingInformationModelArray.length;
+    this.addressResponseModel.TotalResults = buildingDetailsModelArray.length;
   }
 
 }

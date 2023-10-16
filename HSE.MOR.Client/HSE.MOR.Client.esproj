@@ -20,6 +20,7 @@
     <Folder Include="src\app\features\building\identify-building\" />
     <Folder Include="src\app\features\building\building-address\" />
     <Folder Include="src\app\features\building\bca-reference-number\" />
+    <Folder Include="src\app\features\building\hrbr-reference-number\" />
     <Folder Include="src\app\features\building\submitted-design-bca\" />
     <Folder Include="src\app\features\building\is-building\" />
     <Folder Include="src\app\features\home\" />

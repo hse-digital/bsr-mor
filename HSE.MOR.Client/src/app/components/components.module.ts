@@ -29,6 +29,12 @@ import { TooManyBcaAddressComponent } from "./bca-reference/too-many-bca-address
 import { NotFoundBcaAddressComponent } from "./bca-reference/not-found-bca-address.component";
 import { ConfirmBcaAddressComponent } from "./bca-reference/confirm-bca-address.component";
 import { BcaReferenceComponent } from "./bca-reference/bca-reference.component";
+import { HrbrNumberComponent } from "./hrbr-number/hrbr-number.component";
+import { FindHrbrNumberComponent } from "./hrbr-number/find-hrbr-number.component";
+import { SelectHrbrAddressComponent } from "./hrbr-number/select-hrbr-address.component";
+import { ConfirmHrbrAddressComponent } from "./hrbr-number/confirm-hrbr-address.component";
+import { NotFoundHrbrAddressComponent } from "./hrbr-number/not-found-hrbr-address.component";
+import { TooManyHrbrAddressComponent } from "./hrbr-number/too-many-hrbr-address.component";
 
 @NgModule({
   declarations: [
@@ -59,6 +65,12 @@ import { BcaReferenceComponent } from "./bca-reference/bca-reference.component";
     NotFoundBcaAddressComponent,
     ConfirmBcaAddressComponent,
     BcaReferenceComponent,
+    HrbrNumberComponent,
+    FindHrbrNumberComponent,
+    SelectHrbrAddressComponent,
+    ConfirmHrbrAddressComponent,
+    NotFoundHrbrAddressComponent,
+    TooManyHrbrAddressComponent,
   ],
   imports: [
     HseAngularModule,
@@ -70,6 +82,7 @@ import { BcaReferenceComponent } from "./bca-reference/bca-reference.component";
     AddressComponent,
     AddressDescriptionComponent,
     BcaReferenceComponent,
+    HrbrNumberComponent
   ],
   providers: [HttpClient]
 })
