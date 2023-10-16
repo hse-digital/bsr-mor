@@ -13,6 +13,9 @@ public interface IDynamicsService {
     Task<DynamicsBuildingControlApplication> GetBuildingControlApplicationId_Async(string bcaReferenceNumber);
     Task<List<DynamicsBuildingDetails>> GetDynamicsBuildingDetailsUsingId_Async(string applicationId);
     Task<List<DynamicsBuildingDetails>> GetDynamicsBuildingDetailsUsingBcaReference_Async(string bcaReference);
+    Task<List<DynamicsStructure>> GetDynamicsStructureUsingHrbrNumber_Async(string hrbrNumber);
+    Task<DynamicsBuildingApplication> GetBuildingApplicationId_Async(string hrbrNumber);
+    Task<List<DynamicsStructure>> GetStructureUsingId_Async(string buildingApplicationId);
 }
 
 public class DynamicsService : IDynamicsService
@@ -52,6 +55,16 @@ public class DynamicsService : IDynamicsService
         return response.value.ToList();
     }
 
+    public async Task<List<DynamicsStructure>> GetStructureUsingId_Async(string buildingApplicationId)
+    {
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsStructure>>("bsr_blocks", new[]
+        {
+            ("$filter", $"_bsr_buildingapplicationid_value eq '{buildingApplicationId}'")
+        });
+
+        return response.value.ToList();
+    }
+
     public async Task<List<DynamicsBuildingDetails>> GetDynamicsBuildingDetailsUsingId_Async(string applicationId) 
     {
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsBuildingDetails>>("bsr_buildingdetailses", new[] 
@@ -70,6 +83,14 @@ public class DynamicsService : IDynamicsService
         return response.value.FirstOrDefault();
     }
 
+    public async Task<DynamicsBuildingApplication> GetBuildingApplicationId_Async(string hrbrNumber)
+    {
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsBuildingApplication>>("bsr_buildingapplications",
+            new[] { ("$filter", $"bsr_applicationid eq '{hrbrNumber}'"), ("$select", "bsr_buildingapplicationid") });
+
+        return response.value.FirstOrDefault();
+    }
+
     public async Task<List<DynamicsBuildingDetails>> GetDynamicsBuildingDetailsUsingBcaReference_Async(string bcaReference) 
     {
         var buildingDetailsList = new List<DynamicsBuildingDetails>();
@@ -82,5 +103,19 @@ public class DynamicsService : IDynamicsService
             }          
         }
         return buildingDetailsList;
+    }
+
+    public async Task<List<DynamicsStructure>> GetDynamicsStructureUsingHrbrNumber_Async(string hrbrNumber)
+    {
+        var structuresList = new List<DynamicsStructure>();
+        var buildingApp = await GetBuildingApplicationId_Async(hrbrNumber);
+        if (buildingApp is not null)
+        {
+            if (!string.IsNullOrWhiteSpace(buildingApp.bsr_buildingapplicationid))
+            {
+                structuresList = await GetStructureUsingId_Async(buildingApp.bsr_buildingapplicationid);
+            }
+        }
+        return structuresList;
     }
 }

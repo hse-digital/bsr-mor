@@ -17,7 +17,7 @@ namespace HSE.MOR.API.UnitTests.BuildingDetails;
 public class WhenGettingBuildingDetails
 {
     [Fact]
-    public async Task WhenBuildingInformationIsReturnedNull()
+    public async Task WhenBuildingDetailsIsReturnedNull()
     {
         //Arrange
         var testClass = new BuildingDetailsFunctionTestClass();
@@ -32,7 +32,7 @@ public class WhenGettingBuildingDetails
 
     }
     [Fact]
-    public async Task WhenBuildingInformationIsReturnedEmptyList()
+    public async Task WhenBuildingDetailsIsReturnedEmptyList()
     {
         //Arrange
         var testClass = new BuildingDetailsFunctionTestClass();
@@ -47,7 +47,7 @@ public class WhenGettingBuildingDetails
 
     }
     [Fact]
-    public async Task WhenBuildingInformationIsReturned()
+    public async Task WhenBuildingDetailsIsReturned()
     {
         //Arrange
         var testClass = new BuildingDetailsFunctionTestClass();
@@ -62,30 +62,30 @@ public class WhenGettingBuildingDetails
     }
 
     [Fact]
-    public async Task WhenBuildingInformationIsCorrect()
+    public async Task WhenBuildingDetailsIsCorrect()
     {
         //Arrange
         var testClass = new BuildingDetailsFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.GetDynamicsBuildingDetailsUsingBcaReference_Async("SW1A 1AA")).ReturnsAsync(testClass.GetDynamicsBuildingDetails());
+        testClass.DynamicsService.Setup(x => x.GetDynamicsBuildingDetailsUsingBcaReference_Async("TEST1")).ReturnsAsync(testClass.GetDynamicsBuildingDetails());
         var function = testClass.SUT();
         //Act
         var newRequest = testClass.BuildHttpRequestDataWithUri();
-        var result = await function.GetDynamicsBuildingDetailsByBcaReferenceAsync(newRequest, "SW1A 1AA");
+        var result = await function.GetDynamicsBuildingDetailsByBcaReferenceAsync(newRequest, "TEST1");
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<List<DynamicsBuildingDetails>>(result);
         response.FirstOrDefault().bsr_address1_postalcode.Should().Be("SW1A 1AA");
     }
 
     [Fact]
-    public async Task WhenBuildingInformationIsIncorrect()
+    public async Task WhenBuildingDetailsIsIncorrect()
     {
         //Arrange
         var testClass = new BuildingDetailsFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.GetDynamicsBuildingDetailsUsingBcaReference_Async("WC1E 7JW")).ReturnsAsync(testClass.GetDynamicsBuildingDetailsEmpty());
+        testClass.DynamicsService.Setup(x => x.GetDynamicsBuildingDetailsUsingBcaReference_Async("TEST1")).ReturnsAsync(testClass.GetDynamicsBuildingDetailsEmpty());
         var function = testClass.SUT();
         //Act
         var newRequest = testClass.BuildHttpRequestDataWithUri();
-        var result = await function.GetDynamicsBuildingDetailsByBcaReferenceAsync(newRequest, "WC1E 7JW");
+        var result = await function.GetDynamicsBuildingDetailsByBcaReferenceAsync(newRequest, "TEST1");
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<List<DynamicsBuildingDetails>>(result);
         response.FirstOrDefault().bsr_address1_postalcode.Should().NotBe("SW1A 1AA");

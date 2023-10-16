@@ -11,6 +11,8 @@ public class DynamicsModelDefinitionFactory
         [typeof(BuildingInformation)] = new BuildingInformationModelDefinition(),
         [typeof(BuildingDetails)] = new BuildingDetailsModelDefinition(),
         [typeof(BuildingControlApplication)] = new BuildingControlApplicationModelDefinition(),
+        [typeof(BuildingApplication)] = new BuildingApplicationModelDefinition(),
+        [typeof(Structure)] = new StructureModelDefinition(),
     };
 
     public DynamicsModelDefinition<TEntity, TDynamicsEntity> GetDefinitionFor<TEntity, TDynamicsEntity>() where TEntity : Entity

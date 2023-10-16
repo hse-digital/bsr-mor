@@ -1,0 +1,10 @@
+<div class="govuk-form-group">
+
+  <h1 class="govuk-heading-l">We did not find the address of the building</h1>
+
+  <govuk-body>0 addresses found for  <b>{{ searchModel.hrbrNumber }}</b></govuk-body>
+
+  <govuk-body>
+    <a class="govuk-link" (click)="onSearchAgain.emit()" (keyup.enter)="onSearchAgain.emit()" role="link" tabindex="0">Search again</a>
+  </govuk-body>
+</div>

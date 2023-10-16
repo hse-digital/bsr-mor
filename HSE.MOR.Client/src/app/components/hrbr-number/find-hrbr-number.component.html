@@ -1,0 +1,18 @@
+<div class="govuk-form-group">
+
+  <span class="govuk-caption-l">About the building</span>
+
+  <govuk-error-summary *ngIf="hrbrNumberHasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link anchorId="input-hrbr-number" message="{{hrbrNumberErrorText}}" />
+  </govuk-error-summary>
+
+  <govuk-input id="hrbr-number" label="High-rise residential building registration number"
+               labelClass="govuk-label--l" [isPageHeading]=true
+               [(model)]="searchModel.hrbrNumber"
+               hint="This is the number given by the Building Safety Regulator when you registered the building"
+               [errorText]="getErrorDescription(hrbrNumberHasErrors, hrbrNumberErrorText)"
+               class="govuk-!-margin-bottom-5 govuk-input--width-20"
+               (onKeyupEnter)="findAddress()" />
+
+  <govuk-button [isLoading]="loading" loadingText="Searching..." [disabled]="loading" (onClick)="findAddress()">Continue</govuk-button>
+</div>

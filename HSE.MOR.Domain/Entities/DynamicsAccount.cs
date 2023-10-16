@@ -26,3 +26,9 @@ public static class DynamicsAccountType
         ["other"] = "453982a5-1dad-ed11-83ff-0022481b5e4f"
     };
 }
+
+public enum YesNoOption
+{
+    Yes = 760_810_000,
+    No = 760_810_001
+}
