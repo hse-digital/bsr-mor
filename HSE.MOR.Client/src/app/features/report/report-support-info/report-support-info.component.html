@@ -1,0 +1,13 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <ng-container *ngFor="let message of filesInErrorMessage">
+      <govuk-error-link anchorId="input-file-upload-report" [message]="message" />
+    </ng-container>
+    <ng-container *ngFor="let message of filesUploadingMessage">
+      <govuk-error-link anchorId="input-file-upload-report" [message]="message" />
+    </ng-container>
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">About the occurrence</span>
+  <file-upload-view id="file-upload-report" [model]="model" (onErrorMessageDisplay)="showErrorMessage($event)" (onFilesUploaded)="filesUploaded($event)"></file-upload-view>
+</govuk-formpage>

@@ -41,8 +41,8 @@ export class ApplicationService {
   async updateApplication(): Promise<void> {
     this.updateLocalStorage();
 
-    if (this.model.id) {
-      await firstValueFrom(this.httpClient.put(`api/UpdateApplication/${this.model.id}`, this.model));
+    if (this.model.Id) {
+      await firstValueFrom(this.httpClient.put(`api/UpdateApplication/${this.model.Id}`, this.model));
     }
   }
 
@@ -61,10 +61,11 @@ export class ApplicationService {
 }
 
 export class MORModel {
-  id?: string;
+  Id?: string;
   Notice?: NoticeModel;
   Report?: ReportModel;
   Building?: BuildingModel;
+  FilesUploaded: FileUploadModel[] = [];
   EmailAddress?: string;
   WhatToSubmit?: string;
   IsEmailVerified?: boolean;
@@ -159,5 +160,13 @@ export class StructureDynamicsModel {
   bsr_addressline2?: string;
   bsr_city?: string;
   bsr_postcode?: string;
+}
+
+export class FileUploadModel {
+  Progress: number = 0;
+  FileName?: string;
+  Status?: string;
+  Message?: string;
+  CaseId?: string;
 }
 

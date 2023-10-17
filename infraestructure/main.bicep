@@ -106,13 +106,51 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
     }
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-    name: 's118${environment}bsracshelpsa'
+resource bsrFilesStorageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+    name: 's118${environment}bsrfiles'
     location: location
     sku: {
         name: storageAccountType
     }
     kind: 'Storage'
+}
+
+resource filesBlobServices 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+    name: 'default'
+    parent: bsrFilesStorageAccount
+    properties: {
+        cors: {
+            corsRules: [
+                {
+                    allowedHeaders: [
+                        '*'
+                    ]
+                    allowedMethods: [
+                        'DELETE'
+                        'GET'
+                        'HEAD'
+                        'MERGE'
+                        'POST'
+                        'OPTIONS'
+                        'PUT'
+                        'PATCH'
+                    ]
+                    allowedOrigins: [
+                        '*'
+                    ]
+                    exposedHeaders: [
+                        '*'
+                    ]
+                    maxAgeInSeconds: 1800
+                }
+            ]
+        }
+    }
+}
+
+resource uploadsContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+    name: 'moruploads'
+    parent: filesBlobServices
 }
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
@@ -145,6 +183,14 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                 {
                     name: 'AzureWebJobsStorage'
                     value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${az.environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
+                }
+                {
+                    name: 'BlobStore__ConnectionString'
+                    value: 'DefaultEndpointsProtocol=https;AccountName=${bsrFilesStorageAccount.name};EndpointSuffix=${az.environment().suffixes.storage};AccountKey=${bsrFilesStorageAccount.listKeys().keys[0].value}'
+                }
+                {
+                    name: 'BlobStore__ContainerName'
+                    value: uploadsContainer.name
                 }
                 {
                     name: 'FUNCTIONS_WORKER_RUNTIME'

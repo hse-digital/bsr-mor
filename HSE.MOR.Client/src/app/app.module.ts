@@ -23,6 +23,7 @@ import { NoticeModule } from './features/notice/notice.module';
 import { VerifyEmailComponent } from './features/verify-email/verify-email.component';
 import { EnterEmailComponent } from './features/verify-email/enter-email.component';
 import { EnterReferenceComponent } from './features/report/enter-reference/enter-reference.component';
+import { FileUploadService } from './services/file-upload.service';
 
 
 const routes = new HseRoutes([
@@ -58,7 +59,7 @@ const routes = new HseRoutes([
     HttpClientModule,
     HelpPagesModule
   ],
-  providers: [HttpClient, ApplicationService, CookiesBannerService, ...routes.getProviders()],
+  providers: [HttpClient, ApplicationService, FileUploadService, CookiesBannerService, ...routes.getProviders()],
   bootstrap: [AppComponent]
 })
 export class AppModule {

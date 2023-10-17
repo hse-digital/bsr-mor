@@ -35,6 +35,9 @@ import { SelectHrbrAddressComponent } from "./hrbr-number/select-hrbr-address.co
 import { ConfirmHrbrAddressComponent } from "./hrbr-number/confirm-hrbr-address.component";
 import { NotFoundHrbrAddressComponent } from "./hrbr-number/not-found-hrbr-address.component";
 import { TooManyHrbrAddressComponent } from "./hrbr-number/too-many-hrbr-address.component";
+import { FileUploadInputComponent } from "./file-upload/file-upload-input.component";
+import { FileUploadInfoComponent } from "./file-upload/file-upload-info.component";
+import { FileUploadViewComponent } from "./file-upload/file-upload-view.component";
 
 @NgModule({
   declarations: [
@@ -71,6 +74,9 @@ import { TooManyHrbrAddressComponent } from "./hrbr-number/too-many-hrbr-address
     ConfirmHrbrAddressComponent,
     NotFoundHrbrAddressComponent,
     TooManyHrbrAddressComponent,
+    FileUploadInputComponent,
+    FileUploadInfoComponent,
+    FileUploadViewComponent,
   ],
   imports: [
     HseAngularModule,
@@ -82,7 +88,8 @@ import { TooManyHrbrAddressComponent } from "./hrbr-number/too-many-hrbr-address
     AddressComponent,
     AddressDescriptionComponent,
     BcaReferenceComponent,
-    HrbrNumberComponent
+    HrbrNumberComponent,
+    FileUploadViewComponent,
   ],
   providers: [HttpClient]
 })

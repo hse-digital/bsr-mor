@@ -8,9 +8,14 @@ using HSE.MOR.API.Services;
 using HSE.MOR.Domain.DynamicsDefinitions;
 using AutoMapper;
 using HSE.MOR.API.Models.OrdnanceSurvey;
+using HSE.MOR.API.Extensions;
+using HSE.MOR.API.BlobStore;
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWorkerDefaults()
+    .ConfigureFunctionsWorkerDefaults(workerOptions =>
+    {
+        workerOptions.InputConverters.Register<EncodedRequestConverter>();
+    })
     .ConfigureServices(ConfigureServices)
     .Build();
 
@@ -24,6 +29,9 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.Configure<DynamicsOptions>(builderContext.Configuration.GetSection(DynamicsOptions.Dynamics));
     serviceCollection.Configure<SwaOptions>(builderContext.Configuration.GetSection(SwaOptions.Swa));
     serviceCollection.Configure<IntegrationsOptions>(builderContext.Configuration.GetSection(IntegrationsOptions.Integrations));
+    serviceCollection.Configure<BlobStoreOptions>(builderContext.Configuration.GetSection(BlobStoreOptions.BlobStore));
+    serviceCollection.AddSingleton<IBlobClient, BlobStoreClient>();
+    serviceCollection.AddTransient<IBlobSASUri, BlobSASUri>();
     serviceCollection.AddTransient<OTPService>();
     serviceCollection.AddTransient<IDynamicsService, DynamicsService>();
     serviceCollection.AddTransient<DynamicsModelDefinitionFactory>();
