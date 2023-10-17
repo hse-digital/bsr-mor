@@ -10,7 +10,10 @@ public static class HttpRequestDataExtensions
 {
     public static async Task<T> ReadAsJsonAsync<T>(this HttpRequestData httpRequestData)
     {
-        return await JsonSerializer.DeserializeAsync<T>(httpRequestData.Body);
+        var requestContent = await httpRequestData.ReadAsStringAsync();
+        requestContent = requestContent!.Replace("&39", "'");
+
+        return JsonSerializer.Deserialize<T>(requestContent);
     }
 
     public static async Task<T> ReadAsJsonAsync<T>(this HttpResponseData httpRequestData)
