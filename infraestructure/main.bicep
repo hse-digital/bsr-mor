@@ -203,7 +203,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                 {
                     name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
                     value: appInsights.properties.InstrumentationKey
-                }
+                }               
                 {
                     name: 'Dynamics__EmailVerificationFlowUrl'
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--EmailVerificationFlowUrl)'
@@ -231,6 +231,14 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                 {
                     name: 'CosmosConnection'
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=CosmosConnection)'
+                }
+                {
+                    name: 'Integrations__CommonAPIEndpoint'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Integrations--CommonAPIEndpoint)'
+                }
+                {
+                    name: 'Integrations__CommonAPIKey'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Integrations--CommonAPIKey)'
                 }
                 {
                     name: 'Integrations__OrdnanceSurveyEndpoint'
