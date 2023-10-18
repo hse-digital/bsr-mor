@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Injector, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { ApplicationService } from 'src/app/services/application.service';
-import { AddressModel } from 'src/app/services/address.service';
+import { AddressModel, AddressType } from 'src/app/services/address.service';
 import { AddressSearchMode } from './address.component';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
@@ -25,7 +25,7 @@ export class ManualAddressComponent {
     postcode: { hasErrors: false, errorText: '' },
   }
 
-  model: AddressModel = { IsManual: true }
+  model: AddressModel = { BuildingAddressType: AddressType.PostcodeSearch, IsManual: true }
 
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
 

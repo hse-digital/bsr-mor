@@ -122,6 +122,7 @@ export class BuildingModel {
   LocateBuilding?: string;
   Easting?: string;
   Northing?: string;
+  BcaReference?: string;
 }
 
 export class BuildingsInformationResponse {

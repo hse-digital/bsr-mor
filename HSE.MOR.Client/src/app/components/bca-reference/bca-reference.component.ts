@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AddressModel, AddressResponseModel } from 'src/app/services/address.service';
+import { AddressModel, AddressResponseModel, AddressType } from 'src/app/services/address.service';
 import { NavigationService } from '../../services/navigation.service';
 @Component({
   selector: 'bca-reference',

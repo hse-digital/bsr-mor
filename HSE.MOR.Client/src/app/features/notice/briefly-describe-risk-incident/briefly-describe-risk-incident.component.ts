@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from 'src/app/helpers/page.component';
 import { FieldValidations } from 'src/app/helpers/validators/fieldvalidations';
 import { ApplicationService } from 'src/app/services/application.service';
+import { WhenBecomeAwareComponent } from '../when-become-aware/when-become-aware.component';
 
 @Component({
   selector: 'hse-briefly-describe-risk-incident',
@@ -29,7 +30,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<string> 
   }
 
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.FirstName) && FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.LastName)
   }
 
   override isValid(): boolean {
@@ -37,7 +38,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<string> 
   }
 
   override navigateNext(): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this.navigationService.navigateRelative(WhenBecomeAwareComponent.route, this.activatedRoute);
   }
 
 }

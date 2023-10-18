@@ -3,6 +3,7 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService, NoticeModel, ReportModel} from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
 
 @Component({
   templateUrl: './notice-your-details.component.html'
@@ -33,7 +34,8 @@ export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
     applicationService.model.Notice!.LastName = this.model.LastName;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.BcaReference) || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.HrbNumber)
+      || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.Postcode);
   }
 
   firstNameInError: boolean = false;
@@ -47,6 +49,6 @@ export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative(BrieflyDescribeRiskIncidentComponent.route, this.activatedRoute);
   }
 }

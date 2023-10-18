@@ -1,9 +1,9 @@
-import { Component, Output, EventEmitter, Input, ViewChildren, QueryList, Injector } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ViewChildren, OnInit, QueryList, Injector } from '@angular/core';
 import { ApplicationService, StructureDynamicsModel } from 'src/app/services/application.service';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
-import { AddressModel, AddressResponseModel } from '../../services/address.service';
+import { AddressModel, AddressResponseModel, AddressType } from '../../services/address.service';
 @Component({
   selector: 'find-hrbr-number',
   templateUrl: './find-hrbr-number.component.html'
@@ -26,6 +26,10 @@ export class FindHrbrNumberComponent {
   private applicationService: ApplicationService = this.injector.get(ApplicationService);
 
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
+
+  ngOnInit(): void {
+    this.searchModel = { hrbrNumber: this.applicationService.model.Building?.Address?.HrbNumber }
+  }
 
   constructor(private titleService: TitleService) { }
 
@@ -65,12 +69,13 @@ export class FindHrbrNumberComponent {
 
   mapStructureToAddressModel(structureModelArray: StructureDynamicsModel[]) {
     structureModelArray.forEach(x => {
-      this.addressModel = {};
+      this.addressModel = { BuildingAddressType: AddressType.HRBNumber };
       this.addressModel.Address = `${x.bsr_name}, ${x.bsr_addressline1}, ${x.bsr_city}, ${x.bsr_postcode}`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
       this.addressModel.Postcode = x.bsr_postcode;
+      this.addressModel.HrbNumber = this.searchModel.hrbrNumber;
 
       this.addressResponseModel.Results.push(this.addressModel);
     });

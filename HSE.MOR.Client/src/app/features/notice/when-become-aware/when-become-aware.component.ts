@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from 'src/app/helpers/page.component';
 import { FieldValidations } from 'src/app/helpers/validators/fieldvalidations';
 import { ApplicationService, TimeModel } from 'src/app/services/application.service';
+import { NoticeCheckYourAnswersComponent } from '../notice-check-your-answers/notice-check-your-answers.component';
 
 export type InputDateModel = {day?: string, month?: string, year?: string};
 
@@ -88,7 +89,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.DescribeRiskIncident);
   }
 
   override isValid(): boolean {
@@ -159,7 +160,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   override async navigateNext(): Promise<boolean> {
-    return true;
+    return this.navigationService.navigateRelative(NoticeCheckYourAnswersComponent.route, this.activatedRoute);
   }
 
 }

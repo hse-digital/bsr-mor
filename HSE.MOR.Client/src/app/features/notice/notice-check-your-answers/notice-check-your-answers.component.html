@@ -1,0 +1,33 @@
+<govuk-formpage [processing]="processing" saveAndContinueText="Confirm and send" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+  <h1 class="govuk-heading-l">Check your answers</h1>
+  <govuk-body>Review the information you want to send us</govuk-body>
+
+  <h2 class="govuk-heading-m">About the building</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row *ngIf="!isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isSearchAdress" key="Building address" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" actionDetails="Building Address" [showAction]=true>{{model.Address}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <govuk-summary-list *ngIf="isAddressManual">
+    <govuk-summary-list-row key="Building reqion">{{model.AddressRegion}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Number of floors">{{model.NumberOfFloors}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Building height">{{model.BuildingHeight}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Number of units">{{model.NumberOfUnits}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About your</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" [showAction]=true>{{model.YourName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact details" (onKeyupEnter)="navigateTo('enter-email')" (onClick)="navigateTo('enter-email')" [showAction]=true>{{model.ContactDetails}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About occurrence</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Occurrence type" (onKeyupEnter)="navigateTo('what-to-submit')" (onClick)="navigateTo('what-to-submit')" [showAction]=true>Notice</govuk-summary-list-row>
+    <govuk-summary-list-row key="Summary of the occurrence" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Occurrence date" (onKeyupEnter)="navigateTo('when-become-aware')" (onClick)="navigateTo('when-become-aware')" [showAction]=true>{{model.OccurrenceDateTime}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+</govuk-formpage>

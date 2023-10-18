@@ -23,4 +23,12 @@ public class BuildingAddress
     public string AdministrativeArea { get; init; }
     public string Postcode { get; init; }
     public bool IsManual { get; init; }
+    public AddressType BuildingAddressType { get; set; }
+}
+
+public enum AddressType
+{
+    PostcodeSearch = 0,
+    BCAReference = 1,
+    HRBNumber = 2,
 }
