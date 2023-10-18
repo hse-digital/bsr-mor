@@ -1,9 +1,9 @@
-import { Component, Output, EventEmitter, Input, ViewChildren, QueryList, Injector } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ViewChildren, QueryList, Injector, OnInit } from '@angular/core';
 import { ApplicationService, BuildingDetailsDynamicsModel } from 'src/app/services/application.service';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
-import { AddressModel, AddressResponseModel } from '../../services/address.service';
+import { AddressModel, AddressResponseModel, AddressType } from '../../services/address.service';
 @Component({
   selector: 'find-bca-reference',
   templateUrl: './find-bca-reference.component.html'
@@ -26,6 +26,10 @@ export class FindBcaReferenceComponent {
   private applicationService: ApplicationService = this.injector.get(ApplicationService);
 
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
+
+  ngOnInit(): void {
+    this.searchModel = { referenceNumber: this.applicationService.model.Building?.Address?.BcaReference }
+  }
 
   constructor( private titleService: TitleService) { }
 
@@ -65,12 +69,13 @@ export class FindBcaReferenceComponent {
 
   mapBuildingDetailsToAddressModel(buildingDetailsModelArray: BuildingDetailsDynamicsModel[]) {
     buildingDetailsModelArray.forEach(x => {
-      this.addressModel = {};
+      this.addressModel = { BuildingAddressType: AddressType.BCAReference };
       this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode}`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_address1_line1;
       this.addressModel.Town = x.bsr_address1_city;
       this.addressModel.Postcode = x.bsr_address1_postalcode;
+      this.addressModel.BcaReference = this.searchModel.referenceNumber;
 
       this.addressResponseModel.Results.push(this.addressModel);
     });

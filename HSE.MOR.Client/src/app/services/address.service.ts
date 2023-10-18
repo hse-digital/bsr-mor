@@ -54,5 +54,14 @@ export class AddressModel {
   BuildingId?: string;
   StructureId?: string;
   ContactId?: string;
+  BuildingAddressType?: AddressType;
+  BcaReference?: string;
+  HrbNumber?: string;
+}
+
+export enum AddressType {
+  PostcodeSearch,
+  BCAReference,
+  HRBNumber
 }
 

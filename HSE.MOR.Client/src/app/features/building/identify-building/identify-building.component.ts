@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { NotFoundComponent } from '../../../components/not-found/not-found.component';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
+import { BcaReferenceNumberComponent } from '../bca-reference-number/bca-reference-number.component';
+import { HrbrReferenceNumberComponent } from '../hrbr-reference-number/hrbr-reference-number.component';
+import { IsBuildingComponent } from '../is-building/is-building.component';
 
 @Component({
   templateUrl: './identify-building.component.html'
@@ -12,6 +16,7 @@ import { ApplicationService } from '../../../services/application.service';
 export class IdentifyBuildingComponent extends PageComponent<string> {
   public static route: string = 'identify-building';
   static title: string = "How can you identify your building?";
+
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Building) {
@@ -37,6 +42,10 @@ export class IdentifyBuildingComponent extends PageComponent<string> {
     }
   }
 
+  navigateToisBuilding() {
+    this.navigationService.navigateRelative(IsBuildingComponent.route, this.activatedRoute);
+  }
+
   hasIdentifyBuildingErrors: boolean = false;
   modelValid: boolean = false;
 
@@ -45,11 +54,17 @@ export class IdentifyBuildingComponent extends PageComponent<string> {
     this.hasIdentifyBuildingErrors = this.modelValid;
     return !this.modelValid;
   }
+  getRouteKey(key: string) {
+    switch (key) {
+      case "building_reference": return BcaReferenceNumberComponent.route;
+      case "building_registration": return HrbrReferenceNumberComponent.route;
+    }
+    return NotFoundComponent.route;
+  }
 
   navigateNext(): Promise<boolean> {
-    var routeKey = this.model == "building_reference" ? "bca-reference-number" : "not-found";
-    let route = NavigationHelper.getRoute(routeKey);
-    return this.navigationService.navigate(route);
+    var routeKey = this.getRouteKey(this.model!);
+    return this.navigationService.navigateRelative(routeKey, this.activatedRoute);
   }
 
 }

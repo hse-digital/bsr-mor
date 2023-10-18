@@ -68,7 +68,7 @@ export class AddressComponent implements OnInit {
 
   addressRegion(region: string) {
     if (region == "england") {
-      this.changeStepTo('prof-number-of-floors');
+      this.changeStepTo('manual');
     } else {
       this.changeStepTo("not-in-scope");
     }
@@ -130,7 +130,7 @@ export class AddressComponent implements OnInit {
   profNumberOfUnits(units: number) {
     this.applicationService.model.Building!.NumberOfUnitsProf = units;
     if (this.isInScope(this.applicationService.model.Building!)) {
-      this.changeStepTo('manual');
+      this.changeStepTo('confirm');
     } else {
       this.changeStepTo("building-not-in-scope");
     }
@@ -138,7 +138,7 @@ export class AddressComponent implements OnInit {
 
   manualAddressEntered(address: AddressModel) {
     this.address = address;
-    this.changeStepTo('confirm');
+    this.changeStepTo('prof-number-of-floors');
   }
 
   searchAgain() {

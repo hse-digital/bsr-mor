@@ -3,6 +3,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { PageComponent } from '../../helpers/page.component';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../services/application.service';
+import { WhatToSubmitComponent } from '../what-to-submit/what-to-submit.component';
 
 @Component({
   templateUrl: './verify-email.component.html'
@@ -50,7 +51,7 @@ export class VerifyEmailComponent extends PageComponent<number> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('what-to-submit');
+    return this.navigationService.navigate(WhatToSubmitComponent.route);
   }
 
   getOtpError() {

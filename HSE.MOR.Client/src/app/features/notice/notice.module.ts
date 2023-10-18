@@ -10,11 +10,13 @@ import { HseRoute, HseRoutes } from 'src/app/helpers/hse.route';
 import { WhenBecomeAwareComponent } from './when-become-aware/when-become-aware.component';
 import { BuildingModule } from '../building/building.module';
 import { NoticeYourDetailsComponent } from './notice-your-details/notice-your-details.component';
+import { NoticeCheckYourAnswersComponent } from './notice-check-your-answers/notice-check-your-answers.component';
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
   HseRoute.protected(WhenBecomeAwareComponent.route, WhenBecomeAwareComponent, WhenBecomeAwareComponent.title),
   HseRoute.protected(NoticeYourDetailsComponent.route, NoticeYourDetailsComponent, NoticeYourDetailsComponent.title),
+  HseRoute.protected(NoticeCheckYourAnswersComponent.route, NoticeCheckYourAnswersComponent, NoticeCheckYourAnswersComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 ]);
 
@@ -22,7 +24,8 @@ const routes = new HseRoutes([
   declarations: [
     BrieflyDescribeRiskIncidentComponent,
     WhenBecomeAwareComponent,
-    NoticeYourDetailsComponent
+    NoticeYourDetailsComponent,
+    NoticeCheckYourAnswersComponent
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

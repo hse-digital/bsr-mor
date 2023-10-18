@@ -1,6 +1,6 @@
-import { Component, Output, EventEmitter, Input, ViewChildren, QueryList, Injector } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ViewChildren, OnInit, QueryList, Injector } from '@angular/core';
 import { ApplicationService, BuildingDetailsDynamicsModel, BuildingInformationDynamicsModel } from 'src/app/services/application.service';
-import { AddressModel, AddressResponseModel, AddressService } from 'src/app/services/address.service';
+import { AddressModel, AddressResponseModel, AddressService, AddressType } from 'src/app/services/address.service';
 import { AddressSearchMode } from './address.component';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
@@ -31,6 +31,10 @@ export class FindAddressComponent {
   private applicationService: ApplicationService = this.injector.get(ApplicationService);
 
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
+
+  ngOnInit(): void {
+    this.searchModel = { postcode: this.applicationService.model.Building?.Address?.Postcode }
+  }
 
   constructor(private addressService: AddressService, private titleService: TitleService) { }
 
@@ -79,9 +83,6 @@ export class FindAddressComponent {
     return this.postcodeHasErrors && showError ? errorMessage : undefined;
   }
 
-  private searchBuildingAddressByUPRN(uprn: string): Promise<AddressResponseModel> {
-    return this.addressService.SearchBuildingAddressBy_UPRN(uprn);
-  }
   private searchAddress(): Promise<AddressResponseModel> {
     switch (this.searchMode) {
       case AddressSearchMode.Building:
@@ -93,13 +94,13 @@ export class FindAddressComponent {
 
   mapBuildingInformationToAddressModel(buildingInformationModelArray: BuildingInformationDynamicsModel[]) {
     buildingInformationModelArray.forEach(x => {
-      this.addressModel = {};
+      this.addressModel = { BuildingAddressType: AddressType.PostcodeSearch };
       this.addressModel.Address = `${x.bsr_name}, ${x.bsr_addressline1}, ${x.bsr_city}, ${x.bsr_postcode}`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
       this.addressModel.Postcode = x.bsr_postcode;
-      
+
       this.addressResponseModel.Results.push(this.addressModel);
     });
 
@@ -108,13 +109,12 @@ export class FindAddressComponent {
 
   mapBuildingDetailsToAddressModel(buildingInformationModelArray: BuildingDetailsDynamicsModel[]) {
     buildingInformationModelArray.forEach(x => {
-      this.addressModel = {};
+      this.addressModel = { BuildingAddressType: AddressType.PostcodeSearch };
       this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode}`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_address1_line1;
       this.addressModel.Town = x.bsr_address1_city;
       this.addressModel.Postcode = x.bsr_address1_postalcode;
-
       this.addressResponseModel.Results.push(this.addressModel);
     });
 

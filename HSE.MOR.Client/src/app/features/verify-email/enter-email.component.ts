@@ -4,6 +4,7 @@ import { PageComponent } from '../../helpers/page.component';
 import { EmailValidator } from '../../helpers/validators/email-validator';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../services/application.service';
+import { VerifyEmailComponent } from './verify-email.component';
 
 @Component({
   templateUrl: './enter-email.component.html'
@@ -43,6 +44,6 @@ export class EnterEmailComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('verify-email');
+    return this.navigationService.navigate(VerifyEmailComponent.route);
   }
 }

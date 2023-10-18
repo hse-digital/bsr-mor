@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
+import { BcaReferenceNumberComponent } from '../bca-reference-number/bca-reference-number.component';
 
 @Component({
   templateUrl: './submitted-design-bca.component.html'
@@ -25,7 +26,7 @@ export class SubmittedDesignBcaComponent extends PageComponent<string> {
     applicationService.model.Building!.SubmittedDesignBca = this.model;
   }
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.BuildingType) && applicationService.model.Building?.BuildingType == "in_design";
   }
 
   hasSubmittedDesignBcaErrors: boolean = false;
@@ -37,7 +38,9 @@ export class SubmittedDesignBcaComponent extends PageComponent<string> {
     return !this.modelValid;
   }
   navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.model == "yes_reference"
+      ? this.navigationService.navigateRelative(BcaReferenceNumberComponent.route, this.activatedRoute)
+      : this.navigationService.navigate('');
   }
 
 }

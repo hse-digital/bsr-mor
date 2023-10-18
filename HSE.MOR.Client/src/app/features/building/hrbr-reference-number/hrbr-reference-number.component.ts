@@ -5,8 +5,10 @@ import { AddressModel } from "src/app/services/address.service";
 import { ApplicationService } from "src/app/services/application.service";
 import { NavigationService } from "src/app/services/navigation.service";
 import { TitleService } from 'src/app/services/title.service';
+import { NotFoundComponent } from "../../../components/not-found/not-found.component";
 import { GetInjector } from "../../../helpers/injector.helper";
 import { NavigationHelper } from "../../../helpers/navigation.helper";
+import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 
 @Component({
   templateUrl: './hrbr-reference-number.component.html'
@@ -86,7 +88,11 @@ export class HrbrReferenceNumberComponent implements OnInit {
   }
 
   canActivate(routeSnapshot: ActivatedRouteSnapshot) {
-    return true;
+    var isCanActivate = (FieldValidations.IsNotNullOrWhitespace(this.applicationService.model.Building?.IdentifyBuilding) && this.applicationService.model.WhatToSubmit == "notice" && this.applicationService.model.Building?.IdentifyBuilding == "building_registration")
+      || (FieldValidations.IsNotNullOrWhitespace(this.applicationService.model.Building?.IdentifyBuilding) && this.applicationService.model.WhatToSubmit == "report" && this.applicationService.model.Building?.IdentifyBuilding == "building_registration");
+    if (!isCanActivate) {
+      this.navigationService.navigate(NotFoundComponent.route);
+    }
   }
 
 }
