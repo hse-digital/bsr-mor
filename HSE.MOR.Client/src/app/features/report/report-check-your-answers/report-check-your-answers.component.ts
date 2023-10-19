@@ -9,7 +9,7 @@ import { NavigationHelper } from '../../../helpers/navigation.helper';
   templateUrl: './notice-check-your-answers.component.html'
 })
 
-export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersNoticeModel> {
+export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersReportModel> {
   public static route: string = 'check-your-answers';
   static title: string = "Check your answers";
   baseRoutes: string[] = ["enter-email", "what-to-submit"];
@@ -22,7 +22,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   isAddressManual: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
-    this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false; 
+    this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
     this.isAddressManual = applicationService.model.Building?.Address?.IsManual ?? false;
@@ -75,10 +75,10 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
       this.model.NumberOfUnits = buildingModel?.NumberOfUnitsProf?.toString();
       this.model.BuildingHeight = buildingModel?.BuildingHeight?.toString();
     }
-    
+
   }
 
-  setValuesToNoticeModel(noticeModel: NoticeModel) {  
+  setValuesToNoticeModel(noticeModel: NoticeModel) {
     this.model.YourName = `${noticeModel.FirstName} ${noticeModel.LastName}`;
     this.model.Incident = noticeModel.DescribeRiskIncident;
     this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour} ${this.setMeridiem(noticeModel.WhenBecomeAware!.Hour!)}`;
@@ -110,9 +110,11 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     return this.navigationService.navigateRelative('confirmation', this.activatedRoute);
   }
 }
-export class CheckAnswersNoticeModel {
+export class CheckAnswersReportModel {
   Address?: string;
   YourName?: string;
+  SubmittedNotice?: string;
+  NoticeReference?: string;
   Incident?: string;
   OccurrenceDateTime?: string;
   ContactDetails?: string;
@@ -123,5 +125,5 @@ export class CheckAnswersNoticeModel {
   BuildingHeight?: string;
   BcaReference?: string;
   HrbNumber?: string;
-  
+
 }
