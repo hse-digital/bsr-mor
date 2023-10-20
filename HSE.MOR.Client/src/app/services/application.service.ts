@@ -76,6 +76,8 @@ export class NoticeModel {
   WhenBecomeAware?: TimeModel;
   FirstName?: string;
   LastName?: string;
+  ContactNumber?: string;
+  OrganisationName?: string;
   OrgRole?: string;
   OrgRoleOther?: string;
 }
@@ -100,6 +102,8 @@ export class ReportModel {
   IncidentKeepPeopleSafe?: string;
   OrganisationFindOut?: string;
   OccurrenceDiscovered?: string;
+  OrganisationName?: string;
+  ContactNumber?: string;
 }
 
 export class TimeModel {
