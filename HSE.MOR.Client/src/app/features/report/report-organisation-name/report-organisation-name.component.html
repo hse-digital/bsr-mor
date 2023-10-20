@@ -1,15 +1,14 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
 
-  <span class="govuk-caption-l">About you</span>
+  <span class="govuk-caption-l">About the organisation</span>
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link anchorId="input-org-name" message="{{ErrorMessage}}" />
+    <govuk-error-link anchorId="input-report-org-name" message="{{ErrorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-input id="org-name" label="What is the name of the organisation you represent?" labelClass="govuk-label--l" [isPageHeading]=true
+  <govuk-input id="report-org-name" label="Tell us your organisation name?" labelClass="govuk-label--l" [isPageHeading]=true
                [(model)]="model" #field [govukRequired]="field" [maxlength]="50"
                [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
                class="govuk-input--width-20 govuk-!-margin-bottom-5"
-               hint="For example, when you are making a MOR on behalf of an organisation."
                (onKeyupEnter)="saveAndContinue()" />
 
 </govuk-formpage>

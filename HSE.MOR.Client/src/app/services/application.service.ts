@@ -77,6 +77,7 @@ export class NoticeModel {
   FirstName?: string;
   LastName?: string;
   ContactNumber?: string;
+  OrganisationName?: string;
 }
 
 export class ReportModel {

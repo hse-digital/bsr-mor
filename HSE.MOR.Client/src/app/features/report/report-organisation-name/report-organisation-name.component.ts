@@ -5,12 +5,12 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
 @Component({
-  templateUrl: './organisation-name.component.html'
+  templateUrl: './report-organisation-name.component.html'
 })
 
-export class OrganisationNameComponent extends PageComponent<string> {
-  public static route: string = 'organisation-name';
-  static title: string = "What is the name of the organisation you represent? – Tell the Building Safety Regulator about a mandatory occurrence";
+export class ReportOrganisationNameComponent extends PageComponent<string> {
+  public static route: string = 'report-organisation-name';
+  static title: string = "Tell us your organisation name? – Tell the Building Safety Regulator about a mandatory occurrence";
 
 
   override onInit(applicationService: ApplicationService): void {
