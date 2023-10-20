@@ -11,7 +11,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 export class ReportOrgRoleComponent extends PageComponent<string> {
   public static route: string = 'report-org-role';
   static title: string = "How is undefined involved in this building?";
-  organisationName: string = "Test";
+  organisationName?: string;
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Report) {
@@ -21,6 +21,7 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
       applicationService.model.Report.OrgRole = "";
     }     
     this.model = applicationService.model.Report.OrgRole;
+    this.organisationName = applicationService.model.Report.OrganisationName ?? "organisation";
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.OrgRole = this.model;

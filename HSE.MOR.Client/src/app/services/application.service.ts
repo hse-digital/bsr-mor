@@ -79,13 +79,11 @@ export class NoticeModel {
   ContactNumber?: string;
   OrganisationName?: string;
   OrgRole?: string;
-  OrgRoleOther?: string;
 }
 
 export class ReportModel {
   NoticeReference?: string;
   OrgRole?: string;
-  OrgRoleOther?: string;
   WhatToReport?: string;
   SubmittedNotice?: string;
   FirstName?: string;
