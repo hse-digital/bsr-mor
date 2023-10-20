@@ -5,11 +5,11 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
 @Component({
-  templateUrl: './role-in-submit-notice.component.html'
+  templateUrl: './report-org-role.component.html'
 })
 
-export class RoleInSubmitNoticeComponent extends PageComponent<ReportModel> {
-  public static route: string = 'role-in-submit-notice';
+export class ReportOrgRoleComponent extends PageComponent<ReportModel> {
+  public static route: string = 'report-org-role';
   static title: string = "How is undefined involved in this building?";
   override model = new ReportModel();
   organisationName: string = "Test";
