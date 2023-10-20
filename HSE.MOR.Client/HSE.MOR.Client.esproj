@@ -27,6 +27,7 @@
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\report\incident-details\" />
+    <Folder Include="src\app\features\report\organisation-name\" />
     <Folder Include="src\app\features\report\duty-holder-can-submit\" />
     <Folder Include="src\app\features\report\report-support-info\" />
     <Folder Include="src\app\features\report\risk-details\" />
