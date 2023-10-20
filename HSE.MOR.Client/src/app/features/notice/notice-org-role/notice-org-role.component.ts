@@ -1,29 +1,30 @@
 import { Component, ViewChild } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, ReportModel } from "../../../services/application.service";
+import { ApplicationService, NoticeModel } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
 @Component({
-  templateUrl: './report-org-role.component.html'
+  templateUrl: './notice-org-role.component.html'
 })
 
-export class ReportOrgRoleComponent extends PageComponent<string> {
-  public static route: string = 'report-org-role';
+export class NoticeOrgRoleComponent extends PageComponent<string> {
+  public static route: string = 'notice-org-role';
   static title: string = "How is undefined involved in this building?";
   organisationName: string = "Test";
 
   override onInit(applicationService: ApplicationService): void {
-    if (!applicationService.model.Report) {
-      applicationService.model.Report = {};
-    }  
-    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.OrgRole)) {
-      applicationService.model.Report.OrgRole = "";
-    }     
-    this.model = applicationService.model.Report.OrgRole;
+    if (!applicationService.model.Notice) {
+      applicationService.model.Notice = {};
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.OrgRole)) {
+      applicationService.model.Notice.OrgRole = "";
+    }
+    this.model = applicationService.model.Notice.OrgRole;
+
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.Report!.OrgRole = this.model;
+    applicationService.model.Notice!.OrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
@@ -31,8 +32,6 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
 
   modelValid: boolean = true;
   hasOrgRoleErrors: boolean = true;
-  hasOrgRoleOtherErrors: boolean = true;
-
 
   isValid(): boolean {
     this.modelValid = !FieldValidations.IsNotNullOrWhitespace(this.model);

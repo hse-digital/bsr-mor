@@ -76,12 +76,14 @@ export class NoticeModel {
   WhenBecomeAware?: TimeModel;
   FirstName?: string;
   LastName?: string;
+  OrgRole?: string;
+  OrgRoleOther?: string;
 }
 
 export class ReportModel {
   NoticeReference?: string;
-  RoleInNoticeSubmit?: string;
-  RoleInNoticeSubmitOther?: string;
+  OrgRole?: string;
+  OrgRoleOther?: string;
   WhatToReport?: string;
   SubmittedNotice?: string;
   FirstName?: string;

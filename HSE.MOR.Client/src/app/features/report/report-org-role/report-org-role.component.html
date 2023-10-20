@@ -1,19 +1,16 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
 
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link *ngIf="!hasRoleInNoticeSubmitErrors" anchorId="role-in-submit-acc-person-input" message="Tell us who you are" />
-    <govuk-error-link *ngIf="!hasRoleInNoticeSubmitOtherErrors" anchorId="input-role-in-submit-other-description" message="Tell us who you are" />
+    <govuk-error-link *ngIf="hasOrgRoleErrors" anchorId="report-org-role-acc-person-input" message="You need to tell us the role of you or your organisation" />
   </govuk-error-summary>
 
   <span class="govuk-caption-l">About you</span>
-  <govuk-radio-group id="radios-role-in-submit" class="govuk-!-margin-bottom-4" title="How is undefined involved in this building?" [isPageHeading]="true" [(model)]="model.RoleInNoticeSubmit" #field [govukRequired]="field" [errorText]="getErrorDescription(hasRoleInNoticeSubmitErrors, 'You need to tell us the role of you or your organisation')">
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model.RoleInNoticeSubmit" name="role-in-submit-group" id="role-in-submit-acc-person" value="acc_person" label="Accountable person" />
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model.RoleInNoticeSubmit" name="role-in-submit-group" id="role-in-submit-principal-acc-person" value="principal_acc_person" label="Principal accountable person" />
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model.RoleInNoticeSubmit" name="role-in-submit-group" id="role-in-submit-principal-contractor" value="principal_contractor" label="Principal contractor" />
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model.RoleInNoticeSubmit" name="role-in-submit-group" id="role-in-submit-principal-designer" value="principal_designer" label="Principal designer" />
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model.RoleInNoticeSubmit" name="role-in-submit-group" id="role-in-submit-on-behalf" value="on-behalf" label="Acting on behalf of the duty holder. For example, a managing agent" />
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model.RoleInNoticeSubmit" name="role-in-submit-group" id="role-in-submit-other" label="Other" value="Other">
-      <govuk-input (onKeyupEnter)="saveAndContinue()" class="govuk-input--width-20" id="role-in-submit-other-description" [(model)]="model.RoleInNoticeSubmitOther" label="Enter {{organisationName}} role" labelClass="govuk-label--s" [errorText]="getErrorDescription(hasErrors, 'You need to tell us the role of the organisation')" />
-    </govuk-radio>
+  <govuk-radio-group id="radios-report-org-role" class="govuk-!-margin-bottom-4" title="How is undefined involved in this building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasOrgRoleErrors, 'You need to tell us the role of you or your organisation')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-acc-person" value="acc_person" label="Accountable person" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-principal-acc-person" value="principal_acc_person" label="Principal accountable person" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-principal-contractor" value="principal_contractor" label="Principal contractor" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-principal-designer" value="principal_designer" label="Principal designer" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-on-behalf" value="on-behalf" label="Acting on behalf of the duty holder. For example, a managing agent" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-other" label="Other" value="other" />  
   </govuk-radio-group>
 </govuk-formpage>

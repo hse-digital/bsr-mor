@@ -25,9 +25,11 @@
     <Folder Include="src\app\features\building\submitted-design-bca\" />
     <Folder Include="src\app\features\building\is-building\" />
     <Folder Include="src\app\features\home\" />
+    <Folder Include="src\app\features\notice\notice-org-role\" />
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\report\incident-details\" />
     <Folder Include="src\app\features\report\report-support-info\" />
+    <Folder Include="src\app\features\report\report-org-role\" />
     <Folder Include="src\app\features\report\risk-details\" />
     <Folder Include="src\app\features\verify-email\" />
     <Folder Include="src\app\features\report\enter-reference\" />
