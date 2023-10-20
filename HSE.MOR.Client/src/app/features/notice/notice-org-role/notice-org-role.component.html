@@ -1,0 +1,16 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasOrgRoleErrors" anchorId="notice-org-role-acc-person-input" message="You need to tell us the role of you or your organisation" />
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">About you</span>
+  <govuk-radio-group id="radios-notice-org-role" class="govuk-!-margin-bottom-4" title="How is {{organisationName}} involved in this building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasOrgRoleErrors, 'You need to tell us the role of you or your organisation')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="notice-org-role-group" id="notice-org-role-acc-person" value="acc_person" label="Accountable person" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="notice-org-role-group" id="notice-org-role-principal-acc-person" value="principal_acc_person" label="Principal accountable person" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="notice-org-role-group" id="notice-org-role-principal-contractor" value="principal_contractor" label="Principal contractor" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="notice-org-role-group" id="notice-org-role-principal-designer" value="principal_designer" label="Principal designer" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="notice-org-role-group" id="notice-org-role-on-behalf" value="on-behalf" label="Acting on behalf of the duty holder. For example, a managing agent" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="notice-org-role-group" id="notice-org-role-other" label="Other" value="other" />
+  </govuk-radio-group>
+</govuk-formpage>

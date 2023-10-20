@@ -13,6 +13,7 @@ import { NoticeYourDetailsComponent } from './notice-your-details/notice-your-de
 import { NoticeCheckYourAnswersComponent } from './notice-check-your-answers/notice-check-your-answers.component';
 import { NoticeContactNumberComponent } from './notice-contact-number/notice-contact-number.component';
 import { NoticeOrganisationNameComponent } from './notice-organisation-name/notice-organisation-name.component';
+import { NoticeOrgRoleComponent } from './notice-org-role/notice-org-role.component';
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
@@ -21,6 +22,7 @@ const routes = new HseRoutes([
   HseRoute.protected(NoticeCheckYourAnswersComponent.route, NoticeCheckYourAnswersComponent, NoticeCheckYourAnswersComponent.title),
   HseRoute.protected(NoticeContactNumberComponent.route, NoticeContactNumberComponent, NoticeContactNumberComponent.title),
   HseRoute.protected(NoticeOrganisationNameComponent.route, NoticeOrganisationNameComponent, NoticeOrganisationNameComponent.title),
+  HseRoute.protected(NoticeOrgRoleComponent.route, NoticeOrgRoleComponent, NoticeOrgRoleComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 ]);
 
@@ -32,6 +34,8 @@ const routes = new HseRoutes([
     NoticeCheckYourAnswersComponent,
     NoticeContactNumberComponent,
     NoticeOrganisationNameComponent,
+    NoticeCheckYourAnswersComponent,
+    NoticeOrgRoleComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

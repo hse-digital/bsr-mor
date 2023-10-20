@@ -19,6 +19,7 @@ import { ReportSupportInfoComponent } from "./report-support-info/report-support
 import { ReportOrganisationNameComponent } from "./report-organisation-name/report-organisation-name.component";
 import { DutyHolderCanSubmitComponent } from "./duty-holder-can-submit/duty-holder-can-submit.component";
 import { ReportContactNumberComponent } from "./report-contact-number/report-contact-number.component";
+import { ReportOrgRoleComponent } from "./report-org-role/report-org-role.component";
 
 
 const routes = new HseRoutes([
@@ -34,6 +35,7 @@ const routes = new HseRoutes([
   HseRoute.protected(ReportOrganisationNameComponent.route, ReportOrganisationNameComponent, ReportOrganisationNameComponent.title),
   HseRoute.protected(DutyHolderCanSubmitComponent.route, DutyHolderCanSubmitComponent, DutyHolderCanSubmitComponent.title),
   HseRoute.protected(ReportContactNumberComponent.route, ReportContactNumberComponent, ReportContactNumberComponent.title),
+  HseRoute.protected(ReportOrgRoleComponent.route, ReportOrgRoleComponent, ReportOrgRoleComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
 ]);
 
@@ -51,6 +53,7 @@ const routes = new HseRoutes([
     ReportOrganisationNameComponent,
     DutyHolderCanSubmitComponent,
     ReportContactNumberComponent,
+    ReportOrgRoleComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

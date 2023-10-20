@@ -78,10 +78,12 @@ export class NoticeModel {
   LastName?: string;
   ContactNumber?: string;
   OrganisationName?: string;
+  OrgRole?: string;
 }
 
 export class ReportModel {
   NoticeReference?: string;
+  OrgRole?: string;
   WhatToReport?: string;
   SubmittedNotice?: string;
   FirstName?: string;

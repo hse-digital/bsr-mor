@@ -13,7 +13,7 @@ export type InputDateModel = {day?: string, month?: string, year?: string};
 })
 export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   public static route: string = 'when-become-aware';
-  static title: string = "";
+  static title: string = "When did you identify the risk or incident?";
 
   inputDateModel?: InputDateModel;
   inputTimeModel?: string;
