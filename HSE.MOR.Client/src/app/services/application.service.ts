@@ -96,6 +96,7 @@ export class ReportModel {
   IncidentKeepPeopleSafe?: string;
   OrganisationFindOut?: string;
   OccurrenceDiscovered?: string;
+  OrganisationName?: string;
 }
 
 export class TimeModel {
