@@ -4,6 +4,7 @@ import { ApplicationService, NoticeModel, ReportModel} from "../../../services/a
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
+import { NoticeContactNumberComponent } from '../notice-contact-number/notice-contact-number.component';
 
 @Component({
   templateUrl: './notice-your-details.component.html'
@@ -49,6 +50,6 @@ export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(BrieflyDescribeRiskIncidentComponent.route, this.activatedRoute);
+    return this.navigationService.navigateRelative(NoticeContactNumberComponent.route, this.activatedRoute);
   }
 }
