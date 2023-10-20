@@ -80,6 +80,8 @@ export class NoticeModel {
 
 export class ReportModel {
   NoticeReference?: string;
+  RoleInNoticeSubmit?: string;
+  RoleInNoticeSubmitOther?: string;
   WhatToReport?: string;
   SubmittedNotice?: string;
   FirstName?: string;

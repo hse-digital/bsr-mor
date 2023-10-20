@@ -27,6 +27,7 @@
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\report\incident-details\" />
+    <Folder Include="src\app\features\report\role-in-submit-notice\" />
     <Folder Include="src\app\features\report\report-support-info\" />
     <Folder Include="src\app\features\report\risk-details\" />
     <Folder Include="src\app\features\verify-email\" />

@@ -108,7 +108,8 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     return true
   }
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative('confirmation', this.activatedRoute);
+    let route = NavigationHelper.getRoute("report-role-in-submit-notice");
+    return this.navigationService.navigate(route);
   }
 }
 export class CheckAnswersNoticeModel {

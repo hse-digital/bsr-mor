@@ -9,6 +9,7 @@ import { NoticeModule } from "../features/notice/notice.module";
 import { EnterReferenceComponent } from "../features/report/enter-reference/enter-reference.component";
 import { ReportYourDetailsComponent } from "../features/report/report-your-details/report-your-details.component";
 import { ReportModule } from "../features/report/report.module";
+import { RoleInSubmitNoticeComponent } from "../features/report/role-in-submit-notice/role-in-submit-notice.component";
 
 export class NavigationHelper {
 
@@ -27,6 +28,7 @@ export class NavigationHelper {
     "notice-identify-building": `/${NoticeModule.baseRoute}/${BuildingModule.baseRoute}/${IdentifyBuildingComponent.route}`,
     "notice-your-details": `/${NoticeModule.baseRoute}/${NoticeYourDetailsComponent.route}`,
     "report-your-details": `/${ReportModule.baseRoute}/${ReportYourDetailsComponent.route}`,
+    "report-role-in-submit-notice": `/${ReportModule.baseRoute}/${RoleInSubmitNoticeComponent.route}`,
   };
 
   static getRoute(key: string): string {
