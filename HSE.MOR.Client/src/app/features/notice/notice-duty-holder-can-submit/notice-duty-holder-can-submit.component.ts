@@ -1,21 +1,20 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { expand } from 'rxjs';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService } from '../../../services/application.service';
 
 @Component({
-  templateUrl: './duty-holder-can-submit.component.html'
+  templateUrl: './notice-duty-holder-can-submit.component.html'
 })
-export class DutyHolderCanSubmitComponent extends PageComponent<string>  {
-  public static route: string = "duty-holder-can-submit";
+export class NoticeDutyHolderCanSubmitComponent extends PageComponent<string>  {
+  public static route: string = "notice-duty-holder-can-submit";
   static title: string = "Only certain duty holders can submit a mandatory occurrence report";
 
   override onInit(applicationService: ApplicationService): void {
-      
+
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-      
+
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
