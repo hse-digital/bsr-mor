@@ -3,6 +3,7 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { NoticeOrgRoleComponent } from '../notice-org-role/notice-org-role.component';
 
 @Component({
   templateUrl: './notice-organisation-name.component.html'
@@ -49,6 +50,6 @@ export class NoticeOrganisationNameComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative(NoticeOrgRoleComponent.route, this.activatedRoute);
   }
 }
