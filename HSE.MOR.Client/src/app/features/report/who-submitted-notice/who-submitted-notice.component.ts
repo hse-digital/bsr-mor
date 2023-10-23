@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
+import { ReportYourDetailsComponent } from '../report-your-details/report-your-details.component';
 
 @Component({
   templateUrl: './who-submitted-notice.component.html'
@@ -39,7 +40,7 @@ export class WhoSubmittedNoticeComponent extends PageComponent<string> {
     return !this.modelValid;
   }
   navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative(ReportYourDetailsComponent.route, this.activatedRoute);
   }
 
 }

@@ -32,7 +32,7 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
   private fileUploadService: FileUploadService = this.injector.get(FileUploadService);
 
   ngOnInit(): void {
-    this.fileModel = this.applicationService.model.FilesUploaded ? this.applicationService.model.FilesUploaded : [];
+    this.fileModel = this.applicationService.model.Report!.FilesUploaded ? this.applicationService.model.Report!.FilesUploaded : [];
     this.caseId = this.applicationService.model.Id;
   }
 
@@ -133,9 +133,9 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
   }
 
   async filesProcessed() {
-    this.applicationService.model.FilesUploaded = this.fileModel;
+    this.applicationService.model.Report!.FilesUploaded = this.fileModel;
     await this.applicationService.updateApplication();
-    this.onFilesUploaded.emit(this.applicationService.model.FilesUploaded);
+    this.onFilesUploaded.emit(this.applicationService.model.Report!.FilesUploaded);
     this.displayErrorMessage();
   }
 

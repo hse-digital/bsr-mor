@@ -4,6 +4,7 @@ import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { GovukCheckboxComponent } from 'hse-angular';
+import { IncidentDetailsComponent } from '../incident-details/incident-details.component';
 
 @Component({
   templateUrl: './type-incident-reported.component.html'
@@ -40,6 +41,6 @@ export class TypeIncidentReportedComponent extends PageComponent<string[]> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative('incident-details', this.activatedRoute);
+    return this.navigationService.navigateRelative(IncidentDetailsComponent.route, this.activatedRoute);
   }
 }

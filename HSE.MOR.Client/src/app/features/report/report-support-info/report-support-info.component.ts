@@ -3,6 +3,7 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService, FileUploadModel } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { ReportCheckYourAnswersComponent } from '../report-check-your-answers/report-check-your-answers.component';
 
 @Component({
   templateUrl: './report-support-info.component.html'
@@ -25,12 +26,15 @@ export class ReportSupportInfoComponent extends PageComponent<FileUploadModel[]>
   }
 
   override onInit(applicationService: ApplicationService): void {
-    var uploadedFiles = applicationService.model?.FilesUploaded;
-    this.model = applicationService.model.FilesUploaded ? uploadedFiles! : [];
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {};
+    }  
+    var uploadedFiles = applicationService.model?.Report!.FilesUploaded;
+    this.model = applicationService.model.Report.FilesUploaded ? uploadedFiles! : [];
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    var uploadedFiles = this.model;
-    applicationService.model.FilesUploaded = uploadedFiles;
+    var uploadedFiles = this.model; 
+    applicationService.model.Report!.FilesUploaded = uploadedFiles;
   }
   isAccessValid: boolean = false;
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
@@ -68,7 +72,7 @@ export class ReportSupportInfoComponent extends PageComponent<FileUploadModel[]>
     return this.modelValid;
   }
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative('check-your-answers', this.activatedRoute);
+    return this.navigationService.navigateRelative(ReportCheckYourAnswersComponent.route, this.activatedRoute);
   }
 
 }

@@ -20,6 +20,8 @@ import { ReportOrganisationNameComponent } from "./report-organisation-name/repo
 import { ReportDutyHolderCanSubmitComponent } from "./report-duty-holder-can-submit/report-duty-holder-can-submit.component";
 import { ReportContactNumberComponent } from "./report-contact-number/report-contact-number.component";
 import { ReportOrgRoleComponent } from "./report-org-role/report-org-role.component";
+import { ReportCheckYourAnswersComponent } from "./report-check-your-answers/report-check-your-answers.component";
+import { PipeModule } from "../../helpers/pipes/pipe.module";
 
 
 const routes = new HseRoutes([
@@ -36,6 +38,7 @@ const routes = new HseRoutes([
   HseRoute.protected(ReportDutyHolderCanSubmitComponent.route, ReportDutyHolderCanSubmitComponent, ReportDutyHolderCanSubmitComponent.title),
   HseRoute.protected(ReportContactNumberComponent.route, ReportContactNumberComponent, ReportContactNumberComponent.title),
   HseRoute.protected(ReportOrgRoleComponent.route, ReportOrgRoleComponent, ReportOrgRoleComponent.title),
+  HseRoute.protected(ReportCheckYourAnswersComponent.route, ReportCheckYourAnswersComponent, ReportCheckYourAnswersComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
 ]);
 
@@ -54,13 +57,15 @@ const routes = new HseRoutes([
     ReportDutyHolderCanSubmitComponent,
     ReportContactNumberComponent,
     ReportOrgRoleComponent,
+    ReportCheckYourAnswersComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
     HseAngularModule,
     CommonModule,
     HttpClientModule,
-    ComponentsModule
+    ComponentsModule,
+    PipeModule,
   ],
   providers: [HttpClient, ApplicationService, ...routes.getProviders()]
 })

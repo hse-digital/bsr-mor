@@ -3,6 +3,8 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { WhoSubmittedNoticeComponent } from '../who-submitted-notice/who-submitted-notice.component';
+import { NavigationHelper } from '../../../helpers/navigation.helper';
 
 @Component({
   templateUrl: './enter-reference.component.html'
@@ -29,6 +31,11 @@ export class EnterReferenceComponent extends PageComponent<string> {
     return true;
   }
 
+  navigateToIdentifyBuilding() {
+    let route = NavigationHelper.getRoute("report-identify-building");
+    this.navigationService.navigate(route);
+  }
+
   modelValid: boolean = false;
   RefFormat = new RegExp('^CAS[0-9]{5}[A-Z0-9]{4}$', 'i'); // i parameter to make case insensitive
   ErrorMessage: string = "";
@@ -51,6 +58,6 @@ export class EnterReferenceComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative('building/identify-building', this.activatedRoute);
+    return this.navigationService.navigateRelative(WhoSubmittedNoticeComponent.route, this.activatedRoute);
   }
 }

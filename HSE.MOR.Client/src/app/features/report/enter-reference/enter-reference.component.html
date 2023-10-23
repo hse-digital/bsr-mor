@@ -12,7 +12,7 @@
                  (onKeyupEnter)="saveAndContinue()" />
 
     <govuk-body>
-        <a href="" class="govuk-link">I don't have a notice reference</a>
+        <a (keyup.enter)="navigateToIdentifyBuilding()" (click)="navigateToIdentifyBuilding()" class="govuk-link" role="link">I don't have a notice reference</a>
     </govuk-body>
 
 </govuk-formpage>
