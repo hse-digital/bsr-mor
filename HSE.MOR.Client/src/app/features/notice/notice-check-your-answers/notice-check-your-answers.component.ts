@@ -5,6 +5,7 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
+import { NoticeConfirmationComponent } from '../notice-confirmation/notice-confirmation.component';
 
 @Component({
   templateUrl: './notice-check-your-answers.component.html'
@@ -108,8 +109,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     return true
   }
   override navigateNext(): Promise<boolean> {
-    let route = NavigationHelper.getRoute("report-role-in-submit-notice");
-    return this.navigationService.navigate(route);
+    return this.navigationService.navigateRelative(NoticeConfirmationComponent.route, this.activatedRoute);
   }
 }
 export class CheckAnswersNoticeModel {

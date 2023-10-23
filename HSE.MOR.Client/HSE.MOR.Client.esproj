@@ -26,6 +26,7 @@
     <Folder Include="src\app\features\building\is-building\" />
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\briefly-describe-risk-incident\" />
+    <Folder Include="src\app\features\notice\notice-confirmation\" />
     <Folder Include="src\app\features\notice\notice-duty-holder-can-submit\" />
     <Folder Include="src\app\features\notice\notice-organisation-name\" />
     <Folder Include="src\app\features\notice\notice-contact-number\" />
@@ -34,6 +35,7 @@
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\notice\when-become-aware\" />
     <Folder Include="src\app\features\report\incident-details\" />
+    <Folder Include="src\app\features\report\report-confirmation\" />
     <Folder Include="src\app\features\report\report-check-your-answers\" />
     <Folder Include="src\app\features\report\report-duty-holder-can-submit\" />
     <Folder Include="src\app\features\report\report-contact-number\" />

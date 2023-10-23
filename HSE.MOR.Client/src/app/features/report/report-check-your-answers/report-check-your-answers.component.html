@@ -44,5 +44,5 @@
     <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how you discovered the safety occurrence?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.OrganisationFindOut}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Support Information" (onKeyupEnter)="navigateTo('support-info')" (onClick)="navigateTo('support-info')" [showAction]=true>{{model.UploadedFileNames}}</govuk-summary-list-row>
   </govuk-summary-list>
-
+  <govuk-body>you can print this on the next page</govuk-body>
 </govuk-formpage>

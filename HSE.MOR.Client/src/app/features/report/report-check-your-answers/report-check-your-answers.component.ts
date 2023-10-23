@@ -5,6 +5,7 @@ import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
+import { ReportConfirmationComponent } from '../report-confirmation/report-confirmation.component';
 
 @Component({
   templateUrl: './report-check-your-answers.component.html'
@@ -158,8 +159,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     return true
   }
   override navigateNext(): Promise<boolean> {
-    let route = NavigationHelper.getRoute("report-role-in-submit-notice");
-    return this.navigationService.navigate(route);
+    return this.navigationService.navigateRelative(ReportConfirmationComponent.route, this.activatedRoute);
   }
 }
 export class CheckAnswersReportModel {
