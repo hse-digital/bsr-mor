@@ -65,7 +65,6 @@ export class MORModel {
   Notice?: NoticeModel;
   Report?: ReportModel;
   Building?: BuildingModel;
-  FilesUploaded: FileUploadModel[] = [];
   EmailAddress?: string;
   WhatToSubmit?: string;
   IsEmailVerified?: boolean;
@@ -102,6 +101,8 @@ export class ReportModel {
   OccurrenceDiscovered?: string;
   OrganisationName?: string;
   ContactNumber?: string;
+  FilesUploaded?: FileUploadModel[];
+  YourSupportInfo?: string;
 }
 
 export class TimeModel {

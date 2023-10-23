@@ -3,6 +3,8 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
+import { TypeRiskReportedComponent } from '../type-risk-reported/type-risk-reported.component';
 
 @Component({
   templateUrl: './what-to-report.component.html'
@@ -39,10 +41,10 @@ export class WhatToReportComponent extends PageComponent<string> {
 
   override navigateNext(): Promise<boolean> {
     if (this.model == "incident") {
-      return this.navigationService.navigate('');
+      return this.navigationService.navigateRelative(TypeIncidentReportedComponent.route, this.activatedRoute);
     }
     else {
-      return this.navigationService.navigate('');
+      return this.navigationService.navigateRelative(TypeRiskReportedComponent.route, this.activatedRoute);
     }
   }
 }

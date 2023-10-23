@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, ReportModel } from "../../../services/application.service";
+import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { WhatToReportComponent } from '../what-to-report/what-to-report.component';
 
 @Component({
   templateUrl: './report-org-role.component.html'
@@ -42,6 +43,6 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative('risk-details', this.activatedRoute);
+    return this.navigationService.navigateRelative(WhatToReportComponent.route, this.activatedRoute);
   }
 }

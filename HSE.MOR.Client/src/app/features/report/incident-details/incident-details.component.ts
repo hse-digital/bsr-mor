@@ -3,6 +3,7 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService, ReportModel } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { ReportSupportInfoComponent } from '../report-support-info/report-support-info.component';
 
 @Component({
   templateUrl: './incident-details.component.html'
@@ -122,6 +123,6 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative(ReportSupportInfoComponent.route, this.activatedRoute);
   }
 }

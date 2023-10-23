@@ -3,6 +3,7 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { ReportOrgRoleComponent } from '../report-org-role/report-org-role.component';
 
 @Component({
   templateUrl: './report-organisation-name.component.html'
@@ -49,6 +50,6 @@ export class ReportOrganisationNameComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigate('');
+    return this.navigationService.navigateRelative(ReportOrgRoleComponent.route, this.activatedRoute);
   }
 }

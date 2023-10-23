@@ -35,7 +35,7 @@ export class IdentifyBuildingComponent extends PageComponent<string> {
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     if (applicationService.model.WhatToSubmit && applicationService.model.WhatToSubmit == "notice") {
       return true;
-    } else if (applicationService.model.WhatToSubmit && applicationService.model.WhatToSubmit == "report" && applicationService.model?.Report?.NoticeReference) {
+    } else if (applicationService.model.WhatToSubmit && applicationService.model.WhatToSubmit == "report" ) {
       return true;
     } else {
       return false;

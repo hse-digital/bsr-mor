@@ -34,6 +34,7 @@
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\notice\when-become-aware\" />
     <Folder Include="src\app\features\report\incident-details\" />
+    <Folder Include="src\app\features\report\report-check-your-answers\" />
     <Folder Include="src\app\features\report\report-duty-holder-can-submit\" />
     <Folder Include="src\app\features\report\report-contact-number\" />
     <Folder Include="src\app\features\report\report-organisation-name\" />
