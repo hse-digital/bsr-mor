@@ -6,6 +6,6 @@
                    hintClass="govuk-hint"
                    [isPageHeading]="true"
                    (onChange)="selectFiles($event)"
-                   label="Upload support information"
-                   hint="You can upload supporting information, for example scanned documents or photos from your phone. You can upload more than one file at a time. Each file must be smaller than 100MB." />
+                   label="Upload supporting information (optional)"
+                   hint="You can upload supporting information, for example documents or photos. You can upload more than one file at a time. Each file must be smaller than 100MB." />
 <file-upload-info [showUploadingInfo]=showUploadingInfo [(model)]="fileModel" [showUploadedFiles]="showFilesUploded" [fileUploadingInfoModel]="totalFilesProcessing()" [fileInfoModel]="totalFilesProcessed()" (onClick)="remove($event)" (onKeyupEnter)="remove($event)" />

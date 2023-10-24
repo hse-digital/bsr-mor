@@ -22,26 +22,32 @@
     <govuk-summary-list-row key="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" [showAction]=true>{{model.YourName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Contact details" (onKeyupEnter)="navigateTo('enter-email')" (onClick)="navigateTo('enter-email')" [showAction]=true>{{model.ContactDetails}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Contact number" (onKeyupEnter)="navigateTo('report-contact-number')" (onClick)="navigateTo('report-contact-number')" [showAction]=true>{{model.ContactNumber}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Your organisation details" (onKeyupEnter)="navigateTo('report-organisation-name')" (onClick)="navigateTo('report-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About organisation</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('report-organisation-name')" (onClick)="navigateTo('report-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Organisation role" (onKeyupEnter)="navigateTo('report-org-role')" (onClick)="navigateTo('report-org-role')" [showAction]=true>{{model.OrgRole | orgRole }}</govuk-summary-list-row>
   </govuk-summary-list>
 
-  <h2 class="govuk-heading-m">About occurrence</h2>
+  <h2 class="govuk-heading-m">About safety occurrence</h2>
   <govuk-summary-list>
     <govuk-summary-list-row *ngIf="!isBuilding" key="Mandatory occurrence notice reference" (onKeyupEnter)="navigateTo('enter-reference')" (onClick)="navigateTo('enter-reference')" [showAction]=true>{{model.NoticeReference}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Incident or situation" (onKeyupEnter)="navigateTo('what-to-report')" (onClick)="navigateTo('what-to-report')" [showAction]=true>{{model.IncidentOrSituation}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Type of incident" (onKeyupEnter)="navigateTo('type-incident-reported')" (onClick)="navigateTo('type-incident-reported')" [showAction]=true>{{model.IncidentReported}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="What happened?" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.AboutIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="What caused it?" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.CauseOfIncident}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isIncident" key="What has been affected and in what way?" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.WhoAffectedByIncident}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isIncident" key="What have you done to keep people safe?" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.IncidentKeepPeopleSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isIncident" key="Tell us how you discovered the safety occurrence?" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="Type of incident" (onKeyupEnter)="navigateTo('type-risk-reported')" (onClick)="navigateTo('type-risk-reported')" [showAction]=true>{{model.RiskReported}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="What happened?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.AboutRisk}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isIncident" key="Tell us who has been affected and in what way" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.WhoAffectedByIncident}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isIncident" key="Explain what you are doing or planning to do to keep people safe" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.IncidentKeepPeopleSafe}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isIncident" key="Tell us how undefined discovered the safety occurrence" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isSharedWithOthersIncident" key="Tell us any anything you think should be shared for others to learn from" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.SharedWithOthers}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="What type of risk are you reporting?" (onKeyupEnter)="navigateTo('type-risk-reported')" (onClick)="navigateTo('type-risk-reported')" [showAction]=true>{{model.RiskReported}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="What is the situation?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.AboutRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What caused it?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.CauseOfRisk}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="What has been affected and in what way?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.WhoAffectedByRisk}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="What have you done to keep people safe?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.RiskKeepPeopleSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how you discovered the safety occurrence?" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.OrganisationFindOut}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us who could be affected and in what way" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.WhoAffectedByRisk}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="Explain what you are doing or planning to do to keep people safe" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.RiskKeepPeopleSafe}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how undefined discovered the safety occurrence" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.OrganisationFindOut}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isSharedWithOthers" key="Tell us any anything you think should be shared for others to learn from" (onKeyupEnter)="navigateTo('risk-details')" (onClick)="navigateTo('risk-details')" [showAction]=true>{{model.SharedWithOthers}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Support Information" (onKeyupEnter)="navigateTo('support-info')" (onClick)="navigateTo('support-info')" [showAction]=true>{{model.UploadedFileNames}}</govuk-summary-list-row>
   </govuk-summary-list>
   <govuk-body>you can print this on the next page</govuk-body>

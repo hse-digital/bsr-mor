@@ -35,11 +35,15 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.OccurrenceDiscovered)) {
       applicationService.model.Report.OccurrenceDiscovered = "";
     }
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.SharedWithOthers)) {
+      applicationService.model.Report.SharedWithOthers = "";
+    }
     this.model.AboutIncident = applicationService.model.Report?.AboutIncident;
     this.model.CauseOfIncident = applicationService.model.Report?.CauseOfIncident;
     this.model.WhoAffectedByIncident = applicationService.model.Report?.WhoAffectedByIncident;
     this.model.IncidentKeepPeopleSafe = applicationService.model.Report?.IncidentKeepPeopleSafe;
     this.model.OccurrenceDiscovered = applicationService.model.Report?.OccurrenceDiscovered;
+    this.model.SharedWithOthers = applicationService.model.Report?.SharedWithOthers;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.AboutIncident = this.model.AboutIncident;
@@ -47,6 +51,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     applicationService.model.Report!.WhoAffectedByIncident = this.model.WhoAffectedByIncident;
     applicationService.model.Report!.IncidentKeepPeopleSafe = this.model.IncidentKeepPeopleSafe;
     applicationService.model.Report!.OccurrenceDiscovered = this.model.OccurrenceDiscovered;
+    applicationService.model.Report!.SharedWithOthers = this.model.SharedWithOthers;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     if (applicationService.model.Report?.IncidentReported) {
@@ -62,11 +67,13 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
   whoAffectedErrorMessage: string = "You need to tell us who has been / could have been affected";
   keepPeopleSafeErrorMessage: string = "You need to tell us what you have done to keep people safe";
   occurrenceDiscoveredErrorMessage: string = "You need to tell us how the occurrence was discovered";
+  sharedWithOthersErrorMessage: string = "You need to share for others to learn from  using fewer words";
   aboutIncidentInError: boolean = false;
   whatCausedItInError: boolean = false;
   whoAffectedItInError: boolean = false;
-  keepPeopleSafeItInError: boolean = false;
-  occurrenceDiscoveredItInError: boolean = false;
+  keepPeopleSafeInError: boolean = false;
+  occurrenceDiscoveredInError: boolean = false;
+  sharedWithOthersInError: boolean = false;
   modelValid: boolean = false;
 
   override isValid(): boolean {
@@ -74,13 +81,14 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     this.aboutIncidentInError = false;
     this.whatCausedItInError = false;
     this.whoAffectedItInError = false;
-    this.keepPeopleSafeItInError = false;
-    this.occurrenceDiscoveredItInError = false;
+    this.keepPeopleSafeInError = false;
+    this.occurrenceDiscoveredInError = false;
+    this.sharedWithOthersInError = false;
 
     if (!FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident)) {
       this.aboutIncidentInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident) && this.model.AboutIncident?.length! > 500) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident) && this.model.AboutIncident?.length! > 200) {
 
       this.aboutIncidentErrorMessage = "You need to tell us what happened / is the risk using fewer words";
       this.aboutIncidentInError = true;
@@ -88,7 +96,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident)) {
       this.whatCausedItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident) && this.model.CauseOfIncident?.length! > 300) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident) && this.model.CauseOfIncident?.length! > 200) {
 
       this.whatCausedItErrorMessage = "You need to tell us what caused it using fewer words";
       this.whatCausedItInError = true;
@@ -96,29 +104,31 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident)) {
       this.whoAffectedItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident) && this.model.WhoAffectedByIncident?.length! > 250) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident) && this.model.WhoAffectedByIncident?.length! > 200) {
 
       this.whoAffectedErrorMessage = "You need to tell us who has been / could have been affected using fewer words";
       this.whoAffectedItInError = true;
 
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe)) {
-      this.keepPeopleSafeItInError = true;
+      this.keepPeopleSafeInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe) && this.model.IncidentKeepPeopleSafe?.length! > 750) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe) && this.model.IncidentKeepPeopleSafe?.length! > 300) {
 
       this.keepPeopleSafeErrorMessage = "You need to tell us what you have done to keep people safe using fewer words";
-      this.keepPeopleSafeItInError = true;
+      this.keepPeopleSafeInError = true;
 
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered)) {
-      this.occurrenceDiscoveredItInError = true;
+      this.occurrenceDiscoveredInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered) && this.model.OccurrenceDiscovered?.length! > 250) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered) && this.model.OccurrenceDiscovered?.length! > 100) {
+      this.occurrenceDiscoveredInError = true;
 
-      this.occurrenceDiscoveredErrorMessage = "You need to tell us how the occurrence was discovered using fewer words";
-      this.occurrenceDiscoveredItInError = true;
-
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers)) {
+      if (this.model.SharedWithOthers?.length! > 100) {
+        this.sharedWithOthersInError = true;
+      }
     }
-    this.modelValid = this.aboutIncidentInError || this.whatCausedItInError || this.whoAffectedItInError || this.keepPeopleSafeItInError || this.occurrenceDiscoveredItInError ? false : true;
+    this.modelValid = this.aboutIncidentInError || this.whatCausedItInError || this.whoAffectedItInError || this.keepPeopleSafeInError || this.occurrenceDiscoveredInError || this.sharedWithOthersInError ? false : true;
     return this.modelValid;
   }
 

@@ -4,15 +4,15 @@
         <govuk-error-link anchorId="input-notice-reference" message="{{ErrorMessage}}" />
     </govuk-error-summary>
 
-    <govuk-input id="notice-reference" label="Enter mandatory occurrence notice reference" labelClass="govuk-label--l" [isPageHeading]=true
+    <govuk-input id="notice-reference" label="Enter the mandatory occurrence notice reference" labelClass="govuk-label--l" [isPageHeading]=true
                  [(model)]="model" #field [govukRequired]="field" [maxlength]="12"
                  [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
                  class="govuk-input--width-20 govuk-!-margin-bottom-5"
-                 hint="The reference number is in the email or text message acknowledging we have received your mandatory occurrence notice"
+                 hint="You can find this in the email we sent you when we received your mandatory occurrence notice. You must submit your mandatory occurrence notice before submitting your mandatory occurence report."
                  (onKeyupEnter)="saveAndContinue()" />
 
     <govuk-body>
-        <a (keyup.enter)="navigateToIdentifyBuilding()" (click)="navigateToIdentifyBuilding()" class="govuk-link" role="link">I don't have a notice reference</a>
+      <a (keyup.enter)="navigateToIdentifyBuilding()" (click)="navigateToIdentifyBuilding()" class="govuk-link" role="link">I can't find the mandatory occurrence notice reference</a>
     </govuk-body>
 
 </govuk-formpage>

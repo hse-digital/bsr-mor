@@ -16,6 +16,8 @@ import { NoticeOrganisationNameComponent } from './notice-organisation-name/noti
 import { NoticeOrgRoleComponent } from './notice-org-role/notice-org-role.component';
 import { NoticeDutyHolderCanSubmitComponent } from './notice-duty-holder-can-submit/notice-duty-holder-can-submit.component';
 import { NoticeConfirmationComponent } from './notice-confirmation/notice-confirmation.component';
+import { PipeModule } from '../../helpers/pipes/pipe.module';
+import { NoticeSummaryComponent } from './notice-summary/notice-summary.component';
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
@@ -27,6 +29,7 @@ const routes = new HseRoutes([
   HseRoute.protected(NoticeOrgRoleComponent.route, NoticeOrgRoleComponent, NoticeOrgRoleComponent.title),
   HseRoute.protected(NoticeDutyHolderCanSubmitComponent.route, NoticeDutyHolderCanSubmitComponent, NoticeDutyHolderCanSubmitComponent.title),
   HseRoute.protected(NoticeConfirmationComponent.route, NoticeConfirmationComponent, NoticeConfirmationComponent.title),
+  HseRoute.protected(NoticeSummaryComponent.route, NoticeSummaryComponent, NoticeSummaryComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule))
 ]);
 
@@ -42,13 +45,15 @@ const routes = new HseRoutes([
     NoticeOrgRoleComponent,
     NoticeDutyHolderCanSubmitComponent,
     NoticeConfirmationComponent,
+    NoticeSummaryComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),
     HseAngularModule,
     CommonModule,
     HttpClientModule,
-    ComponentsModule
+    ComponentsModule,
+    PipeModule,
   ],
   providers: [HttpClient, ApplicationService, ...routes.getProviders()]
 })

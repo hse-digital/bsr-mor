@@ -1,0 +1,40 @@
+<govuk-formpage [processing]="processing" saveAndContinueText="Confirm and send" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndContinue]="true" [hideSaveAndComeBack]="true">
+  <h1 class="govuk-heading-l">Check your answers</h1>
+  <govuk-body>Review the information you want to send us</govuk-body>
+
+  <h2 class="govuk-heading-m">About the building</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row *ngIf="!isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference">{{model.BcaReference}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number">{{model.HrbNumber}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <govuk-summary-list *ngIf="isAddressManual">
+    <govuk-summary-list-row key="Building reqion">{{model.AddressRegion}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Number of floors">{{model.NumberOfFloors}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Building height">{{model.BuildingHeight}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Number of units">{{model.NumberOfUnits}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About you</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Your name">{{model.YourName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact details">{{model.ContactDetails}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact number">{{model.ContactNumber}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About organisation</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Organisation">{{model.OrganisationName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation's role">{{model.OrgRole | orgRole}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About occurrence</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Occurrence type">Notice</govuk-summary-list-row>
+    <govuk-summary-list-row key="Summary of the occurrence">{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Occurrence date">{{model.OccurrenceDateTime}}</govuk-summary-list-row>
+  </govuk-summary-list>
+  <govuk-body><a class="govuk-link" (click)="printSummary()" role="link"> Print this page </a></govuk-body>
+</govuk-formpage>

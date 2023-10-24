@@ -88,8 +88,8 @@ export class BcaReferenceNumberComponent implements OnInit {
   }
 
   canActivate(routeSnapshot: ActivatedRouteSnapshot) {
-    var isCanActivate = (FieldValidations.IsNotNullOrWhitespace(this.applicationService.model.Building?.IdentifyBuilding) && this.applicationService.model.WhatToSubmit == "notice" && (this.applicationService.model.Building?.IdentifyBuilding == "building_reference" || this.applicationService.model.Building?.SubmittedDesignBca == "yes_reference"))
-      || (FieldValidations.IsNotNullOrWhitespace(this.applicationService.model.Building?.IdentifyBuilding) && this.applicationService.model.WhatToSubmit == "report" && (this.applicationService.model.Building?.IdentifyBuilding == "building_reference" || this.applicationService.model.Building?.SubmittedDesignBca == "yes_reference"));
+    var isCanActivate = (FieldValidations.IsNotNullOrWhitespace(this.applicationService.model.Building?.IdentifyBuilding) && this.applicationService.model.WhatToSubmit == "notice" || (this.applicationService.model.Building?.IdentifyBuilding == "building_reference" || this.applicationService.model.Building?.SubmittedDesignBca == "yes_reference"))
+      || (FieldValidations.IsNotNullOrWhitespace(this.applicationService.model.Building?.IdentifyBuilding) && this.applicationService.model.WhatToSubmit == "report" || (this.applicationService.model.Building?.IdentifyBuilding == "building_reference" || this.applicationService.model.Building?.SubmittedDesignBca == "yes_reference"));
     if (!isCanActivate) {
       this.navigationService.navigate(NotFoundComponent.route);
     }

@@ -1,16 +1,32 @@
 <govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
 
-  <span class="govuk-caption-l">About the occurrence</span>
+  <span class="govuk-caption-l">About the safety occurrence</span>
+
+  <h1 class="govuk-heading-xl">Notice details</h1>
 
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link id="error-textarea-describe-risk-incident" *ngIf="hasErrors" anchorId="textarea-describe-risk-incident" message="You need to briefly describe the risk or incident" />
+    <govuk-error-link id="error-textarea-describe-risk-incident" *ngIf="describeIncidentRiskInError" anchorId="textarea-describe-risk-incident" message="{{describeIncidentRiskErrorMessage}}" />
+    <govuk-error-link id="error-textarea-actions-to-keep-safe" *ngIf="actionsToKeepSafeInError" anchorId="textarea-actions-to-keep-safe" message="{{actionsToKeepSafeErrorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-textarea label="Briefly describe the risk or incident" labelClass="govuk-label--l"
-                  [enableCharacterCount]="true" [maxCharacterRemaining]="500" [isPageHeading]=true
-                  [(model)]="model" #field [govukRequired]="field" id="describe-risk-incident"
-                  aria-describedby="error-textarea-describe-risk-incident" labelFor="textarea-describe-risk-incident"
-                  [errorText]="getErrorDescription(hasErrors, 'You need to briefly describe the risk or incident')" />
+  <div class="govuk-!-margin-bottom-5">
 
-  <govuk-body class="govuk-!-margin-top-5">You must submit a full mandatory occurrence report within 10 days of the occurrence being identified.</govuk-body>
+    <govuk-textarea label="Describe the safety occurrence" labelClass="govuk-label--m"
+                    [enableCharacterCount]="true" [maxCharacterRemaining]="200" [isPageHeading]=false
+                    [(model)]="model.DescribeRiskIncident" #field [govukRequired]="field" id="describe-risk-incident"
+                    aria-describedby="error-textarea-describe-risk-incident" labelFor="textarea-describe-risk-incident"
+                    [errorText]="getErrorDescription(describeIncidentRiskInError, describeIncidentRiskErrorMessage)" />
+
+  </div>
+
+  <div class="govuk-!-margin-bottom-5">
+
+    <govuk-textarea label="Tell us any immediate actions you've taken since to keep people safe" labelClass="govuk-label--m"
+                    [enableCharacterCount]="true" [maxCharacterRemaining]="200" [isPageHeading]=false
+                    [(model)]="model.ActionsToKeepSafe" #field [govukRequired]="field" id="actions-to-keep-safe"
+                    aria-describedby="error-textarea-actions-to-keep-safe" labelFor="textarea-actions-to-keep-safe"
+                    [errorText]="getErrorDescription(actionsToKeepSafeInError, actionsToKeepSafeErrorMessage)" />
+
+  </div>
+
 </govuk-formpage>

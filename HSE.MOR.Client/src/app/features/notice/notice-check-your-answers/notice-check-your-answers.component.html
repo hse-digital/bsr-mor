@@ -21,6 +21,13 @@
   <govuk-summary-list>
     <govuk-summary-list-row key="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" [showAction]=true>{{model.YourName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Contact details" (onKeyupEnter)="navigateTo('enter-email')" (onClick)="navigateTo('enter-email')" [showAction]=true>{{model.ContactDetails}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact number" (onKeyupEnter)="navigateTo('notice-contact-number')" (onClick)="navigateTo('notice-contact-number')" [showAction]=true>{{model.ContactNumber}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 class="govuk-heading-m">About organisation</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('notice-organisation-name')" (onClick)="navigateTo('notice-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-rol')" (onClick)="navigateTo('notice-org-rol')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <h2 class="govuk-heading-m">About occurrence</h2>

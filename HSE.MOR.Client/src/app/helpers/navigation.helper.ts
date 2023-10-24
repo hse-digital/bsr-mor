@@ -10,6 +10,8 @@ import { EnterReferenceComponent } from "../features/report/enter-reference/ente
 import { ReportYourDetailsComponent } from "../features/report/report-your-details/report-your-details.component";
 import { ReportModule } from "../features/report/report.module";
 import { ReportOrgRoleComponent } from "../features/report/report-org-role/report-org-role.component";
+import { ReportSummaryComponent } from "../features/report/report-summary/report-summary.component";
+import { NoticeSummaryComponent } from "../features/notice/notice-summary/notice-summary.component";
 
 export class NavigationHelper {
 
@@ -29,6 +31,8 @@ export class NavigationHelper {
     "notice-your-details": `/${NoticeModule.baseRoute}/${NoticeYourDetailsComponent.route}`,
     "report-your-details": `/${ReportModule.baseRoute}/${ReportYourDetailsComponent.route}`,
     "report-role-in-submit-notice": `/${ReportModule.baseRoute}/${ReportOrgRoleComponent.route}`,
+    "report-summary": `/${ReportModule.baseRoute}/${ReportSummaryComponent.route}`,
+    "notice-summary": `/${NoticeModule.baseRoute}/${NoticeSummaryComponent.route}`,
   };
 
   static getRoute(key: string): string {

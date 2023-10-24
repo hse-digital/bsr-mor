@@ -27,7 +27,7 @@ export class NoticeOrganisationNameComponent extends PageComponent<string> {
     applicationService.model.Notice!.OrganisationName = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ContactNumber);
   }
 
   modelValid: boolean = false;

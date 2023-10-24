@@ -78,6 +78,8 @@ export class NoticeModel {
   ContactNumber?: string;
   OrganisationName?: string;
   OrgRole?: string;
+  ActionsToKeepSafe?: string;
+  CheckAnswersModel?: CheckAnswersNoticeModel;
 }
 
 export class ReportModel {
@@ -99,10 +101,12 @@ export class ReportModel {
   IncidentKeepPeopleSafe?: string;
   OrganisationFindOut?: string;
   OccurrenceDiscovered?: string;
+  SharedWithOthers?: string;
   OrganisationName?: string;
   ContactNumber?: string;
   FilesUploaded?: FileUploadModel[];
   YourSupportInfo?: string;
+  CheckAnswersModel?: CheckAnswersReportModel
 }
 
 export class TimeModel {
@@ -130,6 +134,59 @@ export class BuildingModel {
   Easting?: string;
   Northing?: string;
   BcaReference?: string;
+}
+
+export class CheckAnswersNoticeModel {
+  Address?: string;
+  YourName?: string;
+  Incident?: string;
+  OccurrenceDateTime?: string;
+  ContactDetails?: string;
+  IsManualAddress: boolean = false;
+  AddressRegion?: string;
+  NumberOfFloors?: string;
+  NumberOfUnits?: string;
+  BuildingHeight?: string;
+  BcaReference?: string;
+  HrbNumber?: string;
+  ContactNumber?: string;
+  OrganisationName?: string;
+  OrgRole?: string;
+
+}
+
+export class CheckAnswersReportModel {
+  Address?: string;
+  YourName?: string;
+  NoticeReference?: string;
+  OrgRole?: string;
+  SubmittedNotice?: string;
+  IncidentReported?: string;
+  RiskReported?: string;
+  AboutRisk?: string;
+  AboutIncident?: string;
+  CauseOfRisk?: string;
+  CauseOfIncident?: string;
+  WhoAffectedByIncident?: string;
+  WhoAffectedByRisk?: string;
+  RiskKeepPeopleSafe?: string;
+  IncidentKeepPeopleSafe?: string;
+  OrganisationFindOut?: string;
+  OccurrenceDiscovered?: string;
+  SharedWithOthers?: string;
+  OrganisationName?: string;
+  ContactNumber?: string;
+  ContactDetails?: string;
+  IsManualAddress: boolean = false;
+  AddressRegion?: string;
+  NumberOfFloors?: string;
+  NumberOfUnits?: string;
+  BuildingHeight?: string;
+  BcaReference?: string;
+  HrbNumber?: string;
+  UploadedFileNames?: string;
+  IncidentOrSituation?: string;
+
 }
 
 export class BuildingsInformationResponse {

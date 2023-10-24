@@ -4,8 +4,8 @@
     <govuk-error-link *ngIf="hasOrgRoleErrors" anchorId="report-org-role-acc-person-input" message="You need to tell us the role of you or your organisation" />
   </govuk-error-summary>
 
-  <span class="govuk-caption-l">About you</span>
-  <govuk-radio-group id="radios-report-org-role" class="govuk-!-margin-bottom-4" title="How is {{organisationName}} involved in this building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasOrgRoleErrors, 'You need to tell us the role of you or your organisation')">
+  <span class="govuk-caption-l">About the organisation</span>
+  <govuk-radio-group id="radios-report-org-role" class="govuk-!-margin-bottom-4" title="What is {{organisationName}} role in submitting this notice?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasOrgRoleErrors, 'You need to tell us the role of you or your organisation')">
     <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-acc-person" value="acc_person" label="Accountable person" />
     <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-principal-acc-person" value="principal_acc_person" label="Principal accountable person" />
     <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-org-role-principal-contractor" value="principal_contractor" label="Principal contractor" />
