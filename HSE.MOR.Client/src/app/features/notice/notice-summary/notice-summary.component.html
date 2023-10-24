@@ -33,7 +33,8 @@
   <h2 class="govuk-heading-m">About occurrence</h2>
   <govuk-summary-list>
     <govuk-summary-list-row key="Occurrence type">Notice</govuk-summary-list-row>
-    <govuk-summary-list-row key="Summary of the occurrence">{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Describe the safety occurrence">{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Tell us any immediate actions you've taken since to keep people safe">{{model.ActionsToKeepSafe}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Occurrence date">{{model.OccurrenceDateTime}}</govuk-summary-list-row>
   </govuk-summary-list>
   <govuk-body><a class="govuk-link" (click)="printSummary()" role="link"> Print this page </a></govuk-body>

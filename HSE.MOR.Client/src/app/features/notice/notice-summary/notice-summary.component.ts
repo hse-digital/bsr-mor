@@ -36,6 +36,7 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
     }
     this.model.YourName = applicationService.model.Notice?.CheckAnswersModel?.YourName;
     this.model.Incident = applicationService.model.Notice?.CheckAnswersModel?.Incident;
+    this.model.ActionsToKeepSafe = applicationService.model.Notice?.CheckAnswersModel?.ActionsToKeepSafe;
     this.model.OccurrenceDateTime = applicationService.model.Notice?.CheckAnswersModel?.OccurrenceDateTime;
     this.model.ContactDetails = applicationService.model.Notice?.CheckAnswersModel?.ContactDetails;
     this.model.ContactNumber = applicationService.model.Notice?.CheckAnswersModel?.ContactNumber;

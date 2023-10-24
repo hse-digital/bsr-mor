@@ -27,13 +27,14 @@
   <h2 class="govuk-heading-m">About organisation</h2>
   <govuk-summary-list>
     <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('notice-organisation-name')" (onClick)="navigateTo('notice-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-rol')" (onClick)="navigateTo('notice-org-rol')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-role')" (onClick)="navigateTo('notice-org-role')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <h2 class="govuk-heading-m">About occurrence</h2>
   <govuk-summary-list>
     <govuk-summary-list-row key="Occurrence type" (onKeyupEnter)="navigateTo('what-to-submit')" (onClick)="navigateTo('what-to-submit')" [showAction]=true>Notice</govuk-summary-list-row>
-    <govuk-summary-list-row key="Summary of the occurrence" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Describe the safety occurrence" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Tell us any immediate actions you've taken since to keep people safe" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.ActionsToKeepSafe}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Occurrence date" (onKeyupEnter)="navigateTo('when-become-aware')" (onClick)="navigateTo('when-become-aware')" [showAction]=true>{{model.OccurrenceDateTime}}</govuk-summary-list-row>
   </govuk-summary-list>
   <govuk-body>you can print this on the next page</govuk-body>

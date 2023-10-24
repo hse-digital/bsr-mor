@@ -81,6 +81,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   setValuesToNoticeModel(noticeModel: NoticeModel) {  
     this.model.YourName = `${noticeModel.FirstName} ${noticeModel.LastName}`;
     this.model.Incident = noticeModel.DescribeRiskIncident;
+    this.model.ActionsToKeepSafe = noticeModel.ActionsToKeepSafe;
     this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour}:${noticeModel.WhenBecomeAware!.Minute}  ${this.setMeridiem(noticeModel.WhenBecomeAware!.Hour!)}`;
     this.model.ContactNumber = noticeModel.ContactNumber;
     this.model.OrganisationName = noticeModel.OrganisationName;

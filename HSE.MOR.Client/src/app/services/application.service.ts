@@ -140,6 +140,7 @@ export class CheckAnswersNoticeModel {
   Address?: string;
   YourName?: string;
   Incident?: string;
+  ActionsToKeepSafe?: string;
   OccurrenceDateTime?: string;
   ContactDetails?: string;
   IsManualAddress: boolean = false;
