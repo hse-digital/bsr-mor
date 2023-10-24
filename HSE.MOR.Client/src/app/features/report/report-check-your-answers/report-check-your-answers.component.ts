@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, BuildingModel, ReportModel } from "../../../services/application.service";
+import { ApplicationService, BuildingModel, CheckAnswersReportModel, ReportModel } from "../../../services/application.service";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
@@ -25,7 +25,9 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   isIncident: boolean = false;
   incidentReportedArray: string[] = [];
   riskReportedArray: string[] = [];
-  isBuilding: boolean = false
+  isBuilding: boolean = false;
+  isSharedWithOthers: boolean = false;
+  isSharedWithOthersIncident: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
@@ -34,13 +36,19 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isBuilding = !FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
     this.isAddressManual = applicationService.model.Building?.Address?.IsManual ?? false;
     this.isIncident = applicationService.model.Report?.WhatToReport == "incident" ? true : false;
+    var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
+    this.isSharedWithOthersIncident = this.isIncident && isShared;
+    this.isSharedWithOthers = !this.isIncident && isShared;
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToReportModel(applicationService.model?.Report!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {}
+    }
+    applicationService.model.Report!.CheckAnswersModel = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
@@ -69,11 +77,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
 
   setValuesToBuildingModel(buildingModel: BuildingModel) {
     this.model.Address = buildingModel?.Address ? buildingModel?.Address.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
-    this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;
-    this.model.AddressRegion = buildingModel.AddressRegion;
-    this.model.NumberOfFloors = buildingModel.NumberOfFloorsProf?.toString();
-    this.model.NumberOfUnits = buildingModel.NumberOfUnitsProf?.toString();
-    this.model.BuildingHeight = buildingModel.BuildingHeight?.toString();
+    this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
     if (this.isAddressManual) {
@@ -112,6 +116,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.IncidentKeepPeopleSafe = reportModel.IncidentKeepPeopleSafe;
     this.model.WhoAffectedByIncident = reportModel.WhoAffectedByIncident;
     this.model.OccurrenceDiscovered = reportModel.OccurrenceDiscovered;
+    this.model.SharedWithOthers = reportModel.SharedWithOthers;
     this.model.AboutRisk = reportModel.AboutRisk;
     this.model.CauseOfRisk = reportModel.CauseOfRisk;
     this.model.WhoAffectedByRisk = reportModel.WhoAffectedByRisk;
@@ -162,35 +167,4 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     return this.navigationService.navigateRelative(ReportConfirmationComponent.route, this.activatedRoute);
   }
 }
-export class CheckAnswersReportModel {
-  Address?: string;
-  YourName?: string;
-  NoticeReference?: string;
-  OrgRole?: string;
-  SubmittedNotice?: string;
-  IncidentReported?: string;
-  RiskReported?: string;
-  AboutRisk?: string;
-  AboutIncident?: string;
-  CauseOfRisk?: string;
-  CauseOfIncident?: string;
-  WhoAffectedByIncident?: string;
-  WhoAffectedByRisk?: string;
-  RiskKeepPeopleSafe?: string;
-  IncidentKeepPeopleSafe?: string;
-  OrganisationFindOut?: string;
-  OccurrenceDiscovered?: string;
-  OrganisationName?: string;
-  ContactNumber?: string;
-  ContactDetails?: string;
-  IsManualAddress: boolean = false;
-  AddressRegion?: string;
-  NumberOfFloors?: string;
-  NumberOfUnits?: string;
-  BuildingHeight?: string;
-  BcaReference?: string;
-  HrbNumber?: string;
-  UploadedFileNames?: string;
-  IncidentOrSituation?: string;
 
-}

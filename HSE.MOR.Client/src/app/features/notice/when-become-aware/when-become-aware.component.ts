@@ -3,9 +3,11 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from 'src/app/helpers/page.component';
 import { FieldValidations } from 'src/app/helpers/validators/fieldvalidations';
 import { ApplicationService, TimeModel } from 'src/app/services/application.service';
+import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
 import { NoticeCheckYourAnswersComponent } from '../notice-check-your-answers/notice-check-your-answers.component';
 
-export type InputDateModel = {day?: string, month?: string, year?: string};
+export type InputDateModel = { day?: string, month?: string, year?: string };
+export type InputTimeModel = { hour?: string, minute?: string };
 
 @Component({
   selector: 'hse-when-become-aware',
@@ -16,7 +18,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   static title: string = "When did you identify the risk or incident?";
 
   inputDateModel?: InputDateModel;
-  inputTimeModel?: string;
+  inputTimeModel?: InputTimeModel;
 
   dateErrorMessage?: string;
   timeErrorMessage?: string;
@@ -56,29 +58,16 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     }
   }
 
-  private transformToTimeModel(inputDate?: InputDateModel, inputTime?: string): TimeModel {
-    let hour = inputTime?.split(':')[0];
-    let minute = inputTime?.split(':')[1];
+  private transformToDateTimeModel(inputDate?: InputDateModel, inputTime?: InputTimeModel): TimeModel {
     return  {
       Day: Number(inputDate?.day),
       Month: Number(inputDate?.month),
       Year: Number(inputDate?.year),
-      Hour: FieldValidations.IsNotNullOrWhitespace(hour) ? Number(hour) : -1,
-      Minute: FieldValidations.IsNotNullOrWhitespace(minute) ? Number(minute) : -1
+      Hour: Number(inputTime?.hour),
+      Minute: Number(inputTime?.minute)
     }
   }
 
-  private transformToInputTime(timeModel: TimeModel): string {
-    if(timeModel.Hour == undefined && timeModel.Minute == undefined) return "";
-
-    timeModel.Hour = timeModel?.Hour ?? 0;
-    timeModel.Minute = timeModel?.Minute ?? 0;
-
-    let hour = timeModel?.Hour < 10 ? `0${timeModel.Hour}` : timeModel.Hour;
-    let minute = timeModel.Minute < 10 ? `0${timeModel.Minute}` : timeModel.Hour;
-    
-    return `${hour}:${minute}`;
-  }
 
   private transformToInputDate(timeModel: TimeModel): InputDateModel {
     return {
@@ -88,14 +77,19 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     };
   }
 
+  private transformToInputTime(timeModel: TimeModel): InputTimeModel {
+    return {
+      hour: timeModel?.Hour?.toString(),
+      minute: timeModel?.Minute?.toString()
+    };
+  }
+
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.DescribeRiskIncident);
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrgRole);
   }
 
   override isValid(): boolean {
-    this.model = this.transformToTimeModel(this.inputDateModel, this.inputTimeModel);    
-
-    this.inputIsEmpty = !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel) && this.InputDateModelIsNullOrWhitespace();
+    this.model = this.transformToDateTimeModel(this.inputDateModel, this.inputTimeModel);    
 
     let dateIsValid = this.isDateValid();
     let timeIsValid = this.isTimeValid();
@@ -129,9 +123,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     let isMinuteValid = FieldValidations.IsWholeNumber(this.model?.Minute) && FieldValidations.IsAPositiveNumber(this.model?.Minute) && this.model!.Minute! < 60;
     
     this.timeErrorMessage = "";
-    if (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel)) {
-      this.timeErrorMessage = "You need to tell us the time you were made aware of the occurrence";
-    } else if (!isHourValid || !isMinuteValid || Number.isNaN(this.getTime(this.model).getTime())) {
+    if (!isHourValid || !isMinuteValid || Number.isNaN(this.getTime(this.model).getTime())) {
       this.timeErrorMessage = "You need to enter a valid time";
     }
     this.inputTimeHasError = this.timeErrorMessage != "";
@@ -160,7 +152,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   override async navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(NoticeCheckYourAnswersComponent.route, this.activatedRoute);
+    return this.navigationService.navigateRelative(BrieflyDescribeRiskIncidentComponent.route, this.activatedRoute);
   }
 
 }

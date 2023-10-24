@@ -1,4 +1,4 @@
-<govuk-formpage saveAndContinueText="Verify your email address" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true" [processing]="processing">
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true" [processing]="processing">
 
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
     <govuk-error-link anchorId="input-security-code" [message]="getOtpError()" />

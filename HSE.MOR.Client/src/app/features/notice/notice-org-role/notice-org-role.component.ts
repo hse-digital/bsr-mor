@@ -4,6 +4,7 @@ import { ApplicationService, NoticeModel } from "../../../services/application.s
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
+import { WhenBecomeAwareComponent } from '../when-become-aware/when-become-aware.component';
 
 @Component({
   templateUrl: './notice-org-role.component.html'
@@ -29,7 +30,7 @@ export class NoticeOrgRoleComponent extends PageComponent<string> {
     applicationService.model.Notice!.OrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrganisationName);
   }
 
   modelValid: boolean = true;
@@ -42,6 +43,6 @@ export class NoticeOrgRoleComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(BrieflyDescribeRiskIncidentComponent.route, this.activatedRoute);
+    return this.navigationService.navigateRelative(WhenBecomeAwareComponent.route, this.activatedRoute);
   }
 }

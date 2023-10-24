@@ -4,9 +4,9 @@
     <govuk-error-link *ngIf="hasSubmitNoticeReportErrors" anchorId="what-to-submit-notice-input" message="You need to tell us if you need to notify BSR about the occurrence" />
   </govuk-error-summary>
 
-  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Do you want to submit a notice or a report about an occurrence?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-what-to-submit" [errorText]="getErrorDescription(hasErrors, 'You need to tell us if you need to notify BSR about the occurrence')">
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="what-to-submit-notice" value="notice" label="Submit a notice" />
-    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="what-to-submit-report" value="report" label="Submit a report" />
+  <govuk-radio-group class="govuk-!-margin-bottom-4" title="What do you want to submit?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-what-to-submit" [errorText]="getErrorDescription(hasErrors, 'You need to tell us if you need to notify BSR about the occurrence')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" hint="You must do this as soon as possible and before you submit your report" [model]="model" name="application-group" id="what-to-submit-notice" value="notice" label="A notice" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" hint="You must do this after submitting a notice and within 10 working days of identifying a risk or incident" [model]="model" name="application-group" id="what-to-submit-report" value="report" label="A report" />
 
   </govuk-radio-group>
 </govuk-formpage>

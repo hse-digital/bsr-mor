@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, BuildingModel, MORModel, NoticeModel } from "../../../services/application.service";
-import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
+import { ApplicationService, BuildingModel, CheckAnswersNoticeModel, NoticeModel } from "../../../services/application.service";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
@@ -34,7 +33,10 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-
+    if (!applicationService.model.Notice) {
+      applicationService.model.Notice = {}
+    }
+    applicationService.model.Notice!.CheckAnswersModel = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return applicationService.model.Notice?.WhenBecomeAware !== undefined;
@@ -63,11 +65,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
 
   setValuesToBuildingModel(buildingModel: BuildingModel) {
     this.model.Address = buildingModel?.Address ? buildingModel?.Address.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
-    this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;
-    this.model.AddressRegion = buildingModel.AddressRegion;
-    this.model.NumberOfFloors = buildingModel.NumberOfFloorsProf?.toString();
-    this.model.NumberOfUnits = buildingModel.NumberOfUnitsProf?.toString();
-    this.model.BuildingHeight = buildingModel.BuildingHeight?.toString();
+    this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
     if (this.isAddressManual) {
@@ -83,7 +81,11 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   setValuesToNoticeModel(noticeModel: NoticeModel) {  
     this.model.YourName = `${noticeModel.FirstName} ${noticeModel.LastName}`;
     this.model.Incident = noticeModel.DescribeRiskIncident;
-    this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour} ${this.setMeridiem(noticeModel.WhenBecomeAware!.Hour!)}`;
+    this.model.ActionsToKeepSafe = noticeModel.ActionsToKeepSafe;
+    this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour}:${noticeModel.WhenBecomeAware!.Minute}  ${this.setMeridiem(noticeModel.WhenBecomeAware!.Hour!)}`;
+    this.model.ContactNumber = noticeModel.ContactNumber;
+    this.model.OrganisationName = noticeModel.OrganisationName;
+    this.model.OrgRole = noticeModel.OrgRole;
   }
 
   returnManualAddress(model: AddressModel): string {
@@ -112,18 +114,4 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     return this.navigationService.navigateRelative(NoticeConfirmationComponent.route, this.activatedRoute);
   }
 }
-export class CheckAnswersNoticeModel {
-  Address?: string;
-  YourName?: string;
-  Incident?: string;
-  OccurrenceDateTime?: string;
-  ContactDetails?: string;
-  IsManualAddress: boolean = false;
-  AddressRegion?: string;
-  NumberOfFloors?: string;
-  NumberOfUnits?: string;
-  BuildingHeight?: string;
-  BcaReference?: string;
-  HrbNumber?: string;
-  
-}
+

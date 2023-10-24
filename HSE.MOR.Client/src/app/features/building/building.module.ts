@@ -12,6 +12,7 @@ import { IsBuildingComponent } from "./is-building/is-building.component";
 import { BuildingAddressComponent } from "./building-address/building-address.component";
 import { BcaReferenceNumberComponent } from "./bca-reference-number/bca-reference-number.component";
 import { HrbrReferenceNumberComponent } from "./hrbr-reference-number/hrbr-reference-number.component";
+import { NoNeedMorComponent } from "./no-need-mor/no-need-mor.component";
 
 const routes = new HseRoutes([
   HseRoute.protected(IsBuildingComponent.route, IsBuildingComponent, IsBuildingComponent.title),
@@ -20,6 +21,7 @@ const routes = new HseRoutes([
   HseRoute.protected(BuildingAddressComponent.route, BuildingAddressComponent, BuildingAddressComponent.title),
   HseRoute.protected(BcaReferenceNumberComponent.route, BcaReferenceNumberComponent, BcaReferenceNumberComponent.title),
   HseRoute.protected(HrbrReferenceNumberComponent.route, HrbrReferenceNumberComponent, HrbrReferenceNumberComponent.title),
+  HseRoute.protected(NoNeedMorComponent.route, NoNeedMorComponent, NoNeedMorComponent.title),
 ]);
 
 @NgModule({
@@ -30,6 +32,7 @@ const routes = new HseRoutes([
     BuildingAddressComponent,
     BcaReferenceNumberComponent,
     HrbrReferenceNumberComponent,
+    NoNeedMorComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

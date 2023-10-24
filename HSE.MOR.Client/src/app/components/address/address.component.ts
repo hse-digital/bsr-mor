@@ -81,15 +81,9 @@ export class AddressComponent implements OnInit {
     }
   }
   locateBuildingAddress(locateBuilding: string) {
-    if (locateBuilding == "coordinates") {
-      this.changeStepTo('address-coordinates');
-    } 
-  }
-
-  addressCoordines(isCoordinatesProvided: boolean) {
-    if (isCoordinatesProvided) {
+    if (locateBuilding) {
       this.changeStepTo('prof-number-of-floors');
-    }
+    } 
   }
 
   numberOfFloors(floors: string) {

@@ -4,6 +4,7 @@ import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
 import { BcaReferenceNumberComponent } from '../bca-reference-number/bca-reference-number.component';
+import { NoNeedMorComponent } from '../no-need-mor/no-need-mor.component';
 
 @Component({
   templateUrl: './submitted-design-bca.component.html'
@@ -40,7 +41,7 @@ export class SubmittedDesignBcaComponent extends PageComponent<string> {
   navigateNext(): Promise<boolean> {
     return this.model == "yes_reference"
       ? this.navigationService.navigateRelative(BcaReferenceNumberComponent.route, this.activatedRoute)
-      : this.navigationService.navigate('');
+      : this.navigationService.navigateRelative(NoNeedMorComponent.route, this.activatedRoute);
   }
 
 }

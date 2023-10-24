@@ -22,7 +22,6 @@ import { AddressProfNumberOfUnitsComponent } from "./address/address-prof-number
 import { AddressBuildingHeightComponent } from "./address/address-building-height.component";
 import { HasAddressComponent } from "./address/has-address.component";
 import { LocateBuildingAddressComponent } from "./address/locate-building-address.component";
-import { AddressCoordinatesComponent } from "./address/address-coordinates.component";
 import { FindBcaReferenceComponent } from "./bca-reference/find-bca-reference.component";
 import { SelectBcaAddressComponent } from "./bca-reference/select-bca-address.component";
 import { TooManyBcaAddressComponent } from "./bca-reference/too-many-bca-address.component";
@@ -61,7 +60,6 @@ import { FileUploadViewComponent } from "./file-upload/file-upload-view.componen
     AddressBuildingNotInScopeComponent,
     HasAddressComponent,
     LocateBuildingAddressComponent,
-    AddressCoordinatesComponent,
     FindBcaReferenceComponent,
     SelectBcaAddressComponent,
     TooManyBcaAddressComponent,

@@ -6,10 +6,10 @@
     <govuk-error-link anchorId="input-hrbr-number" message="{{hrbrNumberErrorText}}" />
   </govuk-error-summary>
 
-  <govuk-input id="hrbr-number" label="High-rise residential building registration number"
+  <govuk-input id="hrbr-number" label="High-rise residential building registration reference"
                labelClass="govuk-label--l" [isPageHeading]=true
                [(model)]="searchModel.hrbrNumber"
-               hint="This is the number given by the Building Safety Regulator when you registered the building"
+               hint="This is the reference the Building Safety Regulator gave the building when it was registered"
                [errorText]="getErrorDescription(hrbrNumberHasErrors, hrbrNumberErrorText)"
                class="govuk-!-margin-bottom-5 govuk-input--width-20"
                (onKeyupEnter)="findAddress()" />
