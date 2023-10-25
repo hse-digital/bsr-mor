@@ -34,7 +34,6 @@ public record DynamicsReport() : DynamicsEntity<Report>
 {
     public string incidentid { get; set; }
     public string bsr_case { get; set; }
-
     public DateTime bsr_noticesubmittedon { get; set; }
     public MorStage bsr_morstage { get; set; }
     public NoticeRole bsr_noticesubmittedbyrole { get; set; }

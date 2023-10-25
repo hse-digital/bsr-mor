@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace HSE.MOR.Domain.Entities;
 
 public record Notice(string Id = null) : Entity(Id)
@@ -20,4 +22,25 @@ public record TimeModel
   public string Year { get; set; }
   public string Hour { get; set; }
   public string Minute { get; set; }
+}
+
+public record DynamicsNotice() : DynamicsEntity<Notice>
+{
+    public string bsr_noticesubmittedon { get; set; }
+    public string bsr_case { get; set; }
+    public MorStage bsr_morstage { get; set; }
+    public NoticeRole bsr_noticesubmittedbyrole { get; set; }
+    public string bsr_reportorganisationname { get; set; }
+    public DateTime bsr_occurrenceidentifiedon { get; set; } //notice
+    public IncidentOrSituation bsr_incidentorsituation { get; set; }
+    public TypeOfOccurrence bsr_typeofoccurrence { get; set; }
+    public string bsr_occurrencedescription { get; set; }
+    public string bsr_cause { get; set; }
+    public string bsr_affected { get; set; }
+    public string bsr_actionstokeeppeoplesafe { get; set; }
+    public string bsr_howdiscovered { get; set; }
+    [property: JsonPropertyName("bsr_noticesubmittedby@odata.bind")]
+    public string customerReferenceId { get; set; }
+
+    public string title { get; set; }
 }
