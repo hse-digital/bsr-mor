@@ -1,6 +1,8 @@
 param environment string
 param location string = resourceGroup().location
 param swaLocation string = 'westeurope'
+param d365lKeyPrefix string = ''
+param d365EnvironmentKey string = 'SQUAD4--Dynamics--EnvironmentUrl'
 
 @allowed([ 'Free', 'Standard' ])
 param sku string = 'Standard'
@@ -219,23 +221,23 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                 }
                 {
                     name: 'Dynamics__EnvironmentUrl'
-                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=SQUAD4-Dynamics--EnvironmentUrl)'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${d365EnvironmentKey})'
                 }
                 {
                     name: 'Dynamics__TenantId'
-                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--TenantId)'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${d365lKeyPrefix}Dynamics--TenantId)'
                 }
                 {
                     name: 'Dynamics__ClientId'
-                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--ClientId)'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${d365lKeyPrefix}Dynamics--ClientId)'
                 }
                 {
                     name: 'Dynamics__ClientSecret'
-                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--ClientSecret)'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${d365lKeyPrefix}Dynamics--ClientSecret)'
                 }
                 {
                     name: 'Dynamics__LocalAuthorityTypeId'
-                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--LocalAuthorityTypeId)'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${d365lKeyPrefix}Dynamics--LocalAuthorityTypeId)'
                 }
                 {
                     name: 'CosmosConnection'
