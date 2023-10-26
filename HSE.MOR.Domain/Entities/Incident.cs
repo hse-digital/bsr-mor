@@ -30,6 +30,31 @@ public record Incident(string Id = null) : Entity(Id)
     public string ComplainAboutWho { get; set; }
     public AddressModel Address { get; set; }
     public string CaseNumber { get; set; }
+    public string MorId { get; set; }
+}
+
+public record AddressModel()
+{
+    public string UPRN { get; set; }
+    public string ParentUPRN { get; set; }
+    public string USRN { get; set; }
+    public string BuildingName { get; set; }
+    public string Number { get; set; }
+    public string Street { get; set; }
+    public string AddressLineTwo { get; set; }
+    public string Town { get; set; }
+    public string AdministrativeArea { get; set; }
+    public string Postcode { get; set; }
+    public string BuildingApplicationId { get; set; }
+    public string AccountablePerson { get; set; }
+    public int NumberOfFloors { get; set; }
+    public double BuildingHeight { get; set; }
+    public int ResidentialUnits { get; set; }
+    public string BuildingId { get; set; }
+    public string StructureId { get; set; }
+    public string ContactId { get; set; }
+    public bool IsManual { get; set; }
+    public string Address { get; set; }
 }
 
 public record DynamicsIncident() : DynamicsEntity<Incident>
@@ -40,7 +65,8 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     public string _primarycontactid_value { get; set; }
     public string _bsr_buildingregionlookup_value { get; set; }
     public string _bsr_block_incidentid_value { get; set; }
-    public BsrCanHelpYou bsr_howcanbsrhelpyou { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public BsrCanHelpYou? bsr_howcanbsrhelpyou { get; set; }
     public int? bsr_complaintabout { get; set; }
     public int? bsr_contactrole { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
@@ -117,6 +143,13 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     [property: JsonPropertyName("bsr_buildingregionlookup@odata.bind")]
     public string regionReferenceId { get; set; }
     public string title { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    [property: JsonPropertyName("bsr_MOR@odata.bind")]
+    public string morReferenceId { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingapplication@odata.bind")]
+    public string bsrFunctionReference { get; set; }    
+    public DynamicsNotice bsr_MOR { get; set; }
 }
 
 public enum BsrCanHelpYou

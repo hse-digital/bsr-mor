@@ -16,6 +16,7 @@ public interface IDynamicsService {
     Task<List<DynamicsStructure>> GetDynamicsStructureUsingHrbrNumber_Async(string hrbrNumber);
     Task<DynamicsBuildingApplication> GetBuildingApplicationId_Async(string hrbrNumber);
     Task<List<DynamicsStructure>> GetStructureUsingId_Async(string buildingApplicationId);
+    Task<DynamicsIncident> GetIncidentUsingCaseNumber_Async(string caseNumber);
 }
 
 public class DynamicsService : IDynamicsService
@@ -117,5 +118,16 @@ public class DynamicsService : IDynamicsService
             }
         }
         return structuresList;
+    }
+
+    public async Task<DynamicsIncident> GetIncidentUsingCaseNumber_Async(string caseNumber)
+    {
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsIncident>>("incidents", new[]
+       {
+            ("$filter", $"title eq '{caseNumber}'"),
+            ("$expand", "bsr_MOR")
+        });
+
+        return response.value.FirstOrDefault();
     }
 }

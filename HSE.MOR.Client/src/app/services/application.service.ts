@@ -52,6 +52,9 @@ export class ApplicationService {
   async getBuildigsDetails(postcode: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.post<BuildingDetailsDynamicsModel[]>(`api/GetBuildingDetailsUsingPostcodeAsync`, { "Postcode": postcode }));
   }
+  async getIncidentByCaseNumber(caseNumber: string): Promise<IncidentDynamicsModel> {
+    return await firstValueFrom(this.httpClient.post<IncidentDynamicsModel>(`api/GetIncidentUsingCaseNumberAsync`, { "CaseNumber": caseNumber }));
+  }
   async getBuildigsDetailsByBcaReferenceNumber(referenceNumber: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsBuildingDetailsByBcaReferenceAsync/${referenceNumber}`));
   }
@@ -227,6 +230,13 @@ export class StructureDynamicsModel {
   bsr_city?: string;
   bsr_postcode?: string;
 }
+
+export class IncidentDynamicsModel {
+  title?: string;
+  bsr_MOR?: NoticeDynamicsModel
+}
+
+export class NoticeDynamicsModel { }
 
 export class FileUploadModel {
   Progress: number = 0;

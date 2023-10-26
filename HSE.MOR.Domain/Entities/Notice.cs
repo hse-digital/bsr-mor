@@ -15,14 +15,7 @@ public record Notice(string Id = null) : Entity(Id)
     public string ActionsToKeepSafe { get; set; }
 }
 
-public record TimeModel
-{
-  public string Day { get; set; }
-  public string Month { get; set; }
-  public string Year { get; set; }
-  public string Hour { get; set; }
-  public string Minute { get; set; }
-}
+
 
 public record DynamicsNotice() : DynamicsEntity<Notice>
 {
@@ -33,7 +26,7 @@ public record DynamicsNotice() : DynamicsEntity<Notice>
     public string bsr_reportorganisationname { get; set; }
     public DateTime bsr_occurrenceidentifiedon { get; set; } //notice
     public IncidentOrSituation bsr_incidentorsituation { get; set; }
-    public TypeOfOccurrence bsr_typeofoccurrence { get; set; }
+    //public TypeOfOccurrence bsr_typeofoccurrence { get; set; }
     public string bsr_occurrencedescription { get; set; }
     public string bsr_cause { get; set; }
     public string bsr_affected { get; set; }
