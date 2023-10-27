@@ -32,7 +32,7 @@
 
   <h2 class="govuk-heading-m">About safety occurrence</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row *ngIf="!isBuilding" key="Mandatory occurrence notice reference">{{model.NoticeReference}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Mandatory occurrence notice reference">CAS01525V9D0</govuk-summary-list-row>
     <govuk-summary-list-row key="Incident or situation">{{model.IncidentOrSituation}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Type of incident">{{model.IncidentReported}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="What happened?">{{model.AboutIncident}}</govuk-summary-list-row>
