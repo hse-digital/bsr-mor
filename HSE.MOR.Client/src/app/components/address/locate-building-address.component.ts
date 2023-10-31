@@ -29,7 +29,10 @@ export class LocateBuildingAddressComponent implements OnInit {
     if (!this.applicationService.model.Building) {
       this.applicationService.model.Building = {}
     }
-
+    if (!this.applicationService.model.Building.Address) {
+      this.applicationService.model.Building.Address = { IsManual: false };
+    }
+    this.applicationService.model.Building.Address.IsManual = false;
     if (!this.applicationService.model.Building.LocateBuilding) {
       this.applicationService.model.Building.LocateBuilding = "";
     }
@@ -37,7 +40,7 @@ export class LocateBuildingAddressComponent implements OnInit {
     this.model = this.applicationService.model.Building?.LocateBuilding;
   }
 
-  errorMessage: string = 'You need to tell us how many residential units the building has';
+  errorMessage: string = 'You need to tell us if the building has an address';
 
   continue() {
     this.hasLocateBuildingErrors = !this.isValid();
