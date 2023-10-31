@@ -2,8 +2,8 @@
 <div class="govuk-form-group">
   <span class="govuk-caption-l">About the building</span>
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link *ngIf="errors.lineOneHasErrors" anchorId="input-address-line-one" message="Enter the first line of the address" />
-    <govuk-error-link *ngIf="errors.townOrCityHasErrors" anchorId="input-town-or-city" message="Enter a town or city" />
+    <govuk-error-link *ngIf="errors.addressHasErrors" anchorId="input-address-line-one" message="{{addressMessage}}" />
+    <govuk-error-link *ngIf="errors.townCityHasErrors" anchorId="input-town-or-city" message="{{townCityMessage}}" />
     <govuk-error-link *ngIf="errors.postcode.hasErrors" anchorId="input-postcode" message="{{errors.postcode.errorText}}" />
   </govuk-error-summary>
 
@@ -11,7 +11,7 @@
 
   <govuk-input id="address-line-one" label="Address line 1"
                [(model)]="model.Address"
-               [errorText]="getErrorDescription(errors.lineOneHasErrors, 'Enter the first line of the address')"
+               [errorText]="getErrorDescription(errors.addressHasErrors, addressMessage)"
                class="govuk-!-margin-bottom-5"
                (onKeyupEnter)="confirmAddress()" />
 
@@ -22,7 +22,7 @@
 
   <govuk-input id="town-or-city" label="Town or city"
                [(model)]="model.Town"
-               [errorText]="getErrorDescription(errors.townOrCityHasErrors, 'Enter a town or city')"
+               [errorText]="getErrorDescription(errors.townCityHasErrors, townCityMessage)"
                class="govuk-!-margin-bottom-5 govuk-!-width-two-thirds"
                (onKeyupEnter)="confirmAddress()" />
 

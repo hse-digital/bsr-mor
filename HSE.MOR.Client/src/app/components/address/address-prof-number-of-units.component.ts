@@ -40,7 +40,7 @@ export class AddressProfNumberOfUnitsComponent implements OnInit {
   }
 
   heightHasError = false;
-  errorMessage: string = 'You need to tell us how tall the building is in metres';
+  errorMessage: string = 'You need to tell us how many residential units the building has';
 
   isValid(): boolean {
     this.unitsHasErrors = true;
@@ -49,9 +49,9 @@ export class AddressProfNumberOfUnitsComponent implements OnInit {
     if (!residentialUnits || !Number(residentialUnits) || residentialUnits % 1 != 0) {
       this.errorMessage = 'You need to tell us how many residential units the building has';
     } else if (residentialUnits >= 1000) {
-      this.errorMessage = 'Enter a whole number below 999';
-    } else if (residentialUnits < 1) {
-      this.errorMessage = 'Enter a whole number above 0';
+      this.errorMessage = 'Number of residential units must be 9999 or less';
+    } else if (residentialUnits < 0) {
+      this.errorMessage = 'You need to tell us how many residential units the building has';
     } else {
       this.unitsHasErrors = false;
     }

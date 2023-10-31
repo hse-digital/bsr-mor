@@ -5,6 +5,7 @@ import { AddressSearchMode } from './address.component';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
+import { FieldValidations } from '../../helpers/validators/fieldvalidations';
 
 @Component({
   selector: 'manual-address',
@@ -20,8 +21,9 @@ export class ManualAddressComponent {
 
   hasErrors = false;
   errors = {
-    lineOneHasErrors: false,
-    townOrCityHasErrors: false,
+    postcodeHasErrors: false,
+    addressHasErrors: false,
+    townCityHasErrors: false,
     postcode: { hasErrors: false, errorText: '' },
   }
 
@@ -45,12 +47,25 @@ export class ManualAddressComponent {
     }
   }
 
-  private isModelValid() {
-    this.errors.lineOneHasErrors = !this.model.Address;
-    this.errors.townOrCityHasErrors = !this.model.Town;
-    this.isPostcodeValid();
+  postcodeMessage: string = "You need to enter a postcode";
+  addressMessage: string = "You need to tell us the address of the building";
+  townCityMessage: string = "You need to tell us the address of the building";
 
-    this.hasErrors = this.errors.lineOneHasErrors || this.errors.townOrCityHasErrors || this.errors.postcode.hasErrors || this.errors.postcode.hasErrors;
+
+  private isModelValid() {
+    this.errors.postcodeHasErrors = false;
+    this.errors.addressHasErrors = false;
+    this.errors.townCityHasErrors = false;
+    if (!FieldValidations.IsNotNullOrWhitespace(this.model.Address)) {
+      this.errors.addressHasErrors = true;
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.Town)) {
+      this.errors.townCityHasErrors = true;
+    } if (!this.isPostcodeValid()) {
+      this.errors.postcodeHasErrors = true;
+    }
+
+
+    this.hasErrors = this.errors.postcodeHasErrors || this.errors.addressHasErrors || this.errors.townCityHasErrors || this.errors.postcode.hasErrors;
 
     return !this.hasErrors;
   }
