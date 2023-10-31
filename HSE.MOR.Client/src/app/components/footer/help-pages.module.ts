@@ -36,10 +36,10 @@ export class HelpPagesModule {
   static baseRoute: string = 'help';
 
   static footerLinks = [
-    { title: "Accessibility", href: `/${HelpPagesModule.baseRoute}/${AccessibilityComponent.route}` },
-    { title: "Cookies", href: `/${HelpPagesModule.baseRoute}/${CookiesComponent.route}` },
+    { title: "Accessibility", href: `/${HelpPagesModule.baseRoute}/${AccessibilityComponent.route}`, isNewTab: false },
+    { title: "Cookies", href: `/${HelpPagesModule.baseRoute}/${CookiesComponent.route}`, isNewTab: false },
     { title: "Feedback", href: "https://forms.office.com/e/TtNKsTGn7W" },
-    { title: "Privacy", href: `/${HelpPagesModule.baseRoute}/${PrivacyNoticeComponent.route}` },
-    { title: "Terms and conditions", href: `/${HelpPagesModule.baseRoute}/${TermsConditionsComponent.route}` },
+    { title: "Privacy", href: `/${HelpPagesModule.baseRoute}/${PrivacyNoticeComponent.route}`, isNewTab: false },
+    { title: "Terms and conditions", href: `/${HelpPagesModule.baseRoute}/${TermsConditionsComponent.route}`, isNewTab: false },
   ];
 }

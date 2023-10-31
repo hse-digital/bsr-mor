@@ -7,7 +7,7 @@ export class LocalStorage {
     if (typeof localStorage !== 'undefined') {
       var localStorageModel = localStorage.getItem(key);
       if (localStorageModel) {
-        return JSON.parse(atob(localStorageModel));
+        return JSON.parse(decodeURIComponent(atob(localStorageModel)));
       }
     }
 
@@ -16,7 +16,7 @@ export class LocalStorage {
 
   static setJSON(key: string, value: any) {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(key, btoa(JSON.stringify(value)));
+      localStorage.setItem(key, btoa(encodeURIComponent(JSON.stringify(value))));
     }
   }
 
