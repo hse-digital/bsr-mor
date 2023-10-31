@@ -49,9 +49,9 @@ export class AddressBuildingHeightComponent implements OnInit {
     if (!height || !Number(height) || height % 1 != 0) {
       this.errorMessage = 'You need to tell us how tall the building is in metres';
     } else if (height >= 1000) {
-      this.errorMessage = 'Enter a whole number below 999';
-    } else if (height < 1) {
-      this.errorMessage = 'Enter a whole number above 0';
+      this.errorMessage = 'Building height in metres must be 999.9 or less';
+    } else if (height < 0) {
+      this.errorMessage = 'You need to tell us how tall the building is in metres';
     } else {
       this.heightHasError = false;
     }

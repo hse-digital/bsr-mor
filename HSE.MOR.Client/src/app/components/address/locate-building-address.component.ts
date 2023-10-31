@@ -37,15 +37,32 @@ export class LocateBuildingAddressComponent implements OnInit {
     this.model = this.applicationService.model.Building?.LocateBuilding;
   }
 
+  errorMessage: string = 'You need to tell us how many residential units the building has';
+
   continue() {
-    this.hasLocateBuildingErrors = !FieldValidations.IsNotNullOrWhitespace(this.model);
-    if (!this.hasLocateBuildingErrors) {
+    this.hasLocateBuildingErrors = !this.isValid();
+    if (this.isValid()) {
       this.applicationService.model.Building!.LocateBuilding = this.model;
       this.onLocateBuildingAddress.emit(this.model);
     } else {
       this.summaryError?.first?.focus();
       this.titleService.setTitleError();
     }
+  }
+
+  isValid(): boolean {
+    this.hasLocateBuildingErrors = true;
+    let locateAddress = this.model;
+
+    if (!FieldValidations.IsNotNullOrWhitespace(locateAddress)) {
+      this.errorMessage = 'You need to tell us if the building has an address ';
+    } else if (locateAddress.length! > 500) {
+      this.errorMessage = 'You need to tell us if the building has an address ';
+    }  else {
+      this.hasLocateBuildingErrors = false;
+    }
+
+    return !this.hasLocateBuildingErrors;
   }
 
   getErrorDescription(showError: boolean, errorMessage: string): string | undefined {
