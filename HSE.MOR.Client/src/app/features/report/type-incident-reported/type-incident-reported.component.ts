@@ -13,7 +13,7 @@ import { IncidentDetailsComponent } from '../incident-details/incident-details.c
 export class TypeIncidentReportedComponent extends PageComponent<string[]> {
   public static route: string = 'type-incident-reported';
   static title: string = "What type of incident are you reporting?";
-  isOccupiedComplete: boolean = false
+  isProffesional: boolean = false
   errorAnchorId?: string;
 
   @ViewChild(GovukCheckboxComponent) checkboxGroup?: GovukCheckboxComponent;
@@ -22,7 +22,7 @@ export class TypeIncidentReportedComponent extends PageComponent<string[]> {
     if (!applicationService.model.Report) {
       applicationService.model.Report = {};
     }
-    this.isOccupiedComplete = applicationService.model.Building?.BuildingType == "occupied" || applicationService.model.Building?.BuildingType == "complete_not_occupied" ? true : false;
+    this.isProffesional = applicationService.model.Report!.OrgRole == "principal_contractor" || applicationService.model.Report!.OrgRole == "principal_designer" ? true : false;
     this.model = applicationService.model.Report.IncidentReported ?? [];
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {

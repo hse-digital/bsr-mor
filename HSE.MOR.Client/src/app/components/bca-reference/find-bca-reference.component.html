@@ -9,7 +9,7 @@
   <govuk-input id="bca-reference" label="Building control application reference" 
                labelClass="govuk-label--l" [isPageHeading]=true
                [(model)]="searchModel.referenceNumber"
-               hint="This is the reference number given by the building control body on your application"
+               hint="This is the reference the building control body gave the application"
                [errorText]="getErrorDescription(referenceNumberHasErrors, referenceNumberErrorText)"
                class="govuk-!-margin-bottom-5 govuk-input--width-20"
                (onKeyupEnter)="findAddress()" />

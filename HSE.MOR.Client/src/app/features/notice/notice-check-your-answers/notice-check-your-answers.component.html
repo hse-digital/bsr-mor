@@ -6,8 +6,9 @@
   <govuk-summary-list>
     <govuk-summary-list-row *ngIf="!isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSearchAdress" key="Building address" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" actionDetails="Building Address" [showAction]=true>{{model.Address}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" actionDetails="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" actionDetails="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <govuk-summary-list *ngIf="isAddressManual">
@@ -19,23 +20,23 @@
 
   <h2 class="govuk-heading-m">About you</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row key="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" [showAction]=true>{{model.YourName}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Contact details" (onKeyupEnter)="navigateTo('enter-email')" (onClick)="navigateTo('enter-email')" [showAction]=true>{{model.ContactDetails}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Contact number" (onKeyupEnter)="navigateTo('notice-contact-number')" (onClick)="navigateTo('notice-contact-number')" [showAction]=true>{{model.ContactNumber}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Your name" actionDetails="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" [showAction]=true>{{model.YourName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact details" actionDetails="Contact details" (onKeyupEnter)="navigateTo('enter-email')" (onClick)="navigateTo('enter-email')" [showAction]=true>{{model.ContactDetails}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact number" actionDetails="Contact number" (onKeyupEnter)="navigateTo('notice-contact-number')" (onClick)="navigateTo('notice-contact-number')" [showAction]=true>{{model.ContactNumber}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <h2 class="govuk-heading-m">About organisation</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('notice-organisation-name')" (onClick)="navigateTo('notice-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-role')" (onClick)="navigateTo('notice-org-role')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation" actionDetails="Organisation" (onKeyupEnter)="navigateTo('notice-organisation-name')" (onClick)="navigateTo('notice-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation's role" actionDetails="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-role')" (onClick)="navigateTo('notice-org-role')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
   </govuk-summary-list>
 
-  <h2 class="govuk-heading-m">About occurrence</h2>
+  <h2 class="govuk-heading-m">About the safety occurrence</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row key="Occurrence type" (onKeyupEnter)="navigateTo('what-to-submit')" (onClick)="navigateTo('what-to-submit')" [showAction]=true>Notice</govuk-summary-list-row>
-    <govuk-summary-list-row key="Describe the safety occurrence" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.Incident}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Tell us any immediate actions you've taken since to keep people safe" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.ActionsToKeepSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Occurrence date" (onKeyupEnter)="navigateTo('when-become-aware')" (onClick)="navigateTo('when-become-aware')" [showAction]=true>{{model.OccurrenceDateTime}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Occurrence type" actionDetails="Occurrence type" (onKeyupEnter)="navigateTo('what-to-submit')" (onClick)="navigateTo('what-to-submit')" [showAction]=true>Notice</govuk-summary-list-row>
+    <govuk-summary-list-row key="Describe the safety occurrence" actionDetails="Describe the safety occurrence" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.Incident}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Tell us any immediate actions you've taken since to keep people safe" actionDetails="Tell us any immediate actions you've taken since to keep people safe" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.ActionsToKeepSafe}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Occurrence date" actionDetails="Occurrence date" (onKeyupEnter)="navigateTo('when-become-aware')" (onClick)="navigateTo('when-become-aware')" [showAction]=true>{{model.OccurrenceDateTime}}</govuk-summary-list-row>
   </govuk-summary-list>
   <govuk-body>you can print this on the next page</govuk-body>
 </govuk-formpage>

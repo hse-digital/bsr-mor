@@ -39,14 +39,14 @@
     <govuk-summary-list-row *ngIf="isIncident" key="What caused it?">{{model.CauseOfIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Tell us who has been affected and in what way">{{model.WhoAffectedByIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Explain what you are doing or planning to do to keep people safe">{{model.IncidentKeepPeopleSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isIncident" key="Tell us how undefined discovered the safety occurrence">{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isIncident" key="Tell us how {{organisationName}} discovered the safety occurrence">{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSharedWithOthersIncident" key="Tell us any anything you think should be shared for others to learn from">{{model.SharedWithOthers}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What type of risk are you reporting?">{{model.RiskReported}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What is the situation?">{{model.AboutRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What caused it?">{{model.CauseOfRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="Tell us who could be affected and in what way">{{model.WhoAffectedByRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="Explain what you are doing or planning to do to keep people safe">{{model.RiskKeepPeopleSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how undefined discovered the safety occurrence">{{model.OrganisationFindOut}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how {{organisationName}} discovered the safety occurrence">{{model.OrganisationFindOut}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSharedWithOthers" key="Tell us any anything you think should be shared for others to learn from">{{model.SharedWithOthers}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Support Information">{{model.UploadedFileNames}}</govuk-summary-list-row>
   </govuk-summary-list>

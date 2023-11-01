@@ -13,6 +13,7 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
   public static route: string = 'risk-details';
   static title: string = "Your details";
   override model: ReportModel = new ReportModel();
+  organisationName?: string;
 
 
   override onInit(applicationService: ApplicationService): void {
@@ -20,6 +21,8 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
       applicationService.model.Report = {}
     }
     this.model = applicationService.model.Report;
+    this.organisationName = applicationService.model.Report.OrganisationName ?? "organisation";
+
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.AboutRisk)) {
       applicationService.model.Report.AboutRisk = "";
     }
@@ -61,13 +64,13 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
     }
   }
 
-  errorMessage: string = "You need to tell us about the occurrence";
-  aboutRiskErrorMessage: string = "You need to tell us what happened / is the risk";
+  errorMessage: string = "You need to tell us about the safety occurrence";
+  aboutRiskErrorMessage: string = "You need to tell us what happened or what is the risk";
   whatCausedItErrorMessage: string = "You need to tell us what caused it";
-  whoAffectedErrorMessage: string = "You need to tell us who has been / could have been affected";
-  keepPeopleSafeErrorMessage: string = "You need to tell us what you have done to keep people safe";
-  organisationFindOutErrorMessage: string = "You need to tell us how the occurrence was discovered";
-  sharedWithOthersErrorMessage: string = "You need to share for others to learn from  using fewer words";
+  whoAffectedErrorMessage: string = "You need to tell us who has or could have been affected";
+  keepPeopleSafeErrorMessage: string = "You need to tell us what you are doing to keep people safe";
+  organisationFindOutErrorMessage: string = "You need to tell us how the safety occurrence was discovered";
+  sharedWithOthersErrorMessage: string = "You need to tell us what should be shared for others to learn from using fewer words";
   aboutRiskInError: boolean = false;
   whatCausedItInError: boolean = false;
   whoAffectedItInError: boolean = false;
@@ -90,7 +93,7 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutRisk) && this.model.AboutRisk?.length! > 200) {
 
-      this.aboutRiskErrorMessage = "You need to tell us what happened / is the risk using fewer words";
+      this.aboutRiskErrorMessage = "You need to tell us what happened or what is the risk using fewer words";
       this.aboutRiskInError = true;
 
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfRisk)) {
@@ -106,7 +109,7 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByRisk) && this.model.WhoAffectedByRisk?.length! > 200) {
 
-      this.whoAffectedErrorMessage = "You need to tell us who has been / could have been affected using fewer words";
+      this.whoAffectedErrorMessage = "You need to tell us who has or could have been affected using fewer words";
       this.whoAffectedItInError = true;
 
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.RiskKeepPeopleSafe)) {
@@ -114,7 +117,7 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.RiskKeepPeopleSafe) && this.model.RiskKeepPeopleSafe?.length! > 300) {
 
-      this.keepPeopleSafeErrorMessage = "You need to tell us what you have done to keep people safe using fewer words";
+      this.keepPeopleSafeErrorMessage = "You need to tell us what you are doing to keep people safe using fewer words";
       this.keepPeopleSafeItInError = true;
 
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.OrganisationFindOut)) {
@@ -122,7 +125,7 @@ export class RiskDetailsComponent extends PageComponent<ReportModel> {
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.OrganisationFindOut) && this.model.OrganisationFindOut?.length! > 100) {
 
-      this.organisationFindOutErrorMessage = "You need to tell us how the occurrence was discovered using fewer words";
+      this.organisationFindOutErrorMessage = "You need to tell us how the safety occurrence was discovered using fewer words";
       this.organisationFindOutItInError = true;
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers)) {
