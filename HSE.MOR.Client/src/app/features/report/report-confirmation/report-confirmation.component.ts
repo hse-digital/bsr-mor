@@ -12,9 +12,10 @@ import { ApplicationService } from '../../../services/application.service';
 export class ReportConfirmationComponent extends PageComponent<string> {
   public static route: string = 'confirmation';
   static title: string = "How many floors does the building have?";
+  morReference?: string;
 
   override onInit(applicationService: ApplicationService): void {
-
+    this.morReference = applicationService.model.Report?.NoticeReference ?? "HDJ2123F";
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
 

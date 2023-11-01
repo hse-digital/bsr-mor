@@ -71,7 +71,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
-    this.model.AboutBuilding = buildingModel.LocateBuilding;
+    this.model.AboutBuilding = buildingModel?.LocateBuilding ?? "";
     if (this.isAddressManual) {
       this.model.Address = buildingModel?.Address ? this.returnManualAddress(buildingModel?.Address) : "";
       this.model.AddressRegion = buildingModel?.AddressRegion?.toUpperCase();

@@ -18,18 +18,20 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
   isSearchAdress: boolean = false;
   isAddressManual: boolean = false;
   isIncident: boolean = false;
-  isBuilding: boolean = false;
+  isNoticeReference: boolean = false;
   isSharedWithOthers: boolean = false;
   isSharedWithOthersIncident: boolean = false;
   organisationName?: string;
+  isSameUser: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
-    this.isBuilding = !FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);    
+    this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);    
     this.isIncident = applicationService.model.Report?.WhatToReport == "incident" ? true : false;
     var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
+    this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
     this.isSharedWithOthersIncident = this.isIncident && isShared;
     this.isSharedWithOthers = !this.isIncident && isShared;
     this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
@@ -48,7 +50,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.ContactNumber = applicationService.model.Report?.CheckAnswersModel?.ContactNumber;
     this.model.OrganisationName = applicationService.model.Report?.CheckAnswersModel?.OrganisationName;
     this.model.OrgRole = applicationService.model.Report?.CheckAnswersModel?.OrgRole;
-    this.model.NoticeReference = applicationService.model.Report?.CheckAnswersModel?.NoticeReference;
+    this.model.NoticeReference = applicationService.model.Report?.CheckAnswersModel?.NoticeReference ?? "HDJ2123F";
     this.model.IncidentOrSituation = applicationService.model.Report?.CheckAnswersModel?.IncidentOrSituation;
     this.model.IncidentReported = applicationService.model.Report?.CheckAnswersModel?.IncidentReported;
     this.model.AboutIncident = applicationService.model.Report?.CheckAnswersModel?.AboutIncident;

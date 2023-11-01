@@ -13,6 +13,7 @@ import { NavigationHelper } from '../../../helpers/navigation.helper';
 export class EnterReferenceComponent extends PageComponent<string> {
   public static route: string = 'enter-reference';
   static title: string = "Enter mandatory occurrence notice reference – Tell the Building Safety Regulator about a mandatory occurrence";
+  caseNumber?: string;
 
 
   override onInit(applicationService: ApplicationService): void {
@@ -25,7 +26,21 @@ export class EnterReferenceComponent extends PageComponent<string> {
     this.model = applicationService.model.Report?.NoticeReference;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.Report!.NoticeReference = this.model;
+    
+    var dynamicsIncidentModel = await applicationService.getIncidentByCaseNumber(this.model!);
+    if (dynamicsIncidentModel) {
+      this.model = dynamicsIncidentModel.title;
+    }
+    if (FieldValidations.IsNotNullOrWhitespace(this.model)) {
+      applicationService.model.Report!.NoticeReference = this.model;
+    } else {
+      this.processing = false;
+      this.modelValid = false;
+      this.hasErrors = true;
+      this.ErrorMessage = this.ErrorNotExists;
+      throw Error;
+    }
+    
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;
@@ -41,6 +56,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
   ErrorMessage: string = "";
   ErrorRequired = "You need to enter a notice reference";
   ErrorInvalid = "You need to enter a valid notice reference";
+  ErrorNotExists = "Entered notice reference does not exist";
 
   override isValid(): boolean {
     if (!FieldValidations.IsNotNullOrWhitespace(this.model)) {
