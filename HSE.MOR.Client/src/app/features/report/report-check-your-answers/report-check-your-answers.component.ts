@@ -36,7 +36,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
-    this.isNoticeReference = !FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
+    this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
     this.isAddressManual = applicationService.model.Building?.Address?.IsManual ?? false;
     this.isIncident = applicationService.model.Report?.WhatToReport == "incident" ? true : false;
     var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
