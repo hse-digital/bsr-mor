@@ -109,7 +109,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-    name: 's118${environment}bsracshelpsa'
+    name: 's118${environment}bsracsmorsa'
     location: location
     sku: {
         name: storageAccountType
