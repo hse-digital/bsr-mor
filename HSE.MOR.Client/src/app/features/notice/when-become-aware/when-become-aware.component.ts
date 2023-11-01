@@ -16,6 +16,7 @@ export type InputTimeModel = { hour?: string, minute?: string };
 export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   public static route: string = 'when-become-aware';
   static title: string = "When did you identify the risk or incident?";
+  organisationName?: string;
 
   inputDateModel?: InputDateModel;
   inputTimeModel?: InputTimeModel;
@@ -36,6 +37,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
       applicationService.model.Notice!.WhenBecomeAware = {       
       };
     }
+    this.organisationName = applicationService.model.Notice!.OrganisationName ?? "organisation";
     this.model = applicationService.model.Notice?.WhenBecomeAware;   
     this.model = { 
       Day: applicationService.model.Notice?.WhenBecomeAware?.Day,
@@ -100,7 +102,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   private isDateValid() {
     this.dateErrorMessage = "";
     if (this.InputDateModelIsNullOrWhitespace()) {
-      this.dateErrorMessage = "You need to tell us the date you were made aware of the occurrence";
+      this.dateErrorMessage = "You need to tell us when you were made aware of the occurrence";
     } else if (!this.inputDateModel?.day) {
       this.dateErrorMessage = "You need to tell us the day you were made aware of the occurrence";
     } else if (!this.inputDateModel?.month) {
@@ -108,11 +110,11 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     } else if (!this.inputDateModel?.year) {
       this.dateErrorMessage = "You need to tell us the year you were made aware of the occurrence";
     } else if (Number.isNaN(this.getDate(this.model).getTime())) {
-      this.dateErrorMessage = "You need to enter a date that exists";
+      this.dateErrorMessage = "You need to tell us the time you were made aware of the occurrence";
     } else if (Date.now() < this.getDate(this.model).getTime()) {
       this.dateErrorMessage = "You need to enter a date in the past";
     } else if (this.model?.Year! < 1900) {
-      this.dateErrorMessage = "you need to enter a date that is after 1900";
+      this.dateErrorMessage = "You need to enter a date that is after 1900";
     }
     this.inputDateHasError = this.dateErrorMessage != "";
     return !this.inputDateHasError;

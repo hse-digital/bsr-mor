@@ -3,6 +3,8 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ApplicationService } from '../../../services/application.service';
+import { ReportOrgRoleComponent } from '../report-org-role/report-org-role.component';
+import { ReportOrganisationNameComponent } from '../report-organisation-name/report-organisation-name.component';
 import { ReportYourDetailsComponent } from '../report-your-details/report-your-details.component';
 
 @Component({
@@ -40,7 +42,11 @@ export class WhoSubmittedNoticeComponent extends PageComponent<string> {
     return !this.modelValid;
   }
   navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(ReportYourDetailsComponent.route, this.activatedRoute);
+    if (this.model == "me") {
+      return this.navigationService.navigateRelative(ReportOrganisationNameComponent.route, this.activatedRoute);
+    } else {
+      return this.navigationService.navigateRelative(ReportYourDetailsComponent.route, this.activatedRoute);
+    }   
   }
 
 }

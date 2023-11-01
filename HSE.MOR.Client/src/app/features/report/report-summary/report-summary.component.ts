@@ -21,6 +21,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
   isBuilding: boolean = false;
   isSharedWithOthers: boolean = false;
   isSharedWithOthersIncident: boolean = false;
+  organisationName?: string;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
@@ -31,6 +32,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
     this.isSharedWithOthersIncident = this.isIncident && isShared;
     this.isSharedWithOthers = !this.isIncident && isShared;
+    this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
     this.model.Address = applicationService.model.Report?.CheckAnswersModel?.Address;
     this.model.BcaReference = applicationService.model.Report?.CheckAnswersModel?.BcaReference;
     this.model.HrbNumber = applicationService.model.Report?.CheckAnswersModel?.HrbNumber;
@@ -60,6 +62,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.CauseOfRisk = applicationService.model.Report?.CheckAnswersModel?.CauseOfRisk;
     this.model.WhoAffectedByRisk = applicationService.model.Report?.CheckAnswersModel?.WhoAffectedByRisk;
     this.model.RiskKeepPeopleSafe = applicationService.model.Report?.CheckAnswersModel?.RiskKeepPeopleSafe;
+    this.model.OrganisationFindOut = applicationService.model.Report?.CheckAnswersModel?.OrganisationFindOut;
     this.model.UploadedFileNames = applicationService.model.Report?.CheckAnswersModel?.UploadedFileNames;
 
   }

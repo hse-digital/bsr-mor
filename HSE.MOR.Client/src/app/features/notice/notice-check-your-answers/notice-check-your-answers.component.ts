@@ -5,6 +5,7 @@ import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { NoticeConfirmationComponent } from '../notice-confirmation/notice-confirmation.component';
+import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 
 @Component({
   templateUrl: './notice-check-your-answers.component.html'
@@ -21,6 +22,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   fileNameArray: string[] = [];
   addressRouteKey?: string;
   isAddressManual: boolean = false;
+  isAaboutTheBuilding: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false; 
@@ -30,6 +32,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToNoticeModel(applicationService.model?.Notice!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
+    this.isAaboutTheBuilding = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.LocateBuilding)  ? true : false;
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
@@ -68,6 +71,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
+    this.model.AboutBuilding = buildingModel.LocateBuilding;
     if (this.isAddressManual) {
       this.model.Address = buildingModel?.Address ? this.returnManualAddress(buildingModel?.Address) : "";
       this.model.AddressRegion = buildingModel?.AddressRegion?.toUpperCase();

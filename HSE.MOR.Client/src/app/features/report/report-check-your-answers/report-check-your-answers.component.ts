@@ -28,6 +28,8 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   isBuilding: boolean = false;
   isSharedWithOthers: boolean = false;
   isSharedWithOthersIncident: boolean = false;
+  organisationName?: string;
+  isAaboutTheBuilding: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
@@ -42,7 +44,9 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToReportModel(applicationService.model?.Report!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
-    this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
+    this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!);
+    this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
+    this.isAaboutTheBuilding = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.LocateBuilding) ? true : false;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     if (!applicationService.model.Report) {
@@ -80,6 +84,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
+    this.model.AboutBuilding = buildingModel.LocateBuilding;
     if (this.isAddressManual) {
       this.model.Address = buildingModel?.Address ? this.returnManualAddress(buildingModel?.Address) : "";
       this.model.AddressRegion = buildingModel?.AddressRegion?.toUpperCase();

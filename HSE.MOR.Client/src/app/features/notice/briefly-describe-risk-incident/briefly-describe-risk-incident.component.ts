@@ -41,8 +41,8 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeMo
       && applicationService.model.Notice?.WhenBecomeAware?.Hour && applicationService.model.Notice?.WhenBecomeAware?.Minute ? true : false;
   }
 
-  describeIncidentRiskErrorMessage: string = "You need to describe the safety occurrence";
-  actionsToKeepSafeErrorMessage: string = "You need to tell us about actions you've taken since to keep people safe";
+  describeIncidentRiskErrorMessage: string = "You need to briefly describe the risk or incident";
+  actionsToKeepSafeErrorMessage: string = "You need to tell us what immediate actions you have taken";
   
   describeIncidentRiskInError: boolean = false;
   actionsToKeepSafeInError: boolean = false;
@@ -60,7 +60,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeMo
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.DescribeRiskIncident) && this.model.DescribeRiskIncident?.length! > 200) {
 
-      this.describeIncidentRiskErrorMessage = "You need to describe the safety occurrence using fewer words";
+      this.describeIncidentRiskErrorMessage = "You need to briefly describe the risk or incident in fewer words";
       this.describeIncidentRiskInError = true;
 
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.ActionsToKeepSafe)) {
@@ -68,7 +68,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeMo
 
     } if (FieldValidations.IsNotNullOrWhitespace(this.model.ActionsToKeepSafe) && this.model.ActionsToKeepSafe?.length! > 200) {
 
-      this.actionsToKeepSafeErrorMessage = "You need to tell us about actions using fewer words";
+      this.actionsToKeepSafeErrorMessage = "You need to tell us what immediate actions you have taken in fewer words";
       this.actionsToKeepSafeInError = true;
 
     } 

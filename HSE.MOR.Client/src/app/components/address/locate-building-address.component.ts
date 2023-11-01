@@ -58,9 +58,9 @@ export class LocateBuildingAddressComponent implements OnInit {
     let locateAddress = this.model;
 
     if (!FieldValidations.IsNotNullOrWhitespace(locateAddress)) {
-      this.errorMessage = 'You need to tell us if the building has an address ';
+      this.errorMessage = 'You need to tell us how to find your building';
     } else if (locateAddress.length! > 500) {
-      this.errorMessage = 'You need to tell us if the building has an address ';
+      this.errorMessage = 'You need to tell us how to find your building using fewer words';
     }  else {
       this.hasLocateBuildingErrors = false;
     }

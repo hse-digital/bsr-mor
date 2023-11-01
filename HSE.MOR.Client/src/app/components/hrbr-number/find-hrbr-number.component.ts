@@ -4,6 +4,7 @@ import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
 import { AddressModel, AddressResponseModel, AddressType } from '../../services/address.service';
+import { HrbNumberValidator } from '../../helpers/validators/hrb-number-validator';
 @Component({
   selector: 'find-hrbr-number',
   templateUrl: './find-hrbr-number.component.html'
@@ -34,7 +35,7 @@ export class FindHrbrNumberComponent {
   constructor(private titleService: TitleService) { }
 
   async findAddress() {
-    if (this.isReferenceNumberValid()) {
+    if (!this.isReferenceNumberHasErrors()) {
       this.loading = true;
       let buildingDetailsResponse = await this.applicationService.getStructureByHrbrNumber(this.searchModel.hrbrNumber!);
       if (buildingDetailsResponse.length > 0) {
@@ -49,18 +50,24 @@ export class FindHrbrNumberComponent {
     }
   }
 
-  isReferenceNumberValid(): boolean {
+  isReferenceNumberHasErrors(): boolean {
     let hrbrNumber = this.searchModel.hrbrNumber?.replace(' ', '');
-    this.hrbrNumberHasErrors = true;
+    this.hrbrNumberHasErrors = false;
     if (!hrbrNumber) {
-      this.hrbrNumberErrorText = 'Enter a real number';
-    } else if (hrbrNumber.length < 5 || hrbrNumber.length > 12) {
-      this.hrbrNumberErrorText = "Enter a real number, like 'HRB05286X0T5'.";
-    } else {
-      this.hrbrNumberHasErrors = false;
-    }
+      this.hrbrNumberErrorText = 'You need to enter a building registration number';
+      this.hrbrNumberHasErrors = true;
+      return this.hrbrNumberHasErrors;
+    } if (!HrbNumberValidator.isValid(hrbrNumber ?? '')) {
+      this.hrbrNumberErrorText = 'You need to enter a valid building registration number';
+      this.hrbrNumberHasErrors = true;
+      return this.hrbrNumberHasErrors;
+    } if (hrbrNumber!.length < 5 || hrbrNumber!.length > 12) {
+      this.hrbrNumberErrorText = "You need to enter a valid building registration number";
+      this.hrbrNumberHasErrors = true;
+      return this.hrbrNumberHasErrors;
+    } 
 
-    return !this.hrbrNumberHasErrors;
+    return this.hrbrNumberHasErrors;
   }
 
   getErrorDescription(showError: boolean, errorMessage: string): string | undefined {

@@ -7,7 +7,7 @@
   </govuk-error-summary>
 
   <govuk-textarea label="Tell us how to find your building" labelClass="govuk-label--l"
-                  [enableCharacterCount]="true" [maxCharacterRemaining]="500" [isPageHeading]=true
+                  [enableCharacterCount]="false" [maxCharacterRemaining]="500" [isPageHeading]=true
                   hint="If your building doesn't have an address or has not been identified by BSR, then tell us the closest address or enter a grid reference"
                   [(model)]="model" #field [govukRequired]="field" id="locate-building"
                   aria-describedby="error-textarea-locate-building" labelFor="textarea-locate-building"

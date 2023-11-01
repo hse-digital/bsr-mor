@@ -5,6 +5,7 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
 import { WhenBecomeAwareComponent } from '../when-become-aware/when-become-aware.component';
+import { NoticeDutyHolderCanSubmitComponent } from '../notice-duty-holder-can-submit/notice-duty-holder-can-submit.component';
 
 @Component({
   templateUrl: './notice-org-role.component.html'
@@ -43,6 +44,11 @@ export class NoticeOrgRoleComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(WhenBecomeAwareComponent.route, this.activatedRoute);
+    if (this.model == "other") {
+      return this.navigationService.navigateRelative(NoticeDutyHolderCanSubmitComponent.route, this.activatedRoute);
+    } else {
+      return this.navigationService.navigateRelative(WhenBecomeAwareComponent.route, this.activatedRoute);
+    }
+    
   }
 }
