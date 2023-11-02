@@ -62,6 +62,8 @@ export class AddressModel {
 export enum AddressType {
   PostcodeSearch,
   BCAReference,
-  HRBNumber
+  HRBNumber,
+  Manual,
+  AboutBuilding,
 }
 

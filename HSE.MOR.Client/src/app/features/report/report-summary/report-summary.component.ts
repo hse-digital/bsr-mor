@@ -17,21 +17,26 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
   isHRBAdress: boolean = false;
   isSearchAdress: boolean = false;
   isAddressManual: boolean = false;
+  isManual: boolean = false;
   isIncident: boolean = false;
   isNoticeReference: boolean = false;
   isSharedWithOthers: boolean = false;
   isSharedWithOthersIncident: boolean = false;
   organisationName?: string;
   isSameUser: boolean = false;
+  isAboutBuilding: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
+    this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);    
     this.isIncident = applicationService.model.Report?.WhatToReport == "incident" ? true : false;
     var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
     this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
+    
     this.isSharedWithOthersIncident = this.isIncident && isShared;
     this.isSharedWithOthers = !this.isIncident && isShared;
     this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
@@ -39,6 +44,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.BcaReference = applicationService.model.Report?.CheckAnswersModel?.BcaReference;
     this.model.HrbNumber = applicationService.model.Report?.CheckAnswersModel?.HrbNumber;
     this.isAddressManual = applicationService.model.Report?.CheckAnswersModel?.IsManualAddress!;
+    this.model.AboutBuilding = applicationService.model.Report?.CheckAnswersModel?.AboutBuilding;
     if (this.isAddressManual) {
       this.model.AddressRegion = applicationService.model.Report?.CheckAnswersModel?.AddressRegion;
       this.model.NumberOfFloors = applicationService.model.Report?.CheckAnswersModel?.NumberOfFloors?.toString();
