@@ -3,7 +3,7 @@ import { GovukErrorSummaryComponent } from 'hse-angular';
 import { ApplicationService } from 'src/app/services/application.service';
 import { GetInjector } from '../../helpers/injector.helper';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
-import { AddressModel, AddressResponseModel } from '../../services/address.service';
+import { AddressModel, AddressResponseModel, AddressType } from '../../services/address.service';
 import { TitleService } from '../../services/title.service';
 
 @Component({
@@ -32,6 +32,7 @@ export class LocateBuildingAddressComponent implements OnInit {
     if (!this.applicationService.model.Building.Address) {
       this.applicationService.model.Building.Address = { IsManual: false };
     }
+    this.applicationService.model.Building.Address.BuildingAddressType = AddressType.AboutBuilding;
     this.applicationService.model.Building.Address.IsManual = false;
     if (!this.applicationService.model.Building.LocateBuilding) {
       this.applicationService.model.Building.LocateBuilding = "";

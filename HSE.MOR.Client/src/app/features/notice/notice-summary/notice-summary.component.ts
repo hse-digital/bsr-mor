@@ -16,19 +16,24 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
   isBCAAddress: boolean = false;
   isHRBAdress: boolean = false;
   isSearchAdress: boolean = false;
+  isManual: boolean = false;
   fileNameArray: string[] = [];
   addressRouteKey?: string;
   isAddressManual: boolean = false;
+  isAboutBuilding: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
+    this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.model.Address = applicationService.model.Notice?.CheckAnswersModel?.Address;
     this.model.BcaReference = applicationService.model.Notice?.CheckAnswersModel?.BcaReference;
     this.model.HrbNumber = applicationService.model.Notice?.CheckAnswersModel?.HrbNumber;
+    this.model.AboutBuilding = applicationService.model.Notice?.CheckAnswersModel?.AboutBuilding;
     this.isAddressManual = applicationService.model.Notice?.CheckAnswersModel?.IsManualAddress!;
-    if (this.isAddressManual) {
+    if (this.isManual) {
       this.model.AddressRegion = applicationService.model.Notice?.CheckAnswersModel?.AddressRegion;
       this.model.NumberOfFloors = applicationService.model.Notice?.CheckAnswersModel?.NumberOfFloors?.toString();
       this.model.NumberOfUnits = applicationService.model.Notice?.CheckAnswersModel?.NumberOfUnits?.toString();

@@ -27,7 +27,7 @@ export class ManualAddressComponent {
     postcode: { hasErrors: false, errorText: '' },
   }
 
-  model: AddressModel = { BuildingAddressType: AddressType.PostcodeSearch, IsManual: true }
+  model: AddressModel = { BuildingAddressType: AddressType.Manual, IsManual: true }
 
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
 

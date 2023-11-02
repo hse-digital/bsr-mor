@@ -19,21 +19,23 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   isBCAAddress: boolean = false;
   isHRBAdress: boolean = false;
   isSearchAdress: boolean = false;
+  isManual: boolean = false;
   fileNameArray: string[] = [];
   addressRouteKey?: string;
-  isAddressManual: boolean = false;
   isAaboutTheBuilding: boolean = false;
+  isAddress: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false; 
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
-    this.isAddressManual = applicationService.model.Building?.Address?.IsManual ?? false;
+    this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isAaboutTheBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToNoticeModel(applicationService.model?.Notice!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
-    this.isAaboutTheBuilding = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.LocateBuilding)  ? true : false;
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
+    this.isAddress = applicationService.model?.Building!.Address?.Address ? true : false;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     if (!applicationService.model.Notice) {
@@ -63,19 +65,21 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
       case AddressType.BCAReference: return "notice-bca-reference-number";
       case AddressType.HRBNumber: return "notice-hrb-number";
       case AddressType.PostcodeSearch: return "notice-search-address";
+      case AddressType.Manual: return "notice-search-address";
+      case AddressType.AboutBuilding: return "notice-search-address";
     }
   }
 
   setValuesToBuildingModel(buildingModel: BuildingModel) {
-    this.model.Address = buildingModel?.Address ? buildingModel?.Address.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
+    this.model.Address = this.isSearchAdress || this.isManual ? buildingModel?.Address?.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
     this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
     this.model.AboutBuilding = buildingModel?.LocateBuilding ?? "";
-    if (this.isAddressManual) {
+    if (this.isManual) {
       this.model.Address = buildingModel?.Address ? this.returnManualAddress(buildingModel?.Address) : "";
       this.model.AddressRegion = buildingModel?.AddressRegion?.toUpperCase();
-      this.model.NumberOfUnits = buildingModel?.NumberOfFloorsProf?.toString();
+      this.model.NumberOfFloors = buildingModel?.NumberOfFloorsProf?.toString();
       this.model.NumberOfUnits = buildingModel?.NumberOfUnitsProf?.toString();
       this.model.BuildingHeight = buildingModel?.BuildingHeight?.toString();
     }
