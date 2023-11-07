@@ -3,7 +3,7 @@ import { GovukErrorSummaryComponent } from 'hse-angular';
 import { ApplicationService } from 'src/app/services/application.service';
 import { GetInjector } from '../../helpers/injector.helper';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
-import { AddressModel, AddressResponseModel } from '../../services/address.service';
+import { AddressModel, AddressResponseModel, AddressType } from '../../services/address.service';
 import { TitleService } from '../../services/title.service';
 
 @Component({
@@ -29,7 +29,11 @@ export class LocateBuildingAddressComponent implements OnInit {
     if (!this.applicationService.model.Building) {
       this.applicationService.model.Building = {}
     }
-
+    if (!this.applicationService.model.Building.Address) {
+      this.applicationService.model.Building.Address = { IsManual: false };
+    }
+    this.applicationService.model.Building.Address.BuildingAddressType = AddressType.AboutBuilding;
+    this.applicationService.model.Building.Address.IsManual = false;
     if (!this.applicationService.model.Building.LocateBuilding) {
       this.applicationService.model.Building.LocateBuilding = "";
     }
@@ -37,15 +41,32 @@ export class LocateBuildingAddressComponent implements OnInit {
     this.model = this.applicationService.model.Building?.LocateBuilding;
   }
 
+  errorMessage: string = 'You need to tell us if the building has an address';
+
   continue() {
-    this.hasLocateBuildingErrors = !FieldValidations.IsNotNullOrWhitespace(this.model);
-    if (!this.hasLocateBuildingErrors) {
+    this.hasLocateBuildingErrors = !this.isValid();
+    if (this.isValid()) {
       this.applicationService.model.Building!.LocateBuilding = this.model;
       this.onLocateBuildingAddress.emit(this.model);
     } else {
       this.summaryError?.first?.focus();
       this.titleService.setTitleError();
     }
+  }
+
+  isValid(): boolean {
+    this.hasLocateBuildingErrors = true;
+    let locateAddress = this.model;
+
+    if (!FieldValidations.IsNotNullOrWhitespace(locateAddress)) {
+      this.errorMessage = 'You need to tell us how to find your building';
+    } else if (locateAddress.length! > 500) {
+      this.errorMessage = 'You need to tell us how to find your building using fewer words';
+    }  else {
+      this.hasLocateBuildingErrors = false;
+    }
+
+    return !this.hasLocateBuildingErrors;
   }
 
   getErrorDescription(showError: boolean, errorMessage: string): string | undefined {

@@ -1,13 +1,18 @@
 <govuk-formpage [processing]="processing" saveAndContinueText="Confirm and send" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndContinue]="true" [hideSaveAndComeBack]="true">
-  <h1 class="govuk-heading-l">Check your answers</h1>
-  <govuk-body>Review the information you want to send us</govuk-body>
+  <h1 class="govuk-heading-l">Print or save mandatory occurrence report</h1>
 
-  <h2 *ngIf="isBuilding" class="govuk-heading-m">About the building</h2>
-  <govuk-summary-list *ngIf="isBuilding">
-    <govuk-summary-list-row *ngIf="!isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
+  <h2 class="govuk-heading-m">About the report</h2>
+  <govuk-summary-list>
+    <govuk-summary-list-row key="Mandatory occurrence report reference">{{model.NoticeReference}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
+  <h2 *ngIf="!isNoticeReference" class="govuk-heading-m">About the building</h2>
+  <govuk-summary-list *ngIf="!isNoticeReference">
+    <govuk-summary-list-row *ngIf="isManual" key="Building address">{{model.Address}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference">{{model.BcaReference}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number">{{model.HrbNumber}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isAboutBuilding" key="Tell us how to find your building">{{model.AboutBuilding}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <govuk-summary-list *ngIf="isAddressManual">
@@ -19,9 +24,9 @@
 
   <h2 class="govuk-heading-m">About you</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row key="Your name">{{model.YourName}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isSameUser" key="Your name">{{model.YourName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Contact details">{{model.ContactDetails}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Contact number">{{model.ContactNumber}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isSameUser" key="Contact number">{{model.ContactNumber}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <h2 class="govuk-heading-m">About organisation</h2>
@@ -32,21 +37,21 @@
 
   <h2 class="govuk-heading-m">About safety occurrence</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row *ngIf="!isBuilding" key="Mandatory occurrence notice reference">{{model.NoticeReference}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Mandatory occurrence notice reference">CAS01525V9D0</govuk-summary-list-row>
     <govuk-summary-list-row key="Incident or situation">{{model.IncidentOrSituation}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Type of incident">{{model.IncidentReported}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="What happened?">{{model.AboutIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="What caused it?">{{model.CauseOfIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Tell us who has been affected and in what way">{{model.WhoAffectedByIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isIncident" key="Explain what you are doing or planning to do to keep people safe">{{model.IncidentKeepPeopleSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="isIncident" key="Tell us how undefined discovered the safety occurrence">{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="isIncident" key="Tell us how {{organisationName}} discovered the safety occurrence">{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSharedWithOthersIncident" key="Tell us any anything you think should be shared for others to learn from">{{model.SharedWithOthers}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What type of risk are you reporting?">{{model.RiskReported}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What is the situation?">{{model.AboutRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="What caused it?">{{model.CauseOfRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="Tell us who could be affected and in what way">{{model.WhoAffectedByRisk}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="!isIncident" key="Explain what you are doing or planning to do to keep people safe">{{model.RiskKeepPeopleSafe}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how undefined discovered the safety occurrence">{{model.OrganisationFindOut}}</govuk-summary-list-row>
+    <govuk-summary-list-row *ngIf="!isIncident" key="Tell us how {{organisationName}} discovered the safety occurrence">{{model.OrganisationFindOut}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSharedWithOthers" key="Tell us any anything you think should be shared for others to learn from">{{model.SharedWithOthers}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Support Information">{{model.UploadedFileNames}}</govuk-summary-list-row>
   </govuk-summary-list>

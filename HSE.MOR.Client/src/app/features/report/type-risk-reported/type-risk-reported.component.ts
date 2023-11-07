@@ -13,7 +13,7 @@ import { RiskDetailsComponent } from '../risk-details/risk-details.component';
 export class TypeRiskReportedComponent extends PageComponent<string[]> {
   public static route: string = 'type-risk-reported';
   static title: string = "What type of risk are you reporting?";
-  isOccupiedComplete: boolean = false;
+  isProffesional: boolean = false;
   errorAnchorId?: string;
 
   @ViewChild(GovukCheckboxComponent) checkboxGroup?: GovukCheckboxComponent;
@@ -22,7 +22,7 @@ export class TypeRiskReportedComponent extends PageComponent<string[]> {
     if (!applicationService.model.Report) {
       applicationService.model.Report = {};
     }
-    this.isOccupiedComplete = applicationService.model.Building?.BuildingType == "occupied" || applicationService.model.Building?.BuildingType == "complete_not_occupied" ? true : false;
+    this.isProffesional = applicationService.model.Report!.OrgRole == "principal_contractor" || applicationService.model.Report!.OrgRole == "principal_designer" ? true : false;
     this.model = applicationService.model.Report.RiskReported ?? [];
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {

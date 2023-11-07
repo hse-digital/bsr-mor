@@ -49,9 +49,9 @@ export class AddressProfNumberOfFloorsComponent implements OnInit {
     if (!floorsAbove || !Number(floorsAbove) || floorsAbove % 1 != 0) {
       this.errorMessage = 'You need to tell us how many floors the building has';
     } else if (floorsAbove >= 1000) {
-      this.errorMessage = 'Enter a whole number below 999';
-    } else if (floorsAbove < 1) {
-      this.errorMessage = 'Enter a whole number above 0';
+      this.errorMessage = 'Number of floors must be 999 or less';
+    } else if (floorsAbove < 0) {
+      this.errorMessage = 'You need to tell us how many floors the building has';
     } else {
       this.floorsHasError = false;
     }

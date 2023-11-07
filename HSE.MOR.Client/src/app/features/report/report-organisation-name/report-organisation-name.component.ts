@@ -27,7 +27,7 @@ export class ReportOrganisationNameComponent extends PageComponent<string> {
     applicationService.model.Report!.OrganisationName = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return applicationService.model.Report?.SubmittedNotice == "me" || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.ContactNumber);
   }
 
   modelValid: boolean = false;

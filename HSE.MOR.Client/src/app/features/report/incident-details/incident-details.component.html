@@ -29,7 +29,7 @@
   </div>
 
   <div class="govuk-!-margin-bottom-5">
-    <govuk-textarea aria-describedby="error-textarea-incident-details-occurrence-discovered" labelFor="textarea-incident-details-occurrence-discovered" label="Tell us how undefined discovered the safety occurrence" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="100" [isPageHeading]=false [(model)]="model.OccurrenceDiscovered" #field [govukRequired]="field" id="incident-details-occurrence-discovered" [errorText]="getErrorDescription(occurrenceDiscoveredInError, occurrenceDiscoveredErrorMessage)" />
+    <govuk-textarea aria-describedby="error-textarea-incident-details-occurrence-discovered" labelFor="textarea-incident-details-occurrence-discovered" label="Tell us how {{organisationName}} discovered the safety occurrence" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="100" [isPageHeading]=false [(model)]="model.OccurrenceDiscovered" #field [govukRequired]="field" id="incident-details-occurrence-discovered" [errorText]="getErrorDescription(occurrenceDiscoveredInError, occurrenceDiscoveredErrorMessage)" />
   </div>
 
   <div class="govuk-!-margin-bottom-5">

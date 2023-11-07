@@ -156,6 +156,7 @@ export class CheckAnswersNoticeModel {
   ContactNumber?: string;
   OrganisationName?: string;
   OrgRole?: string;
+  AboutBuilding?: string;
 
 }
 
@@ -190,7 +191,7 @@ export class CheckAnswersReportModel {
   HrbNumber?: string;
   UploadedFileNames?: string;
   IncidentOrSituation?: string;
-
+  AboutBuilding?: string;
 }
 
 export class BuildingsInformationResponse {

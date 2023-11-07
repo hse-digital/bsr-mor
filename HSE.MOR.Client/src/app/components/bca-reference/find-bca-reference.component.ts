@@ -4,6 +4,7 @@ import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
 import { AddressModel, AddressResponseModel, AddressType } from '../../services/address.service';
+import { BcaReferenceValidator } from '../../helpers/validators/bca-reference-validator';
 @Component({
   selector: 'find-bca-reference',
   templateUrl: './find-bca-reference.component.html'
@@ -34,7 +35,7 @@ export class FindBcaReferenceComponent {
   constructor( private titleService: TitleService) { }
 
   async findAddress() {
-    if (this.isReferenceNumberValid()) {
+    if (!this.isReferenceNumberHasErrors()) {
       this.loading = true;
       let buildingDetailsResponse = await this.applicationService.getBuildigsDetailsByBcaReferenceNumber(this.searchModel.referenceNumber!);
       if (buildingDetailsResponse.length > 0) {
@@ -47,6 +48,26 @@ export class FindBcaReferenceComponent {
       this.summaryError?.first?.focus();
       this.titleService.setTitleError();
     }
+  }
+
+  isReferenceNumberHasErrors(): boolean {
+    let referenceNumber = this.searchModel.referenceNumber?.replace(' ', '');
+    this.referenceNumberHasErrors = false;
+    if (!referenceNumber) {
+      this.referenceNumberErrorText = 'You need to enter a building control reference';
+      this.referenceNumberHasErrors = true;
+      return this.referenceNumberHasErrors;
+    } if (!BcaReferenceValidator.isValid(referenceNumber ?? '')) {
+      this.referenceNumberErrorText = 'You need to enter a valid building control reference';
+      this.referenceNumberHasErrors = true;
+      return this.referenceNumberHasErrors;
+    } if (referenceNumber!.length < 5 || referenceNumber!.length > 12) {
+      this.referenceNumberErrorText = "You need to enter a valid building control reference";
+      this.referenceNumberHasErrors = true;
+      return this.referenceNumberHasErrors;
+    }
+
+    return this.referenceNumberHasErrors;
   }
 
   isReferenceNumberValid(): boolean {

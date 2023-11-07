@@ -4,6 +4,7 @@ import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { ReportOrganisationNameComponent } from '../report-organisation-name/report-organisation-name.component';
+import { PhoneNumberValidator } from '../../../helpers/validators/phone-number-validator';
 
 @Component({
   templateUrl: './report-contact-number.component.html'
@@ -31,21 +32,23 @@ export class ReportContactNumberComponent extends PageComponent<string> {
   }
 
   modelValid: boolean = false;
-  ErrorMessage: string = "You need to tell us your contact number";
-  OrgNameInError: boolean = false;
+  ErrorMessage: string = "You need to enter a real contact number";
+  ContactNumberInError: boolean = false;
+  ContactNumberLengthInError: boolean = false;
 
   override isValid(): boolean {
-    this.OrgNameInError = false;
+    this.ContactNumberInError = false;
+    this.ContactNumberLengthInError = false;
     if (!FieldValidations.IsNotNullOrWhitespace(this.model)) {
-      this.OrgNameInError = true;
-    } else if (this.model!.length < 3) {
-      this.ErrorMessage = "You need to enter a contact number that is longer than 2 characters"
-      this.OrgNameInError = true;
+      this.ContactNumberInError = true;
+    } if (!PhoneNumberValidator.isValid(this.model ?? '')) {
+      this.ContactNumberInError = true;
+    } if (this.model!.length < 3) {
+      this.ContactNumberLengthInError = true;
     } if (this.model!.length > 50) {
-      this.ErrorMessage = "You need to tell us your contact number using fewer characters"
-      this.OrgNameInError = true;
+      this.ContactNumberLengthInError = true;
     }
-    this.modelValid = !this.OrgNameInError;
+    this.modelValid = this.ContactNumberInError || this.ContactNumberLengthInError ? false : true;
     return this.modelValid;
   }
 

@@ -36,7 +36,7 @@ export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.BcaReference) || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.HrbNumber)
-      || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.Postcode);
+      || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.Postcode) || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.LocateBuilding);
   }
 
   firstNameInError: boolean = false;

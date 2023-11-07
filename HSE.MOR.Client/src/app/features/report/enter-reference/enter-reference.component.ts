@@ -34,6 +34,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
     if (FieldValidations.IsNotNullOrWhitespace(this.model)) {
       applicationService.model.Report!.NoticeReference = this.model;
     } else {
+      this.processing = false;
       this.modelValid = false;
       this.hasErrors = true;
       this.ErrorMessage = this.ErrorNotExists;

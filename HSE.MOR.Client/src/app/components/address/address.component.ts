@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AddressModel, AddressResponseModel } from 'src/app/services/address.service';
 import { GetInjector } from '../../helpers/injector.helper';
+import { NavigationHelper } from '../../helpers/navigation.helper';
 import { ApplicationService, BuildingModel } from '../../services/application.service';
 import { NavigationService } from '../../services/navigation.service';
 @Component({
@@ -123,10 +124,18 @@ export class AddressComponent implements OnInit {
 
   profNumberOfUnits(units: number) {
     this.applicationService.model.Building!.NumberOfUnitsProf = units;
-    if (this.isInScope(this.applicationService.model.Building!)) {
-      this.changeStepTo('confirm');
-    } else {
-      this.changeStepTo("building-not-in-scope");
+    if (this.applicationService.model.Building?.Address?.IsManual) {
+      if (this.isInScope(this.applicationService.model.Building!)) {
+        this.changeStepTo('confirm');
+      } else {
+        this.changeStepTo("building-not-in-scope");
+      }
+    } else {      
+      if (this.applicationService.model.WhatToSubmit == 'notice') {       
+        this.navigationService.navigate("notice/your-details");
+      } else {
+        this.navigationService.navigate("report/your-details");
+      }
     }
   }
 
