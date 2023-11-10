@@ -11,7 +11,7 @@ import { NoticeConfirmationComponent } from '../notice-confirmation/notice-confi
 
 export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeModel> {
   public static route: string = 'notice-summary';
-  static title: string = "Notice Summary";
+  static title: string = "Notice Summary - Submit a mandatory occurrence notice and report";
   override model: CheckAnswersNoticeModel = new CheckAnswersNoticeModel();
   isBCAAddress: boolean = false;
   isHRBAdress: boolean = false;

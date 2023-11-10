@@ -13,7 +13,7 @@ import { ReportYourDetailsComponent } from '../report-your-details/report-your-d
 
 export class WhoSubmittedNoticeComponent extends PageComponent<string> {
   public static route: string = 'who-submitted-notice';
-  static title: string = "Who submitted the notice?";
+  static title: string = "Who submitted the notice? - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Report) {

@@ -11,7 +11,7 @@ import { NoticeOrgRoleComponent } from '../notice-org-role/notice-org-role.compo
 
 export class NoticeOrganisationNameComponent extends PageComponent<string> {
   public static route: string = 'notice-organisation-name';
-  static title: string = "Tell us your organisation name? – Tell the Building Safety Regulator about a mandatory occurrence";
+  static title: string = "Tell us your organisation name? - Submit a mandatory occurrence notice and report";
 
 
   override onInit(applicationService: ApplicationService): void {

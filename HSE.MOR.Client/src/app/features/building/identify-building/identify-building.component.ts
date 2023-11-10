@@ -15,7 +15,7 @@ import { IsBuildingComponent } from '../is-building/is-building.component';
 
 export class IdentifyBuildingComponent extends PageComponent<string> {
   public static route: string = 'identify-building';
-  static title: string = "How can you identify your building?";
+  static title: string = "How can you identify your building? - Submit a mandatory occurrence notice and report";
 
 
   override onInit(applicationService: ApplicationService): void {

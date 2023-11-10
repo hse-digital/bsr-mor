@@ -11,7 +11,7 @@ import { WhatToSubmitComponent } from '../what-to-submit/what-to-submit.componen
 
 export class VerifyEmailComponent extends PageComponent<number> {
   public static route: string = 'verify-email';
-  static title: string = "Verify your email address";
+  static title: string = "Verify your email address - Submit a mandatory occurrence notice and report";
   otpError = false;
   isOtpNotNumber = false;
   isOtpInvalidLength = false;

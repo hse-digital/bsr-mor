@@ -12,7 +12,7 @@ import { TypeRiskReportedComponent } from '../type-risk-reported/type-risk-repor
 
 export class WhatToReportComponent extends PageComponent<string> {
   public static route: string = 'what-to-report';
-  static title: string = "What do you want to report? – Make a mandatory occurrence report";
+  static title: string = "What do you want to report? - Submit a mandatory occurrence notice and report";
 
 
   override onInit(applicationService: ApplicationService): void {

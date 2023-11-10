@@ -11,7 +11,7 @@ import { ApplicationService } from '../../../services/application.service';
 
 export class ReportConfirmationComponent extends PageComponent<string> {
   public static route: string = 'confirmation';
-  static title: string = "How many floors does the building have?";
+  static title: string = "Confirmation - Submit a mandatory occurrence notice and report";
   morReference?: string;
 
   override onInit(applicationService: ApplicationService): void {

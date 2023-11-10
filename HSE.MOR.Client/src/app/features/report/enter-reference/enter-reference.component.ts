@@ -12,7 +12,7 @@ import { NavigationHelper } from '../../../helpers/navigation.helper';
 
 export class EnterReferenceComponent extends PageComponent<string> {
   public static route: string = 'enter-reference';
-  static title: string = "Enter mandatory occurrence notice reference – Tell the Building Safety Regulator about a mandatory occurrence";
+  static title: string = "Enter mandatory occurrence notice reference - Submit a mandatory occurrence notice and report";
   caseNumber?: string;
 
 
