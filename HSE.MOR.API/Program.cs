@@ -10,6 +10,7 @@ using AutoMapper;
 using HSE.MOR.API.Models.OrdnanceSurvey;
 using HSE.MOR.API.Extensions;
 using HSE.MOR.API.BlobStore;
+using HSE.MOR.API.Models.Dynamics;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults(workerOptions =>
@@ -41,6 +42,7 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.AddSingleton(_ => new MapperConfiguration(config =>
     {
         config.AddProfile<OrdnanceSurveyPostcodeResponseProfile>();
+        config.AddProfile<MORDynamicsResponseProfile>();
 
     }).CreateMapper());
 }

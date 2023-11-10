@@ -5,32 +5,32 @@ namespace HSE.MOR.Domain.Entities;
 public record Incident(string Id = null) : Entity(Id)
 {
     public string CustomerId { get; set; }
-    public string RequestType { get; set; }
-    public string Reason { get; set; }
-    public string WhoAreYou { get; set; }
-    public string WhoAreYouOther { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string ContactNumber { get; set; }
-    public string AskQuestion { get; set; }
-    public string AddressRegion { get; set; }
-    public string NumberOfFloors { get; set; }
-    public string NumberOfUnits { get; set; }
-    public string NumberOfFloorsProf { get; set; }
-    public string NumberOfUnitsProf { get; set; }
-    public string BuildingHeight { get; set; }
-    public bool RegistrationFound { get; set; }
-    public string HaveComplained { get; set; }
-    public string ComplaintAbout { get; set; }
-    public string YourSupportInfo { get; set; }
-    public NoticeDateModel NoticeDate { get; set; }
-    public string WhoWasContacted { get; set; }
-    public string WhyContactNotMade { get; set; }
-    public string ComplainAboutWho { get; set; }
+    public Mor MorModel { get; set; }   
+    public Building BuildingModel { get; set; }
+    public string EmailAddress { get; set; }
+    public string WhatToSubmit { get; set; }    
+    public bool RegistrationFound { get; set; }      
     public AddressModel Address { get; set; }
     public string CaseNumber { get; set; }
     public string MorId { get; set; }
+}
+
+public record Building()
+{
+    public string SubmittedDesignBca { get; set; }
+    public string IdentifyBuilding { get; set; }
+    public string BuildingType { get; set; }
+    public AddressModel Address { get; set; }
+    public string BuildingName { get; set; }
+    public string NumberOfFloors { get; set; }
+    public string NumberOfUnits { get; set; }
+    public int NumberOfFloorsProf { get; set; }
+    public int NumberOfUnitsProf { get; set; }
+    public int BuildingHeight { get; set; }
+    public string AddressRegion { get; set; }
+    public string HasAddress { get; set; }
+    public string LocateBuilding { get; set; }
+    public string BcaReference { get; set; }
 }
 
 public record AddressModel()
