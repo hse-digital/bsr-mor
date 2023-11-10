@@ -11,7 +11,7 @@ import { AddressType } from '../../../services/address.service';
 
 export class ReportSummaryComponent extends PageComponent<CheckAnswersReportModel> {
   public static route: string = 'report-summary';
-  static title: string = "Report Summary";
+  static title: string = "Report Summary - Submit a mandatory occurrence notice and report";
   override model: CheckAnswersReportModel = new CheckAnswersReportModel();
   isBCAAddress: boolean = false;
   isHRBAdress: boolean = false;

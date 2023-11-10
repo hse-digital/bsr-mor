@@ -12,7 +12,7 @@ import { VerifyEmailComponent } from './verify-email.component';
 
 export class EnterEmailComponent extends PageComponent<string> {
   public static route: string = 'enter-email';
-  static title: string = "Your email address";
+  static title: string = "Your email address - Submit a mandatory occurrence notice and report";
   emailValid: boolean = true;
   errorMessage: string = '';
 

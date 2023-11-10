@@ -12,7 +12,7 @@ import { NoticeContactNumberComponent } from '../notice-contact-number/notice-co
 
 export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
   public static route: string = 'your-details';
-  static title: string = "Your details";
+  static title: string = "Your details - Submit a mandatory occurrence notice and report";
   override model: NoticeModel = new NoticeModel();
 
 

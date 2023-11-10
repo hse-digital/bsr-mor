@@ -12,7 +12,7 @@ import { IncidentDetailsComponent } from '../incident-details/incident-details.c
 
 export class TypeIncidentReportedComponent extends PageComponent<string[]> {
   public static route: string = 'type-incident-reported';
-  static title: string = "What type of incident are you reporting?";
+  static title: string = "What type of incident are you reporting? - Submit a mandatory occurrence notice and report";
   isProffesional: boolean = false
   errorAnchorId?: string;
 

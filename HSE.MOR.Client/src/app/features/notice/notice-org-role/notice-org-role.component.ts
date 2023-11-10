@@ -13,7 +13,7 @@ import { NoticeDutyHolderCanSubmitComponent } from '../notice-duty-holder-can-su
 
 export class NoticeOrgRoleComponent extends PageComponent<string> {
   public static route: string = 'notice-org-role';
-  static title: string = "How is undefined involved in this building?";
+  static title: string = "How is undefined involved in this building? - Submit a mandatory occurrence notice and report";
   organisationName?: string;
 
   override onInit(applicationService: ApplicationService): void {

@@ -13,7 +13,7 @@ import { WhenBecomeAwareComponent } from '../when-become-aware/when-become-aware
 export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeModel>  {
   public static route: string = 'briefly-describe-risk-incident';
   override model: NoticeModel = new NoticeModel();
-  static title: string = "";
+  static title: string = "Notice details - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Notice) {

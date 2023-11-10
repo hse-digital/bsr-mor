@@ -12,7 +12,7 @@ import { NoNeedMorComponent } from '../no-need-mor/no-need-mor.component';
 
 export class SubmittedDesignBcaComponent extends PageComponent<string> {
   public static route: string = 'submitted-design-bca';
-  static title: string = "Have you submitted the design to building control approval?";
+  static title: string = "Have you submitted the design to building control approval? - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Building) {

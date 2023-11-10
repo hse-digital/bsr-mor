@@ -12,7 +12,7 @@ import { RiskDetailsComponent } from '../risk-details/risk-details.component';
 
 export class TypeRiskReportedComponent extends PageComponent<string[]> {
   public static route: string = 'type-risk-reported';
-  static title: string = "What type of risk are you reporting?";
+  static title: string = "What type of risk are you reporting? - Submit a mandatory occurrence notice and report";
   isProffesional: boolean = false;
   errorAnchorId?: string;
 

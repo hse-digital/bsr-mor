@@ -16,9 +16,9 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 export class HrbrReferenceNumberComponent implements OnInit {
   static route: string = 'hrbr-reference-number';
 
-  static title: string = 'Find the address of the section';
-  static selectTitle: string = 'Select the section address';
-  static confirmTitle: string = 'Confirm the section address';
+  static title: string = 'Find the address of the section - Submit a mandatory occurrence notice and report';
+  static selectTitle: string = 'Select the section address - Submit a mandatory occurrence notice and report';
+  static confirmTitle: string = 'Confirm the section address - Submit a mandatory occurrence notice and report';
 
   searchMode = AddressSearchMode.Building;
   private injector: Injector = GetInjector();

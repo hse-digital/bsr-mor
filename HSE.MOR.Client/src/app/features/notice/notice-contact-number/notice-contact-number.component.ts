@@ -12,7 +12,7 @@ import { PhoneNumberValidator } from '../../../helpers/validators/phone-number-v
 
 export class NoticeContactNumberComponent extends PageComponent<string> {
   public static route: string = 'notice-contact-number';
-  static title: string = "Your telephone or mobile number – Tell the Building Safety Regulator about a mandatory occurrence";
+  static title: string = "Your telephone or mobile number - Submit a mandatory occurrence notice and report";
 
 
   override onInit(applicationService: ApplicationService): void {

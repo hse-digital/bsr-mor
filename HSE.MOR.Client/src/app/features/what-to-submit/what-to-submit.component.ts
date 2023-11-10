@@ -11,7 +11,7 @@ import { NavigationHelper } from '../../helpers/navigation.helper';
 
 export class WhatToSubmitComponent extends PageComponent<string> {
   public static route: string = 'what-to-submit';
-  static title: string = "Do you want to submit a notice or a report about an occurrence?";
+  static title: string = "Do you want to submit a notice or a report about an occurrence? - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
     this.model = applicationService.model.WhatToSubmit; 
