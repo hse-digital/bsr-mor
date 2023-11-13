@@ -6,6 +6,7 @@ import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
+import { PostCodeValidator } from '../../helpers/validators/postcode-validator';
 
 @Component({
   selector: 'manual-address',
@@ -74,9 +75,11 @@ export class ManualAddressComponent {
     let postcode = this.model.Postcode?.replace(' ', '');
     this.errors.postcode.hasErrors = true;
     if (!postcode) {
-      this.errors.postcode.errorText = 'Enter a postcode';
-    } else if (postcode.length < 5 || postcode.length > 7) {
-      this.errors.postcode.errorText = "Enter a real postcode, like 'EC3A 8BF'.";
+      this.errors.postcode.errorText = 'You need to enter a postcode';
+    } else if (postcode.length < 5) {
+      this.errors.postcode.errorText = "You need to enter a full postcode";
+    } else if (!PostCodeValidator.isValid(postcode)) {
+      this.errors.postcode.errorText = "You need to enter a real postcode";
     } else {
       this.errors.postcode.hasErrors = false;
     }
