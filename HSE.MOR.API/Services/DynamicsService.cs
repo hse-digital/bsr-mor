@@ -147,8 +147,20 @@ public class DynamicsService : IDynamicsService
     public async Task<Incident> CreateMORCase_Async(IncidentModel model)
     {                      
         var caseModel = mapper.Map<Incident>(model);
-        var contact = await CreateContactAsync(model.Notice.FirstName, model.Notice.LastName, model.Notice.ContactNumber, model.EmailAddress);
-        caseModel.MorModel.CustomerNoticeReferenceId = contact.Id;
+        Contact contact = null;
+        if (caseModel.MorModel.IsNotice)
+        {
+            contact = await CreateContactAsync(caseModel.MorModel.NoticeFirstName, caseModel.MorModel.NoticeLastName, 
+                caseModel.MorModel.NoticeContactNumber, caseModel.EmailAddress);
+            caseModel.MorModel.CustomerNoticeReferenceId = contact.Id;
+        }
+        else 
+        {
+            contact = await CreateContactAsync(caseModel.MorModel.ReportFirstName, caseModel.MorModel.ReportLastName,
+                caseModel.MorModel.ReportContactNumber, caseModel.EmailAddress);
+            caseModel.MorModel.CustomerReportReferenceId = contact.Id;
+        }
+        
         var mor = await CreateMORAsync(caseModel.MorModel);
 
         caseModel.CustomerId = contact.Id;
