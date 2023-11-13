@@ -93,6 +93,6 @@ export class ManualAddressComponent {
   }
 
   getTitle() {
-    return 'Enter the building address';
+    return "Enter the building's address";
   }
 }
