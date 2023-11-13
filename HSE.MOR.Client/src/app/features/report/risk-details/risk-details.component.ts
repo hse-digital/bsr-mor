@@ -11,7 +11,7 @@ import { ReportSupportInfoComponent } from '../report-support-info/report-suppor
 
 export class RiskDetailsComponent extends PageComponent<ReportModel> {
   public static route: string = 'risk-details';
-  static title: string = "Your details";
+  static title: string = "Your details - Submit a mandatory occurrence notice and report";
   override model: ReportModel = new ReportModel();
   organisationName?: string;
 

@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { PageComponent } from 'src/app/helpers/page.component';
 import { FieldValidations } from 'src/app/helpers/validators/fieldvalidations';
 import { ApplicationService, TimeModel } from 'src/app/services/application.service';
+import { DateValidator } from '../../../helpers/validators/date-validator';
 import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
 import { NoticeCheckYourAnswersComponent } from '../notice-check-your-answers/notice-check-your-answers.component';
 
@@ -15,7 +16,7 @@ export type InputTimeModel = { hour?: string, minute?: string };
 })
 export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   public static route: string = 'when-become-aware';
-  static title: string = "When did you identify the risk or incident?";
+  static title: string = "When did you identify the risk or incident? - Submit a mandatory occurrence notice and report";
   organisationName?: string;
 
   inputDateModel?: InputDateModel;
@@ -109,6 +110,8 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
       this.dateErrorMessage = "You need to tell us the month you were made aware of the occurrence";
     } else if (!this.inputDateModel?.year) {
       this.dateErrorMessage = "You need to tell us the year you were made aware of the occurrence";
+    } else if (!DateValidator.isValid(this.model?.Day!, this.model?.Month!, this.model?.Year!)) {
+      this.dateErrorMessage = "You need to enter a date that exists";
     } else if (Number.isNaN(this.getDate(this.model).getTime())) {
       this.dateErrorMessage = "You need to tell us the time you were made aware of the occurrence";
     } else if (Date.now() < this.getDate(this.model).getTime()) {
@@ -125,7 +128,10 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     let isMinuteValid = FieldValidations.IsWholeNumber(this.model?.Minute) && FieldValidations.IsAPositiveNumber(this.model?.Minute) && this.model!.Minute! < 60;
     
     this.timeErrorMessage = "";
-    if (!isHourValid || !isMinuteValid || Number.isNaN(this.getTime(this.model).getTime())) {
+    if (this.InputTimeModelIsNullOrWhitespace()) {
+      this.timeErrorMessage = "You need to tell us the time you were made aware of the occurrence";
+    }
+    else if (!isHourValid || !isMinuteValid || Number.isNaN(this.getTime(this.model).getTime())) {
       this.timeErrorMessage = "You need to enter a valid time";
     }
     this.inputTimeHasError = this.timeErrorMessage != "";
@@ -148,9 +154,19 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   private InputDateModelIsNullOrWhitespace() {
-    return !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.day) &&
+    return (!FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.day) &&
       !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.month) &&
-      !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.year);
+      !FieldValidations.IsNotNullOrWhitespace(this.inputDateModel?.year));
+  }
+
+  private InputTimeModelIsNullOrWhitespace() {
+    return (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.hour) &&
+      !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.minute))
+
+      ||
+
+      (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.hour) ||
+        !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.minute));
   }
 
   override async navigateNext(): Promise<boolean> {

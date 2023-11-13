@@ -13,7 +13,7 @@ import { ReportConfirmationComponent } from '../report-confirmation/report-confi
 
 export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersReportModel> {
   public static route: string = 'check-your-answers';
-  static title: string = "Check your answers";
+  static title: string = "Check your answers - Submit a mandatory occurrence notice and report";
   baseRoutes: string[] = ["enter-email", "what-to-submit"];
   override model: CheckAnswersReportModel = new CheckAnswersReportModel();
   isBCAAddress: boolean = false;

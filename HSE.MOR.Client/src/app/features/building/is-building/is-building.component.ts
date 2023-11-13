@@ -12,7 +12,7 @@ import { SubmittedDesignBcaComponent } from '../submitted-design-bca/submitted-d
 
 export class IsBuildingComponent extends PageComponent<string> {
   public static route: string = 'is-building';
-  static title: string = "Is the building";
+  static title: string = "Is the building - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Building) {

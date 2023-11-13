@@ -8,7 +8,7 @@ import { ApplicationService } from '../../../services/application.service';
 })
 export class ReportDutyHolderCanSubmitComponent extends PageComponent<string>  {
   public static route: string = "report-duty-holder-can-submit";
-  static title: string = "Only certain duty holders can submit a mandatory occurrence report";
+  static title: string = "Only certain duty holders can submit a mandatory occurrence report - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
       

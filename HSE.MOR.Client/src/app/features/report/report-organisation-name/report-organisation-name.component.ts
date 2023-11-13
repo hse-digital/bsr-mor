@@ -11,7 +11,7 @@ import { ReportOrgRoleComponent } from '../report-org-role/report-org-role.compo
 
 export class ReportOrganisationNameComponent extends PageComponent<string> {
   public static route: string = 'report-organisation-name';
-  static title: string = "Tell us your organisation name? – Tell the Building Safety Regulator about a mandatory occurrence";
+  static title: string = "Tell us your organisation name? - Submit a mandatory occurrence notice and report";
 
 
   override onInit(applicationService: ApplicationService): void {

@@ -11,7 +11,7 @@ import { ReportCheckYourAnswersComponent } from '../report-check-your-answers/re
 
 export class ReportSupportInfoComponent extends PageComponent<FileUploadModel[]> implements AfterViewInit {
   public static route: string = 'support-info';
-  static title: string = "Upload support information";
+  static title: string = "Upload support information - Submit a mandatory occurrence notice and report";
   override model: FileUploadModel[] = [];
 
   constructor(activatedRoute: ActivatedRoute, applicationService: ApplicationService) {

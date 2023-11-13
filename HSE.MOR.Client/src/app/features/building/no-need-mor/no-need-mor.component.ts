@@ -8,7 +8,7 @@ import { ApplicationService } from '../../../services/application.service';
 })
 export class NoNeedMorComponent extends PageComponent<string>  {
   public static route: string = "no-need-mor";
-  static title: string = "You do not need to submit a mandatory occurrence report";
+  static title: string = "You do not need to submit a mandatory occurrence report - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
 

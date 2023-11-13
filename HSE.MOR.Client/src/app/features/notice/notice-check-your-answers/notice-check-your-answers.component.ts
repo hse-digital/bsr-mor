@@ -13,7 +13,7 @@ import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 
 export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersNoticeModel> {
   public static route: string = 'check-your-answers';
-  static title: string = "Check your answers";
+  static title: string = "Check your answers - Submit a mandatory occurrence notice and report";
   baseRoutes: string[] = ["enter-email", "what-to-submit"];
   override model: CheckAnswersNoticeModel = new CheckAnswersNoticeModel();
   isBCAAddress: boolean = false;
