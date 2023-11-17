@@ -25,7 +25,43 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         this.dynamicsIncident.caseorigincode = 3;
         this.dynamicsIncident.incidentstagecode = 1;
         this.dynamicsIncident.casetypecode = 3;
+        
+        AddStructureOrBuilding(entity);
+        AddFunctionReference(entity);
+
         return this.dynamicsIncident;
+    }
+
+    private void AddStructureOrBuilding(Incident entity) {
+        
+        if (entity.BuildingModel is not null) 
+        {
+            this.dynamicsIncident = dynamicsIncident with { buildingReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.BuildingId) ? null : $"/bsr_buildings({entity.BuildingModel?.Address?.BuildingId})" };
+            this.dynamicsIncident = dynamicsIncident with { structureReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.StructureId) ? null : $"/bsr_blocks({entity.BuildingModel?.Address?.StructureId})" };
+        }
+        else 
+        {
+            this.dynamicsIncident = dynamicsIncident with { buildingReferenceId = null };
+            this.dynamicsIncident = dynamicsIncident with { structureReferenceId = null };
+        }
+    }
+
+    private void AddFunctionReference(Incident entity)
+    {
+
+        if (entity.BuildingModel?.IdentifyBuilding == "building_registration")
+        {
+            this.dynamicsIncident = dynamicsIncident with { bsrBuildingApplicationFunctionReference = $"/bsr_buildingapplications({entity.BuildingModel.Address.HrbApplicationId})" };
+        }
+        else if (entity.BuildingModel?.IdentifyBuilding == "building_reference")
+        {
+            this.dynamicsIncident = dynamicsIncident with { bsrBuildingControlApplicationFunctionReference = $"/bsr_buildingcontrolapplications({entity.BuildingModel.Address.BuildingControlAppId})" };
+        }
+        else {
+            this.dynamicsIncident = dynamicsIncident with { bsrBuildingApplicationFunctionReference = null };
+            this.dynamicsIncident = dynamicsIncident with { bsrBuildingControlApplicationFunctionReference = null };
+        }
+        
     }
 
     private int? TryGetInt(string number)
@@ -63,7 +99,13 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
 
     public override Incident BuildEntity(DynamicsIncident dynamicsEntity)
     {
-        throw new NotImplementedException();
+        var incident = new Incident();
+        incident.IncidentId = dynamicsEntity.incidentid;
+        incident.CaseNumber = dynamicsEntity.title;
+        incident.CustomerId = dynamicsEntity._primarycontactid_value;
+        incident.EmailAddress = dynamicsEntity.bsr_contactemail;
+        incident.MorId = dynamicsEntity._bsr_mor_value;
+        return incident;
     }
       
 }

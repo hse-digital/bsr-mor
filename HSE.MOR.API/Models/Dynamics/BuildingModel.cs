@@ -37,6 +37,8 @@ public record AddressModel()
     public int ResidentialUnits { get; set; }
     public string BuildingId { get; set; }
     public string StructureId { get; set; }
+    public string BuildingControlAppId { get; set; }
+    public string HrbApplicationId { get; set; }
     public string ContactId { get; set; }
     public bool IsManual { get; set; }
     public string Address { get; set; }

@@ -117,6 +117,7 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             {
                 case "building_registration": return BuildingCode.HRBNumber;
                 case "building_reference": return BuildingCode.BCAReference;
+                case "": return null;
                 case null: return null;
             }
 
@@ -143,6 +144,7 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
                 case "complete_not_occupied": return BuildingType.CompleteNotOccupied;
                 case "in_construction": return BuildingType.InConstruction;
                 case "in_design": return BuildingType.InDesign;
+                case "": return null;
                 case null: return null;
             }
 

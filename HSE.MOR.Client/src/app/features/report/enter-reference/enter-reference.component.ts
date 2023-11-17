@@ -29,7 +29,11 @@ export class EnterReferenceComponent extends PageComponent<string> {
     
     var dynamicsIncidentModel = await applicationService.getIncidentByCaseNumber(this.model!);
     if (dynamicsIncidentModel) {
-      this.model = dynamicsIncidentModel.title;
+      this.model = dynamicsIncidentModel.CaseNumber;
+      applicationService.model.Id = dynamicsIncidentModel.IncidentId;
+      applicationService.model.Report!.Id = dynamicsIncidentModel.MorId;
+      applicationService.model.CustomerId = dynamicsIncidentModel.CustomerId;
+      applicationService.model.MorId = dynamicsIncidentModel.MorId;
     }
     if (FieldValidations.IsNotNullOrWhitespace(this.model)) {
       applicationService.model.Report!.NoticeReference = this.model;

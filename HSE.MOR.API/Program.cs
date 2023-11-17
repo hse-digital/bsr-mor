@@ -11,6 +11,8 @@ using HSE.MOR.API.Models.OrdnanceSurvey;
 using HSE.MOR.API.Extensions;
 using HSE.MOR.API.BlobStore;
 using HSE.MOR.API.Models.Dynamics;
+using HSE.MOR.API.Services.ScanFiles;
+using HSE.MOR.API.Services.FileStore;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults(workerOptions =>
@@ -31,6 +33,7 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.Configure<SwaOptions>(builderContext.Configuration.GetSection(SwaOptions.Swa));
     serviceCollection.Configure<IntegrationsOptions>(builderContext.Configuration.GetSection(IntegrationsOptions.Integrations));
     serviceCollection.Configure<BlobStoreOptions>(builderContext.Configuration.GetSection(BlobStoreOptions.BlobStore));
+    serviceCollection.Configure<ScanFileOptions>(builderContext.Configuration.GetSection(ScanFileOptions.Section));
     serviceCollection.AddSingleton<IBlobClient, BlobStoreClient>();
     serviceCollection.AddTransient<IBlobSASUri, BlobSASUri>();
     serviceCollection.AddTransient<OTPService>();
@@ -38,6 +41,10 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.AddTransient<DynamicsModelDefinitionFactory>();
     serviceCollection.AddTransient<DynamicsApi>();
     serviceCollection.AddLogging();
+
+    serviceCollection.AddSingleton<ISharePointPusher, SharePointPusher>();
+    serviceCollection.AddSingleton<ISharePointService, SharePointService>();
+    serviceCollection.AddSingleton<IScanFileService, ScanFileService>();
 
     serviceCollection.AddSingleton(_ => new MapperConfiguration(config =>
     {

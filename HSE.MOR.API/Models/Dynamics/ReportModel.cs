@@ -26,4 +26,5 @@ public record ReportModel()
     public string SharedWithOthers { get; set; }
     public string OrganisationName { get; set; }
     public string YourSupportInfo { get; set; }
+    public FileUploadModel[] FilesUploaded { get; set; }
 }

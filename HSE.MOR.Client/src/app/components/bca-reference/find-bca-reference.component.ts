@@ -96,6 +96,7 @@ export class FindBcaReferenceComponent {
       this.addressModel.Street = x.bsr_address1_line1;
       this.addressModel.Town = x.bsr_address1_city;
       this.addressModel.Postcode = x.bsr_address1_postalcode;
+      this.addressModel.BuildingControlAppId = x._bsr_bcapplicationid_value;
       this.addressModel.BcaReference = this.searchModel.referenceNumber;
 
       this.addressResponseModel.Results.push(this.addressModel);

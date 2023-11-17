@@ -13,5 +13,6 @@ public record DynamicsBuildingDetails(string bsr_buildingdetailsid = null,
     string bsr_address1_postalcode = null,
     string bsr_name = null,
     string bsr_address1_city = null,
-    string bsr_address1_line2 = null
+    string bsr_address1_line2 = null,
+    string _bsr_bcapplicationid_value = null
     ) : DynamicsEntity<BuildingDetails>;

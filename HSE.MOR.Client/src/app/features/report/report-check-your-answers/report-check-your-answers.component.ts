@@ -33,6 +33,9 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   isSameUser: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
+    if (applicationService.model.Report?.CheckAnswersModel!) {
+      this.model = applicationService.model.Report?.CheckAnswersModel!;
+    }
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
@@ -56,6 +59,12 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       applicationService.model.Report = {}
     }
     applicationService.model.Report!.CheckAnswersModel = this.model;
+    if (applicationService.model.Report.NoticeReference) {
+      applicationService.updateMORApplication();
+    } else {
+      applicationService.createNewMORApplication();
+    }
+    
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

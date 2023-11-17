@@ -8,6 +8,7 @@ using HSE.MOR.API.Models.Dynamics;
 using HSE.MOR.Domain.DynamicsDefinitions;
 using HSE.MOR.Domain.Entities;
 using Microsoft.Extensions.Options;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -23,8 +24,9 @@ public interface IDynamicsService {
     Task<List<DynamicsStructure>> GetDynamicsStructureUsingHrbrNumber_Async(string hrbrNumber);
     Task<DynamicsBuildingApplication> GetBuildingApplicationId_Async(string hrbrNumber);
     Task<List<DynamicsStructure>> GetStructureUsingId_Async(string buildingApplicationId);
-    Task<DynamicsIncident> GetIncidentUsingCaseNumber_Async(string caseNumber);
+    Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber);
     Task<Incident> CreateMORCase_Async(IncidentModel model);
+    Task<Incident> UpdateMORCase_Async(IncidentModel model);
 }
 
 public class DynamicsService : IDynamicsService
@@ -114,6 +116,7 @@ public class DynamicsService : IDynamicsService
             if (!string.IsNullOrWhiteSpace(buildingControlApp.bsr_buildingcontrolapplicationid)) 
             {
                 buildingDetailsList = await GetDynamicsBuildingDetailsUsingId_Async(buildingControlApp.bsr_buildingcontrolapplicationid);
+                
             }          
         }
         return buildingDetailsList;
@@ -133,15 +136,17 @@ public class DynamicsService : IDynamicsService
         return structuresList;
     }
 
-    public async Task<DynamicsIncident> GetIncidentUsingCaseNumber_Async(string caseNumber)
+    public async Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber)
     {
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsIncident>>("incidents", new[]
        {
             ("$filter", $"title eq '{caseNumber}'"),
             ("$expand", "bsr_MOR")
         });
-
-        return response.value.FirstOrDefault();
+        var dynamicsIncident = response.value.FirstOrDefault();
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+        var dynamicsCase = modelDefinition.BuildEntity(dynamicsIncident);
+        return dynamicsCase;
     }
 
     public async Task<Incident> CreateMORCase_Async(IncidentModel model)
@@ -170,8 +175,27 @@ public class DynamicsService : IDynamicsService
 
         var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsCase, true);
         var incident = await response.GetJsonAsync<DynamicsIncident>();
-        await UpdateMORWithCaseIdAsync(incident.incidentid, mor);
+        await UpdateMORWithCaseIdAsync(incident.incidentid, caseModel.MorId, mor);
         return caseModel with { Id = incident.incidentid, CaseNumber = incident.title };
+    }
+
+    public async Task<Incident> UpdateMORCase_Async(IncidentModel model) 
+    {
+        var caseModel = mapper.Map<Incident>(model);
+        if (caseModel.MorModel.IsNotice)
+        {
+            caseModel.MorModel.CustomerNoticeReferenceId = caseModel.CustomerId;
+        }
+        else 
+        {
+            caseModel.MorModel.CustomerReportReferenceId = caseModel.CustomerId;
+        }
+        await UpdateMORWithCaseIdAsync(caseModel.Id, caseModel.MorId, caseModel.MorModel);
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+        var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
+        dynamicsCase.customerReferenceId = model.CustomerId;
+        await UpdateCaseAsync(caseModel.Id, dynamicsCase);
+        return caseModel;
     }
 
     private async Task<Contact> CreateContactAsync(string firstName, string lastName, string contactNumber, string email)
@@ -192,12 +216,12 @@ public class DynamicsService : IDynamicsService
         return contact with { Id = existingContact.contactid };
     }
 
-    private async Task UpdateMORWithCaseIdAsync(string incidentId, Mor mor) 
+    private async Task UpdateMORWithCaseIdAsync(string incidentId, string morId, Mor mor) 
     {
         mor.IncidentReference = incidentId;
         var noticeModelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
-        var dynamicsNotice = noticeModelDefinition.BuildDynamicsEntity(mor);
-        await UpdateMORAsync(mor.Id, dynamicsNotice);
+        var dynamicsMor = noticeModelDefinition.BuildDynamicsEntity(mor);
+        await UpdateMORAsync(morId, dynamicsMor);
     }
 
     private async Task<Mor> CreateMORAsync(Mor mor)
@@ -210,6 +234,7 @@ public class DynamicsService : IDynamicsService
 
         return mor with { Id = morId };
     }
+
 
     private async Task<DynamicsContact> FindExistingContactAsync(string firstName, string lastName, string email, string phoneNumber)
     {

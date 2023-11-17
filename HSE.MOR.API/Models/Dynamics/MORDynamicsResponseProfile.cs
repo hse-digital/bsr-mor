@@ -10,6 +10,7 @@ public class MORDynamicsResponseProfile : Profile
     public MORDynamicsResponseProfile() 
     {
         CreateMap<IncidentModel, Mor>()
+            .ForMember(m => m.Id, m => m.Ignore())
             .ForMember(m => m.ReportFirstName, m => m.MapFrom(m => m.Report.FirstName))
             .ForMember(m => m.ReportLastName, m => m.MapFrom(m => m.Report.LastName))
             .ForMember(m => m.ReportContactNumber, m => m.MapFrom(m => m.Report.ContactNumber))
@@ -44,10 +45,13 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.IsNotice, m => m.MapFrom(m => m.WhatToSubmit == "notice" ? true : false));
 
         CreateMap<IncidentModel, Incident>()
-            .ForMember(m => m.Id, m => m.MapFrom(m => m.Id))
+            .ForMember(m => m.Id, m => m.Ignore())
+            .ForMember(m => m.IncidentId, m => m.MapFrom(m => m.Id))
             .ForMember(m => m.CaseNumber, m => m.MapFrom(m => m.CaseNumber))
             .ForMember(m => m.EmailAddress, m => m.MapFrom(m => m.EmailAddress))
             .ForMember(m => m.WhatToSubmit, m => m.MapFrom(m => m.WhatToSubmit))
+            .ForMember(m => m.CustomerId, m => m.MapFrom(m => m.CustomerId))
+            .ForMember(m => m.MorId, m => m.MapFrom(m => m.MorId))
             .ForMember(m => m.MorModel, m => m.MapFrom(m => m))
             .ForMember(m => m.BuildingModel, m => m.MapFrom(m => m));
 
@@ -81,6 +85,8 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.ContactId, m => m.MapFrom(m => m.ContactId))
             .ForMember(m => m.ParentUPRN, m => m.MapFrom(m => m.ParentUPRN))
             .ForMember(m => m.Postcode, m => m.MapFrom(m => m.Postcode))
+            .ForMember(m => m.HrbApplicationId, m => m.MapFrom(m => m.HrbApplicationId))
+            .ForMember(m => m.BuildingControlAppId, m => m.MapFrom(m => m.BuildingControlAppId))
             .ForMember(m => m.ResidentialUnits, m => m.MapFrom(m => m.ResidentialUnits))
             .ForMember(m => m.Street, m => m.MapFrom(m => m.Street));
 
@@ -119,6 +125,8 @@ public class MORDynamicsResponseProfile : Profile
            .ForMember(m => m.USRN, m => m.MapFrom(m => m.Address.USRN))
            .ForMember(m => m.StructureId, m => m.MapFrom(m => m.Address.StructureId))
            .ForMember(m => m.BuildingId, m => m.MapFrom(m => m.Address.BuildingId))
+           .ForMember(m => m.HrbApplicationId, m => m.MapFrom(m => m.Address.HrbApplicationId))
+           .ForMember(m => m.BuildingControlAppId, m => m.MapFrom(m => m.Address.BuildingControlAppId))
            .ForMember(m => m.ContactId, m => m.MapFrom(m => m.Address.ContactId))
            .ForMember(m => m.IsManual, m => m.MapFrom(m => m.Address.IsManual));
 

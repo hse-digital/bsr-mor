@@ -42,6 +42,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
       applicationService.model.Notice = {}
     }
     applicationService.model.Notice!.CheckAnswersModel = this.model;
+   applicationService.updateMORApplication();
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return applicationService.model.Notice?.WhenBecomeAware !== undefined;
@@ -90,7 +91,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.YourName = `${noticeModel.FirstName} ${noticeModel.LastName}`;
     this.model.Incident = noticeModel.DescribeRiskIncident;
     this.model.ActionsToKeepSafe = noticeModel.ActionsToKeepSafe;
-    this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour}:${noticeModel.WhenBecomeAware!.Minute}  ${this.setMeridiem(noticeModel.WhenBecomeAware!.Hour!)}`;
+    this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour}:${noticeModel.WhenBecomeAware!.Minute}  ${this.setMeridiem(Number(noticeModel.WhenBecomeAware!.Hour!))}`;
     this.model.ContactNumber = noticeModel.ContactNumber;
     this.model.OrganisationName = noticeModel.OrganisationName;
     this.model.OrgRole = noticeModel.OrgRole;

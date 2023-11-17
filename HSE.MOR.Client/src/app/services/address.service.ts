@@ -57,6 +57,8 @@ export class AddressModel {
   BuildingAddressType?: AddressType;
   BcaReference?: string;
   HrbNumber?: string;
+  BuildingControlAppId?: string;
+  HrbApplicationId?: string;
 }
 
 export enum AddressType {

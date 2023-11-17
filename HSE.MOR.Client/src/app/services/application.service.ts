@@ -2,12 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { LocalStorage } from "src/app/helpers/local-storage";
+import { Sanitizer } from "../helpers/sanitizer";
 import { AddressModel } from "./address.service";
 
 @Injectable()
 export class ApplicationService {
   // replace this any to a specific type
   model: MORModel;
+
 
   constructor(private httpClient: HttpClient) {
     this.model = LocalStorage.getJSON('application_data') ?? {};
@@ -40,10 +42,7 @@ export class ApplicationService {
 
   async updateApplication(): Promise<void> {
     this.updateLocalStorage();
-
-    if (this.model.Id) {
-      await firstValueFrom(this.httpClient.put(`api/UpdateApplication/${this.model.Id}`, this.model));
-    }
+  
   }
 
   async getBuildigsInformation(postcode: string): Promise<BuildingInformationDynamicsModel[]> {
@@ -52,14 +51,28 @@ export class ApplicationService {
   async getBuildigsDetails(postcode: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.post<BuildingDetailsDynamicsModel[]>(`api/GetBuildingDetailsUsingPostcodeAsync`, { "Postcode": postcode }));
   }
-  async getIncidentByCaseNumber(caseNumber: string): Promise<IncidentDynamicsModel> {
-    return await firstValueFrom(this.httpClient.post<IncidentDynamicsModel>(`api/GetIncidentUsingCaseNumberAsync`, { "CaseNumber": caseNumber }));
+  async getIncidentByCaseNumber(caseNumber: string): Promise<IncidentModel> {
+    return await firstValueFrom(this.httpClient.post<IncidentModel>(`api/GetIncidentUsingCaseNumberAsync`, { "CaseNumber": caseNumber }));
   }
   async getBuildigsDetailsByBcaReferenceNumber(referenceNumber: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsBuildingDetailsByBcaReferenceAsync/${referenceNumber}`));
   }
   async getStructureByHrbrNumber(hrbrNumber: string): Promise<StructureDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsStructureByHrbrNumberAsync/${hrbrNumber}`));
+  }
+  async createNewMORApplication(): Promise<void> {
+    if (!this.model.Id) {
+      var returnModel = await firstValueFrom(this.httpClient.post<MORModel>('api/NewMORCaseAsync', Sanitizer.sanitize(this.model)));
+      this.model.Id = returnModel.Id;
+      this.model.CaseNumber = returnModel.CaseNumber;
+      this.model.MorId = returnModel.MorId;
+      this.model.CustomerId = returnModel.CustomerId;
+      this.updateLocalStorage();
+    }
+  }
+  async updateMORApplication(): Promise<void> {
+    await firstValueFrom(this.httpClient.post<MORModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
+    this.updateLocalStorage();
   }
 }
 
@@ -71,6 +84,9 @@ export class MORModel {
   EmailAddress?: string;
   WhatToSubmit?: string;
   IsEmailVerified?: boolean;
+  CustomerId?: string;
+  MorId?: string;
+  CaseNumber?: string;
 }
 
 export class NoticeModel {
@@ -86,6 +102,7 @@ export class NoticeModel {
 }
 
 export class ReportModel {
+  Id?: string;
   NoticeReference?: string;
   OrgRole?: string;
   WhatToReport?: string;
@@ -113,11 +130,11 @@ export class ReportModel {
 }
 
 export class TimeModel {
-  Day?: number;
-  Month?: number;
-  Year?: number;
-  Hour?: number;
-  Minute?: number;
+  Day?: string;
+  Month?: string;
+  Year?: string;
+  Hour?: string;
+  Minute?: string;
 }
 
 export class BuildingModel {
@@ -220,6 +237,8 @@ export class BuildingDetailsDynamicsModel {
   bsr_name?: string;
   bsr_address1_city?: string;
   bsr_address1_line2?: string;
+  _bsr_bcapplicationid_value?: string;
+  bsr_blockid?: string;
 
 }
 
@@ -230,11 +249,20 @@ export class StructureDynamicsModel {
   bsr_addressline2?: string;
   bsr_city?: string;
   bsr_postcode?: string;
+  _bsr_buildingapplicationid_value?: string;
 }
 
 export class IncidentDynamicsModel {
   title?: string;
   bsr_MOR?: NoticeDynamicsModel
+  incidentid?: string;
+}
+export class IncidentModel {
+  IncidentId?: string;
+  CustomerId?: string;
+  EmailAddress?: string; 
+  CaseNumber?: string;
+  MorId?: string;
 }
 
 export class NoticeDynamicsModel { }
@@ -245,5 +273,7 @@ export class FileUploadModel {
   Status?: string;
   Message?: string;
   CaseId?: string;
+  SASUri?: string;
+  TaskId?: string;
 }
 

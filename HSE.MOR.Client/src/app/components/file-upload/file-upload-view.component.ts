@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, Input, OnDestroy, OnInit, Output } f
 import { Subscription, takeWhile, tap } from 'rxjs';
 import { GetInjector } from '../../helpers/injector.helper';
 import { ApplicationService, FileUploadModel } from '../../services/application.service';
-import { FileUploadRequest, FileUploadService } from '../../services/file-upload.service';
+import {  FileUploadService, ScanAndUploadRequest } from '../../services/file-upload.service';
 
 @Component({
   selector: 'file-upload-view',
@@ -65,13 +65,15 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
   }
 
   async upload(index: number, file: File): Promise<void> {
-    this.fileModel[index] = { Progress: 0, FileName: file.name, Status: "", Message: "", CaseId: this.caseId };
+    this.fileModel[index] = { Progress: 0, FileName: file.name, Status: "", Message: "", CaseId: this.caseId, SASUri: "" };
     if (file) {
       this.showFilesUploded = false;
       this.fileModel[index].Status = "uploading";
-      var filePath = this.caseId ? `${this.caseId}/${file.name}` : `NO-CASE-ID/${file.name}`;
-      var sasUrl = await this.fileUploadService.getSASUri(filePath);
-      this.fileSub = (await this.fileUploadService.uploadFile(file, sasUrl))
+      //var filePath = this.caseId ? `${this.caseId}/${file.name}` : `NO-CASE-ID/${file.name}`;
+      var response = await this.fileUploadService.getSASUri(new ScanAndUploadRequest(file.name));
+      this.fileModel[index].SASUri = response.SASUri;
+      this.fileModel[index].TaskId = response.TaskId;
+      this.fileSub = (await this.fileUploadService.uploadFile(file, response.SASUri!))
         .pipe(tap(v =>
           (v > file.size / 4 && v < file.size / 1.5) && file.size > 600000000 ? this.showUploadingInfo = true : this.showUploadingInfo = false))
         .pipe(takeWhile(() =>
@@ -101,9 +103,9 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
   async remove(event: any) {
     var fileName = event.srcElement.attributes.name.value;
     let index = this.fileModel.findIndex((element) => element.FileName == fileName);
-    var filePath = this.caseId ? `${this.caseId}/${fileName}` : `NO-CASE-ID/${fileName}`;
-    var sasUrl = await this.fileUploadService.getSASUri(filePath);
-    this.fileUploadService.deleteBlobItem(sasUrl)
+    //var filePath = this.caseId ? `${this.caseId}/${fileName}` : `NO-CASE-ID/${fileName}`;
+    //var response = await this.fileUploadService.getSASUri(new ScanAndUploadRequest(fileName));
+    this.fileUploadService.deleteBlobItem(this.fileModel[index].SASUri!)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe({
         next: async (event: any) => {

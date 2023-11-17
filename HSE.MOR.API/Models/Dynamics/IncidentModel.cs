@@ -15,4 +15,6 @@ public record IncidentModel
     public BuildingModel Building { get; set; }
     public string EmailAddress { get; set; }
     public string CaseNumber { get; set; }
+    public string CustomerId { get; set; }
+    public string MorId { get; set; }
 }

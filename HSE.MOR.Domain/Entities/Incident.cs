@@ -4,6 +4,7 @@ namespace HSE.MOR.Domain.Entities;
 
 public record Incident(string Id = null) : Entity(Id)
 {
+    public string IncidentId { get; set; }
     public string CustomerId { get; set; }
     public Mor MorModel { get; set; }   
     public Building BuildingModel { get; set; }
@@ -52,6 +53,8 @@ public record AddressModel()
     public int ResidentialUnits { get; set; }
     public string BuildingId { get; set; }
     public string StructureId { get; set; }
+    public string BuildingControlAppId { get; set; }
+    public string HrbApplicationId { get; set; }
     public string ContactId { get; set; }
     public bool IsManual { get; set; }
     public string Address { get; set; }
@@ -60,6 +63,7 @@ public record AddressModel()
 public record DynamicsIncident() : DynamicsEntity<Incident>
 {
     public string incidentid { get; set; }
+    public string _bsr_mor_value { get; set; } 
     public string _bsr_building_value { get; set; }
     public string _customerid_value { get; set; }
     public string _primarycontactid_value { get; set; }
@@ -148,7 +152,10 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     public string morReferenceId { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingapplication@odata.bind")]
-    public string bsrFunctionReference { get; set; }    
+    public string bsrBuildingApplicationFunctionReference { get; set; }     
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingcontrolapplication@odata.bind")]
+    public string bsrBuildingControlApplicationFunctionReference { get; set; }    
     public DynamicsNotice bsr_MOR { get; set; }
 }
 

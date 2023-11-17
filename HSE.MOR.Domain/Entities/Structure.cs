@@ -11,5 +11,6 @@ public record DynamicsStructure(string bsr_blockid = null,
 string bsr_addressline1 = null,
 string bsr_addressline2  = null,
 string bsr_city = null,
-string bsr_postcode = null) : DynamicsEntity<Structure>;
+string bsr_postcode = null,
+string _bsr_buildingapplicationid_value = null) : DynamicsEntity<Structure>;
 
