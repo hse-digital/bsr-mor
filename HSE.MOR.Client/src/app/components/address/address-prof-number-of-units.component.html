@@ -8,7 +8,7 @@
     <govuk-error-link *ngIf="unitsHasErrors" anchorId="input-prof-number-of-units" message="{{errorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-input label="Number of residential units"
+  <govuk-input [isAriaRequired]="true" label="Number of residential units"
                hint="Count all of the residential units, whether someone is living in them or not."
                labelClass="govuk-label--s" id="prof-number-of-units" #field [govukRequired]="field"
                [(model)]="profNumberOfUnits"

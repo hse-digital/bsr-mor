@@ -5,7 +5,7 @@
     <govuk-error-link anchorId="has-address-yes-input" message="You need to tell us if the building has an address" />
   </govuk-error-summary>
 
-  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Does your building or site have an address?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-has-address" [errorText]="getErrorDescription(addressHasErrors, 'You need to tell us if the building has an address')">
+  <govuk-radio-group aria-required="true"  class="govuk-!-margin-bottom-4" title="Does your building or site have an address?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-has-address" [errorText]="getErrorDescription(addressHasErrors, 'You need to tell us if the building has an address')">
     <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="has-address-yes" value="yes" label="Yes" />
     <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="has-address-no" value="no" label="No" />
   </govuk-radio-group>

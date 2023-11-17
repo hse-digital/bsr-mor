@@ -6,7 +6,7 @@
     <govuk-error-link anchorId="input-bca-reference" message="{{referenceNumberErrorText}}" />
   </govuk-error-summary>
 
-  <govuk-input id="bca-reference" label="Building control application reference" 
+  <govuk-input [isAriaRequired]="true" id="bca-reference" label="Building control application reference" 
                labelClass="govuk-label--l" [isPageHeading]=true
                [(model)]="searchModel.referenceNumber"
                hint="This is the reference the building control body gave the application"

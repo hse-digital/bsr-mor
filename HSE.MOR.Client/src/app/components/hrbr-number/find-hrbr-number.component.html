@@ -6,7 +6,7 @@
     <govuk-error-link anchorId="input-hrbr-number" message="{{hrbrNumberErrorText}}" />
   </govuk-error-summary>
 
-  <govuk-input id="hrbr-number" label="High-rise residential building registration reference"
+  <govuk-input [isAriaRequired]="true" id="hrbr-number" label="High-rise residential building registration reference"
                labelClass="govuk-label--l" [isPageHeading]=true
                [(model)]="searchModel.hrbrNumber"
                hint="This is the reference the Building Safety Regulator gave the building when it was registered"

@@ -4,7 +4,7 @@
         <govuk-error-link anchorId="input-notice-reference" message="{{ErrorMessage}}" />
     </govuk-error-summary>
 
-    <govuk-input id="notice-reference" label="Enter the mandatory occurrence notice reference" labelClass="govuk-label--l" [isPageHeading]=true
+    <govuk-input [isAriaRequired]="true" id="notice-reference" label="Enter the mandatory occurrence notice reference" labelClass="govuk-label--l" [isPageHeading]=true
                  [(model)]="model" #field [govukRequired]="field" [maxlength]="12"
                  [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
                  class="govuk-input--width-20 govuk-!-margin-bottom-5"

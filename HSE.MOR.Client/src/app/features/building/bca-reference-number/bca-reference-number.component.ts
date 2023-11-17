@@ -16,9 +16,9 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 export class BcaReferenceNumberComponent implements OnInit {
   static route: string = 'bca-reference-number';
 
-  static title: string = 'Find the address of the section - Submit a mandatory occurrence notice and report';
-  static selectTitle: string = 'Select the section address - Submit a mandatory occurrence notice and report';
-  static confirmTitle: string = 'Confirm the section address - Submit a mandatory occurrence notice and report';
+  static title: string = 'Find building control application reference - Submit a mandatory occurrence notice and report';
+  static selectTitle: string = 'Select building control application reference - Submit a mandatory occurrence notice and report';
+  static confirmTitle: string = 'Confirm building control application reference - Submit a mandatory occurrence notice and report';
 
   searchMode = AddressSearchMode.Building;
   private injector: Injector = GetInjector();

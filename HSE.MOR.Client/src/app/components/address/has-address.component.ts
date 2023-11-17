@@ -22,7 +22,8 @@ export class HasAddressComponent implements OnInit {
   private injector: Injector = GetInjector();
   private applicationService: ApplicationService = this.injector.get(ApplicationService);
 
-  constructor(private titleService: TitleService) { }
+  constructor(private titleService: TitleService) {
+  }
 
   ngOnInit(): void {
     if (!this.applicationService.model.Building) {
