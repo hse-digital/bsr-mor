@@ -10,7 +10,7 @@
   <govuk-body>If you cannot find the email, please check your junk or spam folders.</govuk-body>
   <govuk-body>If you did not get an email, or wish to use a different email address, you can <a class="govuk-link" [routerLink]="['/enter-email']">resend the email or enter a different email address.</a></govuk-body>
 
-  <govuk-input id="security-code" label="Security code" labelClass="govuk-label--s"
+  <govuk-input [isAriaRequired]="true" id="security-code" label="Security code" labelClass="govuk-label--s"
                [maxlength]=6
                hint="For example, '123456'."
                [(model)]="model" class="govuk-input--width-10"

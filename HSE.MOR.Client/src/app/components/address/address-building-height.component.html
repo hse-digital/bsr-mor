@@ -13,7 +13,7 @@
     <govuk-error-link *ngIf="heightHasErrors" anchorId="input-building-height" message="{{errorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-input label="Height in metres"
+  <govuk-input [isAriaRequired]="true" label="Height in metres"
                labelClass="govuk-label--s" id="building-height" #field [govukRequired]="field"
                [(model)]="buildingHeight"
                [errorText]="getErrorDescription(heightHasErrors, errorMessage)"

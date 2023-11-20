@@ -10,7 +10,7 @@
 
   <govuk-body>If you do not have an email address, <a href="https://www.hse.gov.uk/contact/tell-us-about-a-health-and-safety-issue.htm" class="govuk-link" target="_blank">contact us</a> to submit a mandatory occurrence notice or report.</govuk-body>
 
-  <govuk-input id="email" type="email" [maxlength]=100
+  <govuk-input [isAriaRequired]="true" id="email" type="email" [maxlength]=100
                label="Enter your email address" labelClass="govuk-label--s"
                [(model)]="model" #field [govukRequired]="field"
                [errorText]="getErrorDescription(hasErrors, errorMessage)"

@@ -5,7 +5,7 @@
     </govuk-error-summary>
 
     <span class="govuk-caption-l">About the safety occurrence</span>
-    <govuk-radio-group class="govuk-!-margin-bottom-4" title="What type of safety occurrence do you want to report?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-what-to-report" [errorText]="getErrorDescription(hasErrors, ErrorMessage)">
+    <govuk-radio-group aria-required="true" class="govuk-!-margin-bottom-4" title="What type of safety occurrence do you want to report?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-what-to-report" [errorText]="getErrorDescription(hasErrors, ErrorMessage)">
         <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="what-to-report" id="what-to-report-incident" value="incident" label="An incident that has happened - which caused or could cause death or serious injury to a significant number of people" />
         <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="what-to-report" id="what-to-report-risk" value="risk" label="A situation that has the potential to cause an incident in the future" />
     </govuk-radio-group>
