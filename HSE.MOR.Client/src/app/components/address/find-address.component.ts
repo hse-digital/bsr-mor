@@ -5,6 +5,7 @@ import { AddressSearchMode } from './address.component';
 import { GovukErrorSummaryComponent } from 'hse-angular';
 import { TitleService } from 'src/app/services/title.service';
 import { GetInjector } from '../../helpers/injector.helper';
+import { PostCodeValidator } from '../../helpers/validators/postcode-validator';
 @Component({
   selector: 'find-address',
   templateUrl: './find-address.component.html'
@@ -69,10 +70,15 @@ export class FindAddressComponent {
     let postcode = this.searchModel.postcode?.replace(' ', '');
     this.postcodeHasErrors = true;
     if (!postcode) {
-      this.postcodeErrorText = 'You need to enter a postcode';
-    } else if (postcode.length < 5 || postcode.length > 7) {
-      this.postcodeErrorText = "You need to enter a real postcode";
-    } else {
+      this.postcodeErrorText = "Postcode cannot be empty. Please enter a full UK postcode, such as 'LS1 4AP'";
+    } else if (postcode.length < 5 ) {
+      this.postcodeErrorText = "Postcode provided is too short. Please enter a full UK postcode, such as 'LS1 4AP'";
+    } else if (postcode.length > 7) {
+      this.postcodeErrorText = "Postcode provided is too long. Please enter a full UK postcode, such as 'LS1 4AP'";
+    } else if (!PostCodeValidator.isValid(postcode!)) {
+      this.postcodeErrorText = "Postcode provided is not in the correct format. Please enter a full UK postcode using only letters and numbers, such as 'LS1 4AP'";
+    }
+    else {
       this.postcodeHasErrors = false;
     }
 

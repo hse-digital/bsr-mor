@@ -32,7 +32,7 @@ export class ReportContactNumberComponent extends PageComponent<string> {
   }
 
   modelValid: boolean = false;
-  ErrorMessage: string = "You need to enter a real contact number";
+  ErrorMessage: string = "Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192";
   ContactNumberInError: boolean = false;
   ContactNumberLengthInError: boolean = false;
 
