@@ -68,6 +68,7 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     public string _customerid_value { get; set; }
     public string _primarycontactid_value { get; set; }
     public string _bsr_buildingregionlookup_value { get; set; }
+    public string _bsr_relevantbsrfunctionid_value { get; set; }
     public string _bsr_block_incidentid_value { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public BsrCanHelpYou? bsr_howcanbsrhelpyou { get; set; }
@@ -126,7 +127,7 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_whocomplaintabout { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_yoursupportinginformation { get; set; }
+    public string bsr_yoursupportinginformation { get; set; }   
     public int? casetypecode { get; set; }
     public int? prioritycode { get; set; }
     public int? statecode { get; set; }
@@ -150,12 +151,10 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [property: JsonPropertyName("bsr_MOR@odata.bind")]
     public string morReferenceId { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingapplication@odata.bind")]
-    public string bsrBuildingApplicationFunctionReference { get; set; }     
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsrBuildingApplicationFunctionReference { get; set; }
     [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingcontrolapplication@odata.bind")]
-    public string bsrBuildingControlApplicationFunctionReference { get; set; }    
+    public string bsrBuildingControlApplicationFunctionReference { get; set; }
     public DynamicsNotice bsr_MOR { get; set; }
 }
 

@@ -1,6 +1,8 @@
 ﻿
 using HSE.MOR.Domain.Entities;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HSE.MOR.Domain.DynamicsDefinitions;
 
@@ -36,32 +38,53 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         
         if (entity.BuildingModel is not null) 
         {
-            this.dynamicsIncident = dynamicsIncident with { buildingReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.BuildingId) ? null : $"/bsr_buildings({entity.BuildingModel?.Address?.BuildingId})" };
-            this.dynamicsIncident = dynamicsIncident with { structureReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.StructureId) ? null : $"/bsr_blocks({entity.BuildingModel?.Address?.StructureId})" };
+            this.dynamicsIncident.buildingReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.BuildingId) ? null : $"/bsr_buildings({entity.BuildingModel?.Address?.BuildingId})";
+            this.dynamicsIncident.structureReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.StructureId) ? null : $"/bsr_blocks({entity.BuildingModel?.Address?.StructureId})";
+            this.dynamicsIncident.bsrBuildingApplicationFunctionReference = null;
+            this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = null;        
         }
         else 
         {
-            this.dynamicsIncident = dynamicsIncident with { buildingReferenceId = null };
-            this.dynamicsIncident = dynamicsIncident with { structureReferenceId = null };
+            this.dynamicsIncident.buildingReferenceId = null;
+            this.dynamicsIncident.structureReferenceId = null;
+
         }
     }
 
     private void AddFunctionReference(Incident entity)
     {
-
         if (entity.BuildingModel?.IdentifyBuilding == "building_registration")
         {
-            this.dynamicsIncident = dynamicsIncident with { bsrBuildingApplicationFunctionReference = $"/bsr_buildingapplications({entity.BuildingModel.Address.HrbApplicationId})" };
+            if (string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.HrbApplicationId))
+            {
+                this.dynamicsIncident.bsrBuildingApplicationFunctionReference = null;
+            } 
+            else 
+            {
+                this.dynamicsIncident.bsrBuildingApplicationFunctionReference = $"/bsr_buildingapplications({entity.BuildingModel.Address.HrbApplicationId})";
+            }  
+            
+
         }
         else if (entity.BuildingModel?.IdentifyBuilding == "building_reference")
         {
-            this.dynamicsIncident = dynamicsIncident with { bsrBuildingControlApplicationFunctionReference = $"/bsr_buildingcontrolapplications({entity.BuildingModel.Address.BuildingControlAppId})" };
+            if (string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.BuildingControlAppId))
+            {
+                this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = null;
+            }
+            else
+            {
+                this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = $"/bsr_buildingcontrolapplications({entity.BuildingModel.Address.BuildingControlAppId})";
+            }
+            
+            
         }
-        else {
-            this.dynamicsIncident = dynamicsIncident with { bsrBuildingApplicationFunctionReference = null };
-            this.dynamicsIncident = dynamicsIncident with { bsrBuildingControlApplicationFunctionReference = null };
+        else
+        {
+            this.dynamicsIncident.bsrBuildingApplicationFunctionReference = null;
+            this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = null;
+            //this.dynamicsIncident = dynamicsIncident with { _bsr_relevantbsrfunctionid_value = null };
         }
-        
     }
 
     private int? TryGetInt(string number)

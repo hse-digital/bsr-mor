@@ -193,7 +193,7 @@ public class DynamicsService : IDynamicsService
         await UpdateMORWithCaseIdAsync(caseModel.Id, caseModel.MorId, caseModel.MorModel);
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
         var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
-        dynamicsCase.customerReferenceId = model.CustomerId;
+        //dynamicsCase.customerReferenceId = model.CustomerId;
         await UpdateCaseAsync(caseModel.Id, dynamicsCase);
         return caseModel;
     }

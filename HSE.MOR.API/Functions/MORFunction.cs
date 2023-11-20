@@ -61,7 +61,7 @@ public class MORFunction
     }
 
     [Function(nameof(UpdateMORCaseAsync))]
-    public async Task<CustomHttpResponseData> UpdateMORCaseAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request, EncodedRequest encodedRequest)
+    public async Task<CustomHttpResponseData> UpdateMORCaseAsync([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData request, EncodedRequest encodedRequest)
     {
         var customResponse = default(CustomHttpResponseData);
         try

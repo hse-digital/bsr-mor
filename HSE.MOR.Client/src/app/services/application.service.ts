@@ -71,7 +71,7 @@ export class ApplicationService {
     }
   }
   async updateMORApplication(): Promise<void> {
-    await firstValueFrom(this.httpClient.post<MORModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
+    await firstValueFrom(this.httpClient.put<MORModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
     this.updateLocalStorage();
   }
 }
