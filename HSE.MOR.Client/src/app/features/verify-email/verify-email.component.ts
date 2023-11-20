@@ -55,17 +55,15 @@ export class VerifyEmailComponent extends PageComponent<number> {
   }
 
   getOtpError() {
-    if (!this.isOtpEmpty && this.isOtpNotNumber) {
-      return 'You need to enter a 6-digit security code';
-    }
-    else if (this.isOtpInvalidLength) {
-      return 'You need to enter a security code'
-    }
-
-    else if (this.otpError) {
+    if (this.isOtpEmpty) {
+      return 'Security code cannot be empty. Please enter a 6-digit code';
+    } else if (this.isOtpNotNumber) {
+      return 'Security code should only contain numeric digits. Please re-enter your security code';
+    } else if (this.isOtpInvalidLength) {
+      return 'Security code must be 6 digits long. Please re-enter your security code'
+    } else if (this.otpError) {
       return 'The security code has expired, you need to resend the security code';
-    }
-    else {
+    } else {
       return 'You need to enter a security code'
     }
   }

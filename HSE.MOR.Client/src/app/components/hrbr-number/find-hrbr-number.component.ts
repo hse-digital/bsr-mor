@@ -54,18 +54,22 @@ export class FindHrbrNumberComponent {
     let hrbrNumber = this.searchModel.hrbrNumber?.replace(' ', '');
     this.hrbrNumberHasErrors = false;
     if (!hrbrNumber) {
-      this.hrbrNumberErrorText = 'You need to enter a building registration number';
+      this.hrbrNumberErrorText = "High-rise residential building registration reference cannot be empty. Please enter a valid reference, such as 'HRB12345ABCD'";
       this.hrbrNumberHasErrors = true;
       return this.hrbrNumberHasErrors;
     } if (!HrbNumberValidator.isValid(hrbrNumber ?? '')) {
-      this.hrbrNumberErrorText = 'You need to enter a valid building registration number';
+      this.hrbrNumberErrorText = "High-rise residential building registration reference provided is not in the correct format. Please enter a valid reference, such as 'HRB12345ABCD'";
       this.hrbrNumberHasErrors = true;
       return this.hrbrNumberHasErrors;
-    } if (hrbrNumber!.length < 5 || hrbrNumber!.length > 12) {
-      this.hrbrNumberErrorText = "You need to enter a valid building registration number";
+    } if (hrbrNumber!.length < 5) {
+      this.hrbrNumberErrorText = "High-rise residential building registration reference provided is not in the correct format. Please enter a valid reference, such as 'HRB12345ABCD'";
       this.hrbrNumberHasErrors = true;
       return this.hrbrNumberHasErrors;
-    } 
+    } if (hrbrNumber!.length > 12) {
+      this.hrbrNumberErrorText = "High-rise residential building registration reference provided is not in the correct format. Please enter a valid reference, such as 'HRB12345ABCD'";
+      this.hrbrNumberHasErrors = true;
+      return this.hrbrNumberHasErrors;
+    }
 
     return this.hrbrNumberHasErrors;
   }
