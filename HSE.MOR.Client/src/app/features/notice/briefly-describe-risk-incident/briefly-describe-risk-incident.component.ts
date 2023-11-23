@@ -34,7 +34,6 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeMo
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Notice!.DescribeRiskIncident = this.model.DescribeRiskIncident;
     applicationService.model.Notice!.ActionsToKeepSafe = this.model.ActionsToKeepSafe;
-    applicationService.createNewMORApplication();
   }
 
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {

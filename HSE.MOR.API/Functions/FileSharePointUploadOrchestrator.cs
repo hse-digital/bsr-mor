@@ -23,30 +23,26 @@ namespace HSE.MOR.API.Functions
 
         [Function(nameof(UploadFilesToSharePoint))]
         public async Task UploadFilesToSharePoint([OrchestrationTrigger] TaskOrchestrationContext orchestrationContext)
-        {        
+        {
             var scanModel = orchestrationContext.GetInput<FileScanModel>();
-            
+
             await orchestrationContext.CallActivityAsync(nameof(ScanFileFunction.ScanFileFunctionAsync), scanModel);
 
             await orchestrationContext.CreateTimer(orchestrationContext.CurrentUtcDateTime.AddMinutes(this.integrationsOptions.Value.ScanFileDelayMinutes), CancellationToken.None);
 
             var scanResults = await orchestrationContext.CallActivityAsync<List<FileScanResult>>(nameof(ScanFileFunction.GetFileScanResultsFunctionAsync), scanModel);
-            
-            var successScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => x.Success).Any(d => d.Id == s.TaskId));
-            var failedScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => !x.Success).Any(d => d.Id == s.TaskId));
+
+            var successScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => x.Success).Any(d => d.Id == s.TaskId)).ToArray();
             
             var successModel = scanModel;
             successModel.FileUploads = successScanFiles.ToArray();
+         
+            await orchestrationContext.CallActivityAsync(nameof(SharePointFunction.PushToSharePointAsync), successModel);
+
+            var failedScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => !x.Success).Any(d => d.Id == s.TaskId)).ToArray();
 
             var failedModel = scanModel;
             failedModel.FileUploads = failedScanFiles.ToArray();
-
-            foreach (var result in scanResults)
-            {
-                await orchestrationContext.CallActivityAsync(nameof(SharePointFunction.PushToSharePointAsync), successModel);
-            }
-            
-         
         }
     }
 }

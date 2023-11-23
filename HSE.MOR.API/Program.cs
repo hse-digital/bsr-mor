@@ -34,6 +34,7 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.Configure<IntegrationsOptions>(builderContext.Configuration.GetSection(IntegrationsOptions.Integrations));
     serviceCollection.Configure<BlobStoreOptions>(builderContext.Configuration.GetSection(BlobStoreOptions.BlobStore));
     serviceCollection.Configure<ScanFileOptions>(builderContext.Configuration.GetSection(ScanFileOptions.Section));
+    serviceCollection.Configure<SharePointOptions>(builderContext.Configuration.GetSection(SharePointOptions.Section));
     serviceCollection.AddSingleton<IBlobClient, BlobStoreClient>();
     serviceCollection.AddTransient<IBlobSASUri, BlobSASUri>();
     serviceCollection.AddTransient<OTPService>();

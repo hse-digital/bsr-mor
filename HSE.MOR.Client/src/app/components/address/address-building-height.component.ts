@@ -26,7 +26,9 @@ export class AddressBuildingHeightComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buildingHeight = this.applicationService.model.Building!.BuildingHeight!;
+    if (this.applicationService.model.Building!.BuildingHeight!) {
+      this.buildingHeight = Number(this.applicationService.model.Building!.BuildingHeight!);
+    }   
   }
 
   continue() {

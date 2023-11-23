@@ -38,14 +38,15 @@ public class ScanFileService : IScanFileService
 
     public async Task ScanFileAsync(string fileId, string blobName, CancellationToken cancellationToken)
     {
-        var payload = new FileScanRequest(fileId, blobStoreOptions.Value.ContainerName, blobName, scanFileOptions.Value.Application);
+        var blobPath = Path.Combine(fileId, blobName).Replace('\\', '/'); 
+        var payload = new FileScanRequest(fileId, blobStoreOptions.Value.ContainerName, blobPath, scanFileOptions.Value.Application);
         var response = default(IFlurlResponse);
 
         try
         {
             response = await scanFileOptions.Value.CommonAPIEndpoint
                 .AppendPathSegment(FlurlSettings.ApiSegment)
-                .AppendPathSegment(nameof(ScanFileAsync))
+                .AppendPathSegment("ScanFile")
                 .WithHeader(FlurlSettings.XFunctionsKey, scanFileOptions.Value.CommonAPIKey)
                 .PostJsonAsync(payload, cancellationToken);
         }
@@ -63,7 +64,7 @@ public class ScanFileService : IScanFileService
         {
             var response = await scanFileOptions.Value.CommonAPIEndpoint
                 .AppendPathSegment(FlurlSettings.ApiSegment)
-                .AppendPathSegment(nameof(GetFileScanResultAsync))
+                .AppendPathSegment("GetFileScanResult")
                 .SetQueryParam("id", id)
                 .WithHeader(FlurlSettings.XFunctionsKey, scanFileOptions.Value.CommonAPIKey)
                 .GetJsonAsync<FileScanResult>(cancellationToken);

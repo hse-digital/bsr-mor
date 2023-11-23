@@ -19,7 +19,7 @@ export class VerifyEmailComponent extends PageComponent<number> {
   email: string = "";
 
   override onInit(applicationService: ApplicationService): void {
-
+    this.email = applicationService.model.EmailAddress! ?? '';
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     try {

@@ -145,28 +145,37 @@ public class DynamicsService : IDynamicsService
         });
         var dynamicsIncident = response.value.FirstOrDefault();
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
-        var dynamicsCase = modelDefinition.BuildEntity(dynamicsIncident);
-        return dynamicsCase;
+        var incident = modelDefinition.BuildEntity(dynamicsIncident);       
+        var modelMORDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
+        var mor = modelMORDefinition.BuildEntity(dynamicsIncident.bsr_MOR);
+
+        //buildling information that exists in two entities returned in one to the front end
+        incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
+        incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
+        incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
+
+        incident.MorModelDynamics = mor;
+        return incident;
     }
 
     public async Task<Incident> CreateMORCase_Async(IncidentModel model)
     {                      
         var caseModel = mapper.Map<Incident>(model);
         Contact contact = null;
-        if (caseModel.MorModel.IsNotice)
+        if (caseModel.MorModelDynamics.IsNotice)
         {
-            contact = await CreateContactAsync(caseModel.MorModel.NoticeFirstName, caseModel.MorModel.NoticeLastName, 
-                caseModel.MorModel.NoticeContactNumber, caseModel.EmailAddress);
-            caseModel.MorModel.CustomerNoticeReferenceId = contact.Id;
+            contact = await CreateContactAsync(caseModel.MorModelDynamics.NoticeFirstName, caseModel.MorModelDynamics.NoticeLastName, 
+                caseModel.MorModelDynamics.NoticeContactNumber, caseModel.EmailAddress);
+            caseModel.MorModelDynamics.CustomerNoticeReferenceId = contact.Id;
         }
         else 
         {
-            contact = await CreateContactAsync(caseModel.MorModel.ReportFirstName, caseModel.MorModel.ReportLastName,
-                caseModel.MorModel.ReportContactNumber, caseModel.EmailAddress);
-            caseModel.MorModel.CustomerReportReferenceId = contact.Id;
+            contact = await CreateContactAsync(caseModel.MorModelDynamics.ReportFirstName, caseModel.MorModelDynamics.ReportLastName,
+                caseModel.MorModelDynamics.ReportContactNumber, caseModel.EmailAddress);
+            caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
         }
         
-        var mor = await CreateMORAsync(caseModel.MorModel);
+        var mor = await CreateMORAsync(caseModel.MorModelDynamics);
 
         caseModel.CustomerId = contact.Id;
         caseModel.MorId = mor.Id;
@@ -182,18 +191,17 @@ public class DynamicsService : IDynamicsService
     public async Task<Incident> UpdateMORCase_Async(IncidentModel model) 
     {
         var caseModel = mapper.Map<Incident>(model);
-        if (caseModel.MorModel.IsNotice)
+        if (caseModel.MorModelDynamics.IsNotice)
         {
-            caseModel.MorModel.CustomerNoticeReferenceId = caseModel.CustomerId;
-        }
+            caseModel.MorModelDynamics.CustomerNoticeReferenceId = caseModel.CustomerId;
+        } 
         else 
         {
-            caseModel.MorModel.CustomerReportReferenceId = caseModel.CustomerId;
+            caseModel.MorModelDynamics.CustomerReportReferenceId = caseModel.CustomerId;
         }
-        await UpdateMORWithCaseIdAsync(caseModel.Id, caseModel.MorId, caseModel.MorModel);
+        await UpdateMORWithCaseIdAsync(caseModel.Id, caseModel.MorId, caseModel.MorModelDynamics);
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
         var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
-        //dynamicsCase.customerReferenceId = model.CustomerId;
         await UpdateCaseAsync(caseModel.Id, dynamicsCase);
         return caseModel;
     }
@@ -251,6 +259,7 @@ public class DynamicsService : IDynamicsService
 
     public async Task<IFlurlResponse> UpdateCaseAsync(string id, DynamicsIncident dynamicsIncident)
     {
+        await dynamicsApi.Update($"incidents({id})", new BSRFunctionRemover());
         return await dynamicsApi.Update($"incidents({id})", dynamicsIncident);
     }
 

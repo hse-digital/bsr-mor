@@ -42,7 +42,12 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
       applicationService.model.Notice = {}
     }
     applicationService.model.Notice!.CheckAnswersModel = this.model;
-   applicationService.updateMORApplication();
+    if (applicationService.model.Id) {
+      applicationService.updateMORApplication();   
+    } else {
+      await applicationService.createNewMORApplication();
+    }
+   
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return applicationService.model.Notice?.WhenBecomeAware !== undefined;

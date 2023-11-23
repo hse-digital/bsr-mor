@@ -19,9 +19,9 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             this.dynamicsMor.incidentReference = string.IsNullOrWhiteSpace(entity.IncidentReference) ? null : $"/incidents({entity.IncidentReference})";
             this.dynamicsMor.bsr_briefdescription = entity.DescribeRiskIncident;
             this.dynamicsMor.bsr_immediateactionstaken = entity.ActionsToKeepSafe;
-            this.dynamicsMor.bsr_noticesubmittedon = DateTime.UtcNow;
-            this.dynamicsMor.bsr_morstage = MorStage.NoticeSubmitted;
+            this.dynamicsMor.bsr_morstage = entity.IsNotice ? MorStage.NoticeSubmitted : MorStage.ReportSubmitted;
             this.dynamicsMor.bsr_noticesubmittedbyrole = RoleSubmittingNotice(entity.NoticeOrgRole);
+            this.dynamicsMor.bsr_reportsubmittedbyrole = RoleSubmittingNotice(entity.ReportOrgRole);
             this.dynamicsMor.bsr_noticeorganisationname = entity.NoticeOrganisationName;
             this.dynamicsMor.bsr_occurrenceidentifiedon = entity.WhenBecomeAware != null ? GetDate(entity.WhenBecomeAware.Year, entity.WhenBecomeAware.Month, entity.WhenBecomeAware.Day, entity.WhenBecomeAware.Hour, entity.WhenBecomeAware.Minute) : null;
             this.dynamicsMor.bsr_bsr_identifybuildingcode = entity.BuildingModel != null ? IdentifyBuilding(entity.BuildingModel.IdentifyBuilding) : null;
@@ -33,13 +33,20 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
 
             IncidentRiskDetails(entity);
             AddingContactReference(entity);
+            UpdateNoticeRportSubmittedDateTime(entity);
 
             return this.dynamicsMor;
         }
-
-        public override Mor BuildEntity(DynamicsMor dynamicsEntity)
+      
+        private void UpdateNoticeRportSubmittedDateTime(Mor entity) 
         {
-            throw new NotImplementedException();
+            if (entity.IsNotice)
+            {
+                this.dynamicsMor = dynamicsMor with { bsr_noticesubmittedon = DateTime.UtcNow };
+            }
+            else {
+                this.dynamicsMor = dynamicsMor with { bsr_reportsubmittedon = DateTime.UtcNow };
+            }
         }
 
         private void IncidentRiskDetails(Mor entity) {
@@ -165,5 +172,15 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             { "fire_spread", "760810001" },
             { "fire_safety", "760810002" }
         };
+
+        public override Mor BuildEntity(DynamicsMor dynamicsEntity)
+        {
+            var mor = new Mor();
+            mor.BuildingModel = new Building();
+            mor.BuildingModel.LocateBuilding = dynamicsEntity.bsr_buildinglocation;
+            mor.BuildingModel.IdentifyBuilding = dynamicsEntity.bsr_bsr_identifybuildingcode.GetValueOrDefault().ToString();
+            mor.BuildingModel.BuildingType = dynamicsEntity.bsr_howwouldyoudescribethebuilding.GetValueOrDefault().ToString();
+            return mor;
+        }
     }
 }

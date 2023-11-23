@@ -3,11 +3,11 @@ namespace HSE.MOR.API.Services.FileStore;
 
 public record UploadFileFlow
 {
-    public string FileName { get; set; } = string.Empty;
-    public string SubFolderPath { get; set; } = string.Empty;
-    public string FileDescription { get; set; } = string.Empty;
-    public Guid ProviderContactId { get; set; }
-    public Guid TargetRecordId { get; set; }
-    public string TargetTable { get; set; } = string.Empty;
-    public string AzureBlobFilePath { get; set; } = string.Empty;
+    public string fileName { get; set; } = string.Empty;
+    public string subFolderPath { get; set; } = string.Empty;
+    public string fileDescription { get; set; } = string.Empty;
+    public Guid providerContactId { get; set; }
+    public Guid targetRecordId { get; set; }
+    public string targetTable { get; set; } = string.Empty;
+    public string azureBlobFilePath { get; set; } = string.Empty;
 }

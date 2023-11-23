@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HSE.MOR.API.Models.FileUpload;
-using static System.Net.Mime.MediaTypeNames;
+using Google.Protobuf.Reflection;
 
 namespace HSE.MOR.API.Services.FileStore;
 
@@ -27,7 +27,7 @@ public class SharePointPusher : ISharePointPusher
     private readonly ILogger<SharePointPusher> logger;
 
     private const string _targetTable = "incident";
-    private const string _subFolderPath = "MOR User Uploads";
+    private const string _subFolderPath = "Documents on Default Site 1";
     private const string _mainFileDescription = "Uploaded Files from MOR Portal";
 
     public SharePointPusher(ISharePointService sharePointService, IOptions<BlobStoreOptions> blobStoreOptions, IOptions<SharePointOptions> sharePointOptions, ILogger<SharePointPusher> logger)
@@ -46,7 +46,7 @@ public class SharePointPusher : ISharePointPusher
         {
             foreach (var item in scanModel.FileUploads)
             {
-                request = GetRequestForFile(scanModel, item.FileName, item.FileName, _mainFileDescription, _subFolderPath);
+                request = GetRequestForFile(scanModel, item.TaskId, item.FileName, item.FileName, _mainFileDescription, _subFolderPath);
                 var pushResult = await this.sharePointService.PushFileToSharePointAsync(request);
             }
             
@@ -60,18 +60,14 @@ public class SharePointPusher : ISharePointPusher
 
     private UploadFileFlow GetRequestForFile(FileScanModel scanModel, string taskId, string displayName, string blobName, string fileDescription, string subFolderPath = _subFolderPath)
     {
-        var request = new UploadFileFlow
-        {
-            FileName = displayName,
-            SubFolderPath = subFolderPath,
-            FileDescription = fileDescription,
-
-            ProviderContactId = new Guid(scanModel.ContactId),
-            TargetRecordId = new Guid(scanModel.id),
-
-            TargetTable = _targetTable,
-            AzureBlobFilePath = Path.Combine(this.blobStoreOptions.Value.ContainerName, taskId, blobName).Replace('\\', '/')
-        };
+        var request = new UploadFileFlow();
+        request.fileName = displayName;
+        request.subFolderPath = subFolderPath;
+        request.fileDescription = fileDescription;
+        request.providerContactId = new Guid(scanModel.ContactId);
+        request.targetRecordId = new Guid(scanModel.id);
+        request.targetTable = _targetTable;
+        request.azureBlobFilePath = Path.Combine(this.blobStoreOptions.Value.ContainerName, taskId, blobName).Replace('\\', '/');
 
         return request;
     }

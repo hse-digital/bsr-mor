@@ -6,6 +6,8 @@ namespace HSE.MOR.Domain.Entities;
 
 public record Mor(string Id = null) : Entity(Id)
 {
+
+    public string MORNumber { get; set; }
     public string NoticeFirstName { get; set; }
     public string NoticeLastName { get; set; }
     public string NoticeContactNumber { get; set; }
@@ -57,24 +59,22 @@ public record TimeModel
 public record DynamicsMor() : DynamicsEntity<Mor>
 {
     public string bsr_incident { get; set; }
+    public string bsr_name { get; set; }
     public DateTime? bsr_noticesubmittedon { get; set; }
+    public DateTime? bsr_reportsubmittedon { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public MorStage? bsr_morstage { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public NoticeRole? bsr_noticesubmittedbyrole { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public NoticeRole? bsr_reportsubmittedbyrole { get; set; }
     public string bsr_noticeorganisationname { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public DateTime? bsr_occurrenceidentifiedon { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public BuildingCode? bsr_bsr_identifybuildingcode { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public BuildingType? bsr_howwouldyoudescribethebuilding { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_occurrencedescription { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_briefdescription { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_immediateactionstaken { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_cause { get; set; }
@@ -86,7 +86,6 @@ public record DynamicsMor() : DynamicsEntity<Mor>
     public string bsr_howdiscovered { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_buildinglocation { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [property: JsonPropertyName("bsr_noticesubmittedby@odata.bind")]
     public string customerNoticeReferenceId { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]

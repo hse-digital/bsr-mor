@@ -32,7 +32,7 @@ public class MORFunction
             var response = await request.CreateObjectResponseAsync(responseModel);           
             if (response is not null) 
             {              
-                if (!responseModel.MorModel.IsNotice && incidentModel.Report?.FilesUploaded.Length > 0) 
+                if (!responseModel.MorModelDynamics.IsNotice && incidentModel.Report?.FilesUploaded.Length > 0) 
                 {
                     var sumbissionModel = CreateFileScanModel(incidentModel, responseModel);
                     customResponse = new CustomHttpResponseData
@@ -71,7 +71,7 @@ public class MORFunction
             var response = await request.CreateObjectResponseAsync(responseModel);
             if (response is not null)
             {
-                if (!responseModel.MorModel.IsNotice && incidentModel.Report?.FilesUploaded.Length > 0)
+                if (!responseModel.MorModelDynamics.IsNotice && incidentModel.Report?.FilesUploaded.Length > 0)
                 {
                     var sumbissionModel = CreateFileScanModel(incidentModel, responseModel);
                     customResponse = new CustomHttpResponseData

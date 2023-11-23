@@ -108,12 +108,12 @@ export class AddressComponent implements OnInit {
   }
 
   profNumberOfFloors(floors: number) {
-    this.applicationService.model.Building!.NumberOfFloorsProf = floors;
+    this.applicationService.model.Building!.NumberOfFloorsProf = floors.toString();
     this.changeStepTo('building-height');
   }
 
   buildingHeight(height: number) {
-    this.applicationService.model.Building!.BuildingHeight = height;
+    this.applicationService.model.Building!.BuildingHeight = height.toString();
     if (this.isHeightInScope(this.applicationService.model.Building!)) {
       this.changeStepTo('prof-number-of-units');
     } else {
@@ -123,7 +123,7 @@ export class AddressComponent implements OnInit {
   }
 
   profNumberOfUnits(units: number) {
-    this.applicationService.model.Building!.NumberOfUnitsProf = units;
+    this.applicationService.model.Building!.NumberOfUnitsProf = units.toString();
     if (this.applicationService.model.Building?.Address?.IsManual) {
       if (this.isInScope(this.applicationService.model.Building!)) {
         this.changeStepTo('confirm');

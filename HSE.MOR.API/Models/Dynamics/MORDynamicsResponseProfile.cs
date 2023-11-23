@@ -52,8 +52,8 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.WhatToSubmit, m => m.MapFrom(m => m.WhatToSubmit))
             .ForMember(m => m.CustomerId, m => m.MapFrom(m => m.CustomerId))
             .ForMember(m => m.MorId, m => m.MapFrom(m => m.MorId))
-            .ForMember(m => m.MorModel, m => m.MapFrom(m => m))
-            .ForMember(m => m.BuildingModel, m => m.MapFrom(m => m));
+            .ForMember(m => m.MorModelDynamics, m => m.MapFrom(m => m))
+            .ForMember(m => m.BuildingModelDynamics, m => m.MapFrom(m => m));
 
         CreateMap<IncidentModel, Building>()
             .ForMember(m => m.NumberOfFloorsProf, m => m.MapFrom(m => m.Building.NumberOfFloorsProf))

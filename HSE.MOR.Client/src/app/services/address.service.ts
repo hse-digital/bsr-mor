@@ -48,9 +48,9 @@ export class AddressModel {
   Postcode?: string;
   BuildingApplicationId?: string;
   AccountablePerson?: string;
-  NumberOfFloors?: number;
-  BuildingHeight?: number;
-  ResidentialUnits?: number;
+  NumberOfFloors?: string;
+  BuildingHeight?: string;
+  ResidentialUnits?: string;
   BuildingId?: string;
   StructureId?: string;
   ContactId?: string;

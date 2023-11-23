@@ -8,7 +8,7 @@ import { AddressModel } from "./address.service";
 @Injectable()
 export class ApplicationService {
   // replace this any to a specific type
-  model: MORModel;
+  model: IncidentModel;
 
 
   constructor(private httpClient: HttpClient) {
@@ -17,7 +17,7 @@ export class ApplicationService {
 
   newApplication() {
     LocalStorage.remove('application_data');
-    this.model = new MORModel();
+    this.model = new IncidentModel();
   }
 
   updateLocalStorage() {
@@ -25,7 +25,7 @@ export class ApplicationService {
   }
 
   clearApplication() {
-    this.model = new MORModel();
+    this.model = new IncidentModel();
     this.updateLocalStorage();
   }
 
@@ -51,8 +51,8 @@ export class ApplicationService {
   async getBuildigsDetails(postcode: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.post<BuildingDetailsDynamicsModel[]>(`api/GetBuildingDetailsUsingPostcodeAsync`, { "Postcode": postcode }));
   }
-  async getIncidentByCaseNumber(caseNumber: string): Promise<IncidentModel> {
-    return await firstValueFrom(this.httpClient.post<IncidentModel>(`api/GetIncidentUsingCaseNumberAsync`, { "CaseNumber": caseNumber }));
+  async getIncidentByCaseNumber(caseNumber: string): Promise<IncidentModelDynamics> {
+    return await firstValueFrom(this.httpClient.post<IncidentModelDynamics>(`api/GetIncidentUsingCaseNumberAsync`, { "CaseNumber": caseNumber }));
   }
   async getBuildigsDetailsByBcaReferenceNumber(referenceNumber: string): Promise<BuildingDetailsDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsBuildingDetailsByBcaReferenceAsync/${referenceNumber}`));
@@ -60,9 +60,12 @@ export class ApplicationService {
   async getStructureByHrbrNumber(hrbrNumber: string): Promise<StructureDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsStructureByHrbrNumberAsync/${hrbrNumber}`));
   }
+  async triggerFileUploadScanandUpload(scanModel: FileScanModel): Promise<void> {
+    await firstValueFrom(this.httpClient.post<FileScanModel>(`api/TriggerFilesToSharePointUpload`, scanModel));
+  }
   async createNewMORApplication(): Promise<void> {
     if (!this.model.Id) {
-      var returnModel = await firstValueFrom(this.httpClient.post<MORModel>('api/NewMORCaseAsync', Sanitizer.sanitize(this.model)));
+      var returnModel = await firstValueFrom(this.httpClient.post<IncidentModel>('api/NewMORCaseAsync', Sanitizer.sanitize(this.model)));
       this.model.Id = returnModel.Id;
       this.model.CaseNumber = returnModel.CaseNumber;
       this.model.MorId = returnModel.MorId;
@@ -71,13 +74,14 @@ export class ApplicationService {
     }
   }
   async updateMORApplication(): Promise<void> {
-    await firstValueFrom(this.httpClient.put<MORModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
+    await firstValueFrom(this.httpClient.put<IncidentModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
     this.updateLocalStorage();
   }
 }
 
-export class MORModel {
+export class IncidentModel {
   Id?: string;
+  IncidentId?: string;
   Notice?: NoticeModel;
   Report?: ReportModel;
   Building?: BuildingModel;
@@ -87,6 +91,19 @@ export class MORModel {
   CustomerId?: string;
   MorId?: string;
   CaseNumber?: string;
+}
+
+export class IncidentModelDynamics {
+  Id?: string;
+  IncidentId?: string;
+  EmailAddress?: string;
+  WhatToSubmit?: string;
+  IsEmailVerified?: boolean;
+  CustomerId?: string;
+  MorId?: string;
+  CaseNumber?: string;
+  MorModelDynamics?: NoticeModel;
+  BuildingModelDynamics?: BuildingModel;
 }
 
 export class NoticeModel {
@@ -145,9 +162,9 @@ export class BuildingModel {
   BuildingName?: string;
   NumberOfFloors?: string;
   NumberOfUnits?: string;
-  NumberOfFloorsProf?: number;
-  NumberOfUnitsProf?: number;
-  BuildingHeight?: number;
+  NumberOfFloorsProf?: string;
+  NumberOfUnitsProf?: string;
+  BuildingHeight?: string;
   AddressRegion?: string;
   HasAddress?: string;
   LocateBuilding?: string;
@@ -155,6 +172,7 @@ export class BuildingModel {
   Northing?: string;
   BcaReference?: string;
 }
+
 
 export class CheckAnswersNoticeModel {
   Address?: string;
@@ -252,21 +270,6 @@ export class StructureDynamicsModel {
   _bsr_buildingapplicationid_value?: string;
 }
 
-export class IncidentDynamicsModel {
-  title?: string;
-  bsr_MOR?: NoticeDynamicsModel
-  incidentid?: string;
-}
-export class IncidentModel {
-  IncidentId?: string;
-  CustomerId?: string;
-  EmailAddress?: string; 
-  CaseNumber?: string;
-  MorId?: string;
-}
-
-export class NoticeDynamicsModel { }
-
 export class FileUploadModel {
   Progress: number = 0;
   FileName?: string;
@@ -275,5 +278,12 @@ export class FileUploadModel {
   CaseId?: string;
   SASUri?: string;
   TaskId?: string;
+}
+
+export class FileScanModel {
+  id?: string;
+  ContactId?: string;
+  Email?: string;
+  FileUploads?: FileUploadModel[];
 }
 

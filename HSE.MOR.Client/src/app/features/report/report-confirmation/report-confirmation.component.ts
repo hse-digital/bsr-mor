@@ -15,7 +15,11 @@ export class ReportConfirmationComponent extends PageComponent<string> {
   morReference?: string;
 
   override onInit(applicationService: ApplicationService): void {
-    this.morReference = applicationService.model.Report?.NoticeReference ?? "HDJ2123F";
+    if (applicationService.model.Report?.NoticeReference == '') {
+      this.morReference = applicationService.model.CaseNumber ?? "";
+    } else {
+      this.morReference = applicationService.model.Report?.NoticeReference;
+    }
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
 

@@ -9,9 +9,9 @@ public record BuildingModel()
     public string BuildingName { get; set; }
     public string NumberOfFloors { get; set; }
     public string NumberOfUnits { get; set; }
-    public int NumberOfFloorsProf { get; set; }
-    public int NumberOfUnitsProf { get; set; }
-    public int BuildingHeight { get; set; }
+    public string NumberOfFloorsProf { get; set; }
+    public string NumberOfUnitsProf { get; set; }
+    public string BuildingHeight { get; set; }
     public string AddressRegion { get; set; }
     public string HasAddress { get; set; }
     public string LocateBuilding { get; set; }
@@ -32,9 +32,9 @@ public record AddressModel()
     public string Postcode { get; set; }
     public string BuildingApplicationId { get; set; }
     public string AccountablePerson { get; set; }
-    public int NumberOfFloors { get; set; }
-    public double BuildingHeight { get; set; }
-    public int ResidentialUnits { get; set; }
+    public string NumberOfFloors { get; set; }
+    public string BuildingHeight { get; set; }
+    public string ResidentialUnits { get; set; }
     public string BuildingId { get; set; }
     public string StructureId { get; set; }
     public string BuildingControlAppId { get; set; }
