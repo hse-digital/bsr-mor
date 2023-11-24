@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { app } from '../../../../../server';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { PageComponent } from '../../../helpers/page.component';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
@@ -14,7 +15,7 @@ export class NoticeConfirmationComponent extends PageComponent<string> {
   static title: string = "Confirmation - Submit a mandatory occurrence notice and report";
 
   override onInit(applicationService: ApplicationService): void {
-    
+    this.model = applicationService.model.CaseNumber;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
 

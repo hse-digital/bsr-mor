@@ -63,11 +63,11 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
 
   private transformToDateTimeModel(inputDate?: InputDateModel, inputTime?: InputTimeModel): TimeModel {
     return  {
-      Day: Number(inputDate?.day),
-      Month: Number(inputDate?.month),
-      Year: Number(inputDate?.year),
-      Hour: Number(inputTime?.hour),
-      Minute: Number(inputTime?.minute)
+      Day: inputDate?.day,
+      Month: inputDate?.month,
+      Year: inputDate?.year,
+      Hour: inputTime?.hour,
+      Minute: inputTime?.minute
     }
   }
 
@@ -110,22 +110,22 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
       this.dateErrorMessage = "You need to tell us the month you were made aware of the occurrence";
     } else if (!this.inputDateModel?.year) {
       this.dateErrorMessage = "You need to tell us the year you were made aware of the occurrence";
-    } else if (!DateValidator.isValid(this.model?.Day!, this.model?.Month! - 1, this.model?.Year!)) {
+    } else if (!DateValidator.isValid(Number(this.model?.Day!), Number(this.model?.Month!) - 1, Number(this.model?.Year!))) {
       this.dateErrorMessage = "You need to enter a date that exists";
     } else if (Number.isNaN(this.getDate(this.model).getTime())) {
       this.dateErrorMessage = "You need to tell us the date you were made aware of the occurrence";
     } else if (Date.now() < this.getDate(this.model).getTime()) {
-      this.dateErrorMessage = "You need to enter a date in the past or today's days";
-    } else if (this.model?.Year! < 1900) {
-      this.dateErrorMessage = "You need to enter a date that is after 1900 ";
+      this.dateErrorMessage = "You need to enter a date in the past";
+    } else if (Number(this.model?.Year!) < 1900) {
+      this.dateErrorMessage = "You need to enter a date that is after 1900";
     }
     this.inputDateHasError = this.dateErrorMessage != "";
     return !this.inputDateHasError;
   }
 
   private isTimeValid() {
-    let isHourValid = FieldValidations.IsWholeNumber(this.model?.Hour) && FieldValidations.IsAPositiveNumber(this.model?.Hour) && this.model!.Hour! < 24;
-    let isMinuteValid = FieldValidations.IsWholeNumber(this.model?.Minute) && FieldValidations.IsAPositiveNumber(this.model?.Minute) && this.model!.Minute! < 60;
+    let isHourValid = FieldValidations.IsWholeNumber(Number(this.model?.Hour)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Hour)) && Number(this.model?.Hour) < 24;
+    let isMinuteValid = FieldValidations.IsWholeNumber(Number(this.model?.Minute)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Minute)) && Number(this.model?.Minute) < 60;
     
     this.timeErrorMessage = "";
     if (this.InputTimeModelIsNullOrWhitespace()) {
@@ -144,16 +144,16 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
 
   private getDate(model?: TimeModel) {
     let date: Date = new Date();
-    date.setDate(this.model?.Day ?? -1);
-    date.setMonth(this.model?.Month ?? -1);
-    date.setFullYear(this.model?.Year ?? -1);
+    date.setDate(Number(this.model?.Day!) ?? -1);
+    date.setMonth(Number(this.model?.Month!) ?? -1);
+    date.setFullYear(Number(this.model?.Year!) ?? -1);
     return date;
   }
 
   private getTime(model?: TimeModel) {
     let date: Date = new Date();
-    date.setHours(this.model?.Hour ?? -1);
-    date.setMinutes(this.model?.Minute ?? -1);
+    date.setHours(Number(this.model?.Hour!) ?? -1);
+    date.setMinutes(Number(this.model?.Minute!) ?? -1);
     return date;
   }
 

@@ -1,6 +1,8 @@
 ﻿
 using HSE.MOR.Domain.Entities;
 using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HSE.MOR.Domain.DynamicsDefinitions;
 
@@ -11,26 +13,88 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
 
     public override DynamicsIncident BuildDynamicsEntity(Incident entity)
     {
-        this.dynamicsIncident = new DynamicsIncident()
-        {
-            customerReferenceId = $"/contacts({entity.CustomerId})",
-            primaryContactReferenceId = $"/contacts({entity.CustomerId})",           
-            bsr_contactfirstname = entity.FirstName,
-            bsr_contactlastname = entity.LastName,
-            bsr_contactphone = entity.ContactNumber,
-            bsr_contactemail = entity.Email,
-            bsr_yoursupportinginformation = entity.YourSupportInfo,
-            statecode = 0,
-            statuscode = 2,
-            caseorigincode = 3,
-            incidentstagecode = 1,
-            casetypecode = 3
-        };      
-        AddBuildingInScopeProf(entity);
+        this.dynamicsIncident = new DynamicsIncident();
+        this.dynamicsIncident.customerReferenceId = $"/contacts({entity.CustomerId})";
+        this.dynamicsIncident.primaryContactReferenceId = $"/contacts({entity.CustomerId})";
+        this.dynamicsIncident.morReferenceId = string.IsNullOrWhiteSpace(entity.MorId) ? null : $"/bsr_mors({entity.MorId})";
+        this.dynamicsIncident.bsr_contactfirstname = entity.WhatToSubmit == "notice" ? entity.MorModelDynamics.NoticeFirstName : entity.MorModelDynamics.ReportFirstName;
+        this.dynamicsIncident.bsr_contactlastname = entity.WhatToSubmit == "notice" ? entity.MorModelDynamics.NoticeLastName : entity.MorModelDynamics.ReportLastName;
+        this.dynamicsIncident.bsr_contactphone = entity.WhatToSubmit == "notice" ? entity.MorModelDynamics.NoticeContactNumber : entity.MorModelDynamics.ReportContactNumber;
+        this.dynamicsIncident.bsr_contactemail = entity.EmailAddress;
+        this.dynamicsIncident.bsr_yoursupportinginformation = entity.WhatToSubmit == "notice" ? null : entity.MorModelDynamics.YourSupportInfo;
+        this.dynamicsIncident.statecode = 0;
+        this.dynamicsIncident.statuscode = 2;
+        this.dynamicsIncident.caseorigincode = 3;
+        this.dynamicsIncident.incidentstagecode = 1;
+        this.dynamicsIncident.casetypecode = 3;
+               
+        AddFunctionReference(entity);
+        AddStructureOrBuilding(entity);
         AddBuildingAddress(entity);
-        AddBuildingAndStructure(entity);
 
         return this.dynamicsIncident;
+    }
+
+    private void AddBuildingAddress(Incident entity) {
+
+        if (entity.BuildingModelDynamics is not null) 
+        {
+            if (!string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.BuildingType))
+            {
+                this.dynamicsIncident.bsr_buildingaddressline1 = entity.BuildingModelDynamics.Address.Street;
+                this.dynamicsIncident.bsr_buildingaddressline2 = entity.BuildingModelDynamics.Address.AddressLineTwo;
+                this.dynamicsIncident.bsr_buildingtowncity = entity.BuildingModelDynamics.Address.Town;
+                this.dynamicsIncident.bsr_buildingcounty = entity.BuildingModelDynamics.Address.AdministrativeArea;
+                this.dynamicsIncident.bsr_buildingpostcode = entity.BuildingModelDynamics.Address.Postcode;
+                this.dynamicsIncident.bsr_ismanualaddress = entity.BuildingModelDynamics.Address.IsManual;
+                this.dynamicsIncident.regionReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.Address.Postcode) ? null : $"/bsr_countries(65eeb151-30b8-ed11-b597-0022481b5e4f)";
+            }
+            if (!string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.LocateBuilding) || entity.BuildingModelDynamics.Address.IsManual) 
+            {
+                this.dynamicsIncident.bsr_numberoffloors = TryGetInt(entity.BuildingModelDynamics.NumberOfFloorsProf);
+                this.dynamicsIncident.bsr_numberofresidentialunits = TryGetInt(entity.BuildingModelDynamics.NumberOfUnitsProf);
+                this.dynamicsIncident.bsr_buildingheight = TryGetDouble(entity.BuildingModelDynamics.BuildingHeight);
+            }
+        }       
+    }
+
+    private void AddStructureOrBuilding(Incident entity) {
+        
+        if (!string.IsNullOrWhiteSpace(entity.BuildingModelDynamics?.Address?.BuildingId) || !string.IsNullOrWhiteSpace(entity.BuildingModelDynamics?.Address?.StructureId)) 
+        {
+            this.dynamicsIncident.buildingReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModelDynamics?.Address?.BuildingId) ? null : $"/bsr_buildings({entity.BuildingModelDynamics?.Address?.BuildingId})";
+            this.dynamicsIncident.structureReferenceId = string.IsNullOrWhiteSpace(entity.BuildingModelDynamics?.Address?.StructureId) ? null : $"/bsr_blocks({entity.BuildingModelDynamics?.Address?.StructureId})";
+            this.dynamicsIncident.bsrBuildingApplicationFunctionReference = null;
+            this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = null;        
+        }
+        else 
+        {
+            this.dynamicsIncident.buildingReferenceId = null;
+            this.dynamicsIncident.structureReferenceId = null;
+
+        }
+    }
+
+    private void AddFunctionReference(Incident entity)
+    {
+        if (entity.BuildingModelDynamics?.IdentifyBuilding == "building_registration")
+        {
+            //this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.BuildingControlAppId) ? null : $"/bsr_buildingcontrolapplications({entity.BuildingModel.Address.BuildingControlAppId})";
+            this.dynamicsIncident.bsrBuildingApplicationFunctionReference = $"/bsr_buildingapplications({entity.BuildingModelDynamics.Address.HrbApplicationId})";
+
+        }
+        else if (entity.BuildingModelDynamics?.IdentifyBuilding == "building_reference")
+        {
+            //this.dynamicsIncident.bsrBuildingApplicationFunctionReference = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.HrbApplicationId) ? null : $"/bsr_buildingapplications({entity.BuildingModel.Address.HrbApplicationId})";
+            this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = $"/bsr_buildingcontrolapplications({entity.BuildingModelDynamics.Address.BuildingControlAppId})";
+
+        }
+        else
+        {
+            this.dynamicsIncident.bsrBuildingApplicationFunctionReference = null;
+            this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = null;
+            //this.dynamicsIncident = dynamicsIncident with { _bsr_relevantbsrfunctionid_value = null };
+        }
     }
 
     private int? TryGetInt(string number)
@@ -68,69 +132,29 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
 
     public override Incident BuildEntity(DynamicsIncident dynamicsEntity)
     {
-        throw new NotImplementedException();
-    }
-    public void AddBuildingAndStructure(Incident entity)
-    {
-        if ((!string.IsNullOrWhiteSpace(entity.RequestType) && entity.RequestType == "complaint")
-            && entity.Reason == "building_or_person")
-        {
-            this.dynamicsIncident = dynamicsIncident with { buildingReferenceId = string.IsNullOrWhiteSpace(entity.Address.BuildingId) ? null : $"/bsr_buildings({entity.Address.BuildingId})" };
-            this.dynamicsIncident = dynamicsIncident with { structureReferenceId = string.IsNullOrWhiteSpace(entity.Address.StructureId) ? null : $"/bsr_blocks({entity.Address.StructureId})" };
-            this.dynamicsIncident = dynamicsIncident with { regionReferenceId = string.IsNullOrWhiteSpace(entity.Address.Postcode) ? null : $"/bsr_countries(65eeb151-30b8-ed11-b597-0022481b5e4f)" };
-        }
-        else
-        {
-            this.dynamicsIncident = dynamicsIncident with { buildingReferenceId = null };
-            this.dynamicsIncident = dynamicsIncident with { structureReferenceId = null };
-            this.dynamicsIncident = dynamicsIncident with { regionReferenceId = null };
-        }
-    }
-    private void AddBuildingAddress(Incident entity)
-    {
-        if ((!string.IsNullOrWhiteSpace(entity.RequestType) && entity.RequestType == "complaint")
-            && entity.Reason == "building_or_person")
-        {
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingaddressline1 = entity.Address.Street };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingaddressline2 = entity.Address.AddressLineTwo };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingtowncity = entity.Address.Town };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingcounty = entity.Address.AdministrativeArea };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingpostcode = entity.Address.Postcode };
-            this.dynamicsIncident = dynamicsIncident with { bsr_ismanualaddress = entity.Address.IsManual };
-        }
-        else
-        {
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingaddressline1 = null };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingaddressline2 = null };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingtowncity = null };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingcounty = null };
-            this.dynamicsIncident = dynamicsIncident with { bsr_buildingpostcode = null };
-            this.dynamicsIncident = dynamicsIncident with { bsr_ismanualaddress = null };
-        }
-    }
-    private void AddBuildingInScopeProf(Incident entity)
-    {
-        if ((!string.IsNullOrWhiteSpace(entity.RequestType) && entity.RequestType == "complaint")
-            && entity.Reason == "building_or_person" && entity.WhoAreYou == "building_professional")
-        {
+        var incident =  new Incident();
+        incident.IncidentId = dynamicsEntity.incidentid;
+        incident.CaseNumber = dynamicsEntity.title;
+        incident.CustomerId = dynamicsEntity._primarycontactid_value;
+        incident.EmailAddress = dynamicsEntity.bsr_contactemail;
+        incident.MorId = dynamicsEntity._bsr_mor_value;
+        incident.BuildingModelDynamics = new Building();
+        incident.BuildingModelDynamics.Address = new AddressModel();
+        incident.BuildingModelDynamics.Address.Street = dynamicsEntity.bsr_buildingaddressline1;
+        incident.BuildingModelDynamics.Address.AddressLineTwo = dynamicsEntity.bsr_buildingaddressline2;
+        incident.BuildingModelDynamics.Address.Town = dynamicsEntity.bsr_buildingtowncity;
+        incident.BuildingModelDynamics.Address.AdministrativeArea = dynamicsEntity.bsr_buildingcounty;
+        incident.BuildingModelDynamics.Address.Postcode = dynamicsEntity.bsr_buildingpostcode;
+        incident.BuildingModelDynamics.Address.IsManual = dynamicsEntity.bsr_ismanualaddress.GetValueOrDefault();
+        incident.BuildingModelDynamics.Address.NumberOfFloors = dynamicsEntity.bsr_numberoffloors.GetValueOrDefault().ToString();
+        incident.BuildingModelDynamics.Address.ResidentialUnits = dynamicsEntity.bsr_numberofresidentialunits.GetValueOrDefault().ToString();
+        incident.BuildingModelDynamics.Address.BuildingHeight = dynamicsEntity.bsr_buildingheight.GetValueOrDefault().ToString();
+        incident.BuildingModelDynamics.Address.BuildingId = dynamicsEntity._bsr_building_value;
+        incident.BuildingModelDynamics.Address.StructureId = dynamicsEntity._bsr_block_incidentid_value;
+        incident.BuildingModelDynamics.Address.HrbApplicationId = dynamicsEntity._bsr_relevantbsrfunctionid_value;
+        incident.BuildingModelDynamics.Address.BuildingControlAppId = dynamicsEntity._bsr_relevantbsrfunctionid_value;
 
-            if (entity.Address.IsManual)
-            {
-                this.dynamicsIncident = dynamicsIncident with { bsr_numberoffloors = TryGetInt(entity.NumberOfFloorsProf) };
-                this.dynamicsIncident = dynamicsIncident with { bsr_buildingheight = TryGetDouble(entity.BuildingHeight) };
-                this.dynamicsIncident = dynamicsIncident with { bsr_numberofresidentialunits = TryGetInt(entity.NumberOfUnitsProf) };
-                this.dynamicsIncident = dynamicsIncident with { bsr_howbigisthebuilding = null };
-                this.dynamicsIncident = dynamicsIncident with { bsr_2ormoreresidencesinbuilding = null };
-
-            }
-            else
-            {
-                this.dynamicsIncident = dynamicsIncident with { bsr_numberoffloors = null };
-                this.dynamicsIncident = dynamicsIncident with { bsr_buildingheight = null };
-                this.dynamicsIncident = dynamicsIncident with { bsr_numberofresidentialunits = null };
-            }
-        }
-
+        return incident;
     }
-   
+      
 }

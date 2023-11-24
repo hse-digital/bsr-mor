@@ -35,11 +35,12 @@ public class IncidentFunction
             var incident = await dynamicsService.GetIncidentUsingCaseNumber_Async(caseNumberVerificationModel.CaseNumber);
             if (incident is not null)
             {
+
                 response = await IncidentResponseObjectAsync(request, incident);
             }
             else
             {
-                response = await IncidentResponseObjectAsync(request, new DynamicsIncident());
+                response = await IncidentResponseObjectAsync(request, new Incident());
             }
 
         }
@@ -51,7 +52,7 @@ public class IncidentFunction
         return response;
     }
 
-    private async Task<HttpResponseData> IncidentResponseObjectAsync(HttpRequestData request, DynamicsIncident response)
+    private async Task<HttpResponseData> IncidentResponseObjectAsync(HttpRequestData request, Incident response)
     {
         return await request.CreateObjectResponseAsync(response);
     }

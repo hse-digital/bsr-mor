@@ -26,10 +26,11 @@ public abstract class UnitTestBase
         FlurlHttp.Configure(settings => { settings.JsonSerializer = new SystemTextJsonSerializer(); });
 
         var options = new Mock<IOptions<DynamicsOptions>>();
+        var mapper = new Mock<IMapper>();
         options.SetupGet(x => x.Value).Returns(DynamicsOptions);
 
         HttpTest = new HttpTest();
-        DynamicsService = new DynamicsService(options.Object, new OptionsWrapper<SwaOptions>(new SwaOptions()), new DynamicsApi(options.Object));
+        DynamicsService = new DynamicsService(new DynamicsModelDefinitionFactory(), mapper.Object, options.Object, new OptionsWrapper<SwaOptions>(new SwaOptions()), new DynamicsApi(options.Object));
     }
 
     protected readonly DynamicsOptions DynamicsOptions = new()

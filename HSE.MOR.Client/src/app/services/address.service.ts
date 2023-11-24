@@ -48,15 +48,17 @@ export class AddressModel {
   Postcode?: string;
   BuildingApplicationId?: string;
   AccountablePerson?: string;
-  NumberOfFloors?: number;
-  BuildingHeight?: number;
-  ResidentialUnits?: number;
+  NumberOfFloors?: string;
+  BuildingHeight?: string;
+  ResidentialUnits?: string;
   BuildingId?: string;
   StructureId?: string;
   ContactId?: string;
   BuildingAddressType?: AddressType;
   BcaReference?: string;
   HrbNumber?: string;
+  BuildingControlAppId?: string;
+  HrbApplicationId?: string;
 }
 
 export enum AddressType {

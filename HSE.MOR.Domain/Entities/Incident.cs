@@ -4,33 +4,34 @@ namespace HSE.MOR.Domain.Entities;
 
 public record Incident(string Id = null) : Entity(Id)
 {
+    public string IncidentId { get; set; }
     public string CustomerId { get; set; }
-    public string RequestType { get; set; }
-    public string Reason { get; set; }
-    public string WhoAreYou { get; set; }
-    public string WhoAreYouOther { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string ContactNumber { get; set; }
-    public string AskQuestion { get; set; }
-    public string AddressRegion { get; set; }
+    public Mor MorModelDynamics { get; set; }   
+    public Building BuildingModelDynamics { get; set; }
+    public string EmailAddress { get; set; }
+    public string WhatToSubmit { get; set; }    
+    public bool RegistrationFound { get; set; }      
+    public AddressModel Address { get; set; }
+    public string CaseNumber { get; set; }
+    public string MorId { get; set; }
+}
+
+public record Building()
+{
+    public string SubmittedDesignBca { get; set; }
+    public string IdentifyBuilding { get; set; }
+    public string BuildingType { get; set; }
+    public AddressModel Address { get; set; }
+    public string BuildingName { get; set; }
     public string NumberOfFloors { get; set; }
     public string NumberOfUnits { get; set; }
     public string NumberOfFloorsProf { get; set; }
     public string NumberOfUnitsProf { get; set; }
     public string BuildingHeight { get; set; }
-    public bool RegistrationFound { get; set; }
-    public string HaveComplained { get; set; }
-    public string ComplaintAbout { get; set; }
-    public string YourSupportInfo { get; set; }
-    public NoticeDateModel NoticeDate { get; set; }
-    public string WhoWasContacted { get; set; }
-    public string WhyContactNotMade { get; set; }
-    public string ComplainAboutWho { get; set; }
-    public AddressModel Address { get; set; }
-    public string CaseNumber { get; set; }
-    public string MorId { get; set; }
+    public string AddressRegion { get; set; }
+    public string HasAddress { get; set; }
+    public string LocateBuilding { get; set; }
+    public string BcaReference { get; set; }
 }
 
 public record AddressModel()
@@ -47,11 +48,13 @@ public record AddressModel()
     public string Postcode { get; set; }
     public string BuildingApplicationId { get; set; }
     public string AccountablePerson { get; set; }
-    public int NumberOfFloors { get; set; }
-    public double BuildingHeight { get; set; }
-    public int ResidentialUnits { get; set; }
+    public string NumberOfFloors { get; set; }
+    public string BuildingHeight { get; set; }
+    public string ResidentialUnits { get; set; }
     public string BuildingId { get; set; }
     public string StructureId { get; set; }
+    public string BuildingControlAppId { get; set; }
+    public string HrbApplicationId { get; set; }
     public string ContactId { get; set; }
     public bool IsManual { get; set; }
     public string Address { get; set; }
@@ -60,33 +63,19 @@ public record AddressModel()
 public record DynamicsIncident() : DynamicsEntity<Incident>
 {
     public string incidentid { get; set; }
+    public string _bsr_mor_value { get; set; } 
     public string _bsr_building_value { get; set; }
     public string _customerid_value { get; set; }
     public string _primarycontactid_value { get; set; }
     public string _bsr_buildingregionlookup_value { get; set; }
-    public string _bsr_block_incidentid_value { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public BsrCanHelpYou? bsr_howcanbsrhelpyou { get; set; }
-    public int? bsr_complaintabout { get; set; }
-    public int? bsr_contactrole { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_contactroleother { get; set; }
+    public string _bsr_relevantbsrfunctionid_value { get; set; }
+    public string _bsr_block_incidentid_value { get; set; }   
     public string bsr_contactfirstname { get; set; }
     public string bsr_contactlastname { get; set; }
     public string bsr_contactphone { get; set; }
     public string bsr_contactemail { get; set; }
     public string customerid { get; set; }
-    public string primarycontactid { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public int? bsr_complaintabouttopic { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public bool? bsr_sharecontactdetails { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_question { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public int? bsr_howbigisthebuilding { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public int? bsr_2ormoreresidencesinbuilding { get; set; }
+    public string primarycontactid { get; set; }  
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public int? bsr_numberoffloors { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
@@ -106,23 +95,7 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public bool? bsr_ismanualaddress { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public bool? bsr_hrdregfound { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public bool? bsr_complainedtoap { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_complaint { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public DateTime? bsr_firstnoticedon { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_whocontacted { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public DateTime? bsr_firstcontactedon { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_whynotcontactedap { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_whocomplaintabout { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_yoursupportinginformation { get; set; }
+    public string bsr_yoursupportinginformation { get; set; }   
     public int? casetypecode { get; set; }
     public int? prioritycode { get; set; }
     public int? statecode { get; set; }
@@ -146,10 +119,19 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [property: JsonPropertyName("bsr_MOR@odata.bind")]
     public string morReferenceId { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingapplication@odata.bind")]
-    public string bsrFunctionReference { get; set; }    
-    public DynamicsNotice bsr_MOR { get; set; }
+    public string bsrBuildingApplicationFunctionReference { get; set; }
+    [property: JsonPropertyName("bsr_relevantBSRfunctionId_bsr_buildingcontrolapplication@odata.bind")]
+    public string bsrBuildingControlApplicationFunctionReference { get; set; }
+    public DynamicsMor bsr_MOR { get; set; }
+}
+
+public class BSRFunctionRemover {
+
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsr_relevantBSRfunctionId_bsr_buildingapplication { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsr_relevantBSRfunctionId_bsr_buildingcontrolapplication { get; set; }
 }
 
 public enum BsrCanHelpYou

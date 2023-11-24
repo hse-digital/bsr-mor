@@ -106,6 +106,8 @@ export class FindAddressComponent {
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
       this.addressModel.Postcode = x.bsr_postcode;
+      this.addressModel.BuildingId = x._bsr_buildingid_value ? x._bsr_buildingid_value : undefined;
+      this.addressModel.StructureId = x.bsr_blockid ? x.bsr_blockid : undefined;
 
       this.addressResponseModel.Results.push(this.addressModel);
     });

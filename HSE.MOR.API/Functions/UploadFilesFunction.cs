@@ -1,10 +1,8 @@
-﻿
-
-using HSE.MOR.API.BlobStore;
+﻿using HSE.MOR.API.BlobStore;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker;
 using HSE.MOR.API.Extensions;
-using HSE.MOR.API.Models;
+using HSE.MOR.API.Models.FileUpload;
 
 namespace HSE.MOR.API.Functions;
 
@@ -18,14 +16,16 @@ public class UploadFilesFunction
     }
 
     [Function(nameof(GetSASUri))]
-    public async Task<HttpResponseData> GetSASUri([HttpTrigger(AuthorizationLevel.Anonymous, "get",
-        Route = $"{nameof(GetSASUri)}/{{caseId}}/{{blobName}}")] HttpRequestData request, string caseId, string blobName)
+    public async Task<HttpResponseData> GetSASUri([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request, EncodedRequest encodedRequest)
     {
-        var blobString = blobSASUri.GetSASUri($"{caseId}/{blobName}");
-
-        return await BuildResponseObjectAsync(request, blobString);
-    }
-    private async Task<HttpResponseData> BuildResponseObjectAsync(HttpRequestData request, string response)
+        var scanRequest = encodedRequest.GetDecodedData<ScanAndUploadRequest>()!;
+        scanRequest.TaskId = Guid.NewGuid().ToString();
+        scanRequest.FilePath = Path.Combine(scanRequest.TaskId, scanRequest.BlobName);
+        var uri = blobSASUri.GetSASUri(scanRequest.FilePath);
+        scanRequest.SASUri = uri;
+        return await BuildScanAndUploadRequestResponseObjectAsync(request, scanRequest);
+    }   
+    private async Task<HttpResponseData> BuildScanAndUploadRequestResponseObjectAsync(HttpRequestData request, ScanAndUploadRequest response)
     {
         return await request.CreateObjectResponseAsync(response);
     }

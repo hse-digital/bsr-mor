@@ -81,7 +81,7 @@ resource cosmosDB 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15
     }
 }
 
-var containerName = 'mor-case-submission'
+var containerName = 'mor-file-scan'
 resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2022-05-15' = {
     parent: cosmosDB
     name: containerName
@@ -278,6 +278,10 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                 {
                     name: 'Integrations__PaymentAmount'
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Integrations--PaymentAmount)'
+                }
+                {
+                    name: 'Integrations__ScanFileDelayMinutes'
+                    value: '120'
                 }
                 {
                     name: 'Feature__DisableOtpValidation'

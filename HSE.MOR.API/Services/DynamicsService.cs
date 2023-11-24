@@ -1,7 +1,15 @@
-﻿using Flurl.Http;
+﻿using AutoMapper;
+using DurableTask.Core;
+using Flurl.Http;
+using Flurl.Util;
+using HSE.MOR.API.Extensions;
 using HSE.MOR.API.Models;
+using HSE.MOR.API.Models.Dynamics;
+using HSE.MOR.Domain.DynamicsDefinitions;
 using HSE.MOR.Domain.Entities;
 using Microsoft.Extensions.Options;
+using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HSE.MOR.API.Services;
@@ -16,17 +24,24 @@ public interface IDynamicsService {
     Task<List<DynamicsStructure>> GetDynamicsStructureUsingHrbrNumber_Async(string hrbrNumber);
     Task<DynamicsBuildingApplication> GetBuildingApplicationId_Async(string hrbrNumber);
     Task<List<DynamicsStructure>> GetStructureUsingId_Async(string buildingApplicationId);
-    Task<DynamicsIncident> GetIncidentUsingCaseNumber_Async(string caseNumber);
+    Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber);
+    Task<Incident> CreateMORCase_Async(IncidentModel model);
+    Task<Incident> UpdateMORCase_Async(IncidentModel model);
 }
 
 public class DynamicsService : IDynamicsService
 {
+    private readonly IMapper mapper;
+    private readonly DynamicsModelDefinitionFactory dynamicsModelDefinitionFactory;
     private readonly DynamicsOptions dynamicsOptions;
     private readonly SwaOptions swaOptions;
     private readonly DynamicsApi dynamicsApi;
 
-    public DynamicsService(IOptions<DynamicsOptions> dynamicsOptions, IOptions<SwaOptions> swaOptions, DynamicsApi dynamicsApi) 
+    public DynamicsService(DynamicsModelDefinitionFactory dynamicsModelDefinitionFactory, IMapper mapper,
+        IOptions<DynamicsOptions> dynamicsOptions, IOptions<SwaOptions> swaOptions, DynamicsApi dynamicsApi) 
     {
+        this.dynamicsModelDefinitionFactory = dynamicsModelDefinitionFactory;
+        this.mapper = mapper;
         this.dynamicsOptions = dynamicsOptions.Value;
         this.swaOptions = swaOptions.Value;
         this.dynamicsApi = dynamicsApi;
@@ -101,6 +116,7 @@ public class DynamicsService : IDynamicsService
             if (!string.IsNullOrWhiteSpace(buildingControlApp.bsr_buildingcontrolapplicationid)) 
             {
                 buildingDetailsList = await GetDynamicsBuildingDetailsUsingId_Async(buildingControlApp.bsr_buildingcontrolapplicationid);
+                
             }          
         }
         return buildingDetailsList;
@@ -120,14 +136,171 @@ public class DynamicsService : IDynamicsService
         return structuresList;
     }
 
-    public async Task<DynamicsIncident> GetIncidentUsingCaseNumber_Async(string caseNumber)
+    public async Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber)
     {
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsIncident>>("incidents", new[]
        {
             ("$filter", $"title eq '{caseNumber}'"),
             ("$expand", "bsr_MOR")
         });
+        var dynamicsIncident = response.value.FirstOrDefault();
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+        var incident = modelDefinition.BuildEntity(dynamicsIncident);       
+        var modelMORDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
+        var mor = modelMORDefinition.BuildEntity(dynamicsIncident.bsr_MOR);
+
+        //buildling information that exists in two entities returned in one to the front end
+        incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
+        incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
+        incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
+
+        incident.MorModelDynamics = mor;
+        return incident;
+    }
+
+    public async Task<Incident> CreateMORCase_Async(IncidentModel model)
+    {                      
+        var caseModel = mapper.Map<Incident>(model);
+        Contact contact = null;
+        if (caseModel.MorModelDynamics.IsNotice)
+        {
+            contact = await CreateContactAsync(caseModel.MorModelDynamics.NoticeFirstName, caseModel.MorModelDynamics.NoticeLastName, 
+                caseModel.MorModelDynamics.NoticeContactNumber, caseModel.EmailAddress);
+            caseModel.MorModelDynamics.CustomerNoticeReferenceId = contact.Id;
+        }
+        else 
+        {
+            contact = await CreateContactAsync(caseModel.MorModelDynamics.ReportFirstName, caseModel.MorModelDynamics.ReportLastName,
+                caseModel.MorModelDynamics.ReportContactNumber, caseModel.EmailAddress);
+            caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
+        }
+        
+        var mor = await CreateMORAsync(caseModel.MorModelDynamics);
+
+        caseModel.CustomerId = contact.Id;
+        caseModel.MorId = mor.Id;
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+        var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
+
+        var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsCase, true);
+        var incident = await response.GetJsonAsync<DynamicsIncident>();
+        await UpdateMORWithCaseIdAsync(incident.incidentid, caseModel.MorId, mor);
+        return caseModel with { Id = incident.incidentid, CaseNumber = incident.title };
+    }
+
+    public async Task<Incident> UpdateMORCase_Async(IncidentModel model) 
+    {
+        var caseModel = mapper.Map<Incident>(model);
+        if (caseModel.MorModelDynamics.IsNotice)
+        {
+            caseModel.MorModelDynamics.CustomerNoticeReferenceId = caseModel.CustomerId;
+        } 
+        else 
+        {
+            caseModel.MorModelDynamics.CustomerReportReferenceId = caseModel.CustomerId;
+        }
+        await UpdateMORWithCaseIdAsync(caseModel.Id, caseModel.MorId, caseModel.MorModelDynamics);
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+        var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
+        await UpdateCaseAsync(caseModel.Id, dynamicsCase);
+        return caseModel;
+    }
+
+    private async Task<Contact> CreateContactAsync(string firstName, string lastName, string contactNumber, string email)
+    {
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Contact, DynamicsContact>();
+        var contact = new Contact(firstName, lastName, contactNumber, email);
+        var dynamicsContact = modelDefinition.BuildDynamicsEntity(contact);
+
+        var existingContact = await FindExistingContactAsync(contact.FirstName, contact.LastName, contact.Email, contact.PhoneNumber);
+        if (existingContact == null)
+        {
+            var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
+            var contactId = ExtractEntityIdFromHeader(response.Headers);
+            await AssignContactTypeAsync(contactId, DynamicsContactTypes.HRBRegistrationApplicant);
+
+            return contact with { Id = contactId };
+        }
+        return contact with { Id = existingContact.contactid };
+    }
+
+    private async Task UpdateMORWithCaseIdAsync(string incidentId, string morId, Mor mor) 
+    {
+        mor.IncidentReference = incidentId;
+        var noticeModelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
+        var dynamicsMor = noticeModelDefinition.BuildDynamicsEntity(mor);
+        await UpdateMORAsync(morId, dynamicsMor);
+    }
+
+    private async Task<Mor> CreateMORAsync(Mor mor)
+    {
+        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
+        var dynamicsMOR = modelDefinition.BuildDynamicsEntity(mor);
+
+        var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsMOR);
+        var morId = ExtractEntityIdFromHeader(response.Headers);
+
+        return mor with { Id = morId };
+    }
+
+
+    private async Task<DynamicsContact> FindExistingContactAsync(string firstName, string lastName, string email, string phoneNumber)
+    {
+        var contactNumber = !string.IsNullOrWhiteSpace(phoneNumber) ? phoneNumber : string.Empty;
+        var emailAddres = !string.IsNullOrWhiteSpace(email) ? email : string.Empty;
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsContact>>("contacts", new[]
+        {
+            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and emailaddress1 eq '{emailAddres.EscapeSingleQuote()}' and contains(telephone1, '{contactNumber.Replace("+", string.Empty).EscapeSingleQuote()}')"),
+            ("$expand", "bsr_contacttype_contact")
+        });
 
         return response.value.FirstOrDefault();
+    }
+
+    public async Task<IFlurlResponse> UpdateCaseAsync(string id, DynamicsIncident dynamicsIncident)
+    {
+        await dynamicsApi.Update($"incidents({id})", new BSRFunctionRemover());
+        return await dynamicsApi.Update($"incidents({id})", dynamicsIncident);
+    }
+
+    public async Task<IFlurlResponse> UpdateMORAsync(string id, DynamicsMor dynamicsMor)
+    {
+        return await dynamicsApi.Update($"bsr_mors({id})", dynamicsMor);
+    }
+
+    public async Task<IFlurlResponse> UpdateContactAsync(string id, DynamicsContact dynamicsContact)
+    {
+        return await dynamicsApi.Update($"contacts({id})", dynamicsContact);
+    }
+
+    private async Task AssignContactTypeAsync(string contactId, string contactTypeId)
+    {
+        await dynamicsApi.Create($"contacts({contactId})/bsr_contacttype_contact/$ref", new DynamicsContactType
+        {
+            contactTypeReferenceId = $"{dynamicsOptions.EnvironmentUrl}/api/data/v9.2/bsr_contacttypes({contactTypeId})"
+        });
+    }
+
+    public async Task<string> GetAuthenticationTokenAsync()
+    {
+        var response = await $"https://login.microsoftonline.com/{dynamicsOptions.TenantId}/oauth2/token"
+            .PostUrlEncodedAsync(new
+            {
+                grant_type = "client_credentials",
+                client_id = dynamicsOptions.ClientId,
+                client_secret = dynamicsOptions.ClientSecret,
+                resource = dynamicsOptions.EnvironmentUrl
+            })
+            .ReceiveJson<DynamicsAuthenticationModel>();
+
+        return response.AccessToken;
+    }
+
+    private string ExtractEntityIdFromHeader(IReadOnlyNameValueList<string> headers)
+    {
+        var header = headers.FirstOrDefault(x => x.Name == "OData-EntityId");
+        var id = Regex.Match(header.Value, @"\((.+)\)");
+
+        return id.Groups[1].Value;
     }
 }

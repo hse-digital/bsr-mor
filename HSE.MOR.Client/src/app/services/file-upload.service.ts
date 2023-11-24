@@ -44,8 +44,12 @@ export class FileUploadService {
     return (progress: TransferProgressEvent) =>
       observer.next(progress.loadedBytes);
   }
-  async getSASUri(blobName: string): Promise<string> {
-    return await firstValueFrom(this.httpClient.get<string>(`api/GetSASUri/${blobName}`));
+  async getSASUri(scan?: ScanAndUploadRequest): Promise<ScanAndUploadResponse> {
+    //return await firstValueFrom(this.httpClient.get<string>(`api/GetSASUri/${blobName}`));
+    return await fetch('api/GetSASUri', {
+      method: 'POST',
+      body: Sanitizer.sanitize(scan)
+    }).then(e => e.json());
   }
 
   deleteBlobItem(sasUrl: string) {
@@ -62,13 +66,34 @@ export class BlobItem {
   uploaded?: boolean;
 }
 
-export class FileUploadRequest {
-  FilePath?: string
-  BlobName?: string
-  constructor(FilePath?: string, BlobName?: string) {
-    this.FilePath = FilePath
-    this.BlobName = BlobName
+export class FileScanRequest {
+  id?: string
+  ContainerName?: string
+  FileName?: string
+  Application?: string
+}
+export class FileScanResult {
+  id?: string
+  ContainerName?: string
+  FileName?: string
+  Application?: string
+  Success?: boolean
+  IsComplete?: boolean
+}
+
+export class ScanAndUploadRequest { 
+  BlobName?: string;
+  SASUri?: string;
+  constructor(BlobName?: string, SASUri?: string) {
+    this.BlobName = BlobName;
+    this.SASUri = SASUri;
   }
+}
+export class ScanAndUploadResponse {
+  FilePath?: string;
+  TaskId?: string;
+  BlobName?: string;
+  SASUri?: string; 
 }
 
 export type Dictionary<T> = { [key: string]: T };

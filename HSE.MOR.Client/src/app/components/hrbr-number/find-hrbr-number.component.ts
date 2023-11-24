@@ -86,6 +86,7 @@ export class FindHrbrNumberComponent {
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
       this.addressModel.Postcode = x.bsr_postcode;
+      this.addressModel.HrbApplicationId = x._bsr_buildingapplicationid_value;
       this.addressModel.HrbNumber = this.searchModel.hrbrNumber;
 
       this.addressResponseModel.Results.push(this.addressModel);

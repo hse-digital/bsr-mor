@@ -27,8 +27,8 @@ public class WhenGettingIncident
         var newRequest = testClass.BuildHttpRequestDataWithUri(incidentRequestModel);
         var result = await function.GetIncidentUsingCaseNumberAsync(newRequest);
         //Assert
-        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<DynamicsIncident>(result);
-        response.Should().Be(new DynamicsIncident());
+        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
+        response.Should().Be(new Domain.Entities.Incident());
 
     }
     [Fact]
@@ -36,15 +36,15 @@ public class WhenGettingIncident
     {
         //Arrange
         var testClass = new IncidentFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.GetIncidentUsingCaseNumber_Async("Empty")).ReturnsAsync(new DynamicsIncident());
+        testClass.DynamicsService.Setup(x => x.GetIncidentUsingCaseNumber_Async("Empty")).ReturnsAsync(new Domain.Entities.Incident());
         var function = testClass.SUT();
         //Act
         var incidentRequestModel = new CaseNumberValidationModel("Empty");
         var newRequest = testClass.BuildHttpRequestDataWithUri(incidentRequestModel);
         var result = await function.GetIncidentUsingCaseNumberAsync(newRequest);
         //Assert
-        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<DynamicsIncident>(result);
-        response.bsr_MOR.Should().Be(null);
+        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
+        response.MorModelDynamics.Should().Be(null);
 
     }
     [Fact]
@@ -59,8 +59,8 @@ public class WhenGettingIncident
         var newRequest = testClass.BuildHttpRequestDataWithUri(incidentRequestModel);
         var result = await function.GetIncidentUsingCaseNumberAsync(newRequest);
         //Assert
-        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<DynamicsIncident>(result);
-        response.bsr_MOR.Should().Be(null);
+        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
+        response.MorModelDynamics.Should().Be(null);
     }
 
     [Fact]
@@ -75,8 +75,8 @@ public class WhenGettingIncident
         var newRequest = testClass.BuildHttpRequestDataWithUri(incidentRequestModel);
         var result = await function.GetIncidentUsingCaseNumberAsync(newRequest);
         //Assert
-        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<DynamicsIncident>(result);
-        response.bsr_MOR.Should().Be(new DynamicsNotice());
+        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
+        response.MorModelDynamics.Should().Be(new Mor());
     }
 
     [Fact]
@@ -91,8 +91,8 @@ public class WhenGettingIncident
         var newRequest = testClass.BuildHttpRequestDataWithUri(incidentRequestModel);
         var result = await function.GetIncidentUsingCaseNumberAsync(newRequest);
         //Assert
-        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<DynamicsIncident>(result);
-        response.title.Should().Be("CASE12345");
+        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
+        response.CaseNumber.Should().Be("CASE12345");
     }
 
     [Fact]
@@ -107,8 +107,8 @@ public class WhenGettingIncident
         var newRequest = testClass.BuildHttpRequestDataWithUri(incidentRequestModel);
         var result = await function.GetIncidentUsingCaseNumberAsync(newRequest);
         //Assert
-        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<DynamicsIncident>(result);
-        response.bsr_MOR.title.Should().Be("MOR1234");
+        var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
+        response.MorModelDynamics.MORNumber.Should().Be("MOR1234");
     }
 
     public class IncidentFunctionTestClass
@@ -130,34 +130,33 @@ public class WhenGettingIncident
 
             return new TestableHttpRequestData(functionContext.Object, new Uri("http://dynamics.com"), memoryStream);
         }
-        public DynamicsIncident GetDynamicsIncidentEmpty()
+        public Domain.Entities.Incident GetDynamicsIncidentEmpty()
         {
-            return new DynamicsIncident
+            return new Domain.Entities.Incident
             {
-                title = "CASE12344",
-                
-                bsr_MOR = null
+                CaseNumber = "CASE12344",               
+                MorModelDynamics = null
 
             };
         }
-        public DynamicsIncident GetDynamicsIncidentWithNotice()
+        public Domain.Entities.Incident GetDynamicsIncidentWithNotice()
         {
-            return new DynamicsIncident
+            return new Domain.Entities.Incident
             {
-                title = "CASE12345",
+                CaseNumber = "CASE12345",
 
-                bsr_MOR = new DynamicsNotice { 
-                    title = "MOR1234"
+                MorModelDynamics = new Mor { 
+                    MORNumber = "MOR1234"
                 }
 
             };
         }
-        public DynamicsIncident GetDynamicsIncidentWithEmptyNotice()
+        public Domain.Entities.Incident GetDynamicsIncidentWithEmptyNotice()
         {
-            return new DynamicsIncident
+            return new Domain.Entities.Incident
             {
-                title = "CASE12346",
-                bsr_MOR = new DynamicsNotice { }
+                CaseNumber = "CASE12346",
+                MorModelDynamics = new Mor { }
 
             };
         }

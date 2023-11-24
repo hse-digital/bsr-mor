@@ -16,4 +16,5 @@ public class IntegrationsOptions
     public string CommonAPIEndpoint { get; set; }
     public string CommonAPIKey { get; set; }
     public string Environment { get; set; }
+    public int ScanFileDelayMinutes { get; set; }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, BuildingModel, CheckAnswersReportModel, ReportModel } from "../../../services/application.service";
+import { ApplicationService, BuildingModel, CheckAnswersReportModel, FileScanModel, ReportModel } from "../../../services/application.service";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
@@ -31,8 +31,12 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   organisationName?: string;
   isAaboutTheBuilding: boolean = false;
   isSameUser: boolean = false;
+  FileScanModel?: FileScanModel;
 
   override onInit(applicationService: ApplicationService): void {
+    if (applicationService.model.Report?.CheckAnswersModel!) {
+      this.model = applicationService.model.Report?.CheckAnswersModel!;
+    }
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
@@ -56,6 +60,20 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       applicationService.model.Report = {}
     }
     applicationService.model.Report!.CheckAnswersModel = this.model;
+    if (applicationService.model.Report.NoticeReference) {
+      applicationService.updateMORApplication();
+    } else {
+      await applicationService.createNewMORApplication();
+    }
+    if (this.model.UploadedFileNames) {
+      this.FileScanModel = {};
+      this.FileScanModel.id = applicationService.model.Id;
+      this.FileScanModel.ContactId = applicationService.model.CustomerId;
+      this.FileScanModel.Email = applicationService.model.EmailAddress;
+      this.FileScanModel.FileUploads = applicationService.model.Report.FilesUploaded;
+      //applicationService.triggerFileUploadScanandUpload(this.FileScanModel);
+    }
+    
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

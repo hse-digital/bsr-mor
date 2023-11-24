@@ -26,7 +26,10 @@ export class AddressProfNumberOfFloorsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profNumberOfFloors = this.applicationService.model.Building!.NumberOfFloorsProf!;
+    if (this.applicationService.model.Building!.NumberOfFloorsProf!) {
+      this.profNumberOfFloors = Number(this.applicationService.model.Building!.NumberOfFloorsProf!);
+    }
+    
   }
 
   continue() {
