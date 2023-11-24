@@ -21,6 +21,11 @@ public static class HttpRequestDataExtensions
         return await JsonSerializer.DeserializeAsync<T>(httpRequestData.Body);
     }
 
+    public static async Task<T> ReadAsJsonAsync<T>(this HSE.MOR.API.Functions.CustomHttpResponseData customHttpRequestData)
+    {
+        return await JsonSerializer.DeserializeAsync<T>(customHttpRequestData.HttpResponse.Body);
+    }
+
     public static async Task<HttpResponseData> CreateObjectResponseAsync<T>(this HttpRequestData httpRequestData, T @object)
     {
         var stream = new MemoryStream();

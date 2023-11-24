@@ -71,7 +71,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       this.FileScanModel.ContactId = applicationService.model.CustomerId;
       this.FileScanModel.Email = applicationService.model.EmailAddress;
       this.FileScanModel.FileUploads = applicationService.model.Report.FilesUploaded;
-      applicationService.triggerFileUploadScanandUpload(this.FileScanModel);
+      //applicationService.triggerFileUploadScanandUpload(this.FileScanModel);
     }
     
   }
