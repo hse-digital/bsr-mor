@@ -5,7 +5,7 @@
     <govuk-error-link *ngIf="hasIsBuildingErrors" anchorId="is-building-occupied-input" message="You need to tell us more about the building " />
   </govuk-error-summary>
 
-  <govuk-radio-group class="govuk-!-margin-bottom-4" title="How would you describe the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-is-building" [errorText]="getErrorDescription(hasErrors, 'You need to tell us more about the building ')">
+  <govuk-radio-group aria-required="true" class="govuk-!-margin-bottom-4" title="How would you describe the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-is-building" [errorText]="getErrorDescription(hasErrors, 'You need to tell us more about the building ')">
     <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="is-building-occupied" value="occupied" label="Occupied" />
     <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="is-building-complete-not-occupied" value="complete_not_occupied" label="Complete but not occupied" />
     <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="application-group" id="is-building-in-construction" value="in_construction" label="In construction" />

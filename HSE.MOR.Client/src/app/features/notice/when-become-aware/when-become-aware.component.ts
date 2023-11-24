@@ -113,7 +113,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     } else if (!DateValidator.isValid(Number(this.model?.Day!), Number(this.model?.Month!) - 1, Number(this.model?.Year!))) {
       this.dateErrorMessage = "You need to enter a date that exists";
     } else if (Number.isNaN(this.getDate(this.model).getTime())) {
-      this.dateErrorMessage = "You need to tell us the time you were made aware of the occurrence";
+      this.dateErrorMessage = "You need to tell us the date you were made aware of the occurrence";
     } else if (Date.now() < this.getDate(this.model).getTime()) {
       this.dateErrorMessage = "You need to enter a date in the past";
     } else if (Number(this.model?.Year!) < 1900) {
@@ -130,6 +130,10 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     this.timeErrorMessage = "";
     if (this.InputTimeModelIsNullOrWhitespace()) {
       this.timeErrorMessage = "You need to tell us the time you were made aware of the occurrence";
+    } else if (!this.inputTimeModel?.hour) {
+      this.timeErrorMessage = "You need to tell us the hour you were made aware of the occurrence";
+    } else if (!this.inputTimeModel?.minute) {
+      this.timeErrorMessage = "You need to tell us the time including minutes you were made aware of the occurrence";
     }
     else if (!isHourValid || !isMinuteValid || Number.isNaN(this.getTime(this.model).getTime())) {
       this.timeErrorMessage = "You need to enter a valid time";
@@ -160,13 +164,9 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   private InputTimeModelIsNullOrWhitespace() {
-    return (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.hour) &&
-      !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.minute))
+    return !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.hour) &&
+      !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.minute)
 
-      ||
-
-      (!FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.hour) ||
-        !FieldValidations.IsNotNullOrWhitespace(this.inputTimeModel?.minute));
   }
 
   override async navigateNext(): Promise<boolean> {

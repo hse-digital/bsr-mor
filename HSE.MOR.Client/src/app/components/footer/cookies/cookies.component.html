@@ -28,7 +28,7 @@
             <govuk-body>We do not allow Google to use or share the data about how you use this site.</govuk-body>
           </div>
 
-          <govuk-radio-group title="Do you want to accept analytics cookies?" class="govuk-!-margin-bottom-4" [(model)]="cookieModel">
+          <govuk-radio-group aria-required="true" title="Do you want to accept analytics cookies?" class="govuk-!-margin-bottom-4" [(model)]="cookieModel">
             <govuk-radio name="cookies" id="cookies-yes" value="true" label="Yes" (onKeyupEnter)="saveCookieSettings()" [model]="cookieModel" />
             <govuk-radio name="cookies" id="cookies-no" value="false" label="No" (onKeyupEnter)="saveCookieSettings()" [model]="cookieModel" />
           </govuk-radio-group>

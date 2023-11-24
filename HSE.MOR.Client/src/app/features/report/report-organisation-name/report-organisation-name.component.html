@@ -5,7 +5,7 @@
     <govuk-error-link anchorId="input-report-org-name" message="{{ErrorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-input id="report-org-name" label="Tell us your organisation's name?" labelClass="govuk-label--l" [isPageHeading]=true
+  <govuk-input [isAriaRequired]="true" id="report-org-name" label="Tell us your organisation's name?" labelClass="govuk-label--l" [isPageHeading]=true
                [(model)]="model" #field [govukRequired]="field" [maxlength]="50"
                [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
                class="govuk-input--width-20 govuk-!-margin-bottom-5"

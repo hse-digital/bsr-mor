@@ -54,15 +54,15 @@ export class FindBcaReferenceComponent {
     let referenceNumber = this.searchModel.referenceNumber?.replace(' ', '');
     this.referenceNumberHasErrors = false;
     if (!referenceNumber) {
-      this.referenceNumberErrorText = 'You need to enter a building control reference';
+      this.referenceNumberErrorText = "Building control application reference cannot be empty.Please enter a valid reference, such as 'BCA12345ABCD'";
       this.referenceNumberHasErrors = true;
       return this.referenceNumberHasErrors;
     } if (!BcaReferenceValidator.isValid(referenceNumber ?? '')) {
-      this.referenceNumberErrorText = 'You need to enter a valid building control reference';
+      this.referenceNumberErrorText = "Building control application reference provided is not in the correct format. Please enter a valid reference, such as 'BCA12345ABCD'";
       this.referenceNumberHasErrors = true;
       return this.referenceNumberHasErrors;
     } if (referenceNumber!.length < 5 || referenceNumber!.length > 12) {
-      this.referenceNumberErrorText = "You need to enter a valid building control reference";
+      this.referenceNumberErrorText = "Building control application reference provided is not in the correct format. Please enter a valid reference, such as 'BCA12345ABCD'";
       this.referenceNumberHasErrors = true;
       return this.referenceNumberHasErrors;
     }

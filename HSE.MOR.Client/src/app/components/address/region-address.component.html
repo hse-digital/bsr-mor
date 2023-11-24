@@ -5,7 +5,7 @@
     <govuk-error-link anchorId="region-address-england-input" message="You need to tell us which region the building is in" />
   </govuk-error-summary>
 
-  <govuk-radio-group class="govuk-!-margin-bottom-4" title="Where is the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-region-address" [errorText]="getErrorDescription(addressHasErrors, 'You need to tell us which region the building is in')">
+  <govuk-radio-group aria-required="true"  class="govuk-!-margin-bottom-4" title="Where is the building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-region-address" [errorText]="getErrorDescription(addressHasErrors, 'You need to tell us which region the building is in')">
     <div class="govuk-hint">We need to know this because the Building Safety Regulator does not operate in all parts of the UK.</div>
     <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-england" value="england" label="England" />
     <govuk-radio (onKeyupEnter)="continue()" [model]="model" name="application-group" id="region-address-scotland" value="scotland" label="Scotland" />

@@ -16,9 +16,10 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 export class BuildingAddressComponent implements OnInit {
   static route: string = 'address';
 
-  static title: string = 'Find the address of the section - Submit a mandatory occurrence notice and report';
-  static selectTitle: string = 'Select the section address - Submit a mandatory occurrence notice and report';
-  static confirmTitle: string = 'Confirm the section address - Submit a mandatory occurrence notice and report';
+  static title: string = 'Find Building - Postcode search - Submit a mandatory occurrence notice and report';
+  static selectTitle: string = 'Select building - Postcode search - Submit a mandatory occurrence notice and report';
+  static confirmTitle: string = 'Confirm building - Postcode search - Submit a mandatory occurrence notice and report';
+  static hasAddressTitle: string = 'Does your building or site have an address? - Submit a mandatory occurrence notice and report';
 
   searchMode = AddressSearchMode.Building;
   private injector: Injector = GetInjector();
@@ -82,6 +83,8 @@ export class BuildingAddressComponent implements OnInit {
       case "select": this.titleService.setTitle(BuildingAddressComponent.selectTitle);
         return;
       case "confirm": this.titleService.setTitle(BuildingAddressComponent.confirmTitle);
+        return;
+      case "has-address": this.titleService.setTitle(BuildingAddressComponent.hasAddressTitle);
         return;
     }
     this.titleService.setTitle(BuildingAddressComponent.title);

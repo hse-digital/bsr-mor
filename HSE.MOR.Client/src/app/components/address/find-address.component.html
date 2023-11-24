@@ -7,7 +7,7 @@
     <govuk-error-link anchorId="input-postcode" message="{{postcodeErrorText}}" />
   </govuk-error-summary>
 
-  <govuk-input id="postcode" label="Postcode"
+  <govuk-input [isAriaRequired]="true" id="postcode" label="Postcode"
                [(model)]="searchModel.postcode"
                hint="If you know the post code of the building, enter it here and select the relevant address."
                [errorText]="getErrorDescription(postcodeHasErrors, postcodeErrorText)"

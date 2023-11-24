@@ -37,7 +37,7 @@ export class EnterEmailComponent extends PageComponent<string> {
     }
     this.emailValid = EmailValidator.isValid(this.model ?? '');
     if (!this.emailValid) {
-      this.errorMessage = 'You need to enter a real email address';
+      this.errorMessage = 'Enter an email address in the correct format, like name@example.com';
       return false;
     }   
     return true; 

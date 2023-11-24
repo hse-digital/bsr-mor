@@ -29,7 +29,7 @@
     <govuk-error-link *ngIf="floorsHasError" anchorId="input-prof-number-of-floors" message="{{errorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-input label="Number of floors at or above ground level"
+  <govuk-input [isAriaRequired]="true" label="Number of floors at or above ground level"
                labelClass="govuk-label--s" id="prof-number-of-floors" #field [govukRequired]="field"
                [(model)]="profNumberOfFloors"
                [errorText]="getErrorDescription(floorsHasError, errorMessage)"

@@ -4,7 +4,7 @@
     <govuk-error-link anchorId="hrbr-address-0-input" message="Select an address" />
   </govuk-error-summary>
 
-  <govuk-radio-group title="Select the address of the building" [isPageHeading]=true [(model)]="selectedAddress" id="radios-hrbr-addresses" [errorText]="getErrorDescription(hrbrAddressHasErrors, 'Select an address.')">
+  <govuk-radio-group aria-required="true" title="Select the address of the building" [isPageHeading]=true [(model)]="selectedAddress" id="radios-hrbr-addresses" [errorText]="getErrorDescription(hrbrAddressHasErrors, 'Select an address.')">
     <govuk-body>{{addressResponse?.Results?.length}} {{(addressResponse?.Results?.length ?? 0) > 1 ? "addresses" : "address"}} found <b>{{ searchModel.hrbrNumber }}</b></govuk-body>
 
     <govuk-radio *ngFor="let item of addressResponse?.Results; let i = index" (onKeyupEnter)="continue()" name="application-group" id="hrbr-address-{{i}}" [value]="item" label="{{ item.Address }}" />
