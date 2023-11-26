@@ -30,10 +30,8 @@ export class EnterReferenceComponent extends PageComponent<string> {
   override async onSave(applicationService: ApplicationService): Promise<void> {
     
     var dynamicsIncidentModel = await applicationService.getIncidentByCaseNumber(this.model!);
-    if (dynamicsIncidentModel) {
+    if (FieldValidations.IsNotNullOrWhitespace(dynamicsIncidentModel.IncidentId)) {
       this.mapCaseWithNotice(dynamicsIncidentModel, applicationService);
-    }
-    if (FieldValidations.IsNotNullOrWhitespace(this.model)) {
       applicationService.model.Report!.NoticeReference = this.model;
     } else {
       this.processing = false;
