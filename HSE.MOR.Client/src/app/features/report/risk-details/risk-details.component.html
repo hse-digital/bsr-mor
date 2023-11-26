@@ -28,7 +28,7 @@
   </div>
 
   <div class="govuk-!-margin-bottom-5">
-    <govuk-textarea aria-describedby="error-textarea-risk-details-organisation-find-out" labelFor="textarea-risk-details-organisation-find-out" label="Tell us how undefined discovered the safety occurrence" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="100" [isPageHeading]=false [(model)]="model.OrganisationFindOut" #field [govukRequired]="field" id="risk-details-organisation-find-out" [errorText]="getErrorDescription(organisationFindOutItInError, organisationFindOutErrorMessage)" />
+    <govuk-textarea aria-describedby="error-textarea-risk-details-organisation-find-out" labelFor="textarea-risk-details-organisation-find-out" label="Tell us how {{organisationName}} discovered the safety occurrence" labelClass="govuk-label--s" [enableCharacterCount]="true" [maxCharacterRemaining]="100" [isPageHeading]=false [(model)]="model.OrganisationFindOut" #field [govukRequired]="field" id="risk-details-organisation-find-out" [errorText]="getErrorDescription(organisationFindOutItInError, organisationFindOutErrorMessage)" />
   </div>
 
   <div class="govuk-!-margin-bottom-5">

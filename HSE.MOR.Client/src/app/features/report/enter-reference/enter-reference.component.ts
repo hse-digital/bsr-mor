@@ -57,8 +57,8 @@ export class EnterReferenceComponent extends PageComponent<string> {
   RefFormat = new RegExp('^CAS[0-9]{5}[A-Z0-9]{4}$', 'i'); // i parameter to make case insensitive
   ErrorMessage: string = "";
   ErrorRequired = "You need to enter a notice reference";
-  ErrorInvalid = "You need to enter a valid notice reference";
-  ErrorNotExists = "Entered notice reference does not exist";
+  ErrorInvalid = "You need to enter a valid a notice reference";
+  ErrorNotExists = "You need to enter a valid notice reference";
 
   override isValid(): boolean {
     if (!FieldValidations.IsNotNullOrWhitespace(this.model)) {

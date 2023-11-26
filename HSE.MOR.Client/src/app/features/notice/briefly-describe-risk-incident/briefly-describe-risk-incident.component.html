@@ -12,7 +12,7 @@
   <div class="govuk-!-margin-bottom-5">
 
     <govuk-textarea label="Describe the safety occurrence" labelClass="govuk-label--m"
-                    [enableCharacterCount]="true" [maxCharacterRemaining]="200" [isPageHeading]=false
+                    [enableCharacterCount]="true" [maxCharacterRemaining]="200" rows="8" [isPageHeading]=false
                     [(model)]="model.DescribeRiskIncident" #field [govukRequired]="field" id="describe-risk-incident"
                     aria-describedby="error-textarea-describe-risk-incident" labelFor="textarea-describe-risk-incident"
                     [errorText]="getErrorDescription(describeIncidentRiskInError, describeIncidentRiskErrorMessage)" />
@@ -22,7 +22,7 @@
   <div class="govuk-!-margin-bottom-5">
 
     <govuk-textarea label="Tell us any immediate actions you've taken since to keep people safe" labelClass="govuk-label--m"
-                    [enableCharacterCount]="true" [maxCharacterRemaining]="200" [isPageHeading]=false
+                    [enableCharacterCount]="true" [maxCharacterRemaining]="200" rows="8" [isPageHeading]=false
                     [(model)]="model.ActionsToKeepSafe" #field [govukRequired]="field" id="actions-to-keep-safe"
                     aria-describedby="error-textarea-actions-to-keep-safe" labelFor="textarea-actions-to-keep-safe"
                     [errorText]="getErrorDescription(actionsToKeepSafeInError, actionsToKeepSafeErrorMessage)" />
