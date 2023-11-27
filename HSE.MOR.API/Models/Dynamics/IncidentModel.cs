@@ -32,7 +32,14 @@ public record IncidentModel : IValidatableModel
         {
             errors.Add("Email Address is required");
         }
-        if(Notice is null && Report is null) 
+        if (!string.IsNullOrWhiteSpace(EmailAddress))
+        {
+            if (string.IsNullOrEmpty(EmailAddress) || !MailAddress.TryCreate(EmailAddress, out _))
+            {
+                errors.Add("You must enter an email address in the correct format, like name@example.com");
+            }
+        }
+        if (Notice is null && Report is null) 
         {
             errors.Add("Notice or Report model is required");
         }
