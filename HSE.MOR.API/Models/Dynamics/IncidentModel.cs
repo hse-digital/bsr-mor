@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace HSE.MOR.API.Models.Dynamics;
 
-public record IncidentModel
+public record IncidentModel : IValidatableModel
 {
     public string Id { get; set; }
     public string WhatToSubmit { get; set; }    
@@ -24,9 +24,25 @@ public record IncidentModel
     public ValidationSummary Validate()
     {
         var errors = new List<string>();
-        
-
-
+        if (string.IsNullOrWhiteSpace(WhatToSubmit)) 
+        {
+            errors.Add("WhatToSubmit is required");
+        }
+        if (string.IsNullOrWhiteSpace(EmailAddress))
+        {
+            errors.Add("Email Address is required");
+        }
+        if(Notice is null && Report is null) 
+        {
+            errors.Add("Notice or Report model is required");
+        }
+        if (Report is null) 
+        {
+            if (Notice is not null && Building is null) 
+            {
+                errors.Add("Building model is required");
+            }
+        }
         return new ValidationSummary(!errors.Any(), errors.ToArray());
     }
    

@@ -21,11 +21,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.DynamicsIncidentEmpty());
+        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.DynamicsIncidentEmpty());
         var function = testClass.SUT();
         //Act       
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.NewMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -37,11 +37,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
+        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.NewMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -53,11 +53,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.UpdateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
+        testClass.DynamicsService.Setup(x => x.UpdateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.UpdateMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -69,11 +69,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.DynamicsIncidentEmpty());
+        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.DynamicsIncidentEmpty());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.NewMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -85,11 +85,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
+        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.NewMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -101,11 +101,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.UpdateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
+        testClass.DynamicsService.Setup(x => x.UpdateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.UpdateMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -117,11 +117,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
+        testClass.DynamicsService.Setup(x => x.CreateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.NewMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -133,11 +133,11 @@ public class WhenCreatingUpdatingMORCase
     {
         //Arrange
         var testClass = new MORFunctionTestClass();
-        testClass.DynamicsService.Setup(x => x.UpdateMORCase_Async(new IncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
+        testClass.DynamicsService.Setup(x => x.UpdateMORCase_Async(testClass.TestIncidentModel())).ReturnsAsync(testClass.GetDynamicsIncidentWithMORNumber());
         var function = testClass.SUT();
         //Act
-        var newRequest = testClass.BuildHttpRequestDataWithUri(new IncidentModel());
-        var incidentModelEncoded = testClass.Base64Encode(new IncidentModel());
+        var newRequest = testClass.BuildHttpRequestDataWithUri(testClass.TestIncidentModel());
+        var incidentModelEncoded = testClass.Base64Encode(testClass.TestIncidentModel());
         var result = await function.UpdateMORCaseAsync(newRequest, incidentModelEncoded);
         //Assert
         var response = await HttpRequestDataExtensions.ReadAsJsonAsync<Domain.Entities.Incident>(result);
@@ -171,6 +171,16 @@ public class WhenCreatingUpdatingMORCase
             return new EncodedRequest("base64:" + System.Convert.ToBase64String(plainTextBytes));
         }
 
+        public IncidentModel TestIncidentModel()
+        {
+            return new IncidentModel
+            {
+                WhatToSubmit = "notice",
+                EmailAddress = "test@test.com",
+                Notice = new NoticeModel(),
+                Building = new BuildingModel()
+            };
+        }
         public Domain.Entities.Incident DynamicsIncidentEmpty()
         {
             return new Domain.Entities.Incident

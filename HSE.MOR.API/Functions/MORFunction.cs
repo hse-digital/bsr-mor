@@ -29,6 +29,11 @@ public class MORFunction
         try
         {
             var incidentModel = encodedRequest.GetDecodedData<IncidentModel>()!;
+            var incidentValidation = incidentModel.Validate();
+            if (!incidentValidation.IsValid)
+            {
+                return await request.BuildValidationErrorResponseDataAsync(incidentValidation);
+            }
             var responseModel = await dynamicsService.CreateMORCase_Async(incidentModel);
             response = await request.CreateObjectResponseAsync(responseModel);           
             //if (response is not null) 
@@ -68,6 +73,11 @@ public class MORFunction
         try
         {
             var incidentModel = encodedRequest.GetDecodedData<IncidentModel>()!;
+            var incidentValidation = incidentModel.Validate();
+            if (!incidentValidation.IsValid) 
+            {
+                return await request.BuildValidationErrorResponseDataAsync(incidentValidation);
+            }
             var responseModel = await dynamicsService.UpdateMORCase_Async(incidentModel);
             response = await request.CreateObjectResponseAsync(responseModel);
             //if (response is not null)
