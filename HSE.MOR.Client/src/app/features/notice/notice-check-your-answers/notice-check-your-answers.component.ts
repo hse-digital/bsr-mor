@@ -77,7 +77,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   }
 
   setValuesToBuildingModel(buildingModel: BuildingModel) {
-    this.model.Address = this.isSearchAdress || this.isManual ? buildingModel?.Address?.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
+    this.model.Address = !this.isAaboutTheBuilding ? buildingModel?.Address?.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
     this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;

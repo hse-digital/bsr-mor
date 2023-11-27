@@ -6,9 +6,9 @@
   </govuk-error-summary>
 
   <govuk-checkbox-group id="type-risk-reported" title="What could potentially happen in the future?" [isPageHeading]=true hint="Select all that apply" [(model)]="model!" #field [govukRequired]="field" [errorText]="getErrorDescription(hasErrors, 'You need to tell us what the occurrence is about')">
-    <govuk-checkbox id="type-risk-reported-structure-failure" (onKeyupEnter)="saveAndContinue()" [model]="model!" text="Structural Failure" value="structural_failure" />
-    <govuk-checkbox *ngIf="!isProffesional" id="type-risk-reported-fire-spread" (onKeyupEnter)="saveAndContinue()" [model]="model!" text="Fire Spread" value="fire_spread" />
-    <govuk-checkbox *ngIf="isProffesional" id="type-risk-reported-fire-safety" (onKeyupEnter)="saveAndContinue()" [model]="model!" text="Fire Safety" value="fire_safety" />
+    <govuk-checkbox id="type-risk-reported-structure-failure" (onKeyupEnter)="saveAndContinue()" [model]="model!" text="Structural failure" value="structural_failure" />
+    <govuk-checkbox *ngIf="!isProffesional" id="type-risk-reported-fire-spread" (onKeyupEnter)="saveAndContinue()" [model]="model!" text="Fire spread" value="fire_spread" />
+    <govuk-checkbox *ngIf="isProffesional" id="type-risk-reported-fire-safety" (onKeyupEnter)="saveAndContinue()" [model]="model!" text="Fire safety" value="fire_safety" />
   </govuk-checkbox-group>
 
 </govuk-formpage>
