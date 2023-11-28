@@ -222,7 +222,7 @@ public class DynamicsService : IDynamicsService
         {
             var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
             var contactId = ExtractEntityIdFromHeader(response.Headers);
-            await AssignContactTypeAsync(contactId, DynamicsContactTypes.HRBRegistrationApplicant);
+            //await AssignContactTypeAsync(contactId, DynamicsContactTypes.HRBRegistrationApplicant);
 
             return contact with { Id = contactId };
         }
