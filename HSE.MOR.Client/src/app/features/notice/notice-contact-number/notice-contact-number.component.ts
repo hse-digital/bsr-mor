@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService } from "../../../services/application.service";
+import { ApplicationService, ContactModel } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { NoticeOrganisationNameComponent } from '../notice-organisation-name/notice-organisation-name.component';
@@ -26,6 +26,12 @@ export class NoticeContactNumberComponent extends PageComponent<string> {
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Notice!.ContactNumber = this.model;
+    var contactModel = new ContactModel();
+    contactModel.EmailAddress = applicationService.model.EmailAddress;
+    contactModel.FirstName = applicationService.model.Notice?.FirstName;
+    contactModel.LastName = applicationService.model.Notice?.LastName;
+    contactModel.ContactNumber = applicationService.model.Notice!.ContactNumber;
+    //applicationService.createContactIfNotExists(contactModel);
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.FirstName) && FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.LastName)

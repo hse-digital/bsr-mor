@@ -63,6 +63,10 @@ export class ApplicationService {
   async triggerFileUploadScanandUpload(scanModel: FileScanModel): Promise<void> {
     await firstValueFrom(this.httpClient.post<FileScanModel>(`api/TriggerFilesToSharePointUpload`, scanModel));
   }
+  async createContactIfNotExists(contactModel: ContactModel): Promise<void> {
+    var dynamicsContact = await firstValueFrom(this.httpClient.post<ContactModel>('api/CreateContactIfExistsAsync', Sanitizer.sanitize(contactModel)));
+    this.model.CustomerId = dynamicsContact.Id;
+  }
   async createNewMORApplication(): Promise<void> {
     if (!this.model.Id) {
       var returnModel = await firstValueFrom(this.httpClient.post<IncidentModel>('api/NewMORCaseAsync', Sanitizer.sanitize(this.model)));
@@ -77,6 +81,14 @@ export class ApplicationService {
     await firstValueFrom(this.httpClient.put<IncidentModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
     this.updateLocalStorage();
   }
+}
+
+export class ContactModel {
+  Id?: string;
+  EmailAddress?: string;
+  FirstName?: string;
+  LastName?: string;
+  ContactNumber?: string;
 }
 
 export class IncidentModel {

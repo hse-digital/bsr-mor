@@ -27,6 +27,7 @@ public interface IDynamicsService {
     Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber);
     Task<Incident> CreateMORCase_Async(IncidentModel model);
     Task<Incident> UpdateMORCase_Async(IncidentModel model);
+    Task<Contact> CreateContactAsync(string firstName, string lastName, string contactNumber, string email);
 }
 
 public class DynamicsService : IDynamicsService
@@ -164,15 +165,31 @@ public class DynamicsService : IDynamicsService
         Contact contact = null;
         if (caseModel.MorModelDynamics.IsNotice)
         {
-            contact = await CreateContactAsync(caseModel.MorModelDynamics.NoticeFirstName, caseModel.MorModelDynamics.NoticeLastName, 
+            if (string.IsNullOrWhiteSpace(caseModel.CustomerId))
+            {
+                contact = await CreateContactAsync(caseModel.MorModelDynamics.NoticeFirstName, caseModel.MorModelDynamics.NoticeLastName,
                 caseModel.MorModelDynamics.NoticeContactNumber, caseModel.EmailAddress);
-            caseModel.MorModelDynamics.CustomerNoticeReferenceId = contact.Id;
+                caseModel.MorModelDynamics.CustomerNoticeReferenceId = contact.Id;
+            }
+            else 
+            {
+                caseModel.MorModelDynamics.CustomerNoticeReferenceId = caseModel.CustomerId;
+            }
+            
         }
         else 
         {
-            contact = await CreateContactAsync(caseModel.MorModelDynamics.ReportFirstName, caseModel.MorModelDynamics.ReportLastName,
+            if (string.IsNullOrWhiteSpace(caseModel.CustomerId))
+            {
+                contact = await CreateContactAsync(caseModel.MorModelDynamics.ReportFirstName, caseModel.MorModelDynamics.ReportLastName,
                 caseModel.MorModelDynamics.ReportContactNumber, caseModel.EmailAddress);
-            caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
+                caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
+            }
+            else
+            {
+                caseModel.MorModelDynamics.CustomerReportReferenceId = caseModel.CustomerId;
+            }
+            
         }
         
         var mor = await CreateMORAsync(caseModel.MorModelDynamics);
@@ -206,7 +223,7 @@ public class DynamicsService : IDynamicsService
         return caseModel;
     }
 
-    private async Task<Contact> CreateContactAsync(string firstName, string lastName, string contactNumber, string email)
+    public async Task<Contact> CreateContactAsync(string firstName, string lastName, string contactNumber, string email)
     {
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Contact, DynamicsContact>();
         var contact = new Contact(firstName, lastName, contactNumber, email);
