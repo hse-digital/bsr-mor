@@ -9,12 +9,9 @@ import { HseRoute, HseRoutes } from "../../helpers/hse.route";
 import { BuildingModule } from "../building/building.module";
 import { EnterReferenceComponent } from "./enter-reference/enter-reference.component";
 import { TypeIncidentReportedComponent } from "./type-incident-reported/type-incident-reported.component";
-import { TypeRiskReportedComponent } from "./type-risk-reported/type-risk-reported.component";
-import { WhatToReportComponent } from "./what-to-report/what-to-report.component";
 import { ReportYourDetailsComponent } from "./report-your-details/report-your-details.component";
 import { WhoSubmittedNoticeComponent } from "./who-submitted-notice/who-submitted-notice.component";
 import { IncidentDetailsComponent } from "./incident-details/incident-details.component";
-import { RiskDetailsComponent } from "./risk-details/risk-details.component";
 import { ReportSupportInfoComponent } from "./report-support-info/report-support-info.component";
 import { ReportOrganisationNameComponent } from "./report-organisation-name/report-organisation-name.component";
 import { ReportDutyHolderCanSubmitComponent } from "./report-duty-holder-can-submit/report-duty-holder-can-submit.component";
@@ -28,13 +25,10 @@ import { ReportSummaryComponent } from "./report-summary/report-summary.componen
 
 const routes = new HseRoutes([
   HseRoute.protected(EnterReferenceComponent.route, EnterReferenceComponent, EnterReferenceComponent.title),
-  HseRoute.protected(WhatToReportComponent.route, WhatToReportComponent, WhatToReportComponent.title),
   HseRoute.protected(TypeIncidentReportedComponent.route, TypeIncidentReportedComponent, TypeIncidentReportedComponent.title),
-  HseRoute.protected(TypeRiskReportedComponent.route, TypeRiskReportedComponent, TypeRiskReportedComponent.title),
   HseRoute.protected(WhoSubmittedNoticeComponent.route, WhoSubmittedNoticeComponent, WhoSubmittedNoticeComponent.title),
   HseRoute.protected(ReportYourDetailsComponent.route, ReportYourDetailsComponent, ReportYourDetailsComponent.title),
   HseRoute.protected(IncidentDetailsComponent.route, IncidentDetailsComponent, IncidentDetailsComponent.title),
-  HseRoute.protected(RiskDetailsComponent.route, RiskDetailsComponent, RiskDetailsComponent.title),
   HseRoute.protected(ReportSupportInfoComponent.route, ReportSupportInfoComponent, ReportSupportInfoComponent.title),
   HseRoute.protected(ReportOrganisationNameComponent.route, ReportOrganisationNameComponent, ReportOrganisationNameComponent.title),
   HseRoute.protected(ReportDutyHolderCanSubmitComponent.route, ReportDutyHolderCanSubmitComponent, ReportDutyHolderCanSubmitComponent.title),
@@ -49,13 +43,10 @@ const routes = new HseRoutes([
 @NgModule({
   declarations: [
     EnterReferenceComponent,
-    WhatToReportComponent,
     ReportYourDetailsComponent,
     WhoSubmittedNoticeComponent,
     TypeIncidentReportedComponent,
-    TypeRiskReportedComponent,
     IncidentDetailsComponent,
-    RiskDetailsComponent,
     ReportSupportInfoComponent,
     ReportOrganisationNameComponent,
     ReportDutyHolderCanSubmitComponent,

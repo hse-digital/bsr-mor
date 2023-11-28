@@ -134,21 +134,14 @@ export class ReportModel {
   Id?: string;
   NoticeReference?: string;
   OrgRole?: string;
-  WhatToReport?: string;
   SubmittedNotice?: string;
   FirstName?: string;
   LastName?: string;
   IncidentReported?: string[];
-  RiskReported?: string[];
-  AboutRisk?: string;
   AboutIncident?: string;
-  CauseOfRisk?: string;
   CauseOfIncident?: string;
   WhoAffectedByIncident?: string;
-  WhoAffectedByRisk?: string;
-  RiskKeepPeopleSafe?: string;
   IncidentKeepPeopleSafe?: string;
-  OrganisationFindOut?: string;
   OccurrenceDiscovered?: string;
   SharedWithOthers?: string;
   OrganisationName?: string;
@@ -214,16 +207,10 @@ export class CheckAnswersReportModel {
   OrgRole?: string;
   SubmittedNotice?: string;
   IncidentReported?: string;
-  RiskReported?: string;
-  AboutRisk?: string;
   AboutIncident?: string;
-  CauseOfRisk?: string;
   CauseOfIncident?: string;
   WhoAffectedByIncident?: string;
-  WhoAffectedByRisk?: string;
-  RiskKeepPeopleSafe?: string;
   IncidentKeepPeopleSafe?: string;
-  OrganisationFindOut?: string;
   OccurrenceDiscovered?: string;
   SharedWithOthers?: string;
   OrganisationName?: string;
@@ -237,7 +224,6 @@ export class CheckAnswersReportModel {
   BcaReference?: string;
   HrbNumber?: string;
   UploadedFileNames?: string;
-  IncidentOrSituation?: string;
   AboutBuilding?: string;
 }
 

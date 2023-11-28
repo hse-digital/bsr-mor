@@ -139,23 +139,28 @@ public class DynamicsService : IDynamicsService
 
     public async Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber)
     {
+        var incident = default(Incident);
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsIncident>>("incidents", new[]
        {
             ("$filter", $"title eq '{caseNumber}'"),
             ("$expand", "bsr_MOR")
         });
         var dynamicsIncident = response.value.FirstOrDefault();
-        var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
-        var incident = modelDefinition.BuildEntity(dynamicsIncident);       
-        var modelMORDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
-        var mor = modelMORDefinition.BuildEntity(dynamicsIncident.bsr_MOR);
+        if (dynamicsIncident is not null) 
+        {
+            var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+            incident = modelDefinition.BuildEntity(dynamicsIncident);
+            var modelMORDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
+            var mor = modelMORDefinition.BuildEntity(dynamicsIncident.bsr_MOR);
 
-        //buildling information that exists in two entities returned in one to the front end
-        incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
-        incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
-        incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
+            //buildling information that exists in two entities returned in one to the front end
+            incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
+            incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
+            incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
 
-        incident.MorModelDynamics = mor;
+            incident.MorModelDynamics = mor;
+        }
+        
         return incident;
     }
 
@@ -234,7 +239,7 @@ public class DynamicsService : IDynamicsService
         {
             var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
             var contactId = ExtractEntityIdFromHeader(response.Headers);
-            await AssignContactTypeAsync(contactId, DynamicsContactTypes.HRBRegistrationApplicant);
+            //await AssignContactTypeAsync(contactId, DynamicsContactTypes.HRBRegistrationApplicant);
 
             return contact with { Id = contactId };
         }

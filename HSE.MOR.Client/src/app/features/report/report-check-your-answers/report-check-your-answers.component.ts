@@ -43,10 +43,6 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isAaboutTheBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
-    this.isIncident = applicationService.model.Report?.WhatToReport == "incident" ? true : false;
-    var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
-    this.isSharedWithOthersIncident = this.isIncident && isShared;
-    this.isSharedWithOthers = !this.isIncident && isShared;
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToReportModel(applicationService.model?.Report!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
@@ -131,25 +127,13 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
         this.incidentReportedArray.push(this.incidentReportedText[v ?? ""]);
       })
       this.model.IncidentReported = this.incidentReportedArray.length > 1 ? this.incidentReportedArray.toString().split(',').filter(x => x.trim().length > 0).join(', ') : this.incidentReportedArray.toString();
-    }
-    if (reportModel.RiskReported) {
-      reportModel.RiskReported.forEach(v => {
-        this.riskReportedArray.push(this.riskReportedText[v ?? ""]);
-      })
-      this.model.RiskReported = this.riskReportedArray.length > 1 ? this.riskReportedArray.toString().split(',').filter(x => x.trim().length > 0).join(', ') : this.riskReportedArray.toString();
-    }
-    this.model.IncidentOrSituation = reportModel.WhatToReport == "risk" ? "Situation" : "Incident";
+    }   
     this.model.AboutIncident = reportModel.AboutIncident;
     this.model.CauseOfIncident = reportModel.CauseOfIncident;
     this.model.IncidentKeepPeopleSafe = reportModel.IncidentKeepPeopleSafe;
     this.model.WhoAffectedByIncident = reportModel.WhoAffectedByIncident;
     this.model.OccurrenceDiscovered = reportModel.OccurrenceDiscovered;
     this.model.SharedWithOthers = reportModel.SharedWithOthers;
-    this.model.AboutRisk = reportModel.AboutRisk;
-    this.model.CauseOfRisk = reportModel.CauseOfRisk;
-    this.model.WhoAffectedByRisk = reportModel.WhoAffectedByRisk;
-    this.model.RiskKeepPeopleSafe = reportModel.RiskKeepPeopleSafe;
-    this.model.OrganisationFindOut = reportModel.OrganisationFindOut;
     if (reportModel.FilesUploaded) {
       reportModel.FilesUploaded.map(v => {
         this.fileNameArray.push(v.FileName!);

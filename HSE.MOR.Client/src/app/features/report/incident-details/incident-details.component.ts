@@ -70,7 +70,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
   whoAffectedErrorMessage: string = "You need to tell us who has or could have been affected";
   keepPeopleSafeErrorMessage: string = "You need to tell us what you are doing to keep people safe";
   occurrenceDiscoveredErrorMessage: string = "You need to tell us how the safety occurrence was discovered";
-  sharedWithOthersErrorMessage: string = "You need to tell us what should be shared for others to learn from using fewer words";
+  sharedWithOthersErrorMessage: string = "Enter anything you think should be shared for others to learn from";
   aboutIncidentInError: boolean = false;
   whatCausedItInError: boolean = false;
   whoAffectedItInError: boolean = false;
@@ -128,10 +128,13 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
       this.occurrenceDiscoveredErrorMessage = "You need to tell us how the safety occurrence was discovered using fewer words "
       this.occurrenceDiscoveredInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers)) {
-      if (this.model.SharedWithOthers?.length! > 100) {
-        this.sharedWithOthersInError = true;
-      }
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers)) {
+      this.sharedWithOthersInError = true;
+
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers) && this.model.SharedWithOthers?.length! > 100) {
+
+      this.sharedWithOthersErrorMessage = "You need to tell us what should be shared for others to learn from using fewer words"
+      this.sharedWithOthersInError = true;
     }
     this.modelValid = this.aboutIncidentInError || this.whatCausedItInError || this.whoAffectedItInError || this.keepPeopleSafeInError || this.occurrenceDiscoveredInError || this.sharedWithOthersInError ? false : true;
     return this.modelValid;
