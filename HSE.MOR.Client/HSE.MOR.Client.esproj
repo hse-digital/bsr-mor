@@ -46,12 +46,9 @@
     <Folder Include="src\app\features\report\report-your-details\" />
     <Folder Include="src\app\features\report\report-support-info\" />
     <Folder Include="src\app\features\report\report-org-role\" />
-    <Folder Include="src\app\features\report\risk-details\" />
     <Folder Include="src\app\features\verify-email\" />
     <Folder Include="src\app\features\report\enter-reference\" />
     <Folder Include="src\app\features\report\type-incident-reported\" />
-    <Folder Include="src\app\features\report\type-risk-reported\" />
-    <Folder Include="src\app\features\report\what-to-report\" />
     <Folder Include="src\app\features\report\who-submitted-notice\" />
     <Folder Include="src\app\features\what-to-submit\" />
     <Folder Include="src\app\helpers\validators\" />
