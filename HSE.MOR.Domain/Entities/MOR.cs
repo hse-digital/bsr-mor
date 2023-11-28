@@ -36,6 +36,7 @@ public record Mor(string Id = null) : Entity(Id)
     public string YourSupportInfo { get; set; }
     public string CustomerReportReferenceId { get; set; }
     public bool IsNotice { get; set; }
+    public bool IsReportSubmitted { get; set; }
 }
 
 public record TimeModel

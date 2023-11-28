@@ -147,17 +147,20 @@ public class DynamicsService : IDynamicsService
         var dynamicsIncident = response.value.FirstOrDefault();
         if (dynamicsIncident is not null) 
         {
-            var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
-            incident = modelDefinition.BuildEntity(dynamicsIncident);
-            var modelMORDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
-            var mor = modelMORDefinition.BuildEntity(dynamicsIncident.bsr_MOR);
+            if (dynamicsIncident.bsr_MOR is not null) 
+            {
+                var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
+                incident = modelDefinition.BuildEntity(dynamicsIncident);
+                var modelMORDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
+                var mor = modelMORDefinition.BuildEntity(dynamicsIncident.bsr_MOR);
 
-            //buildling information that exists in two entities returned in one to the front end
-            incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
-            incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
-            incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
+                //buildling information that exists in two entities returned in one to the front end
+                incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
+                incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
+                incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
 
-            incident.MorModelDynamics = mor;
+                incident.MorModelDynamics = mor;
+            }           
         }
         
         return incident;
@@ -174,7 +177,7 @@ public class DynamicsService : IDynamicsService
             caseModel.MorModelDynamics.CustomerNoticeReferenceId = contact.Id;
         }
         else 
-        {
+        {           
             contact = await CreateContactAsync(caseModel.MorModelDynamics.ReportFirstName, caseModel.MorModelDynamics.ReportLastName,
                 caseModel.MorModelDynamics.ReportContactNumber, caseModel.EmailAddress);
             caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
@@ -202,7 +205,17 @@ public class DynamicsService : IDynamicsService
         } 
         else 
         {
-            caseModel.MorModelDynamics.CustomerReportReferenceId = caseModel.CustomerId;
+            if (caseModel.MorModelDynamics.SubmittedNotice == "me")
+            {
+                caseModel.MorModelDynamics.CustomerReportReferenceId = caseModel.CustomerId;
+            }
+            else 
+            {
+                var contact = await CreateContactAsync(caseModel.MorModelDynamics.ReportFirstName, caseModel.MorModelDynamics.ReportLastName,
+                caseModel.MorModelDynamics.ReportContactNumber, caseModel.EmailAddress);
+                caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
+            }
+            
         }
         await UpdateMORWithCaseIdAsync(caseModel.Id, caseModel.MorId, caseModel.MorModelDynamics);
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
@@ -222,7 +235,6 @@ public class DynamicsService : IDynamicsService
         {
             var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
             var contactId = ExtractEntityIdFromHeader(response.Headers);
-            //await AssignContactTypeAsync(contactId, DynamicsContactTypes.HRBRegistrationApplicant);
 
             return contact with { Id = contactId };
         }
@@ -255,8 +267,7 @@ public class DynamicsService : IDynamicsService
         var emailAddres = !string.IsNullOrWhiteSpace(email) ? email : string.Empty;
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsContact>>("contacts", new[]
         {
-            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and emailaddress1 eq '{emailAddres.EscapeSingleQuote()}' and contains(telephone1, '{contactNumber.Replace("+", string.Empty).EscapeSingleQuote()}')"),
-            ("$expand", "bsr_contacttype_contact")
+            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and emailaddress1 eq '{emailAddres.EscapeSingleQuote()}' and contains(telephone1, '{contactNumber.Replace("+", string.Empty).EscapeSingleQuote()}')")
         });
 
         return response.value.FirstOrDefault();
