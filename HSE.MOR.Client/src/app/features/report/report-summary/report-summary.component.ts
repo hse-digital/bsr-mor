@@ -32,13 +32,9 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
-    this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);    
-    this.isIncident = applicationService.model.Report?.WhatToReport == "incident" ? true : false;
-    var isShared = applicationService.model.Report?.SharedWithOthers ? true : false;
+    this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);       
     this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
     
-    this.isSharedWithOthersIncident = this.isIncident && isShared;
-    this.isSharedWithOthers = !this.isIncident && isShared;
     this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
     this.model.Address = applicationService.model.Report?.CheckAnswersModel?.Address;
     this.model.BcaReference = applicationService.model.Report?.CheckAnswersModel?.BcaReference;
@@ -55,9 +51,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.ContactDetails = applicationService.model.Report?.CheckAnswersModel?.ContactDetails;
     this.model.ContactNumber = applicationService.model.Report?.CheckAnswersModel?.ContactNumber;
     this.model.OrganisationName = applicationService.model.Report?.CheckAnswersModel?.OrganisationName;
-    this.model.OrgRole = applicationService.model.Report?.CheckAnswersModel?.OrgRole;
-    this.model.NoticeReference = applicationService.model.Report?.CheckAnswersModel?.NoticeReference ?? "HDJ2123F";
-    this.model.IncidentOrSituation = applicationService.model.Report?.CheckAnswersModel?.IncidentOrSituation;
+    this.model.NoticeReference = applicationService.model.CaseNumber ?? applicationService.model.Report?.CheckAnswersModel?.NoticeReference;
     this.model.IncidentReported = applicationService.model.Report?.CheckAnswersModel?.IncidentReported;
     this.model.AboutIncident = applicationService.model.Report?.CheckAnswersModel?.AboutIncident;
     this.model.CauseOfIncident = applicationService.model.Report?.CheckAnswersModel?.CauseOfIncident;
@@ -65,12 +59,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.IncidentKeepPeopleSafe = applicationService.model.Report?.CheckAnswersModel?.IncidentKeepPeopleSafe;
     this.model.OccurrenceDiscovered = applicationService.model.Report?.CheckAnswersModel?.OccurrenceDiscovered;
     this.model.SharedWithOthers = applicationService.model.Report?.CheckAnswersModel?.SharedWithOthers;
-    this.model.RiskReported = applicationService.model.Report?.CheckAnswersModel?.RiskReported;
-    this.model.AboutRisk = applicationService.model.Report?.CheckAnswersModel?.AboutRisk;
-    this.model.CauseOfRisk = applicationService.model.Report?.CheckAnswersModel?.CauseOfRisk;
-    this.model.WhoAffectedByRisk = applicationService.model.Report?.CheckAnswersModel?.WhoAffectedByRisk;
-    this.model.RiskKeepPeopleSafe = applicationService.model.Report?.CheckAnswersModel?.RiskKeepPeopleSafe;
-    this.model.OrganisationFindOut = applicationService.model.Report?.CheckAnswersModel?.OrganisationFindOut;
+    this.model.OrgRole = applicationService.model.Report?.CheckAnswersModel?.OrgRole; 
     this.model.UploadedFileNames = applicationService.model.Report?.CheckAnswersModel?.UploadedFileNames;
 
   }

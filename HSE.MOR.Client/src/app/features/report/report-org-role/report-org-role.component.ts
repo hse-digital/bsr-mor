@@ -3,8 +3,8 @@ import { PageComponent } from '../../../helpers/page.component';
 import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
-import { WhatToReportComponent } from '../what-to-report/what-to-report.component';
 import { ReportDutyHolderCanSubmitComponent } from '../report-duty-holder-can-submit/report-duty-holder-can-submit.component';
+import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
 
 @Component({
   templateUrl: './report-org-role.component.html'
@@ -47,7 +47,7 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
     if (this.model == "other") {
       return this.navigationService.navigateRelative(ReportDutyHolderCanSubmitComponent.route, this.activatedRoute);
     } else {
-      return this.navigationService.navigateRelative(WhatToReportComponent.route, this.activatedRoute);
+      return this.navigationService.navigateRelative(TypeIncidentReportedComponent.route, this.activatedRoute);
     }
     
   }

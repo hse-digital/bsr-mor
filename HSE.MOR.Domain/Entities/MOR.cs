@@ -25,19 +25,12 @@ public record Mor(string Id = null) : Entity(Id)
     public string IncidentReference { get; set; }
     public Building BuildingModel { get; set; }
     public string NoticeReference { get; set; }
-    public string WhatToReport { get; set; }
     public string SubmittedNotice { get; set; }
     public string[] IncidentReported { get; set; }
-    public string[] RiskReported { get; set; }
-    public string AboutRisk { get; set; }
     public string AboutIncident { get; set; }
-    public string CauseOfRisk { get; set; }
     public string CauseOfIncident { get; set; }
     public string WhoAffectedByIncident { get; set; }
-    public string WhoAffectedByRisk { get; set; }
-    public string RiskKeepPeopleSafe { get; set; }
     public string IncidentKeepPeopleSafe { get; set; }
-    public string OrganisationFindOut { get; set; }
     public string OccurrenceDiscovered { get; set; }
     public string SharedWithOthers { get; set; }
     public string YourSupportInfo { get; set; }
