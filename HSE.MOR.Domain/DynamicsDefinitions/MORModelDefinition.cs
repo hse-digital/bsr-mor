@@ -155,7 +155,13 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             mor.BuildingModel.LocateBuilding = dynamicsEntity.bsr_buildinglocation;
             mor.BuildingModel.IdentifyBuilding = dynamicsEntity.bsr_bsr_identifybuildingcode.GetValueOrDefault().ToString();
             mor.BuildingModel.BuildingType = dynamicsEntity.bsr_howwouldyoudescribethebuilding.GetValueOrDefault().ToString();
+            mor.IsReportSubmitted = IsReportSubmitted(dynamicsEntity.bsr_morstage);
             return mor;
+        }
+
+        private bool IsReportSubmitted(MorStage? stage) 
+        {
+            return stage.GetValueOrDefault() == MorStage.ReportSubmitted ? true : false;
         }
     }
 }

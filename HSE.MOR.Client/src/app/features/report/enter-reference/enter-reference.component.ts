@@ -31,8 +31,17 @@ export class EnterReferenceComponent extends PageComponent<string> {
     
     var dynamicsIncidentModel = await applicationService.getIncidentByCaseNumber(this.model!);
     if (FieldValidations.IsNotNullOrWhitespace(dynamicsIncidentModel.IncidentId)) {
-      this.mapCaseWithNotice(dynamicsIncidentModel, applicationService);
-      applicationService.model.Report!.NoticeReference = this.model;
+      if (dynamicsIncidentModel.MorModelDynamics?.IsReportSubmitted) {
+        this.processing = false;
+        this.modelValid = false;
+        this.hasErrors = true;
+        this.ErrorMessage = this.ErrorNotExists;
+        throw Error;
+      } else {
+        this.mapCaseWithNotice(dynamicsIncidentModel, applicationService);
+        applicationService.model.Report!.NoticeReference = this.model;
+      }
+      
     } else {
       this.processing = false;
       this.modelValid = false;
