@@ -1,6 +1,8 @@
-﻿namespace HSE.MOR.API.Models.Dynamics;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 
-public record BuildingModel()
+namespace HSE.MOR.API.Models.Dynamics;
+
+public record BuildingModel() : IValidatableModel
 {
     public string SubmittedDesignBca { get; set; }
     public string IdentifyBuilding { get; set; }
@@ -16,6 +18,57 @@ public record BuildingModel()
     public string HasAddress { get; set; }
     public string LocateBuilding { get; set; }
     public string BcaReference { get; set; }
+
+    public ValidationSummary Validate()
+    {
+        var errors = new List<string>();
+        if (string.IsNullOrWhiteSpace(IdentifyBuilding))
+        {
+            errors.Add("IdentifyBuilding is required");
+        }
+        if (Address is null)
+        {
+            errors.Add("Address is required");
+        }
+        if (Address is not null)
+        {
+            if (string.IsNullOrWhiteSpace(Address.Address))
+            {
+                errors.Add("Address is required");
+            }
+            if (string.IsNullOrWhiteSpace(Address.Postcode))
+            {
+                errors.Add("Postcode is required");
+            }
+            if (Address.IsManual || !string.IsNullOrWhiteSpace(LocateBuilding))
+            {
+                if (string.IsNullOrWhiteSpace(Address.NumberOfFloors))
+                {
+                    errors.Add("NumberOfFloors is required");
+                }
+                if (string.IsNullOrWhiteSpace(Address.BuildingHeight))
+                {
+                    errors.Add("NumberOfFloors is required");
+                }
+                if (string.IsNullOrWhiteSpace(Address.ResidentialUnits))
+                {
+                    errors.Add("NumberOfFloors is required");
+                }               
+            }
+            if (!string.IsNullOrWhiteSpace(HasAddress))
+            {
+                if (HasAddress.Equals("no"))
+                {
+                    if (string.IsNullOrWhiteSpace(LocateBuilding))
+                    {
+                        errors.Add("LocateBuilding is required");
+                    }
+                }
+            }
+
+        }
+        return new ValidationSummary(!errors.Any(), errors.ToArray());
+    }
 }
 
 public record AddressModel()

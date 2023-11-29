@@ -34,6 +34,27 @@ public class MORFunction
             {
                 return await request.BuildValidationErrorResponseDataAsync(incidentValidation);
             }
+            var noticeValidation = incidentModel.Notice.Validate();
+            if (!noticeValidation.IsValid) 
+            {
+                return await request.BuildValidationErrorResponseDataAsync(noticeValidation);
+            }
+            if (incidentModel.Report is not null) 
+            {
+                var reportValidation = incidentModel.Report.Validate();
+                if (!reportValidation.IsValid)
+                {
+                    return await request.BuildValidationErrorResponseDataAsync(reportValidation);
+                }
+            }
+            if (incidentModel.Building is not null)
+            {
+                var buildingValidation = incidentModel.Building.Validate();
+                if (!buildingValidation.IsValid)
+                {
+                    return await request.BuildValidationErrorResponseDataAsync(buildingValidation);
+                }
+            }
             var responseModel = await dynamicsService.CreateMORCase_Async(incidentModel);
             response = await request.CreateObjectResponseAsync(responseModel);           
             //if (response is not null) 
@@ -74,9 +95,30 @@ public class MORFunction
         {
             var incidentModel = encodedRequest.GetDecodedData<IncidentModel>()!;
             var incidentValidation = incidentModel.Validate();
-            if (!incidentValidation.IsValid) 
+            if (!incidentValidation.IsValid)
             {
                 return await request.BuildValidationErrorResponseDataAsync(incidentValidation);
+            }
+            var noticeValidation = incidentModel.Notice.Validate();
+            if (!noticeValidation.IsValid)
+            {
+                return await request.BuildValidationErrorResponseDataAsync(noticeValidation);
+            }
+            if (incidentModel.Report is not null)
+            {
+                var reportValidation = incidentModel.Report.Validate();
+                if (!reportValidation.IsValid)
+                {
+                    return await request.BuildValidationErrorResponseDataAsync(reportValidation);
+                }
+            }
+            if (incidentModel.Building is not null)
+            {
+                var buildingValidation = incidentModel.Building.Validate();
+                if (!buildingValidation.IsValid)
+                {
+                    return await request.BuildValidationErrorResponseDataAsync(buildingValidation);
+                }
             }
             var responseModel = await dynamicsService.UpdateMORCase_Async(incidentModel);
             response = await request.CreateObjectResponseAsync(responseModel);

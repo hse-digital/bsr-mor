@@ -177,8 +177,33 @@ public class WhenCreatingUpdatingMORCase
             {
                 WhatToSubmit = "notice",
                 EmailAddress = "test@test.com",
-                Notice = new NoticeModel(),
-                Building = new BuildingModel()
+                Notice = new NoticeModel 
+                {
+                    FirstName = "Test",
+                    LastName = "Test",
+                    ContactNumber = "+441111111111",
+                    ActionsToKeepSafe = "Test",
+                    OrganisationName = "Test",
+                    OrgRole = "Test",
+                    DescribeRiskIncident = "Test",
+                    WhenBecomeAware = new TimeModel 
+                    { 
+                        Year = "2021",
+                        Month = "10",
+                        Day = "10",
+                        Hour = "10",
+                        Minute = "10"
+                    },
+                },
+                Building = new BuildingModel 
+                {
+                    IdentifyBuilding = "test",
+                    Address = new Models.Dynamics.AddressModel
+                    { 
+                        Address = "Test",
+                        Postcode = "Test",  
+                    }
+                }
             };
         }
         public Domain.Entities.Incident DynamicsIncidentEmpty()
