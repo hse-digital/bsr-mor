@@ -11,7 +11,7 @@
           <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" actionDetails="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" actionDetails="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
-          <govuk-summary-list-row key="Building reqion">England</govuk-summary-list-row>
+          <govuk-summary-list-row key="Building region">England</govuk-summary-list-row>
         </govuk-summary-list>
 
         <govuk-summary-list *ngIf="isManual || isAaboutTheBuilding">         

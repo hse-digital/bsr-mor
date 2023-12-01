@@ -1,0 +1,18 @@
+
+<govuk-back-link>Back</govuk-back-link>
+<div class="govuk-main-wrapper" id="main-content">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">A report has already been submitted using notice reference {{model}}</h1>
+
+      <govuk-body>If you typed the notice reference, check it is correct.</govuk-body>
+      <govuk-body>If you pasted the notice reference, check you copied the entire reference.</govuk-body>
+      <govuk-body>If the notice reference is correct and the report has been submitted incorrectly or in error, <a href="https://www.gov.uk/guidance/contact-the-building-safety-regulator" class="govuk-link" target="_blank" role="link">contact the Building Safety Regulator</a> to speak to someone your this mandatory occurrence report.</govuk-body>
+      <govuk-body><a (keyup.enter)="navigateToEnterReference()" (click)="navigateToEnterReference()" class="govuk-link" tabindex="0" role="link">Re-enter your mandatory occurrence notice reference</a></govuk-body>
+      
+
+    </div>
+
+  </div>
+</div>
