@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HSE.MOR.API\HSE.MOR.API.csproj" />
+    <ProjectReference Include="..\HSE.MOR.TestingCommon\HSE.MOR.TestingCommon.csproj" />
   </ItemGroup>
 
 </Project>

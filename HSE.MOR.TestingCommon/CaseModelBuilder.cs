@@ -11,6 +11,8 @@ public class CaseModelBuilder
     private string modelCaseNumber = "building_or_person";
     private string modelCustomerId = "building_or_person";
     private string modelMorId = "building_or_person";
+    private NoticeModel modelNotice = new NoticeModel();
+    private BuildingModel modelBuilding = new BuildingModel();
     
 
     public CaseModelBuilder WithWhatToSubmit(string whatToSubmit)
@@ -43,6 +45,16 @@ public class CaseModelBuilder
         modelMorId = morId;
         return this;
     }
+    public CaseModelBuilder WithNotice(NoticeModel noticeModel) 
+    {
+        modelNotice = noticeModel;
+        return this;
+    }
+    public CaseModelBuilder WithBuilding(BuildingModel buildingModel)
+    {
+        modelBuilding = buildingModel;
+        return this;
+    }
 
     public IncidentModel Build()
     {
@@ -53,6 +65,8 @@ public class CaseModelBuilder
         model.CaseNumber = modelCaseNumber;
         model.CustomerId = modelCustomerId;
         model.MorId = modelMorId;
+        model.Notice = modelNotice;
+        model.Building = modelBuilding;
         return model;
     }
 }

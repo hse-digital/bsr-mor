@@ -1,5 +1,5 @@
 ﻿using HSE.MOR.API.Models.Dynamics;
-using Microsoft.DurableTask;
+using HSE.MOR.Domain.Entities;
 
 namespace HSE.MOR.TestingCommon;
 
@@ -12,7 +12,7 @@ public class NoticeModelBuilder
     private string modelDescribeRiskIncident = "building_or_person";
     private string modelOrganisationName = "building_or_person";
     private string modelOrgRole = "building_or_person";
-
+    private TimeModel modelWhenBecomeAware = new TimeModel();
 
     public NoticeModelBuilder WithFirstName(string firstName)
     {
@@ -51,6 +51,12 @@ public class NoticeModelBuilder
         return this;
     }
 
+    public NoticeModelBuilder WithTimeModel(TimeModel whenBecomeAware)
+    {
+        modelWhenBecomeAware = whenBecomeAware;
+        return this;
+    }
+
     public NoticeModel Build()
     {
         var model = new NoticeModel();
@@ -61,6 +67,7 @@ public class NoticeModelBuilder
         model.DescribeRiskIncident = modelDescribeRiskIncident;
         model.OrganisationName = modelOrganisationName;
         model.OrgRole = modelOrgRole;
+        model.WhenBecomeAware = modelWhenBecomeAware;
         return model;
     }
 }
