@@ -2,7 +2,7 @@
 
   <span class="govuk-caption-l">About the building</span>
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
-    <govuk-error-link *ngIf="hasIdentifyBuildingErrors" anchorId="identify-building-building-registration-input" message="You need to tell us how you want to identify the building" /> 
+    <govuk-error-link *ngIf="hasIdentifyBuildingErrors" anchorId="identify-building-building-registration-input" message="You need to tell us how you want to identify the building" />
   </govuk-error-summary>
 
   <govuk-radio-group aria-required="true" class="govuk-!-margin-bottom-4" title="How can you identify your building?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" id="radios-identify-building" [errorText]="getErrorDescription(hasErrors, 'You need to tell us how you want to identify the building')">
