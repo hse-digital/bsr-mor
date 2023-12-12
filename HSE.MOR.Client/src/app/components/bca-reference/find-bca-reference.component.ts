@@ -54,7 +54,7 @@ export class FindBcaReferenceComponent {
     let referenceNumber = this.searchModel.referenceNumber?.replace(' ', '');
     this.referenceNumberHasErrors = false;
     if (!referenceNumber) {
-      this.referenceNumberErrorText = "Building control application reference cannot be empty.Please enter a valid reference, such as 'BCA12345ABCD'";
+      this.referenceNumberErrorText = "Building control application reference cannot be empty. Please enter a valid reference, such as 'BCA12345ABCD'";
       this.referenceNumberHasErrors = true;
       return this.referenceNumberHasErrors;
     } if (!BcaReferenceValidator.isValid(referenceNumber ?? '')) {
