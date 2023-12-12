@@ -6,7 +6,7 @@
     <govuk-error-link id="error-textarea-locate-building" *ngIf="hasLocateBuildingErrors" anchorId="textarea-locate-building" message="{{errorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-textarea label="Tell us how to find your building" labelClass="govuk-label--l"
+  <govuk-textarea label="Tell us how to find the building" labelClass="govuk-label--l"
                   [enableCharacterCount]="false" [maxCharacterRemaining]="500" [isPageHeading]=true
                   hint="If your building doesn't have an address or has not been identified by BSR, then tell us the closest address or enter a grid reference"
                   [(model)]="model" #field [govukRequired]="field" id="locate-building"
