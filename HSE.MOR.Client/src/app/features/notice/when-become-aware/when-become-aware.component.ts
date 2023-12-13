@@ -115,7 +115,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
     } else if (Number.isNaN(this.getDate(this.model).getTime())) {
       this.dateErrorMessage = "You need to tell us the date you were made aware of the occurrence";
     } else if (Date.now() < this.getDate(this.model).getTime()) {
-      this.dateErrorMessage = "You need to enter a date in the past";
+      this.dateErrorMessage = "You need to enter a date in the past or today's days";
     } else if (Number(this.model?.Year!) < 1900) {
       this.dateErrorMessage = "You need to enter a date that is after 1900";
     }
