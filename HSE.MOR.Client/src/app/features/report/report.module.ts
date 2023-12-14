@@ -21,6 +21,7 @@ import { ReportCheckYourAnswersComponent } from "./report-check-your-answers/rep
 import { PipeModule } from "../../helpers/pipes/pipe.module";
 import { ReportConfirmationComponent } from "./report-confirmation/report-confirmation.component";
 import { ReportSummaryComponent } from "./report-summary/report-summary.component";
+import { ReportSubmittedComponent } from "./report-submitted/report-submitted.component";
 
 
 const routes = new HseRoutes([
@@ -37,6 +38,7 @@ const routes = new HseRoutes([
   HseRoute.protected(ReportCheckYourAnswersComponent.route, ReportCheckYourAnswersComponent, ReportCheckYourAnswersComponent.title),
   HseRoute.protected(ReportConfirmationComponent.route, ReportConfirmationComponent, ReportConfirmationComponent.title),
   HseRoute.protected(ReportSummaryComponent.route, ReportSummaryComponent, ReportSummaryComponent.title),
+  HseRoute.protected(ReportSubmittedComponent.route, ReportSubmittedComponent, ReportSubmittedComponent.title),
   HseRoute.forLoadChildren(BuildingModule.baseRoute, () => import('../building/building.module').then(m => m.BuildingModule)),
 ]);
 
@@ -55,6 +57,7 @@ const routes = new HseRoutes([
     ReportCheckYourAnswersComponent,
     ReportConfirmationComponent,
     ReportSummaryComponent,
+    ReportSubmittedComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

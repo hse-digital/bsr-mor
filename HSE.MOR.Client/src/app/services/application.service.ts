@@ -127,6 +127,7 @@ export class NoticeModel {
   OrganisationName?: string;
   OrgRole?: string;
   ActionsToKeepSafe?: string;
+  IsReportSubmitted?: boolean;
   CheckAnswersModel?: CheckAnswersNoticeModel;
 }
 

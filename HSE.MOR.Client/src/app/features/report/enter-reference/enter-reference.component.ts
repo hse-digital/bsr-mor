@@ -7,6 +7,7 @@ import { WhoSubmittedNoticeComponent } from '../who-submitted-notice/who-submitt
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { application } from 'express';
 import { AddressType } from '../../../services/address.service';
+import { ReportSubmittedComponent } from '../report-submitted/report-submitted.component';
 
 @Component({
   templateUrl: './enter-reference.component.html'
@@ -31,8 +32,18 @@ export class EnterReferenceComponent extends PageComponent<string> {
     
     var dynamicsIncidentModel = await applicationService.getIncidentByCaseNumber(this.model!);
     if (FieldValidations.IsNotNullOrWhitespace(dynamicsIncidentModel.IncidentId)) {
-      this.mapCaseWithNotice(dynamicsIncidentModel, applicationService);
-      applicationService.model.Report!.NoticeReference = this.model;
+      if (dynamicsIncidentModel.MorModelDynamics?.IsReportSubmitted) {
+        applicationService.model.CaseNumber = dynamicsIncidentModel.CaseNumber;
+        this.processing = false;
+        this.modelValid = false;
+        this.hasErrors = true;
+        this.isReportSubmitted = true;
+        this.ErrorMessage = this.ErrorReportSubmitted;
+      } else {
+        this.mapCaseWithNotice(dynamicsIncidentModel, applicationService);
+        applicationService.model.Report!.NoticeReference = this.model;
+      }
+      
     } else {
       this.processing = false;
       this.modelValid = false;
@@ -57,7 +68,8 @@ export class EnterReferenceComponent extends PageComponent<string> {
   ErrorRequired = "You need to enter a notice reference";
   ErrorInvalid = "You need to enter a valid a notice reference";
   ErrorNotExists = "You need to enter a valid notice reference";
-
+  ErrorReportSubmitted = "You need to enter a valid notice reference";
+  isReportSubmitted: boolean = false;
   override isValid(): boolean {
     if (!FieldValidations.IsNotNullOrWhitespace(this.model)) {
       this.modelValid = false;
@@ -74,6 +86,9 @@ export class EnterReferenceComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
+    if (this.isReportSubmitted) {
+      return this.navigationService.navigateRelative(ReportSubmittedComponent.route, this.activatedRoute);
+    }
     return this.navigationService.navigateRelative(WhoSubmittedNoticeComponent.route, this.activatedRoute);
   }
 
