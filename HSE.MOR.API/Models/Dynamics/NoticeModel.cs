@@ -2,7 +2,6 @@
 
 using HSE.MOR.Domain.Entities;
 using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HSE.MOR.API.Models.Dynamics;
 

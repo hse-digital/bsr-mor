@@ -8,18 +8,28 @@ namespace HSE.MOR.API.UnitTests.Incident;
 public class WhenValidatingIncidentModel
 {
     [Fact]
-    public void ShouldReturnNoErrorsWhenModelIsValid()
+    public void ShouldReturnNoErrorsWhenModelIsInValid()
     {
         var model = new CaseModelBuilder().Build();
         var validationResult = model.Validate();
 
-        validationResult.IsValid.Should().BeTrue();
-        validationResult.Errors.Should().BeEmpty();
+        validationResult.IsValid.Should().BeFalse();
+        validationResult.Errors.Should().NotBeEmpty();
     }
 
     [Theory]
     [MemberData(nameof(ValidationNoticeCases))]
-    public void ShouldValidateContactCaseFields(NoticeModel model, string errorMessage)
+    public void ShouldValidateNoticeCaseFields(NoticeModel model, string errorMessage)
+    {
+        var validationResult = model.Validate();
+
+        validationResult.IsValid.Should().BeFalse();
+        validationResult.Errors.Should().Contain(errorMessage);
+    }
+
+    [Theory]
+    [MemberData(nameof(ValidationReportCases))]
+    public void ShouldValidateReportCaseFields(ReportModel model, string errorMessage)
     {
         var validationResult = model.Validate();
 
@@ -85,19 +95,90 @@ public class WhenValidatingIncidentModel
     {
 
         // first name
-        yield return new object[] { new NoticeModelBuilder().WithFirstName("").Build(), "Contact first name is required" };
-        yield return new object[] { new NoticeModelBuilder().WithFirstName(" ").Build(), "Contact first name is required" };
-        yield return new object[] { new NoticeModelBuilder().WithFirstName(default).Build(), "Contact first name is required" };
+        yield return new object[] { new NoticeModelBuilder().WithFirstName("").Build(), "FirstName is required" };
+        yield return new object[] { new NoticeModelBuilder().WithFirstName(" ").Build(), "FirstName is required" };
+        yield return new object[] { new NoticeModelBuilder().WithFirstName(default).Build(), "FirstName is required" };
 
         // last name
-        yield return new object[] { new NoticeModelBuilder().WithLastName("").Build(), "Contact last name is required" };
-        yield return new object[] { new NoticeModelBuilder().WithLastName(" ").Build(), "Contact last name is required" };
-        yield return new object[] { new NoticeModelBuilder().WithLastName(default).Build(), "Contact last name is required" };
+        yield return new object[] { new NoticeModelBuilder().WithLastName("").Build(), "LastName is required" };
+        yield return new object[] { new NoticeModelBuilder().WithLastName(" ").Build(), "LastName is required" };
+        yield return new object[] { new NoticeModelBuilder().WithLastName(default).Build(), "LastName is required" };
 
-        // phone number and email
-        yield return new object[] { new NoticeModelBuilder().WithContactNumber("").Build(), "Contact number or email is required" };
-        yield return new object[] { new NoticeModelBuilder().WithContactNumber(" ").Build(), "Contact number or email is required" };
-        yield return new object[] { new NoticeModelBuilder().WithContactNumber(default).Build(), "Contact number or email is required" };
+        // phone number
+        yield return new object[] { new NoticeModelBuilder().WithContactNumber("").Build(), "ContactNumber is required" };
+        yield return new object[] { new NoticeModelBuilder().WithContactNumber(" ").Build(), "ContactNumber is required" };
+        yield return new object[] { new NoticeModelBuilder().WithContactNumber(default).Build(), "ContactNumber is required" };
 
-    } 
+        //when become aware datetime model
+        yield return new object[] { new NoticeModelBuilder().WithTimeModel(default).Build(), "WhenBecomeAware is required" };
+        yield return new object[] { new NoticeModelBuilder().WithTimeModel(new Domain.Entities.TimeModel { Year = "", Month = "10", Day = "10", Hour = "10", Minute = "10" }).Build(), "WhenBecomeAware Year is required" };
+        yield return new object[] { new NoticeModelBuilder().WithTimeModel(new Domain.Entities.TimeModel { Year = "2021", Month = "", Day = "10", Hour = "10", Minute = "10" }).Build(), "WhenBecomeAware Month is required" };
+        yield return new object[] { new NoticeModelBuilder().WithTimeModel(new Domain.Entities.TimeModel { Year = "2021", Month = "10", Day = "", Hour = "10", Minute = "10" }).Build(), "WhenBecomeAware Day is required" };
+        yield return new object[] { new NoticeModelBuilder().WithTimeModel(new Domain.Entities.TimeModel { Year = "2021", Month = "10", Day = "10", Hour = "", Minute = "10" }).Build(), "WhenBecomeAware Hour is required" };
+        yield return new object[] { new NoticeModelBuilder().WithTimeModel(new Domain.Entities.TimeModel { Year = "2021", Month = "10", Day = "10", Hour = "10", Minute = "" }).Build(), "WhenBecomeAware Minute is required" };
+
+    }
+
+    public static IEnumerable<object[]> ValidationReportCases()
+    {
+        //first name
+        yield return new object[] { new ReportModelBuilder().WithFirstName("").Build(), "FirstName is required" };
+        yield return new object[] { new ReportModelBuilder().WithFirstName(" ").Build(), "FirstName is required" };
+        yield return new object[] { new ReportModelBuilder().WithFirstName(default).Build(), "FirstName is required" };
+
+        //last name
+        yield return new object[] { new ReportModelBuilder().WithLastName("").Build(), "LastName is required" };
+        yield return new object[] { new ReportModelBuilder().WithLastName(" ").Build(), "LastName is required" };
+        yield return new object[] { new ReportModelBuilder().WithLastName(default).Build(), "LastName is required" };
+
+        //phone number
+        yield return new object[] { new ReportModelBuilder().WithContactNumber("").Build(), "ContactNumber is required" };
+        yield return new object[] { new ReportModelBuilder().WithContactNumber(" ").Build(), "ContactNumber is required" };
+        yield return new object[] { new ReportModelBuilder().WithContactNumber(default).Build(), "ContactNumber is required" };
+
+        //submitted notice
+        yield return new object[] { new ReportModelBuilder().WithSubmittedNotice("").Build(), "SubmittedNotice is required" };
+        yield return new object[] { new ReportModelBuilder().WithSubmittedNotice(" ").Build(), "SubmittedNotice is required" };
+        yield return new object[] { new ReportModelBuilder().WithSubmittedNotice(default).Build(), "SubmittedNotice is required" };
+
+        //organisaton role
+        yield return new object[] { new ReportModelBuilder().WithOrgRole("").Build(), "OrgRole is required" };
+        yield return new object[] { new ReportModelBuilder().WithOrgRole(" ").Build(), "OrgRole is required" };
+        yield return new object[] { new ReportModelBuilder().WithOrgRole(default).Build(), "OrgRole is required" };
+
+        //organisaton name
+        yield return new object[] { new ReportModelBuilder().WithOrganisationName("").Build(), "OrganisationName is required" };
+        yield return new object[] { new ReportModelBuilder().WithOrganisationName(" ").Build(), "OrganisationName is required" };
+        yield return new object[] { new ReportModelBuilder().WithOrganisationName(default).Build(), "OrganisationName is required" };
+
+        //about incident
+        yield return new object[] { new ReportModelBuilder().WithAboutIncident("").Build(), "AboutIncident is required" };
+        yield return new object[] { new ReportModelBuilder().WithAboutIncident(" ").Build(), "AboutIncident is required" };
+        yield return new object[] { new ReportModelBuilder().WithAboutIncident(default).Build(), "AboutIncident is required" };
+
+        //cause of incident
+        yield return new object[] { new ReportModelBuilder().WithCauseOfIncident("").Build(), "CauseOfIncident is required" };
+        yield return new object[] { new ReportModelBuilder().WithCauseOfIncident(" ").Build(), "CauseOfIncident is required" };
+        yield return new object[] { new ReportModelBuilder().WithCauseOfIncident(default).Build(), "CauseOfIncident is required" };
+
+        //who affected by incident
+        yield return new object[] { new ReportModelBuilder().WithWhoAffectedByIncident("").Build(), "WhoAffectedByIncident is required" };
+        yield return new object[] { new ReportModelBuilder().WithWhoAffectedByIncident(" ").Build(), "WhoAffectedByIncident is required" };
+        yield return new object[] { new ReportModelBuilder().WithWhoAffectedByIncident(default).Build(), "WhoAffectedByIncident is required" };
+
+        //incident keep people safe
+        yield return new object[] { new ReportModelBuilder().WithIncidentKeepPeopleSafe("").Build(), "IncidentKeepPeopleSafe is required" };
+        yield return new object[] { new ReportModelBuilder().WithIncidentKeepPeopleSafe(" ").Build(), "IncidentKeepPeopleSafe is required" };
+        yield return new object[] { new ReportModelBuilder().WithIncidentKeepPeopleSafe(default).Build(), "IncidentKeepPeopleSafe is required" };
+
+        //occurrence discovered
+        yield return new object[] { new ReportModelBuilder().WithOccurrenceDiscovered("").Build(), "OccurrenceDiscovered is required" };
+        yield return new object[] { new ReportModelBuilder().WithOccurrenceDiscovered(" ").Build(), "OccurrenceDiscovered is required" };
+        yield return new object[] { new ReportModelBuilder().WithOccurrenceDiscovered(default).Build(), "OccurrenceDiscovered is required" };
+
+        //shared with others
+        yield return new object[] { new ReportModelBuilder().WithSharedWithOthers("").Build(), "SharedWithOthers is required" };
+        yield return new object[] { new ReportModelBuilder().WithSharedWithOthers(" ").Build(), "SharedWithOthers is required" };
+        yield return new object[] { new ReportModelBuilder().WithSharedWithOthers(default).Build(), "SharedWithOthers is required" };
+    }
 }

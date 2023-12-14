@@ -7,12 +7,19 @@ public class NoticeModelBuilder
 {
     private string modelFirstName = "building_or_person";
     private string modelLastName = "building_or_person";
-    private string modelContactNumber = "building_or_person";
+    private string modelContactNumber = "+441111111111";
     private string modelActionsToKeepSafe = "building_or_person";
     private string modelDescribeRiskIncident = "building_or_person";
     private string modelOrganisationName = "building_or_person";
     private string modelOrgRole = "building_or_person";
-    private TimeModel modelWhenBecomeAware = new TimeModel();
+    private TimeModel modelWhenBecomeAware = new TimeModel 
+    {
+        Year = "2021",
+        Month = "06",
+        Day = "06",
+        Hour = "10",
+        Minute = "10"
+    };
 
     public NoticeModelBuilder WithFirstName(string firstName)
     {

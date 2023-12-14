@@ -8,7 +8,7 @@ public class ReportModelBuilder
 {
     private string modelFirstName = "building_or_person";
     private string modelLastName = "building_or_person";
-    private string modelContactNumber = "building_or_person";
+    private string modelContactNumber = "+441111111111";
     private string modelAboutIncident = "building_or_person";
     private string modelCauseOfIncident = "building_or_person";
     private string modelOrganisationName = "building_or_person";
@@ -17,9 +17,10 @@ public class ReportModelBuilder
     private string modelIncidentKeepPeopleSafe = "building_or_person";
     private string modelNoticeReference = "building_or_person";
     private string modelSharedWithOthers = "building_or_person";
-    private string modelSubmittedNotice = "building_or_person";
+    private string modelSubmittedNotice = "other";
     private string modelWhoAffectedByIncident = "building_or_person";
     private string modelYourSupportInfo = "building_or_person";
+    private string[] modelIncidentReported = new string[] { "incident" };
 
 
     public ReportModelBuilder WithFirstName(string firstName)
@@ -94,6 +95,12 @@ public class ReportModelBuilder
         return this;
     }
 
+    public ReportModelBuilder WithIncidentReported(string[] incidentReported)
+    {
+        modelIncidentReported = incidentReported;
+        return this;
+    }
+
     public ReportModel Build()
     {
         var model = new ReportModel();
@@ -111,6 +118,7 @@ public class ReportModelBuilder
         model.SubmittedNotice = modelSubmittedNotice;
         model.WhoAffectedByIncident = modelWhoAffectedByIncident;
         model.YourSupportInfo = modelYourSupportInfo;
+        model.IncidentReported = modelIncidentReported;
         return model;
     }
 }

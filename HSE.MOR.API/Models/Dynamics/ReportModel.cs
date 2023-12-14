@@ -41,11 +41,11 @@ public record ReportModel() : IValidatableModel
                     }
                     if (string.IsNullOrWhiteSpace(LastName))
                     {
-                        errors.Add("FirstName is required");
+                        errors.Add("LastName is required");
                     }
                     if (string.IsNullOrWhiteSpace(ContactNumber))
                     {
-                        errors.Add("FirstName is required");
+                        errors.Add("ContactNumber is required");
                     }
                     if (!string.IsNullOrWhiteSpace(ContactNumber))
                     {
