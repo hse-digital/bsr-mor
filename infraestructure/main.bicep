@@ -280,8 +280,8 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Integrations--PaymentAmount)'
                 }
                 {
-                    name: 'Integrations__ScanFileDelayMinutes'
-                    value: '120'
+                    name: 'Integrations__ScanFileDelaySeconds'
+                    value: '30'
                 }
                 {
                     name: 'Feature__DisableOtpValidation'

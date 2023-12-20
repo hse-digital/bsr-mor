@@ -46,7 +46,8 @@ public class SharePointPusher : ISharePointPusher
         {
             foreach (var item in scanModel.FileUploads)
             {
-                request = GetRequestForFile(scanModel, item.TaskId, item.FileName, item.FileName, _mainFileDescription, _subFolderPath);
+                var blobFile = SpecialCharCleaner.RemoveSpecialCharacters(item.FileName);
+                request = GetRequestForFile(scanModel, item.TaskId, item.FileName, blobFile, _mainFileDescription, _subFolderPath);
                 var pushResult = await this.sharePointService.PushFileToSharePointAsync(request);
             }
             

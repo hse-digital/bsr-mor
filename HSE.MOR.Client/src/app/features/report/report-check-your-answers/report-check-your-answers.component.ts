@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { PageComponent } from '../../../helpers/page.component';
-import { ApplicationService, BuildingModel, CheckAnswersReportModel, FileScanModel, ReportModel } from "../../../services/application.service";
+import { ApplicationService, BuildingModel, CheckAnswersReportModel, UploadSharepointModel, ReportModel } from "../../../services/application.service";
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ReportConfirmationComponent } from '../report-confirmation/report-confirmation.component';
-
 @Component({
   templateUrl: './report-check-your-answers.component.html'
 })
@@ -31,7 +30,8 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   organisationName?: string;
   isAaboutTheBuilding: boolean = false;
   isSameUser: boolean = false;
-  FileScanModel?: FileScanModel;
+  UploadSharepointModel?: UploadSharepointModel;
+  incidentId?: string;
 
   override onInit(applicationService: ApplicationService): void {
     if (applicationService.model.Report?.CheckAnswersModel!) {
@@ -59,17 +59,8 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     if (applicationService.model.Report.NoticeReference) {
       applicationService.updateMORApplication();
     } else {
-      await applicationService.createNewMORApplication();
-    }
-    if (this.model.UploadedFileNames) {
-      this.FileScanModel = {};
-      this.FileScanModel.id = applicationService.model.Id;
-      this.FileScanModel.ContactId = applicationService.model.CustomerId;
-      this.FileScanModel.Email = applicationService.model.EmailAddress;
-      this.FileScanModel.FileUploads = applicationService.model.Report.FilesUploaded;
-      //applicationService.triggerFileUploadScanandUpload(this.FileScanModel);
-    }
-    
+      await applicationService.createNewMORReportApplication();
+    }  
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return true;

@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker;
 using HSE.MOR.API.Extensions;
 using HSE.MOR.API.Models.FileUpload;
+using HSE.MOR.API.Utils;
 
 namespace HSE.MOR.API.Functions;
 
@@ -20,7 +21,8 @@ public class UploadFilesFunction
     {
         var scanRequest = encodedRequest.GetDecodedData<ScanAndUploadRequest>()!;
         scanRequest.TaskId = Guid.NewGuid().ToString();
-        scanRequest.FilePath = Path.Combine(scanRequest.TaskId, scanRequest.BlobName);
+        var blobName = SpecialCharCleaner.RemoveSpecialCharacters(scanRequest.BlobName);
+        scanRequest.FilePath = Path.Combine(scanRequest.TaskId, blobName);
         var uri = blobSASUri.GetSASUri(scanRequest.FilePath);
         scanRequest.SASUri = uri;
         return await BuildScanAndUploadRequestResponseObjectAsync(request, scanRequest);

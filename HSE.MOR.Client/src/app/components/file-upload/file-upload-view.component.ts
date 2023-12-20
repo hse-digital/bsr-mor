@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Injector, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription, takeWhile, tap } from 'rxjs';
+import { interval, Subscription, takeWhile, tap } from 'rxjs';
 import { GetInjector } from '../../helpers/injector.helper';
 import { ApplicationService, FileUploadModel } from '../../services/application.service';
 import {  FileUploadService, ScanAndUploadRequest } from '../../services/file-upload.service';
@@ -90,6 +90,49 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
             await this.filesProcessed();
           },
           complete: async () => {
+            this.fileModel![index].isScanning = true
+            await this.fileUploadService.ScanFile(new ScanAndUploadRequest(file.name, undefined, this.fileModel[index].TaskId))
+              .then(async result => {
+                this.fileModel![index].TaskId = result.TaskId
+              })
+              .then(async () => {
+                this.fileModel![index].isScanning = true
+                this.fileModel![index].Subscription = interval(1000)
+                  .subscribe(async (val) => {
+                    await this.fileUploadService.GetFileScanResult(new ScanAndUploadRequest(file.name, undefined, this.fileModel![index].TaskId))
+                      .then(async res => {
+
+                        this.fileModel![index].FileScanResult = res
+                        if (this.fileModel![index].FileScanResult?.IsComplete == true) {
+                          console.log("Scan Completed");
+                          if (this.fileModel![index].Subscription && !this.fileModel![index].Subscription.closed) {
+                            this.fileModel![index].Subscription.unsubscribe();
+                          }
+                          if (this.fileModel![index].FileScanResult?.Success == false) {
+
+                            this.fileModel![index].Message = `May contain malware`;
+                            this.fileModel![index].Status = "error";
+                            this.fileModel![index].isScanning = false
+                            this.fileModel![index].isProcessing = false;
+                          }
+                          else {
+                            console.log("Upload Successful");
+                            this.fileModel![index].Message = `Uploaded the file successfully: ${file.name}`;
+                            this.fileModel![index].Status = "uploaded";
+                            this.fileModel![index].Progress = 100
+                            this.fileModel![index].isScanning = false
+                            this.fileModel![index].isProcessing = false;
+                          }
+                          //this.showFilesUploaded = true;
+                          if (this.fileModel!.filter(f => !f.isProcessing && !f.isRemoved).length === this.fileModel!.filter(f => !f.isRemoved).length) {
+                            this.filesProcessed();
+                            //this.AllFilesProcessing = false;
+                          }
+
+                        }
+                      });
+                  });
+              })
             this.fileModel[index].Message = `Uploaded the file successfully: ${file.name}`;
             this.fileModel[index].Status = "uploaded";
             this.showFilesUploded = true;

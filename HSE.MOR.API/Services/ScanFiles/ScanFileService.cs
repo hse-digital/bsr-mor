@@ -1,4 +1,5 @@
-﻿using Flurl;
+﻿using Azure.Core;
+using Flurl;
 using Flurl.Http;
 using HSE.MOR.API.Models.ScanFiles;
 using HSE.MOR.API.Utils;
@@ -11,8 +12,8 @@ namespace HSE.MOR.API.Services.ScanFiles;
 
 public interface IScanFileService
 {
-    Task ScanFileAsync(string id, string blobName, CancellationToken cancellationToken);
-    Task<FileScanResult> GetFileScanResultAsync(string id, CancellationToken cancellationToken);
+    Task ScanFileActivityAsync(string fileId, string blobName, CancellationToken cancellationToken);
+    Task<FileScanResult> GetFileScanResultAsync(string id, string blobName, CancellationToken cancellationToken);
 }
 
 public class ScanFileService : IScanFileService
@@ -36,7 +37,7 @@ public class ScanFileService : IScanFileService
         this.testFileName = featureOptions.Value.TestFileName;
     }
 
-    public async Task ScanFileAsync(string fileId, string blobName, CancellationToken cancellationToken)
+    public async Task ScanFileActivityAsync(string fileId, string blobName, CancellationToken cancellationToken)
     {
         var blobPath = Path.Combine(fileId, blobName).Replace('\\', '/'); 
         var payload = new FileScanRequest(fileId, blobStoreOptions.Value.ContainerName, blobPath, scanFileOptions.Value.Application);
@@ -58,7 +59,29 @@ public class ScanFileService : IScanFileService
         }
     }
 
-    public async Task<FileScanResult> GetFileScanResultAsync(string id, CancellationToken cancellationToken)
+    public async Task ScanFileAsync(string fileId, string blobName, CancellationToken cancellationToken)
+    {
+        var blobPath = Path.Combine(fileId, blobName).Replace('\\', '/');
+        var payload = new FileScanRequest(fileId, blobStoreOptions.Value.ContainerName, blobPath, scanFileOptions.Value.Application);
+        var response = default(IFlurlResponse);
+
+        try
+        {
+            response = await scanFileOptions.Value.CommonAPIEndpoint
+                .AppendPathSegment(FlurlSettings.ApiSegment)
+                .AppendPathSegment("ScanFile")
+                .WithHeader(FlurlSettings.XFunctionsKey, scanFileOptions.Value.CommonAPIKey)
+                .PostJsonAsync(payload, cancellationToken);
+        }
+        catch (FlurlHttpException ex)
+        {
+            logger.LogInformation(ex, ExceptionMessageTemplates.ScanFileService_ScanFile, response?.StatusCode, payload, ex.Message);
+
+            throw new RetryException("Retry", ex);
+        }
+    }
+
+    public async Task<FileScanResult> GetFileScanResultAsync(string id, string blobName, CancellationToken cancellationToken)
     {
         try
         {
@@ -67,14 +90,20 @@ public class ScanFileService : IScanFileService
                 .AppendPathSegment("GetFileScanResult")
                 .SetQueryParam("id", id)
                 .WithHeader(FlurlSettings.XFunctionsKey, scanFileOptions.Value.CommonAPIKey)
-                .GetJsonAsync<FileScanResult>(cancellationToken);
+                .GetAsync();
 
-            if (allowTestFile && GetTestFileName(response.FileName))
+            //if (allowTestFile && GetTestFileName(response.FileName))
+            //{
+            //    response = new FileScanResult(response.Id, response.ContainerName, response.FileName, response.Application, false);
+            //}
+            if (response.StatusCode != (int)HttpStatusCode.Created)
             {
-                response = new FileScanResult(response.Id, response.ContainerName, response.FileName, response.Application, false);
+                return new FileScanResult(id, this.blobStoreOptions.Value.ContainerName, blobName, scanFileOptions.Value.Application, false, false);
             }
-
-            return response;
+            else 
+            {
+                return await response.GetJsonAsync<FileScanResult>();
+            }
         }
         catch (FlurlHttpException ex) when (ex.StatusCode == (int)HttpStatusCode.NotFound)
         {

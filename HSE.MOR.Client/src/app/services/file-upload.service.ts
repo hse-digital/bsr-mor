@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { distinctUntilChanged, firstValueFrom, from, Observable, Subscriber } from "rxjs";
 import { BlockBlobClient} from "@azure/storage-blob";
 import { Sanitizer } from "../helpers/sanitizer";
+import { FileUploadModel } from "./application.service";
 
 @Injectable()
 export class FileUploadService {
@@ -45,11 +46,17 @@ export class FileUploadService {
       observer.next(progress.loadedBytes);
   }
   async getSASUri(scan?: ScanAndUploadRequest): Promise<ScanAndUploadResponse> {
-    //return await firstValueFrom(this.httpClient.get<string>(`api/GetSASUri/${blobName}`));
     return await fetch('api/GetSASUri', {
       method: 'POST',
       body: Sanitizer.sanitize(scan)
     }).then(e => e.json());
+  }
+
+  async ScanFile(request?: ScanAndUploadRequest): Promise<ScanAndUploadResponse> {
+    return await firstValueFrom(this.httpClient.post<ScanAndUploadResponse>(`api/ScanFileFunctionAsync`, Sanitizer.sanitize(request)));
+  }
+  async GetFileScanResult(request?: ScanAndUploadRequest): Promise<FileScanResult> {
+    return await firstValueFrom(this.httpClient.post<FileScanResult>(`api/GetFileScanResultsFunctionAsync`, Sanitizer.sanitize(request)));
   }
 
   deleteBlobItem(sasUrl: string) {
@@ -84,11 +91,16 @@ export class FileScanResult {
 export class ScanAndUploadRequest { 
   BlobName?: string;
   SASUri?: string;
-  constructor(BlobName?: string, SASUri?: string) {
+  TaskId?: string;
+  CustomerId?: string;
+  IncidentId?: string;
+  constructor(BlobName?: string, SASUri?: string, TaskId?: string) {
     this.BlobName = BlobName;
     this.SASUri = SASUri;
+    this.TaskId = TaskId;
   }
 }
+
 export class ScanAndUploadResponse {
   FilePath?: string;
   TaskId?: string;
