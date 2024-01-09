@@ -60,8 +60,7 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
           }
         }
       }
-      this.totalFiles = lastIndex + this.filesToUpload.length;
-      this.AllFilesProcessing = true;
+      this.totalFiles = lastIndex + this.filesToUpload.length;     
       this.filesToUpload.forEach(async (v) => {
         await this.upload(lastIndex++, v);
       });
@@ -74,7 +73,7 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
 
   async upload(index: number, file: File): Promise<void> {
     this.fileModel[index] = { Progress: 0, FileName: file.name, Status: "", Message: "", CaseId: this.caseId, SASUri: "" };
-    
+    this.AllFilesProcessing = true;
     let regex = /^[a-zA-Z0-9\s]*$/
     let fileNameOnly = file.name.substring(0, file.name.lastIndexOf('.'))
     if (file) {
