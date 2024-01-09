@@ -36,10 +36,10 @@ export class HelpPagesModule {
   static baseRoute: string = 'help';
 
   static footerLinks = [
+    { title: "Contact the Building Safety Regulator", href: "https://www.gov.uk/guidance/contact-the-building-safety-regulator", isNewTab: false },
+    { title: "Privacy", href: `/${HelpPagesModule.baseRoute}/${PrivacyNoticeComponent.route}`, isNewTab: false },
     { title: "Accessibility", href: `/${HelpPagesModule.baseRoute}/${AccessibilityComponent.route}`, isNewTab: false },
     { title: "Cookies", href: `/${HelpPagesModule.baseRoute}/${CookiesComponent.route}`, isNewTab: false },
-    { title: "Feedback", href: "https://forms.office.com/e/2sAjVhkG9b" },
-    { title: "Privacy", href: `/${HelpPagesModule.baseRoute}/${PrivacyNoticeComponent.route}`, isNewTab: false },
     { title: "Terms and conditions", href: `/${HelpPagesModule.baseRoute}/${TermsConditionsComponent.route}`, isNewTab: false },
   ];
 }

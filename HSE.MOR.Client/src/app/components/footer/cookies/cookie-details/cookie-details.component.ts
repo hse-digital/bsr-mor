@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
 })
 export class CookieDetailsComponent {
   public static route: string = "cookie-details";
-  static title: string = "Cookies on Notify BSR of a mandatory occurrence service - GOV.UK";
+  static title: string = "Cookies on Submit a mandatory occurrence notice and report service - GOV.UK";
 
 }
