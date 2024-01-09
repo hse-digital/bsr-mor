@@ -3,8 +3,12 @@
     <dt class="govuk-summary-list__key">
       {{m.FileName}}
     </dt>
-    <dd class="govuk-summary-list__value">
-      <strong [ngClass]="[m.Progress == 100 ? 'govuk-tag govuk-tag--green' : 'govuk-tag govuk-tag--yellow']" role="progressbar" attr.aria-valuenow="{{ m.Progress }}" aria-valuemin="0" aria-valuemax="100">{{ m.Progress }}% {{ m.Progress == 100 ? 'Uploaded' : 'Uploading'}}</strong>
+    <dd class="govuk-summary-list__value" *ngIf="m.Status!=='error'">
+      <strong *ngIf="m.isScanning===undefined" [ngClass]="[m.Progress == 100 ? 'govuk-tag govuk-tag--green' : 'govuk-tag govuk-tag--yellow']" role="progressbar" attr.aria-valuenow="{{ m.Progress }}" aria-valuemin="0" aria-valuemax="100">{{ m.Progress }}% {{ m.Progress == 100 ? 'Uploaded' : 'Uploading'}}</strong>
+      <strong *ngIf="m.isScanning!==undefined" [ngClass]="[m.isScanning ? 'govuk-tag govuk-tag--blue' : 'govuk-tag govuk-tag--green']" role="progressbar" attr.aria-valuenow="{{ m.Progress }}" aria-valuemin="0" aria-valuemax="100">{{ m.isScanning ? 'Scanning': 'Uploaded Successfully'}}</strong>
+    </dd>
+    <dd class="govuk-summary-list__value" *ngIf="m.Status==='error'">
+      <strong [ngClass]="['govuk-tag govuk-tag--red']" role="progressbar" attr.aria-valuenow="{{ m.Progress }}" aria-valuemin="0" aria-valuemax="100">{{ m.Message}}</strong>
     </dd>
     <dd class="govuk-summary-list__actions">
       <a name="{{m.FileName}}" class="govuk-link" role="link" (click)="onClick.emit($event)" (keyup.enter)="onKeyupEnter.emit($event)" tabindex="0">
