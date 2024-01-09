@@ -104,7 +104,6 @@ export class FileUploadViewComponent implements OnInit, OnDestroy {
 
                         this.fileModel![index].FileScanResult = res
                         if (this.fileModel![index].FileScanResult?.IsComplete == true) {
-                          console.log("Scan Completed");
                           if (this.fileModel![index].Subscription && !this.fileModel![index].Subscription.closed) {
                             this.fileModel![index].Subscription.unsubscribe();
                           }
