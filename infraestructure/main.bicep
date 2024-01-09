@@ -240,6 +240,10 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=${d365lKeyPrefix}Dynamics--LocalAuthorityTypeId)'
                 }
                 {
+                    name: 'Dynamics__UploadFileFlowUrl'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--UploadFileFlowUrl)'
+                }
+                {
                     name: 'CosmosConnection'
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=CosmosConnection)'
                 }
