@@ -7,7 +7,7 @@ namespace HSE.MOR.API.Extensions;
 
 public class CustomHttpResponseData
 {
-    [CosmosDBOutput("hseportal", "building-control-applications", Connection = "CosmosConnection")]
+    [CosmosDBOutput("hseportal", "mor-case-submission", Connection = "CosmosConnection")]
     public object Application { get; set; }
     public HttpResponseData HttpResponse { get; set; }
 }
