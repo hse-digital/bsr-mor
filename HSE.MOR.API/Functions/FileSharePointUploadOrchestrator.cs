@@ -21,28 +21,29 @@ namespace HSE.MOR.API.Functions
             this.integrationsOptions = integrationsOptions;
         }
 
-        [Function(nameof(UploadFilesToSharePoint))]
-        public async Task UploadFilesToSharePoint([OrchestrationTrigger] TaskOrchestrationContext orchestrationContext)
+        [Function(nameof(UploadFilesToShareActivityPoint))]
+        public async Task UploadFilesToShareActivityPoint([OrchestrationTrigger] TaskOrchestrationContext orchestrationContext)
         {
             var scanModel = orchestrationContext.GetInput<FileScanModel>();
 
-            await orchestrationContext.CallActivityAsync(nameof(ScanFileFunction.ScanFileFunctionAsync), scanModel);
+            //await orchestrationContext.CallActivityAsync(nameof(ScanFileFunction.ScanFileActivityFunctionAsync), scanModel);
 
-            await orchestrationContext.CreateTimer(orchestrationContext.CurrentUtcDateTime.AddMinutes(this.integrationsOptions.Value.ScanFileDelayMinutes), CancellationToken.None);
+            //time delay set because sharepoint upload fails if triggered straight after incident is created in D365
+            await orchestrationContext.CreateTimer(orchestrationContext.CurrentUtcDateTime.AddSeconds(this.integrationsOptions.Value.ScanFileDelaySeconds), CancellationToken.None);
 
-            var scanResults = await orchestrationContext.CallActivityAsync<List<FileScanResult>>(nameof(ScanFileFunction.GetFileScanResultsFunctionAsync), scanModel);
+            //var scanResults = await orchestrationContext.CallActivityAsync<List<FileScanResult>>(nameof(ScanFileFunction.GetFileScanResultsActivityFunctionAsync), scanModel);
 
-            var successScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => x.Success).Any(d => d.Id == s.TaskId)).ToArray();
+            //var successScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => x.Success).Any(d => d.Id == s.TaskId)).ToArray();
             
-            var successModel = scanModel;
-            successModel.FileUploads = successScanFiles.ToArray();
+            //var successModel = scanModel;
+            //successModel.FileUploads = successScanFiles.ToArray();
          
-            await orchestrationContext.CallActivityAsync(nameof(SharePointFunction.PushToSharePointAsync), successModel);
+            await orchestrationContext.CallActivityAsync(nameof(SharePointFunction.PushToSharePointActivityAsync), scanModel);
 
-            var failedScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => !x.Success).Any(d => d.Id == s.TaskId)).ToArray();
+            //var failedScanFiles = scanModel.FileUploads.Where(s => scanResults.Where(x => !x.Success).Any(d => d.Id == s.TaskId)).ToArray();
 
-            var failedModel = scanModel;
-            failedModel.FileUploads = failedScanFiles.ToArray();
+            //var failedModel = scanModel;
+            //failedModel.FileUploads = failedScanFiles.ToArray();
         }
     }
 }

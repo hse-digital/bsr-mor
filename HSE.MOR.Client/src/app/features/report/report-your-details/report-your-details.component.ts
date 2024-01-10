@@ -31,7 +31,7 @@ export class ReportYourDetailsComponent extends PageComponent<ReportModel> {
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.FirstName = this.model.FirstName;
-    applicationService.model.Report!.LastName = this.model.LastName;
+    applicationService.model.Report!.LastName = this.model.LastName;    
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.BcaReference) || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.HrbNumber)

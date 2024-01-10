@@ -3,13 +3,15 @@ import { Injectable } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { LocalStorage } from "src/app/helpers/local-storage";
 import { Sanitizer } from "../helpers/sanitizer";
+import { FieldValidations } from "../helpers/validators/fieldvalidations";
 import { AddressModel } from "./address.service";
+import { FileScanResult } from "./file-upload.service";
 
 @Injectable()
 export class ApplicationService {
   // replace this any to a specific type
   model: IncidentModel;
-
+  uploadSharepointModel?: UploadSharepointModel;
 
   constructor(private httpClient: HttpClient) {
     this.model = LocalStorage.getJSON('application_data') ?? {};
@@ -60,8 +62,8 @@ export class ApplicationService {
   async getStructureByHrbrNumber(hrbrNumber: string): Promise<StructureDynamicsModel[]> {
     return await firstValueFrom(this.httpClient.get<BuildingDetailsDynamicsModel[]>(`api/GetDynamicsStructureByHrbrNumberAsync/${hrbrNumber}`));
   }
-  async triggerFileUploadScanandUpload(scanModel: FileScanModel): Promise<void> {
-    await firstValueFrom(this.httpClient.post<FileScanModel>(`api/TriggerFilesToSharePointUpload`, scanModel));
+  async triggerFileUploadScanandUpload(scanModel: UploadSharepointModel): Promise<void> {
+    await firstValueFrom(this.httpClient.post<UploadSharepointModel>(`api/TriggerFilesToSharePointUpload`, scanModel));
   }
   async createNewMORApplication(): Promise<void> {
     if (!this.model.Id) {
@@ -73,9 +75,31 @@ export class ApplicationService {
       this.updateLocalStorage();
     }
   }
+  async createNewMORReportApplication(): Promise<void> {
+    if (!this.model.Id) {
+      var returnModel = await firstValueFrom(this.httpClient.post<IncidentModel>('api/NewMORCaseAsync', Sanitizer.sanitize(this.model)));
+      this.model.Id = returnModel.Id;
+      this.model.CaseNumber = returnModel.CaseNumber;
+      this.model.MorId = returnModel.MorId;
+      this.model.CustomerId = returnModel.CustomerId;
+      this.updateLocalStorage();
+      if (FieldValidations.IsNotNullOrWhitespace(this.model.Id) && this.model.Report?.FilesUploaded) {
+        this.uploadSharepointModel = {};
+        this.uploadSharepointModel.id = this.model.Id;
+        this.uploadSharepointModel.ContactId = this.model.CustomerId;
+        this.uploadSharepointModel.Email = this.model.EmailAddress;
+        this.uploadSharepointModel.FileUploads = this.model.Report.FilesUploaded;
+        this.triggerFileUploadScanandUpload(this.uploadSharepointModel);
+      }
+    }   
+  }
   async updateMORApplication(): Promise<void> {
     await firstValueFrom(this.httpClient.put<IncidentModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
     this.updateLocalStorage();
+  }
+
+  async UploadToSharepoint(model?: UploadSharepointModel): Promise<UploadSharepointModel> {
+    return await firstValueFrom(this.httpClient.post<UploadSharepointModel>(`api/PushToSharePointAsync`, Sanitizer.sanitize(model)));
   }
 }
 
@@ -265,9 +289,14 @@ export class FileUploadModel {
   CaseId?: string;
   SASUri?: string;
   TaskId?: string;
+  isProcessing?: boolean;
+  isRemoved?: boolean;
+  Subscription?: any;
+  FileScanResult?: FileScanResult;
+  isScanning?: boolean;
 }
 
-export class FileScanModel {
+export class UploadSharepointModel {
   id?: string;
   ContactId?: string;
   Email?: string;

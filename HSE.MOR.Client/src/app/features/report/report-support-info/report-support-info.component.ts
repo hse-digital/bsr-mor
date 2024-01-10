@@ -53,6 +53,10 @@ export class ReportSupportInfoComponent extends PageComponent<FileUploadModel[]>
 
   }
 
+  isFileProcessing(processing: boolean) {
+    this.processing = processing
+  }
+
   modelValid: boolean = false;
   filesInErrorMessage: string[] = [];
   filesUploadingMessage: string[] = [];

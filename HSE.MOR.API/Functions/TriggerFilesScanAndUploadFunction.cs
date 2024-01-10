@@ -19,7 +19,7 @@ public class TriggerFilesScanAndUploadFunction
         [DurableClient] DurableTaskClient durableTaskClient, CancellationToken cancellationToken)
     {
         var scanModel = await request.ReadAsJsonAsync<FileScanModel>();
-        var orchestrationId = await durableTaskClient.ScheduleNewOrchestrationInstanceAsync(nameof(FileSharePointUploadOrchestrator.UploadFilesToSharePoint), scanModel);
+        var orchestrationId = await durableTaskClient.ScheduleNewOrchestrationInstanceAsync(nameof(FileSharePointUploadOrchestrator.UploadFilesToShareActivityPoint), scanModel);
 
         return durableTaskClient.CreateCheckStatusResponse(request, orchestrationId, cancellationToken);
     }

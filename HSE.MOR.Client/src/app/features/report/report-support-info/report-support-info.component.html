@@ -1,4 +1,5 @@
-<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]=true
+                [hideSaveAndContinue]=true [processing]="processing">
   <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
     <ng-container *ngFor="let message of filesInErrorMessage">
       <govuk-error-link anchorId="input-file-upload-report" [message]="message" />
@@ -9,5 +10,14 @@
   </govuk-error-summary>
 
   <span class="govuk-caption-l">About the safety occurrence</span>
-  <file-upload-view id="file-upload-report" [model]="model" (onErrorMessageDisplay)="showErrorMessage($event)" (onFilesUploaded)="filesUploaded($event)"></file-upload-view>
+  <file-upload-view id="file-upload-report" [model]="model" (onErrorMessageDisplay)="showErrorMessage($event)" (onFilesUploaded)="filesUploaded($event)" (isFileProcessing)="isFileProcessing($event)"></file-upload-view>
+
+  <govuk-button name="file-upload-save"
+                classes="govuk-!-margin-bottom-0"
+                [isLoading]="processing"
+                loadingText="Uploading files..."
+                (onClick)="saveAndContinue()"
+                (keyup.enter)="saveAndContinue()">
+    {{processing ? 'Uploading files...' :'Continue'}}
+  </govuk-button>
 </govuk-formpage>
