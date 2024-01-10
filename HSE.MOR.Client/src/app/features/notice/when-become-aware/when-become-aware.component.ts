@@ -102,6 +102,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
 
   private isDateValid() {
     this.dateErrorMessage = "";
+
     if (this.InputDateModelIsNullOrWhitespace()) {
       this.dateErrorMessage = "You need to tell us when you were made aware of the occurrence";
     } else if (!this.inputDateModel?.day) {
@@ -114,7 +115,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
       this.dateErrorMessage = "You need to enter a date that exists";
     } else if (Number.isNaN(this.getDate(this.model).getTime())) {
       this.dateErrorMessage = "You need to tell us the date you were made aware of the occurrence";
-    } else if (Date.now() < this.getDate(this.model).getTime()) {
+    } else if ((new Date()).setHours(23, 59, 59, 999) < this.getDate(this.model).getTime()) {
       this.dateErrorMessage = "You need to enter a date in the past or today's date";
     } else if (Number(this.model?.Year!) < 1900) {
       this.dateErrorMessage = "You need to enter a date that is after 1900";
@@ -145,7 +146,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   private getDate(model?: TimeModel) {
     let date: Date = new Date();
     date.setDate(Number(this.model?.Day!) ?? -1);
-    date.setMonth(Number(this.model?.Month!) ?? -1);
+    date.setMonth(Number(Number(this.model?.Month!)-1) ?? -1);
     date.setFullYear(Number(this.model?.Year!) ?? -1);
     return date;
   }
