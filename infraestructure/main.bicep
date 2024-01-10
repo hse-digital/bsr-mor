@@ -241,7 +241,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                 }
                 {
                     name: 'Dynamics__UploadFileFlowUrl'
-                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Dynamics--UploadFileFlowUrl)'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=SQUAD4--Dynamics--UploadFileFlowUrl)'
                 }
                 {
                     name: 'CosmosConnection'
