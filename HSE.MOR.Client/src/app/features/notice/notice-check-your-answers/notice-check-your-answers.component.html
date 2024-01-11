@@ -40,7 +40,7 @@
           <govuk-summary-list-row key="Immediate actions taken to keep people safe" actionDetails="Immediate actions taken to keep people safe" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.ActionsToKeepSafe}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Date and time" actionDetails="Date and time" (onKeyupEnter)="navigateTo('when-become-aware')" (onClick)="navigateTo('when-become-aware')" [showAction]=true>{{model.OccurrenceDateTime}}</govuk-summary-list-row>
         </govuk-summary-list>
-        <govuk-body>you can print this on the next page</govuk-body>
+        <govuk-body>You can print this on the next page</govuk-body>
       </div>
       <govuk-button id="check-anwers" (onClick)="saveAndContinue()" [isLoading]="processing">Confirm and send</govuk-button>
     </div>

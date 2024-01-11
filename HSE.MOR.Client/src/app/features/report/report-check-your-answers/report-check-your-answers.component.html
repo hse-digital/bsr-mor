@@ -47,9 +47,9 @@
           <govuk-summary-list-row  key="Explain what you are doing or planning to do to keep people safe" actionDetails="Explain what you are doing or planning to do to keep people safe" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.IncidentKeepPeopleSafe}}</govuk-summary-list-row>
           <govuk-summary-list-row  key="Tell us how {{organisationName}} discovered the safety occurrence" actionDetails="Tell us how {{organisationName}} discovered the safety occurrence" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
           <govuk-summary-list-row  key="Tell us anything you think should be shared for others to learn from" actionDetails="Tell us anything you think should be shared for others to learn from" (onKeyupEnter)="navigateTo('incident-details')" (onClick)="navigateTo('incident-details')" [showAction]=true>{{model.SharedWithOthers}}</govuk-summary-list-row>          
-          <govuk-summary-list-row key="Support Information" actionDetails="Support Information" (onKeyupEnter)="navigateTo('support-info')" (onClick)="navigateTo('support-info')" [showAction]=true>{{model.UploadedFileNames}}</govuk-summary-list-row>
+          <govuk-summary-list-row key="Supporting information" actionDetails="Supporting information" (onKeyupEnter)="navigateTo('support-info')" (onClick)="navigateTo('support-info')" [showAction]=true>{{model.UploadedFileNames}}</govuk-summary-list-row>
         </govuk-summary-list>
-        <govuk-body>you can print this on the next page</govuk-body>
+        <govuk-body>You can print this on the next page</govuk-body>
       </div>
       <govuk-button id="check-anwers" (onClick)="saveAndContinue()" [isLoading]="processing">Confirm and send</govuk-button>
     </div>
