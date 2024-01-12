@@ -41,7 +41,7 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         {
             if (!string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.BuildingType))
             {
-                this.dynamicsIncident.bsr_buildingaddressline1 = entity.BuildingModelDynamics.Address.Street;
+                this.dynamicsIncident.bsr_buildingaddressline1 = entity.BuildingModelDynamics.Address.Address;
                 this.dynamicsIncident.bsr_buildingaddressline2 = entity.BuildingModelDynamics.Address.AddressLineTwo;
                 this.dynamicsIncident.bsr_buildingtowncity = entity.BuildingModelDynamics.Address.Town;
                 this.dynamicsIncident.bsr_buildingcounty = entity.BuildingModelDynamics.Address.AdministrativeArea;

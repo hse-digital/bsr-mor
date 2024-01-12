@@ -117,7 +117,12 @@ export class EnterReferenceComponent extends PageComponent<string> {
       }
       if (caseModel.BuildingModelDynamics.LocateBuilding || caseModel.BuildingModelDynamics.Address?.IsManual)
       {
-        applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;
+        if (caseModel.BuildingModelDynamics.Address?.IsManual) {
+          applicationService.model.Building.Address.Address = caseModel.Address?.Address;
+        }
+        else {
+          applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;
+        }
         applicationService.model.Building.Address.Street = caseModel.BuildingModelDynamics.Address?.Street;
         applicationService.model.Building.Address.AddressLineTwo = caseModel.BuildingModelDynamics.Address?.AddressLineTwo;
         applicationService.model.Building.Address.AdministrativeArea = caseModel.BuildingModelDynamics.Address?.AdministrativeArea;

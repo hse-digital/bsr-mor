@@ -189,11 +189,13 @@ public class DynamicsService : IDynamicsService
             {
                 incident.BuildingModelDynamics.BcaReference = buildingControlApplication.bsr_bcaareferencenumber;
             }
-            incident.Address.Address = buildingDetails.Count > 0 ? ReturnAddressString<DynamicsBuildingDetails>(buildingDetails.FirstOrDefault(), details => {
-                return string.Join(',', details.bsr_address1_line1, details.bsr_address1_city, details.bsr_address1_postalcode);
+            incident.Address.Address = buildingDetails.Count > 0 ? ReturnAddressString<DynamicsBuildingDetails>(buildingDetails.FirstOrDefault(), details =>
+            {
+                var postcode = !string.IsNullOrWhiteSpace(details.bsr_address1_postalcode) ? details.bsr_address1_postalcode.Replace(" ", "") : details.bsr_address1_postalcode;
+                return string.Join(',', details.bsr_address1_line1, details.bsr_address1_city, postcode);
             }) : string.Empty;
         }
-        else if (incident.BuildingModelDynamics.IdentifyBuilding.Equals("HRBNumber") && !string.IsNullOrWhiteSpace(incident.BuildingModelDynamics?.Address?.HrbApplicationId)) 
+        else if (incident.BuildingModelDynamics.IdentifyBuilding.Equals("HRBNumber") && !string.IsNullOrWhiteSpace(incident.BuildingModelDynamics?.Address?.HrbApplicationId))
         {
             var buildingApplication = await GetBuildingApplication_Async(incident.BuildingModelDynamics.Address.BuildingControlAppId);
             if (buildingApplication is not null)
@@ -201,9 +203,15 @@ public class DynamicsService : IDynamicsService
                 incident.BuildingModelDynamics.HrbNumber = buildingApplication.bsr_applicationid;
             }
             var structure = await GetStructureUsingId_Async(incident.BuildingModelDynamics?.Address?.HrbApplicationId);
-            incident.Address.Address = structure.Count > 0 ? ReturnAddressString<DynamicsStructure>(structure.FirstOrDefault(), structure => {
-                return string.Join(',', structure.bsr_addressline1, structure.bsr_city, structure.bsr_postcode);               
+            incident.Address.Address = structure.Count > 0 ? ReturnAddressString<DynamicsStructure>(structure.FirstOrDefault(), structure =>
+            {
+                var postcode = !string.IsNullOrWhiteSpace(structure.bsr_postcode) ? structure.bsr_postcode.Replace(" ", "") : structure.bsr_postcode;
+                return string.Join(',', structure.bsr_addressline1, structure.bsr_city, postcode);
             }) : string.Empty;
+        }
+        else {
+            var postcode = !string.IsNullOrWhiteSpace(dynamicsIncident.bsr_buildingpostcode) ? dynamicsIncident.bsr_buildingpostcode.Replace(" ", "") : dynamicsIncident.bsr_buildingpostcode;
+            incident.Address.Address = string.Join(',', dynamicsIncident.bsr_buildingaddressline1, dynamicsIncident.bsr_buildingaddressline2, dynamicsIncident.bsr_buildingcounty, dynamicsIncident.bsr_buildingtowncity, postcode);
         }
         return incident;
     }
