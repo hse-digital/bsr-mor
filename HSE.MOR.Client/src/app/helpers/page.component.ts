@@ -75,8 +75,13 @@ export abstract class PageComponent<T> implements OnInit {
 
     canActivate(route: ActivatedRouteSnapshot, _: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         if (!this.canAccess(this.applicationService, route)) {
+          if (this.applicationService.model.IsAnswersChecked) {
+            this.navigationService.navigate("");
+            return false;
+          } else {
             this.navigationService.navigate(NotFoundComponent.route);
             return false;
+          }
         }
 
         return true;

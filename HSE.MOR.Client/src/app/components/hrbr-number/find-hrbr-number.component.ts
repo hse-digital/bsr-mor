@@ -81,11 +81,11 @@ export class FindHrbrNumberComponent {
   mapStructureToAddressModel(structureModelArray: StructureDynamicsModel[]) {
     structureModelArray.forEach(x => {
       this.addressModel = { BuildingAddressType: AddressType.HRBNumber };
-      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_addressline1}, ${x.bsr_city}, ${x.bsr_postcode}`;
+      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_addressline1}, ${x.bsr_city}, ${x.bsr_postcode?.replace(' ', '') }`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
-      this.addressModel.Postcode = x.bsr_postcode;
+      this.addressModel.Postcode = x.bsr_postcode?.replace(' ', '');
       this.addressModel.HrbApplicationId = x._bsr_buildingapplicationid_value;
       this.addressModel.HrbNumber = this.searchModel.hrbrNumber;
 

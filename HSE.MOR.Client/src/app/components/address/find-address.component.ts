@@ -101,11 +101,11 @@ export class FindAddressComponent {
   mapBuildingInformationToAddressModel(buildingInformationModelArray: BuildingInformationDynamicsModel[]) {
     buildingInformationModelArray.forEach(x => {
       this.addressModel = { BuildingAddressType: AddressType.PostcodeSearch };
-      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_addressline1}, ${x.bsr_city}, ${x.bsr_postcode}`;
+      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_addressline1}, ${x.bsr_city}, ${x.bsr_postcode?.replace(' ', '') }`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
-      this.addressModel.Postcode = x.bsr_postcode;
+      this.addressModel.Postcode = x.bsr_postcode?.replace(' ', '');
       this.addressModel.BuildingId = x._bsr_buildingid_value ? x._bsr_buildingid_value : undefined;
       this.addressModel.StructureId = x.bsr_blockid ? x.bsr_blockid : undefined;
 
@@ -118,11 +118,11 @@ export class FindAddressComponent {
   mapBuildingDetailsToAddressModel(buildingInformationModelArray: BuildingDetailsDynamicsModel[]) {
     buildingInformationModelArray.forEach(x => {
       this.addressModel = { BuildingAddressType: AddressType.PostcodeSearch };
-      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode}`;
+      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode?.replace(' ', '') }`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_address1_line1;
       this.addressModel.Town = x.bsr_address1_city;
-      this.addressModel.Postcode = x.bsr_address1_postalcode;
+      this.addressModel.Postcode = x.bsr_address1_postalcode?.replace(' ', '');
       this.addressResponseModel.Results.push(this.addressModel);
     });
 

@@ -18,20 +18,25 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   override model: CheckAnswersNoticeModel = new CheckAnswersNoticeModel();
   isBCAAddress: boolean = false;
   isHRBAdress: boolean = false;
-  isSearchAdress: boolean = false;
-  isManual: boolean = false;
+  isSearchAddress: boolean = false;
+  isManualAddress: boolean = false;
   fileNameArray: string[] = [];
   addressRouteKey?: string;
   isAaboutTheBuilding: boolean = false;
   isAddress: boolean = false;
+  isEnteredAddress: boolean = false;
+  isProvidedAdress: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false; 
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
-    this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;   
     this.isAaboutTheBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
+    this.isManualAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isEnteredAddress = this.isSearchAddress || this.isManualAddress;
+    this.isProvidedAdress = this.isBCAAddress || this.isHRBAdress;
     this.model.ContactDetails = applicationService.model.EmailAddress;
+
     this.setValuesToNoticeModel(applicationService.model?.Notice!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
@@ -47,10 +52,10 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     } else {
       await applicationService.createNewMORApplication();
     }
-   
+    applicationService.model.IsAnswersChecked = true;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return applicationService.model.Notice?.WhenBecomeAware !== undefined;
+    return applicationService.model.Notice?.WhenBecomeAware !== undefined && !applicationService.model.IsAnswersChecked;
   }
 
   navigateTo(routeKey: string) {
@@ -82,7 +87,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.BcaReference = buildingModel?.Address?.BcaReference;
     this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
     this.model.AboutBuilding = buildingModel?.LocateBuilding ?? "";
-    if (this.isManual) {
+    if (this.isManualAddress || this.isAaboutTheBuilding) {
       this.model.Address = buildingModel?.Address ? this.returnManualAddress(buildingModel?.Address) : "";
       this.model.AddressRegion = buildingModel?.AddressRegion?.toUpperCase();
       this.model.NumberOfFloors = buildingModel?.NumberOfFloorsProf?.toString();

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 import { ApplicationService } from '../../services/application.service';
 import { TitleService } from '../../services/title.service';
 
@@ -7,7 +8,7 @@ import { TitleService } from '../../services/title.service';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  public static route: string = "";
+  public static route: string = environment.production ? "home" : "";
   continueLink: string = 'enter-email'
   static title: string = "Make a mandatory occurrence report";
 

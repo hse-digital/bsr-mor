@@ -12,10 +12,10 @@
 
         <h2 class="govuk-heading-m">About the building</h2>
         <govuk-summary-list>
-          <govuk-summary-list-row *ngIf="!isAaboutTheBuilding && !isNoticeReference" key="Building address" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" actionDetails="Building Address" [showAction]=true>{{model.Address}}</govuk-summary-list-row>
-          <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" actionDetails="BCA reference" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
-          <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" actionDetails="Building HRB number" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
-          <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="!isAaboutTheBuilding" key="Building address" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" >{{model.Address}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" >{{model.BcaReference}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" >{{model.HrbNumber}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()">{{model.AboutBuilding}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="!isAaboutTheBuilding && !isNoticeReference" key="Building region">England</govuk-summary-list-row>
         </govuk-summary-list>
 
