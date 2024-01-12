@@ -91,11 +91,11 @@ export class FindBcaReferenceComponent {
   mapBuildingDetailsToAddressModel(buildingDetailsModelArray: BuildingDetailsDynamicsModel[]) {
     buildingDetailsModelArray.forEach(x => {
       this.addressModel = { BuildingAddressType: AddressType.BCAReference };
-      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode}`;
+      this.addressModel.Address = `${x.bsr_name}, ${x.bsr_address1_line1}, ${x.bsr_address1_city}, ${x.bsr_address1_postalcode?.replace(' ', '')}`;
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_address1_line1;
       this.addressModel.Town = x.bsr_address1_city;
-      this.addressModel.Postcode = x.bsr_address1_postalcode;
+      this.addressModel.Postcode = x.bsr_address1_postalcode?.replace(' ', '');
       this.addressModel.BuildingControlAppId = x._bsr_bcapplicationid_value;
       this.addressModel.BcaReference = this.searchModel.referenceNumber;
 

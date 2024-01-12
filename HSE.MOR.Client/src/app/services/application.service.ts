@@ -115,6 +115,7 @@ export class IncidentModel {
   CustomerId?: string;
   MorId?: string;
   CaseNumber?: string;
+  IsAnswersChecked: boolean = false;
 }
 
 export class IncidentModelDynamics {
@@ -128,6 +129,7 @@ export class IncidentModelDynamics {
   CaseNumber?: string;
   MorModelDynamics?: NoticeModel;
   BuildingModelDynamics?: BuildingModel;
+  Address?: AddressModel;
 }
 
 export class NoticeModel {
@@ -189,6 +191,7 @@ export class BuildingModel {
   Easting?: string;
   Northing?: string;
   BcaReference?: string;
+  HrbNumber?: string
 }
 
 

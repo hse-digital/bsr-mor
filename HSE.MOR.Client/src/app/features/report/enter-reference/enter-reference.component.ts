@@ -99,21 +99,30 @@ export class EnterReferenceComponent extends PageComponent<string> {
     applicationService.model.CustomerId = caseModel.CustomerId;
     applicationService.model.MorId = caseModel.MorId;
     if (caseModel.BuildingModelDynamics) {
-      applicationService.model.Building = {};     
-      applicationService.model.Building.Address = {};
+      applicationService.model.Building = {};
+      applicationService.model.Building.Address = {}
+      applicationService.model.Building.Address.Address = caseModel.Address?.Address; 
       if (AddressType[caseModel.BuildingModelDynamics.IdentifyBuilding as keyof typeof AddressType] == AddressType.HRBNumber)
       {
         applicationService.model.Building.Address.HrbApplicationId = caseModel.BuildingModelDynamics?.Address?.HrbApplicationId;
-        applicationService.model.Building.IdentifyBuilding = "building_registration"
+        applicationService.model.Building.IdentifyBuilding = "building_registration";
+        applicationService.model.Building.Address.BuildingAddressType = AddressType.HRBNumber;
+        applicationService.model.Building.Address.HrbNumber = caseModel.BuildingModelDynamics?.HrbNumber;
       }
       if (AddressType[caseModel.BuildingModelDynamics.IdentifyBuilding as keyof typeof AddressType] == AddressType.BCAReference)
       {
         applicationService.model.Building.Address.BuildingControlAppId = caseModel.BuildingModelDynamics?.Address?.BuildingControlAppId;
         applicationService.model.Building.IdentifyBuilding = "building_reference"
+        applicationService.model.Building.Address.BuildingAddressType = AddressType.BCAReference;
       }
-      if (FieldValidations.IsNotNullOrWhitespace(caseModel.BuildingModelDynamics.IdentifyBuilding) || caseModel.BuildingModelDynamics.IdentifyBuilding == "")
+      if (caseModel.BuildingModelDynamics.LocateBuilding || caseModel.BuildingModelDynamics.Address?.IsManual)
       {
-        applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;
+        if (caseModel.BuildingModelDynamics.Address?.IsManual) {
+          applicationService.model.Building.Address.Address = caseModel.Address?.Address;
+        }
+        else {
+          applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;
+        }
         applicationService.model.Building.Address.Street = caseModel.BuildingModelDynamics.Address?.Street;
         applicationService.model.Building.Address.AddressLineTwo = caseModel.BuildingModelDynamics.Address?.AddressLineTwo;
         applicationService.model.Building.Address.AdministrativeArea = caseModel.BuildingModelDynamics.Address?.AdministrativeArea;
@@ -129,6 +138,6 @@ export class EnterReferenceComponent extends PageComponent<string> {
         applicationService.model.Building.Address.Number = caseModel.BuildingModelDynamics.Address?.Number;
       }
       applicationService.model.Building.LocateBuilding = caseModel.BuildingModelDynamics.LocateBuilding;
-    }
+    } applicationService.updateApplication();
   }
 }

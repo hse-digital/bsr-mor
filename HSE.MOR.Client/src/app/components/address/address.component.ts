@@ -34,7 +34,7 @@ export class AddressComponent implements OnInit {
   step = 'has-address';
   private history: string[] = [];
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
     if (this.address) {
       this.changeStepTo('confirm');
       this.history = [];

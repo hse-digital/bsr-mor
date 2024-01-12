@@ -41,7 +41,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
-    this.isAaboutTheBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
+    this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding  ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToReportModel(applicationService.model?.Report!);
@@ -56,6 +56,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       applicationService.model.Report = {}
     }
     applicationService.model.Report!.CheckAnswersModel = this.model;
+    applicationService.model.IsAnswersChecked = true;
     if (applicationService.model.Report.NoticeReference) {
       applicationService.updateMORApplication();
     } else {
@@ -63,7 +64,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     }  
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return !applicationService.model.IsAnswersChecked;
   }
 
   navigateTo(routeKey: string) {
@@ -90,12 +91,14 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   }
 
   setValuesToBuildingModel(buildingModel: BuildingModel) {
-    this.model.Address = this.isSearchAdress || this.isManual ? buildingModel?.Address?.Address!.split(',').filter(x => x.trim().length > 0).join(', ') : "";
-    this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;   
-    this.model.BcaReference = buildingModel?.Address?.BcaReference;
-    this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
+    if (buildingModel?.Address?.Address) {
+      this.model.Address = buildingModel?.Address?.Address!.split(',').filter(x => x.trim().length > 0).join(', ');
+      this.model.IsManualAddress = buildingModel?.Address?.IsManual ? buildingModel?.Address?.IsManual : false;
+      this.model.BcaReference = buildingModel?.Address?.BcaReference
+      this.model.HrbNumber = buildingModel?.Address?.HrbNumber;
+    } 
     this.model.AboutBuilding = buildingModel?.LocateBuilding ?? "";
-    if (this.isManual) {
+    if (this.isManual || buildingModel?.LocateBuilding) {
       this.model.Address = buildingModel?.Address ? this.returnManualAddress(buildingModel?.Address) : "";
       this.model.AddressRegion = buildingModel?.AddressRegion?.toUpperCase();
       this.model.NumberOfFloors = buildingModel?.NumberOfFloorsProf?.toString();

@@ -41,7 +41,7 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         {
             if (!string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.BuildingType))
             {
-                this.dynamicsIncident.bsr_buildingaddressline1 = entity.BuildingModelDynamics.Address.Street;
+                this.dynamicsIncident.bsr_buildingaddressline1 = entity.BuildingModelDynamics.Address.Address;
                 this.dynamicsIncident.bsr_buildingaddressline2 = entity.BuildingModelDynamics.Address.AddressLineTwo;
                 this.dynamicsIncident.bsr_buildingtowncity = entity.BuildingModelDynamics.Address.Town;
                 this.dynamicsIncident.bsr_buildingcounty = entity.BuildingModelDynamics.Address.AdministrativeArea;
@@ -77,13 +77,13 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
 
     private void AddFunctionReference(Incident entity)
     {
-        if (entity.BuildingModelDynamics?.IdentifyBuilding == "building_registration")
+        if (entity.BuildingModelDynamics?.IdentifyBuilding == "building_registration" && !string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.Address.HrbApplicationId))
         {
             //this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.BuildingControlAppId) ? null : $"/bsr_buildingcontrolapplications({entity.BuildingModel.Address.BuildingControlAppId})";
             this.dynamicsIncident.bsrBuildingApplicationFunctionReference = $"/bsr_buildingapplications({entity.BuildingModelDynamics.Address.HrbApplicationId})";
 
         }
-        else if (entity.BuildingModelDynamics?.IdentifyBuilding == "building_reference")
+        else if (entity.BuildingModelDynamics?.IdentifyBuilding == "building_reference" && !string.IsNullOrWhiteSpace(entity.BuildingModelDynamics.Address.BuildingControlAppId))
         {
             //this.dynamicsIncident.bsrBuildingApplicationFunctionReference = string.IsNullOrWhiteSpace(entity.BuildingModel?.Address?.HrbApplicationId) ? null : $"/bsr_buildingapplications({entity.BuildingModel.Address.HrbApplicationId})";
             this.dynamicsIncident.bsrBuildingControlApplicationFunctionReference = $"/bsr_buildingcontrolapplications({entity.BuildingModelDynamics.Address.BuildingControlAppId})";
@@ -144,7 +144,7 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         incident.BuildingModelDynamics.Address.AddressLineTwo = dynamicsEntity.bsr_buildingaddressline2;
         incident.BuildingModelDynamics.Address.Town = dynamicsEntity.bsr_buildingtowncity;
         incident.BuildingModelDynamics.Address.AdministrativeArea = dynamicsEntity.bsr_buildingcounty;
-        incident.BuildingModelDynamics.Address.Postcode = dynamicsEntity.bsr_buildingpostcode;
+        incident.BuildingModelDynamics.Address.Postcode = !string.IsNullOrWhiteSpace(dynamicsEntity.bsr_buildingpostcode) ? dynamicsEntity.bsr_buildingpostcode.Replace(" ", "") : dynamicsEntity.bsr_buildingpostcode;
         incident.BuildingModelDynamics.Address.IsManual = dynamicsEntity.bsr_ismanualaddress.GetValueOrDefault();
         incident.BuildingModelDynamics.Address.NumberOfFloors = dynamicsEntity.bsr_numberoffloors.GetValueOrDefault().ToString();
         incident.BuildingModelDynamics.Address.ResidentialUnits = dynamicsEntity.bsr_numberofresidentialunits.GetValueOrDefault().ToString();

@@ -32,6 +32,7 @@ public record Building()
     public string HasAddress { get; set; }
     public string LocateBuilding { get; set; }
     public string BcaReference { get; set; }
+    public string HrbNumber { get; set; }
 }
 
 public record AddressModel()

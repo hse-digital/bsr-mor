@@ -20,6 +20,8 @@ export class ReportConfirmationComponent extends PageComponent<string> {
     } else {
       this.morReference = applicationService.model.Report?.NoticeReference;
     }
+    applicationService.model.IsAnswersChecked = true;
+    applicationService.updateApplication();
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
 

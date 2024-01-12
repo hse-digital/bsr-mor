@@ -33,6 +33,7 @@ public class IncidentFunction
                 return await request.BuildValidationErrorResponseDataAsync(validation);
             }
             var incident = await dynamicsService.GetIncidentUsingCaseNumber_Async(caseNumberVerificationModel.CaseNumber);
+            
             if (incident is not null)
             {
 

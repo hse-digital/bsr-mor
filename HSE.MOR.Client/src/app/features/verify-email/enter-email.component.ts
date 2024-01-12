@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { environment } from '../../../environments/environment';
 import { PageComponent } from '../../helpers/page.component';
 import { EmailValidator } from '../../helpers/validators/email-validator';
 import { FieldValidations } from '../../helpers/validators/fieldvalidations';
@@ -11,12 +12,13 @@ import { VerifyEmailComponent } from './verify-email.component';
 })
 
 export class EnterEmailComponent extends PageComponent<string> {
-  public static route: string = 'enter-email';
+  public static route: string = environment.production ? "" : "enter-email";
   static title: string = "Your email address - Submit a mandatory occurrence notice and report";
   emailValid: boolean = true;
   errorMessage: string = '';
 
   override onInit(applicationService: ApplicationService): void {
+    applicationService.newApplication();
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.EmailAddress = this.model;

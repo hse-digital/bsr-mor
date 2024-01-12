@@ -102,6 +102,22 @@ public class DynamicsService : IDynamicsService
         return response.value.FirstOrDefault();
     }
 
+    public async Task<DynamicsBuildingApplication> GetBuildingApplication_Async(string buildingApplicationId)
+    {
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsBuildingApplication>>("bsr_buildingapplications",
+            new[] { ("$filter", $"bsr_buildingapplicationid eq '{buildingApplicationId}'") });
+
+        return response.value.FirstOrDefault();
+    }
+
+    public async Task<DynamicsBuildingControlApplication> GetBuildingControlApplication_Async(string buildingControlApplicationId)
+    {
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsBuildingControlApplication>>("bsr_buildingcontrolapplications",
+            new[] { ("$filter", $"bsr_buildingcontrolapplicationid eq '{buildingControlApplicationId}'") });
+
+        return response.value.FirstOrDefault();
+    }
+
     public async Task<List<DynamicsBuildingDetails>> GetDynamicsBuildingDetailsUsingBcaReference_Async(string bcaReference) 
     {
         var buildingDetailsList = new List<DynamicsBuildingDetails>();
@@ -153,11 +169,45 @@ public class DynamicsService : IDynamicsService
                 incident.BuildingModelDynamics.IdentifyBuilding = mor.BuildingModel.IdentifyBuilding;
                 incident.BuildingModelDynamics.LocateBuilding = mor.BuildingModel.LocateBuilding;
                 incident.BuildingModelDynamics.BuildingType = mor.BuildingModel.BuildingType;
-
                 incident.MorModelDynamics = mor;
-            }           
+            }
+            if (incident.Address is null)
+            {
+                incident.Address = new Domain.Entities.AddressModel();
+            }
         }
-        
+        if (incident.BuildingModelDynamics.IdentifyBuilding.Equals("BCAReference") && !string.IsNullOrWhiteSpace(incident.BuildingModelDynamics?.Address?.BuildingControlAppId))
+        {
+            var buildingDetails = await GetDynamicsBuildingDetailsUsingId_Async(incident.BuildingModelDynamics.Address.BuildingControlAppId);
+            var buildingControlApplication = await GetBuildingControlApplication_Async(incident.BuildingModelDynamics.Address.BuildingControlAppId);
+            if (buildingControlApplication is not null)
+            {
+                incident.BuildingModelDynamics.BcaReference = buildingControlApplication.bsr_bcaareferencenumber;
+            }
+            incident.Address.Address = buildingDetails.Count > 0 ? ReturnAddressString<DynamicsBuildingDetails>(buildingDetails.FirstOrDefault(), details =>
+            {
+                var postcode = !string.IsNullOrWhiteSpace(details.bsr_address1_postalcode) ? details.bsr_address1_postalcode.Replace(" ", "") : details.bsr_address1_postalcode;
+                return string.Join(',', details.bsr_address1_line1, details.bsr_address1_city, postcode);
+            }) : string.Empty;
+        }
+        else if (incident.BuildingModelDynamics.IdentifyBuilding.Equals("HRBNumber") && !string.IsNullOrWhiteSpace(incident.BuildingModelDynamics?.Address?.HrbApplicationId))
+        {
+            var buildingApplication = await GetBuildingApplication_Async(incident.BuildingModelDynamics.Address.BuildingControlAppId);
+            if (buildingApplication is not null)
+            {
+                incident.BuildingModelDynamics.HrbNumber = buildingApplication.bsr_applicationid;
+            }
+            var structure = await GetStructureUsingId_Async(incident.BuildingModelDynamics?.Address?.HrbApplicationId);
+            incident.Address.Address = structure.Count > 0 ? ReturnAddressString<DynamicsStructure>(structure.FirstOrDefault(), structure =>
+            {
+                var postcode = !string.IsNullOrWhiteSpace(structure.bsr_postcode) ? structure.bsr_postcode.Replace(" ", "") : structure.bsr_postcode;
+                return string.Join(',', structure.bsr_addressline1, structure.bsr_city, postcode);
+            }) : string.Empty;
+        }
+        else {
+            var postcode = !string.IsNullOrWhiteSpace(dynamicsIncident.bsr_buildingpostcode) ? dynamicsIncident.bsr_buildingpostcode.Replace(" ", "") : dynamicsIncident.bsr_buildingpostcode;
+            incident.Address.Address = string.Join(',', dynamicsIncident.bsr_buildingaddressline1, dynamicsIncident.bsr_buildingaddressline2, dynamicsIncident.bsr_buildingcounty, dynamicsIncident.bsr_buildingtowncity, postcode);
+        }
         return incident;
     }
 
@@ -178,16 +228,17 @@ public class DynamicsService : IDynamicsService
             caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
         }
         
-        var mor = await CreateMORAsync(caseModel.MorModelDynamics);
+        //var mor = await CreateMORAsync(caseModel.MorModelDynamics);
 
         caseModel.CustomerId = contact.Id;
-        caseModel.MorId = mor.Id;
+        //caseModel.MorId = mor.Id;
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
         var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
 
         var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsCase, true);
         var incident = await response.GetJsonAsync<DynamicsIncident>();
-        await UpdateMORWithCaseIdAsync(incident.incidentid, caseModel.MorId, mor);
+        await UpdateMORWithCaseIdAsync(incident.incidentid, incident._bsr_mor_value, caseModel.MorModelDynamics);
+        //await UpdateMORWithCaseIdAsync(incident.incidentid, caseModel.MorId, mor);
         return caseModel with { Id = incident.incidentid, CaseNumber = incident.title };
     }
 
@@ -313,5 +364,9 @@ public class DynamicsService : IDynamicsService
         var id = Regex.Match(header.Value, @"\((.+)\)");
 
         return id.Groups[1].Value;
+    }
+    private string ReturnAddressString<T>(T input, Func<T, string> action) 
+    {
+        return action(input);
     }
 }

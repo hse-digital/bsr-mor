@@ -16,6 +16,8 @@ export class NoticeConfirmationComponent extends PageComponent<string> {
 
   override onInit(applicationService: ApplicationService): void {
     this.model = applicationService.model.CaseNumber;
+    applicationService.model.IsAnswersChecked = true;
+    applicationService.updateApplication();
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
 
