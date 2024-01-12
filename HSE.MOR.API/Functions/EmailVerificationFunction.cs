@@ -30,7 +30,7 @@ public class EmailVerificationFunction
 
         var otpToken = await otpService.GenerateToken(emailVerificationModel.EmailAddress);
 
-        await dynamicsService.SendVerificationEmail(emailVerificationModel.EmailAddress, otpToken);
+        await otpService.SendNotificationEmail(emailVerificationModel.EmailAddress, otpToken);
         return request.CreateResponse();
     }
 

@@ -17,4 +17,6 @@ public class IntegrationsOptions
     public string CommonAPIKey { get; set; }
     public string Environment { get; set; }
     public int ScanFileDelaySeconds { get; set; }
+
+    public string NotificationServiceOTPEmailTemplateId { get; set; }
 }
