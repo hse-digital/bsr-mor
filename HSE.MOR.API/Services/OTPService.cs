@@ -1,6 +1,7 @@
 ﻿
 using Flurl;
 using Flurl.Http;
+using HSE.MOR.API.Models.Notifications;
 using Microsoft.Extensions.Options;
 using System.Net;
 
@@ -42,6 +43,25 @@ public class OTPService
             });
 
         return response.StatusCode == (int)HttpStatusCode.OK;
+    }
+
+    public async Task SendNotificationEmail(string emailAddress, string otpToken)
+    {
+
+        var response = await integrationsOptions.CommonAPIEndpoint
+            .AppendPathSegment("api")
+            .AppendPathSegment("SendNotificationEmail")
+            .WithHeader("x-functions-key", integrationsOptions.CommonAPIKey)
+            .AllowHttpStatus(HttpStatusCode.BadRequest)
+            .PostJsonAsync(new EmailNotificationRequest
+            {
+                email_address = emailAddress,
+                template_id = integrationsOptions.NotificationServiceOTPEmailTemplateId,
+                personalisation = new Dictionary<string, dynamic>()
+                {
+                        { "security code", otpToken },
+                }
+            });
     }
 }
 

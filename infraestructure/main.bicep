@@ -283,6 +283,10 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
                     name: 'Integrations__PaymentAmount'
                     value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=Integrations--PaymentAmount)'
                 }
+                 {
+                    name: 'Integrations__NotificationServiceOTPEmailTemplateId'
+                    value: '@Microsoft.KeyVault(VaultName=${keyVault.name};SecretName=SQUAD4--Integrations--NotificationServiceOTPEmailTemplateId)'
+                }
                 {
                     name: 'Integrations__ScanFileDelaySeconds'
                     value: '30'

@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 namespace HSE.MOR.API.Services;
 
 public interface IDynamicsService {
-    Task SendVerificationEmail(string emailAddress, string otpToken);
     Task<List<DynamicsBuildingInformation>> GetBuildingInformationUsingPostcode_Async(string postcode);
     Task<List<DynamicsBuildingDetails>> GetBuildingDetailsUsingPostcode_Async(string postcode);
     Task<DynamicsBuildingControlApplication> GetBuildingControlApplicationId_Async(string bcaReferenceNumber);
@@ -45,10 +44,6 @@ public class DynamicsService : IDynamicsService
         this.dynamicsOptions = dynamicsOptions.Value;
         this.swaOptions = swaOptions.Value;
         this.dynamicsApi = dynamicsApi;
-    }
-    public async Task SendVerificationEmail(string emailAddress, string otpToken)
-    {
-        await dynamicsOptions.EmailVerificationFlowUrl.PostJsonAsync(new { emailAddress = emailAddress.ToLower(), otp = otpToken,  hrbRegUrl = swaOptions.Url });
     }
 
     public async Task<List<DynamicsBuildingInformation>> GetBuildingInformationUsingPostcode_Async(string postcode)
