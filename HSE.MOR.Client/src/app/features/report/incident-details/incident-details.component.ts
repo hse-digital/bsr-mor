@@ -91,7 +91,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     if (!FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident)) {
       this.aboutIncidentInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident) && this.model.AboutIncident?.length! > 200) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.AboutIncident) && this.model.AboutIncident?.length! > 1000) {
 
       this.aboutIncidentErrorMessage = "You need to tell us what happened or what is the risk using fewer words";
       this.aboutIncidentInError = true;
@@ -99,7 +99,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident)) {
       this.whatCausedItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident) && this.model.CauseOfIncident?.length! > 200) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.CauseOfIncident) && this.model.CauseOfIncident?.length! > 1000) {
 
       this.whatCausedItErrorMessage = "You need to tell us what caused it using fewer words";
       this.whatCausedItInError = true;
@@ -107,7 +107,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident)) {
       this.whoAffectedItInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident) && this.model.WhoAffectedByIncident?.length! > 200) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.WhoAffectedByIncident) && this.model.WhoAffectedByIncident?.length! > 1000) {
 
       this.whoAffectedErrorMessage = "You need to tell us who has or could have been affected using fewer words ";
       this.whoAffectedItInError = true;
@@ -115,7 +115,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe)) {
       this.keepPeopleSafeInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe) && this.model.IncidentKeepPeopleSafe?.length! > 300) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.IncidentKeepPeopleSafe) && this.model.IncidentKeepPeopleSafe?.length! > 1100) {
 
       this.keepPeopleSafeErrorMessage = "You need to tell us what you are doing to keep people safe using fewer words";
       this.keepPeopleSafeInError = true;
@@ -123,7 +123,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered)) {
       this.occurrenceDiscoveredInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered) && this.model.OccurrenceDiscovered?.length! > 100) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.OccurrenceDiscovered) && this.model.OccurrenceDiscovered?.length! > 750) {
 
       this.occurrenceDiscoveredErrorMessage = "You need to tell us how the safety occurrence was discovered using fewer words "
       this.occurrenceDiscoveredInError = true;
@@ -131,7 +131,7 @@ export class IncidentDetailsComponent extends PageComponent<ReportModel> {
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers)) {
       this.sharedWithOthersInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers) && this.model.SharedWithOthers?.length! > 100) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.SharedWithOthers) && this.model.SharedWithOthers?.length! > 750) {
 
       this.sharedWithOthersErrorMessage = "You need to tell us what should be shared for others to learn from using fewer words"
       this.sharedWithOthersInError = true;
