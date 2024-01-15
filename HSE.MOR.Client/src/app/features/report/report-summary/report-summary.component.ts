@@ -30,7 +30,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
-    this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isManual = applicationService.model.Building?.Address?.IsManual ? true : false;
     this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);       
     this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
@@ -41,7 +41,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.HrbNumber = applicationService.model.Report?.CheckAnswersModel?.HrbNumber;
     this.isAddressManual = applicationService.model.Report?.CheckAnswersModel?.IsManualAddress!;
     this.model.AboutBuilding = applicationService.model.Report?.CheckAnswersModel?.AboutBuilding;
-    if (this.isAddressManual) {
+    if (this.isAddressManual || this.isAaboutTheBuilding) {
       this.model.AddressRegion = applicationService.model.Report?.CheckAnswersModel?.AddressRegion;
       this.model.NumberOfFloors = applicationService.model.Report?.CheckAnswersModel?.NumberOfFloors?.toString();
       this.model.NumberOfUnits = applicationService.model.Report?.CheckAnswersModel?.NumberOfUnits?.toString();

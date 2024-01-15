@@ -5,6 +5,9 @@ namespace HSE.MOR.Domain.Entities;
 public record Incident(string Id = null) : Entity(Id)
 {
     public string IncidentId { get; set; }
+    public string FirstName { get; set; } 
+    public string LastName { get; set; }
+    public string ContactNumber { get; set; }
     public string CustomerId { get; set; }
     public Mor MorModelDynamics { get; set; }   
     public Building BuildingModelDynamics { get; set; }

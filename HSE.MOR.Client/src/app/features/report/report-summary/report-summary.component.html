@@ -6,8 +6,8 @@
     <govuk-summary-list-row key="Mandatory occurrence report reference">{{model.NoticeReference}}</govuk-summary-list-row>
   </govuk-summary-list>
 
-  <h2 *ngIf="!isNoticeReference" class="govuk-heading-m">About the building</h2>
-  <govuk-summary-list *ngIf="!isNoticeReference">
+  <h2 class="govuk-heading-m">About the building</h2>
+  <govuk-summary-list>
     <govuk-summary-list-row *ngIf="!isAaboutTheBuilding" key="Building address">{{model.Address}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isSearchAdress" key="Building address">{{model.Address}}</govuk-summary-list-row>
     <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference">{{model.BcaReference}}</govuk-summary-list-row>
@@ -15,8 +15,7 @@
     <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building">{{model.AboutBuilding}}</govuk-summary-list-row>
   </govuk-summary-list>
 
-  <govuk-summary-list *ngIf="isAddressManual">
-    <govuk-summary-list-row key="Building region">{{model.AddressRegion}}</govuk-summary-list-row>
+  <govuk-summary-list *ngIf="isAaboutTheBuilding || isAddressManual">
     <govuk-summary-list-row key="Number of floors">{{model.NumberOfFloors}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Building height">{{model.BuildingHeight}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Number of units">{{model.NumberOfUnits}}</govuk-summary-list-row>
@@ -24,9 +23,9 @@
 
   <h2 class="govuk-heading-m">About you</h2>
   <govuk-summary-list>
-    <govuk-summary-list-row *ngIf="!isSameUser" key="Your name">{{model.YourName}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Your name">{{model.YourName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Contact details">{{model.ContactDetails}}</govuk-summary-list-row>
-    <govuk-summary-list-row *ngIf="!isSameUser" key="Contact number">{{model.ContactNumber}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Contact number">{{model.ContactNumber}}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <h2 class="govuk-heading-m">About organisation</h2>

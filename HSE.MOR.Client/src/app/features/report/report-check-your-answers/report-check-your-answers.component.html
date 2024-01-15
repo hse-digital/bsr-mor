@@ -19,7 +19,7 @@
           <govuk-summary-list-row *ngIf="!isAaboutTheBuilding && !isNoticeReference" key="Building region">England</govuk-summary-list-row>
         </govuk-summary-list>
 
-        <govuk-summary-list *ngIf="(!isNoticeReference && isManual) || (isAaboutTheBuilding && !isNoticeReference)">
+        <govuk-summary-list *ngIf="isManual || isAaboutTheBuilding">
           <govuk-summary-list-row key="Number of floors">{{model.NumberOfFloors}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Building height">{{model.BuildingHeight}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Number of units">{{model.NumberOfUnits}}</govuk-summary-list-row>
@@ -27,8 +27,10 @@
 
         <h2 class="govuk-heading-m">About you</h2>
         <govuk-summary-list>
+          <govuk-summary-list-row *ngIf="isSameUser" key="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" actionDetails="Your name">{{model.YourName}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="!isSameUser" key="Your name" (onKeyupEnter)="navigateTo('your-details')" (onClick)="navigateTo('your-details')" actionDetails="Your name" [showAction]=true>{{model.YourName}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Contact details" (onKeyupEnter)="navigateTo('enter-email')" (onClick)="navigateTo('enter-email')" actionDetails="Contact details" [showAction]=true>{{model.ContactDetails}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isSameUser" key="Contact number" (onKeyupEnter)="navigateTo('report-contact-number')" (onClick)="navigateTo('report-contact-number')" actionDetails="Contact number" >{{model.ContactNumber}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="!isSameUser" key="Contact number" (onKeyupEnter)="navigateTo('report-contact-number')" (onClick)="navigateTo('report-contact-number')" actionDetails="Contact number" [showAction]=true>{{model.ContactNumber}}</govuk-summary-list-row>
         </govuk-summary-list>
 

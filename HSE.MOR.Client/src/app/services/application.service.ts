@@ -121,6 +121,9 @@ export class IncidentModel {
 export class IncidentModelDynamics {
   Id?: string;
   IncidentId?: string;
+  FirstName?: string;
+  LastName?: string;
+  ContactNumber?: string;
   EmailAddress?: string;
   WhatToSubmit?: string;
   IsEmailVerified?: boolean;

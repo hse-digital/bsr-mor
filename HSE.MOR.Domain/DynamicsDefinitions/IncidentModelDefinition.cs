@@ -136,6 +136,9 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         incident.IncidentId = dynamicsEntity.incidentid;
         incident.CaseNumber = dynamicsEntity.title;
         incident.CustomerId = dynamicsEntity._primarycontactid_value;
+        incident.FirstName = dynamicsEntity.bsr_contactfirstname ;
+        incident.LastName = dynamicsEntity.bsr_contactlastname;
+        incident.ContactNumber = dynamicsEntity.bsr_contactphone;
         incident.EmailAddress = dynamicsEntity.bsr_contactemail;
         incident.MorId = dynamicsEntity._bsr_mor_value;
         incident.BuildingModelDynamics = new Building();
