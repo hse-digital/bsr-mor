@@ -58,7 +58,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeMo
     if (!FieldValidations.IsNotNullOrWhitespace(this.model.DescribeRiskIncident)) {
       this.describeIncidentRiskInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.DescribeRiskIncident) && this.model.DescribeRiskIncident?.length! > 200) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.DescribeRiskIncident) && this.model.DescribeRiskIncident?.length! > 500) {
 
       this.describeIncidentRiskErrorMessage = "You need to briefly describe the risk or incident in fewer words";
       this.describeIncidentRiskInError = true;
@@ -66,7 +66,7 @@ export class BrieflyDescribeRiskIncidentComponent extends PageComponent<NoticeMo
     } if (!FieldValidations.IsNotNullOrWhitespace(this.model.ActionsToKeepSafe)) {
       this.actionsToKeepSafeInError = true;
 
-    } if (FieldValidations.IsNotNullOrWhitespace(this.model.ActionsToKeepSafe) && this.model.ActionsToKeepSafe?.length! > 200) {
+    } if (FieldValidations.IsNotNullOrWhitespace(this.model.ActionsToKeepSafe) && this.model.ActionsToKeepSafe?.length! > 500) {
 
       this.actionsToKeepSafeErrorMessage = "You need to tell us what immediate actions you have taken in fewer words";
       this.actionsToKeepSafeInError = true;
