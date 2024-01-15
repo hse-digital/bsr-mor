@@ -7,11 +7,12 @@
 
         <h2 class="govuk-heading-m">About the building</h2>
         <govuk-summary-list>
-          <govuk-summary-list-row *ngIf="isEnteredAddress" key="Building address" actionDetails="Building address" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.Address}}</govuk-summary-list-row>
-          <govuk-summary-list-row *ngIf="isProvidedAdress" key="Building address"  (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" >{{model.Address}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isEnteredAddress" key="Building address" actionDetails="Building address" (onKeyupEnter)="navigateToAddress('find')" (onClick)="navigateToAddress('find')" [showAction]=true>{{model.Address}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isProvidedAdress" key="Building address"  (onKeyupEnter)="navigateToAddress('find')" (onClick)="navigateToAddress('find')" >{{model.Address}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" actionDetails="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" actionDetails="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
-          <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress('locate-building-address')" (onClick)="navigateToAddress('locate-building-address')" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
+          <govuk-summary-list-row key="Building region">England</govuk-summary-list-row>
         </govuk-summary-list>
 
         <govuk-summary-list *ngIf="isManualAddress || isAaboutTheBuilding">         

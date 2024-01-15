@@ -66,8 +66,10 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     }
   }
 
-  navigateToAddress() {
+  navigateToAddress(step:string="") {
     var routeKey = NavigationHelper.getRoute(this.addressRouteKey!)
+    if(step!=="")
+      return this.navigationService.navigateRelative(`..${routeKey}`, this.activatedRoute, { step: step });
     return this.navigationService.navigate(routeKey);
   }
 

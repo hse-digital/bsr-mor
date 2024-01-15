@@ -20,7 +20,7 @@ export class BuildingAddressComponent implements OnInit {
   static selectTitle: string = 'Select building - Postcode search - Submit a mandatory occurrence notice and report';
   static confirmTitle: string = 'Confirm building - Postcode search - Submit a mandatory occurrence notice and report';
   static hasAddressTitle: string = 'Does your building or site have an address? - Submit a mandatory occurrence notice and report';
-
+  step!: string;
   searchMode = AddressSearchMode.Building;
   private injector: Injector = GetInjector();
   private applicationService: ApplicationService = this.injector.get(ApplicationService);
@@ -35,6 +35,7 @@ export class BuildingAddressComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(query => {
       this.addressIndex = query['address'];
       this.returnUrl = query['return'];
+      this.step = query['step'];
       if (this.addressIndex) {
         if (this.applicationService.model.Building) {
           this.applicationService.model.Building = {};

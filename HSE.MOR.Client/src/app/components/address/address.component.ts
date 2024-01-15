@@ -31,11 +31,15 @@ export class AddressComponent implements OnInit {
   searchModel: { postcode?: string } = {};
   addressResponse?: AddressResponseModel;
 
-  step = 'has-address';
+  @Input() step = '';
   private history: string[] = [];
 
-  ngOnInit(): void {   
-    if (this.address) {
+  ngOnInit(): void {
+    if (this.step != undefined && this.step!.length > 0) {
+      this.changeStepTo(this.step);
+      this.history = [];
+    }
+    else if (this.address) {
       this.changeStepTo('confirm');
       this.history = [];
     } else {
