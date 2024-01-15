@@ -56,7 +56,6 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       applicationService.model.Report = {}
     }
     applicationService.model.Report!.CheckAnswersModel = this.model;
-    applicationService.model.IsAnswersChecked = true;
     if (applicationService.model.Report.NoticeReference) {
       applicationService.updateMORApplication();
     } else {

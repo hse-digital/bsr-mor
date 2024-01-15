@@ -40,13 +40,44 @@ export class NoticeYourDetailsComponent extends PageComponent<NoticeModel> {
   }
 
   firstNameInError: boolean = false;
+  firstAndLastNameInError: boolean = false;
   lastNameInError: boolean = false;
+  modelValid: boolean = false;
+  firstAndLastNameErrorMessage: string = "You need to tell us your first name and your last name";
+  firstNameErrorMessage: string = "You need to tell us your first name";
+  lastNameErrorMessage: string = "You need to tell us your last name";
+
 
   override isValid(): boolean {
-    this.firstNameInError = !FieldValidations.IsNotNullOrWhitespace(this.model.FirstName);
-    this.lastNameInError = !FieldValidations.IsNotNullOrWhitespace(this.model.LastName);
+    this.modelValid = false;
+    this.firstNameInError = false;
+    this.lastNameInError = false;
+    this.firstAndLastNameInError = false;
 
-    return !this.firstNameInError && !this.lastNameInError;
+    if (!FieldValidations.IsNotNullOrWhitespace(this.model.FirstName)) {
+      this.firstNameInError = true;
+
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.LastName)) {
+      this.lastNameInError = true;
+
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(this.model.FirstName) && !FieldValidations.IsNotNullOrWhitespace(this.model.LastName)) {
+      this.firstAndLastNameInError = true;
+
+    }
+    if (!FieldValidations.IsNotNullOrWhitespace(this.model.FirstName) && this.model.FirstName?.length! > 50) {
+
+      this.firstNameErrorMessage = "You need to tell us your first name using fewer words";
+      this.firstNameInError = true;
+
+    } if (!FieldValidations.IsNotNullOrWhitespace(this.model.LastName) && this.model.LastName?.length! > 50) {
+
+      this.lastNameErrorMessage = "You need to tell us your last name using fewer words";
+      this.lastNameInError = true;
+
+    }
+    this.modelValid = this.firstAndLastNameInError || this.firstNameInError || this.lastNameInError  ? false : true;
+    return this.modelValid;
   }
 
   override navigateNext(): Promise<boolean> {

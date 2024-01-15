@@ -114,6 +114,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
         applicationService.model.Building.Address.BuildingControlAppId = caseModel.BuildingModelDynamics?.Address?.BuildingControlAppId;
         applicationService.model.Building.IdentifyBuilding = "building_reference"
         applicationService.model.Building.Address.BuildingAddressType = AddressType.BCAReference;
+        applicationService.model.Building.Address.BcaReference = caseModel.BuildingModelDynamics?.BcaReference;
       }
       if (caseModel.BuildingModelDynamics.LocateBuilding || caseModel.BuildingModelDynamics.Address?.IsManual)
       {

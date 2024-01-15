@@ -24,14 +24,14 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
   isSharedWithOthersIncident: boolean = false;
   organisationName?: string;
   isSameUser: boolean = false;
-  isAboutBuilding: boolean = false;
+  isAaboutTheBuilding: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
-    this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
+    this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);       
     this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
     
