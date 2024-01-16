@@ -244,6 +244,7 @@ export class CheckAnswersReportModel {
   HrbNumber?: string;
   UploadedFileNames?: string;
   AboutBuilding?: string;
+  BuildingType?: string;
 }
 
 export class BuildingsInformationResponse {
