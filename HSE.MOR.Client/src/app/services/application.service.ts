@@ -216,7 +216,7 @@ export class CheckAnswersNoticeModel {
   OrganisationName?: string;
   OrgRole?: string;
   AboutBuilding?: string;
-
+  CaseNumber?: string;
 }
 
 export class CheckAnswersReportModel {

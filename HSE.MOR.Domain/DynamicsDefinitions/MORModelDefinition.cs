@@ -25,7 +25,15 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             this.dynamicsMor.bsr_noticeorganisationname = entity.NoticeOrganisationName;
             this.dynamicsMor.bsr_occurrenceidentifiedon = entity.WhenBecomeAware != null ? GetDate(entity.WhenBecomeAware.Year, entity.WhenBecomeAware.Month, entity.WhenBecomeAware.Day, entity.WhenBecomeAware.Hour, entity.WhenBecomeAware.Minute) : null;
             this.dynamicsMor.bsr_bsr_identifybuildingcode = entity.BuildingModel != null ? IdentifyBuilding(entity.BuildingModel.IdentifyBuilding) : null;
-            this.dynamicsMor.bsr_howwouldyoudescribethebuilding = entity.BuildingModel != null ? HowDescribeBuilding(entity.BuildingModel.BuildingType) : null;
+            if (entity.IncidentReference is null)
+            {
+                this.dynamicsMor.bsr_howwouldyoudescribethebuilding = entity.BuildingModel != null ? HowDescribeBuilding(entity.BuildingModel.BuildingType) : null;
+            }
+            else 
+            {
+                this.dynamicsMor.bsr_howwouldyoudescribethebuilding = entity.BuildingModel != null ? HowDescribeBuildingEnum(entity.BuildingModel.BuildingType) : null;
+            }
+            
             this.dynamicsMor.bsr_buildinglocation = entity.BuildingModel != null && !string.IsNullOrWhiteSpace(entity.BuildingModel.LocateBuilding) ? entity.BuildingModel.LocateBuilding : null;
             this.dynamicsMor.bsr_typeofoccurrence = entity.IncidentReported.Length > 0 ? WhatHappened(entity.IncidentReported) : null;
             this.dynamicsMor.bsr_reportorganisationname = !string.IsNullOrWhiteSpace(entity.ReportOrganisationName) ? entity.ReportOrganisationName : null;
@@ -126,6 +134,20 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
                 case "complete_not_occupied": return BuildingType.CompleteNotOccupied;
                 case "in_construction": return BuildingType.InConstruction;
                 case "in_design": return BuildingType.InDesign;
+                case "": return null;
+                case null: return null;
+            }
+
+            throw new ArgumentException();
+        }
+        private BuildingType? HowDescribeBuildingEnum(string type)
+        {
+            switch (type)
+            {
+                case "Occupied": return BuildingType.Occupied;
+                case "CompleteNotOccupied": return BuildingType.CompleteNotOccupied;
+                case "InConstruction": return BuildingType.InConstruction;
+                case "InDesign": return BuildingType.InDesign;
                 case "": return null;
                 case null: return null;
             }

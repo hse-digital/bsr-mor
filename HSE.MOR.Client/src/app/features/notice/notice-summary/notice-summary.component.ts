@@ -29,11 +29,12 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.model.Address = applicationService.model.Notice?.CheckAnswersModel?.Address;
+    this.model.CaseNumber = applicationService.model.CaseNumber;
     this.model.BcaReference = applicationService.model.Notice?.CheckAnswersModel?.BcaReference;
     this.model.HrbNumber = applicationService.model.Notice?.CheckAnswersModel?.HrbNumber;
     this.model.AboutBuilding = applicationService.model.Notice?.CheckAnswersModel?.AboutBuilding;
     this.isAddressManual = applicationService.model.Notice?.CheckAnswersModel?.IsManualAddress!;
-    if (this.isManual) {
+    if (this.isManual || this.isAboutBuilding) {
       this.model.AddressRegion = applicationService.model.Notice?.CheckAnswersModel?.AddressRegion;
       this.model.NumberOfFloors = applicationService.model.Notice?.CheckAnswersModel?.NumberOfFloors?.toString();
       this.model.NumberOfUnits = applicationService.model.Notice?.CheckAnswersModel?.NumberOfUnits?.toString();
