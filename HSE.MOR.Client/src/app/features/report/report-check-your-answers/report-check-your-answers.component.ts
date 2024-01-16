@@ -6,6 +6,7 @@ import { AddressModel, AddressType } from '../../../services/address.service';
 import { NavigationHelper } from '../../../helpers/navigation.helper';
 import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 import { ReportConfirmationComponent } from '../report-confirmation/report-confirmation.component';
+import { app } from '../../../../../server';
 @Component({
   templateUrl: './report-check-your-answers.component.html'
 })
@@ -17,7 +18,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   override model: CheckAnswersReportModel = new CheckAnswersReportModel();
   isBCAAddress: boolean = false;
   isHRBAdress: boolean = false;
-  isSearchAdress: boolean = false;
+  isSearchAddress: boolean = false;
   isManual: boolean = false;
   fileNameArray: string[] = [];
   addressRouteKey?: string;
@@ -32,6 +33,9 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   isSameUser: boolean = false;
   UploadSharepointModel?: UploadSharepointModel;
   incidentId?: string;
+  isBuildingType: boolean = false;
+  isEnteredAddress: boolean = false;
+  isProvidedAdress: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     if (applicationService.model.Report?.CheckAnswersModel!) {
@@ -39,16 +43,18 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     }
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
+    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
     this.isManual = applicationService.model.Building?.Address?.IsManual ? true : false;
-    this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding  ? true : false;
+    this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding ? true : false;
+    this.isEnteredAddress = this.isSearchAddress || this.isManual;
+    this.isProvidedAdress = this.isBCAAddress || this.isHRBAdress;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.setValuesToReportModel(applicationService.model?.Report!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!);
     this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
-    
+    this.isBuildingType = applicationService.model.Building?.BuildingType ? true : false;
     this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
@@ -74,8 +80,10 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     }
   }
 
-  navigateToAddress() {
+  navigateToAddress(step: string = "") {
     var routeKey = NavigationHelper.getRoute(this.addressRouteKey!)
+    if (step !== "")
+      return this.navigationService.navigateRelative(`..${routeKey}`, this.activatedRoute, { step: step });
     return this.navigationService.navigate(routeKey);
   }
 
