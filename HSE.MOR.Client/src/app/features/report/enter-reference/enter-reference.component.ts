@@ -28,7 +28,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
       applicationService.model.Report.NoticeReference = "";
     }
     this.model = applicationService.model.Report?.NoticeReference;
-    this.isNoticeReference = applicationService.model.Report?.NoticeReference ? true : false;
+    this.isNoticeReference = applicationService.model.Report?.NoticeReference ? true : false;   
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     
@@ -143,7 +143,6 @@ export class EnterReferenceComponent extends PageComponent<string> {
         applicationService.model.Building.Address.ParentUPRN = caseModel.BuildingModelDynamics.Address?.ParentUPRN;
         applicationService.model.Building.Address.Number = caseModel.BuildingModelDynamics.Address?.Number;
       }
-      applicationService.model.Building.BuildingType = caseModel.BuildingModelDynamics.BuildingType;
       applicationService.model.Building.LocateBuilding = caseModel.BuildingModelDynamics.LocateBuilding;
     } applicationService.updateApplication();
   }
