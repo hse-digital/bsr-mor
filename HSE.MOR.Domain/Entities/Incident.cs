@@ -5,6 +5,9 @@ namespace HSE.MOR.Domain.Entities;
 public record Incident(string Id = null) : Entity(Id)
 {
     public string IncidentId { get; set; }
+    public string FirstName { get; set; } 
+    public string LastName { get; set; }
+    public string ContactNumber { get; set; }
     public string CustomerId { get; set; }
     public Mor MorModelDynamics { get; set; }   
     public Building BuildingModelDynamics { get; set; }
@@ -96,7 +99,7 @@ public record DynamicsIncident() : DynamicsEntity<Incident>
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public bool? bsr_ismanualaddress { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_yoursupportinginformation { get; set; }   
+    public string bsr_yoursupportinginformation { get; set; }
     public int? casetypecode { get; set; }
     public int? prioritycode { get; set; }
     public int? statecode { get; set; }

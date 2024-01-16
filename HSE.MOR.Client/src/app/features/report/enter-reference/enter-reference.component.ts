@@ -98,6 +98,9 @@ export class EnterReferenceComponent extends PageComponent<string> {
     applicationService.model.Report!.Id = caseModel.MorId;
     applicationService.model.CustomerId = caseModel.CustomerId;
     applicationService.model.MorId = caseModel.MorId;
+    applicationService.model.Report!.FirstName = caseModel.FirstName;
+    applicationService.model.Report!.LastName = caseModel.LastName;
+    applicationService.model.Report!.ContactNumber = caseModel.ContactNumber;
     if (caseModel.BuildingModelDynamics) {
       applicationService.model.Building = {};
       applicationService.model.Building.Address = {}
@@ -114,6 +117,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
         applicationService.model.Building.Address.BuildingControlAppId = caseModel.BuildingModelDynamics?.Address?.BuildingControlAppId;
         applicationService.model.Building.IdentifyBuilding = "building_reference"
         applicationService.model.Building.Address.BuildingAddressType = AddressType.BCAReference;
+        applicationService.model.Building.Address.BcaReference = caseModel.BuildingModelDynamics?.BcaReference;
       }
       if (caseModel.BuildingModelDynamics.LocateBuilding || caseModel.BuildingModelDynamics.Address?.IsManual)
       {
@@ -122,6 +126,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
         }
         else {
           applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;
+          applicationService.model.Building.BuildingType = caseModel.BuildingModelDynamics.BuildingType;
         }
         applicationService.model.Building.Address.Street = caseModel.BuildingModelDynamics.Address?.Street;
         applicationService.model.Building.Address.AddressLineTwo = caseModel.BuildingModelDynamics.Address?.AddressLineTwo;

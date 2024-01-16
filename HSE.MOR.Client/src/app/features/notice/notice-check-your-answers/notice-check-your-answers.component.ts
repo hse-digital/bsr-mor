@@ -52,7 +52,6 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     } else {
       await applicationService.createNewMORApplication();
     }
-    applicationService.model.IsAnswersChecked = true;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return applicationService.model.Notice?.WhenBecomeAware !== undefined && !applicationService.model.IsAnswersChecked;

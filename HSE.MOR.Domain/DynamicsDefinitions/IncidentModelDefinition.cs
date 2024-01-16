@@ -26,8 +26,12 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         this.dynamicsIncident.statuscode = 2;
         this.dynamicsIncident.caseorigincode = 3;
         this.dynamicsIncident.incidentstagecode = 1;
-        this.dynamicsIncident.casetypecode = 3;
-               
+        //check is necessary to avoid duplicate mor table creation on update (report submission)
+        if (entity.IncidentId is null) 
+        {
+            this.dynamicsIncident.casetypecode = 3;
+        }
+                      
         AddFunctionReference(entity);
         AddStructureOrBuilding(entity);
         AddBuildingAddress(entity);
@@ -136,6 +140,9 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         incident.IncidentId = dynamicsEntity.incidentid;
         incident.CaseNumber = dynamicsEntity.title;
         incident.CustomerId = dynamicsEntity._primarycontactid_value;
+        incident.FirstName = dynamicsEntity.bsr_contactfirstname ;
+        incident.LastName = dynamicsEntity.bsr_contactlastname;
+        incident.ContactNumber = dynamicsEntity.bsr_contactphone;
         incident.EmailAddress = dynamicsEntity.bsr_contactemail;
         incident.MorId = dynamicsEntity._bsr_mor_value;
         incident.BuildingModelDynamics = new Building();

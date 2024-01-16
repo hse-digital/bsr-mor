@@ -40,7 +40,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
-    this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
+    this.isManual = applicationService.model.Building?.Address?.IsManual ? true : false;
     this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding  ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
     this.model.ContactDetails = applicationService.model.EmailAddress;
@@ -56,7 +56,6 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       applicationService.model.Report = {}
     }
     applicationService.model.Report!.CheckAnswersModel = this.model;
-    applicationService.model.IsAnswersChecked = true;
     if (applicationService.model.Report.NoticeReference) {
       applicationService.updateMORApplication();
     } else {

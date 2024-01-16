@@ -11,7 +11,7 @@
                  hint="You can find this in the email we sent you when we received your mandatory occurrence notice. You must submit your mandatory occurrence notice before submitting your mandatory occurence report."
                  (onKeyupEnter)="saveAndContinue()" />
 
-    <govuk-body>
+    <govuk-body *ngIf="!model">
       <a (keyup.enter)="navigateToIdentifyBuilding()" (click)="navigateToIdentifyBuilding()" class="govuk-link" role="link">I can't find the mandatory occurrence notice reference</a>
     </govuk-body>
 
