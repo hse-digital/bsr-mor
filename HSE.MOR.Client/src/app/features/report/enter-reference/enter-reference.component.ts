@@ -17,6 +17,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
   public static route: string = 'enter-reference';
   static title: string = "Enter mandatory occurrence notice reference - Submit a mandatory occurrence notice and report";
   caseNumber?: string;
+  isNoticeReference: boolean = false;
 
 
   override onInit(applicationService: ApplicationService): void {
@@ -27,6 +28,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
       applicationService.model.Report.NoticeReference = "";
     }
     this.model = applicationService.model.Report?.NoticeReference;
+    this.isNoticeReference = applicationService.model.Report?.NoticeReference ? true : false;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     
