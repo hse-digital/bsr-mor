@@ -230,17 +230,13 @@ public class DynamicsService : IDynamicsService
             caseModel.MorModelDynamics.CustomerReportReferenceId = contact.Id;
         }
         
-        //var mor = await CreateMORAsync(caseModel.MorModelDynamics);
-
         caseModel.CustomerId = contact.Id;
-        //caseModel.MorId = mor.Id;
         var modelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Incident, DynamicsIncident>();
         var dynamicsCase = modelDefinition.BuildDynamicsEntity(caseModel);
 
         var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsCase, true);
         var incident = await response.GetJsonAsync<DynamicsIncident>();
         await UpdateMORWithCaseIdAsync(incident.incidentid, incident._bsr_mor_value, caseModel.MorModelDynamics);
-        //await UpdateMORWithCaseIdAsync(incident.incidentid, caseModel.MorId, mor);
         return caseModel with { Id = incident.incidentid, CaseNumber = incident.title };
     }
 

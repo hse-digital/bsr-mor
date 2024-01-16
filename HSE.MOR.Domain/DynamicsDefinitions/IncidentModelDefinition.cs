@@ -26,8 +26,12 @@ public class IncidentModelDefinition : DynamicsModelDefinition<Incident, Dynamic
         this.dynamicsIncident.statuscode = 2;
         this.dynamicsIncident.caseorigincode = 3;
         this.dynamicsIncident.incidentstagecode = 1;
-        this.dynamicsIncident.casetypecode = 3;
-               
+        //check is necessary to avoid duplicate mor table creation on update (report submission)
+        if (entity.IncidentId is null) 
+        {
+            this.dynamicsIncident.casetypecode = 3;
+        }
+                      
         AddFunctionReference(entity);
         AddStructureOrBuilding(entity);
         AddBuildingAddress(entity);
