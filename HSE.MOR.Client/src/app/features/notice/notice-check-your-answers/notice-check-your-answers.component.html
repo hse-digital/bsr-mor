@@ -12,7 +12,6 @@
           <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" actionDetails="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" actionDetails="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress('locate-building-address')" (onClick)="navigateToAddress('locate-building-address')" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
-          <govuk-summary-list-row key="Building region">England</govuk-summary-list-row>
         </govuk-summary-list>
 
         <govuk-summary-list *ngIf="isManualAddress || isAaboutTheBuilding">         
@@ -36,7 +35,7 @@
 
         <h2 class="govuk-heading-m">About the safety occurrence</h2>
         <govuk-summary-list>
-          <govuk-summary-list-row key="Notice or Report" actionDetails="Notice or Report" (onKeyupEnter)="navigateTo('what-to-submit')" (onClick)="navigateTo('what-to-submit')" [showAction]=true>Notice</govuk-summary-list-row>
+          <govuk-summary-list-row key="Notice or report" actionDetails="Notice or Report" (onKeyupEnter)="navigateTo('what-to-submit')" (onClick)="navigateTo('what-to-submit')" [showAction]=true>{{model.WhatToSubmit | whatToSubmit }}</govuk-summary-list-row>
           <govuk-summary-list-row key="Brief description of the occurrence" actionDetails="Brief description of the occurrence" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.Incident}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Immediate actions taken to keep people safe" actionDetails="Immediate actions taken to keep people safe" (onKeyupEnter)="navigateTo('briefly-describe-risk-incident')" (onClick)="navigateTo('briefly-describe-risk-incident')" [showAction]=true>{{model.ActionsToKeepSafe}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Date and time" actionDetails="Date and time" (onKeyupEnter)="navigateTo('when-become-aware')" (onClick)="navigateTo('when-become-aware')" [showAction]=true>{{model.OccurrenceDateTime}}</govuk-summary-list-row>

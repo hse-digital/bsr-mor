@@ -36,6 +36,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   isBuildingType: boolean = false;
   isEnteredAddress: boolean = false;
   isProvidedAdress: boolean = false;
+  isIdentiyBuilding: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     if (applicationService.model.Report?.CheckAnswersModel!) {
@@ -50,11 +51,13 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isProvidedAdress = this.isBCAAddress || this.isHRBAdress;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
     this.model.ContactDetails = applicationService.model.EmailAddress;
+    this.model.WhatToSubmit = applicationService.model.WhatToSubmit;
     this.setValuesToReportModel(applicationService.model?.Report!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!);
     this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
     this.isBuildingType = applicationService.model.Building?.BuildingType ? true : false;
+    this.isIdentiyBuilding = applicationService.model.Building?.IdentifyBuilding ? true : false;
     this.isSameUser = applicationService.model.Report?.SubmittedNotice == "me" ? true : false;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
@@ -112,7 +115,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       this.model.NumberOfUnits = buildingModel?.NumberOfUnitsProf?.toString();
       this.model.BuildingHeight = buildingModel?.BuildingHeight?.toString();
     }
-
+    this.model.IdentiyBuilding = buildingModel.IdentifyBuilding;
   }
 
   setValuesToReportModel(reportModel: ReportModel) {

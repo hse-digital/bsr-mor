@@ -217,6 +217,7 @@ export class CheckAnswersNoticeModel {
   OrgRole?: string;
   AboutBuilding?: string;
   CaseNumber?: string;
+  WhatToSubmit?: string;
 }
 
 export class CheckAnswersReportModel {
@@ -245,6 +246,8 @@ export class CheckAnswersReportModel {
   UploadedFileNames?: string;
   AboutBuilding?: string;
   BuildingType?: string;
+  IdentiyBuilding?: string;
+  WhatToSubmit?: string;
 }
 
 export class BuildingsInformationResponse {

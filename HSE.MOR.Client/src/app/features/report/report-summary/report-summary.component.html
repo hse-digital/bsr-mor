@@ -20,8 +20,8 @@
     <govuk-summary-list-row key="Number of units">{{model.NumberOfUnits}}</govuk-summary-list-row>
   </govuk-summary-list>
 
-  <h2 class="govuk-heading-m">About you</h2>
-  <govuk-summary-list>
+  <h2 class="govuk-heading-m" *ngIf="!isSameUser || !isNoticeReference">About you</h2>
+  <govuk-summary-list *ngIf="!isSameUser || !isNoticeReference">
     <govuk-summary-list-row key="Your name">{{model.YourName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Email address">{{model.ContactDetails}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Contact number">{{model.ContactNumber}}</govuk-summary-list-row>

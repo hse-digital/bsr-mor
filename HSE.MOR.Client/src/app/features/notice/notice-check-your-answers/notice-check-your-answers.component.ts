@@ -36,7 +36,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.isEnteredAddress = this.isSearchAddress || this.isManualAddress;
     this.isProvidedAdress = this.isBCAAddress || this.isHRBAdress;
     this.model.ContactDetails = applicationService.model.EmailAddress;
-
+    this.model.WhatToSubmit = applicationService.model.WhatToSubmit;
     this.setValuesToNoticeModel(applicationService.model?.Notice!);
     this.setValuesToBuildingModel(applicationService.model?.Building!);
     this.addressRouteKey = this.getAddressRouteKey(applicationService.model.Building?.Address?.BuildingAddressType!)
