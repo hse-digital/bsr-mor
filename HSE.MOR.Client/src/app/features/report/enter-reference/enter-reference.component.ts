@@ -127,7 +127,8 @@ export class EnterReferenceComponent extends PageComponent<string> {
           applicationService.model.Building.Address.Address = caseModel.Address?.Address;
         }
         else {
-          applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;          
+          applicationService.model.Building.Address.Address = caseModel.BuildingModelDynamics.Address?.Address;
+          applicationService.model.Building.BuildingType = caseModel.BuildingModelDynamics.BuildingType;
         }
         applicationService.model.Building.Address.Street = caseModel.BuildingModelDynamics.Address?.Street;
         applicationService.model.Building.Address.AddressLineTwo = caseModel.BuildingModelDynamics.Address?.AddressLineTwo;
