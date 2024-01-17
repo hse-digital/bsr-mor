@@ -18,7 +18,9 @@ export class IsBuildingComponent extends PageComponent<string> {
     if (!applicationService.model.Building) {
       applicationService.model.Building = {}
     }
-
+    if (FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.IdentifyBuilding)) {
+      applicationService.model.Building.IdentifyBuilding = undefined;
+    }
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building.BuildingType)) {
       applicationService.model.Building.BuildingType = "";
     }
