@@ -26,15 +26,25 @@ public class AddressFunctions
     [Function(nameof(SearchBuildingByPostcode))]
     public async Task<HttpResponseData> SearchBuildingByPostcode([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = $"{nameof(SearchBuildingByPostcode)}/{{postcode}}")] HttpRequestData request, string postcode)
     {
-        var response = await GetDataFromOrdnanceSurvey("postcode", new
+        try
         {
-            postcode = postcode,
-            dataset = "LPI",
-            fq = new[] { "CLASSIFICATION_CODE:PP", "COUNTRY_CODE:E" },
-            key = integrationOptions.OrdnanceSurveyApiKey
-        });
+            var resp = await integrationOptions.CommonAPIEndpoint
+                .AppendPathSegment("api")
+                .AppendPathSegment(nameof(SearchBuildingByPostcode))
+                .AppendPathSegment(postcode)
+                .WithHeader("x-functions-key", integrationOptions.CommonAPIKey)
+                .AllowHttpStatus(HttpStatusCode.BadRequest)
+                .GetAsync();
 
-        return await BuildResponseObjectAsync(request, response);
+            var stream = await resp.GetStreamAsync();
+
+            return await request.CreateObjectResponseFromStreamAsync(stream);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 
     [Function(nameof(SearchPostalAddress_LPI_ByPostcode))]
@@ -52,14 +62,25 @@ public class AddressFunctions
     [Function(nameof(SearchPostalAddressByPostcode))]
     public async Task<HttpResponseData> SearchPostalAddressByPostcode([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = $"{nameof(SearchPostalAddressByPostcode)}/{{postcode}}")] HttpRequestData request, string postcode)
     {
-        var response = await GetDataFromOrdnanceSurvey("postcode", new
+        try
         {
-            postcode = postcode,
-            dataset = "DPA",
-            key = integrationOptions.OrdnanceSurveyApiKey
-        });
+            var resp = await integrationOptions.CommonAPIEndpoint
+                .AppendPathSegment("api")
+                .AppendPathSegment(nameof(SearchPostalAddressByPostcode))
+                .AppendPathSegment(postcode)
+                .WithHeader("x-functions-key", integrationOptions.CommonAPIKey)
+                .AllowHttpStatus(HttpStatusCode.BadRequest)
+                .GetAsync();
 
-        return await BuildResponseObjectAsync(request, response);
+            var stream = await resp.GetStreamAsync();
+
+            return await request.CreateObjectResponseFromStreamAsync(stream);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 
     [Function(nameof(SearchBuildingAddressByUPRN))]
@@ -69,7 +90,7 @@ public class AddressFunctions
         {
             uprn = uprn,
             dataset = "LPI",
-            fq = new[] { "CLASSIFICATION_CODE:PP", "COUNTRY_CODE:E" },
+            fq = new[] { "CLASSIFICATION_CODE:PP CLASSIFICATION_CODE:P", "COUNTRY_CODE:E" },
             key = integrationOptions.OrdnanceSurveyApiKey
         });
 
