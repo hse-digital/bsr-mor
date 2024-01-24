@@ -40,6 +40,20 @@ public static class HttpRequestDataExtensions
         return response;
     }
 
+    public static async Task<HttpResponseData> CreateObjectResponseFromStreamAsync(this HttpRequestData httpRequestData, Stream originalStream)
+    {
+        var stream = new MemoryStream();
+        await originalStream.CopyToAsync(stream);
+
+        stream.Flush();
+        stream.Seek(0, SeekOrigin.Begin);
+
+        var response = httpRequestData.CreateResponse(HttpStatusCode.OK);
+        response.Body = stream;
+
+        return response;
+    }
+
     public static async Task<HttpResponseData> BuildValidationErrorResponseDataAsync(this HttpRequestData httpRequestData, ValidationSummary validationSummary)
     {
         var stream = new MemoryStream();

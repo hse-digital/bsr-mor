@@ -14,11 +14,11 @@ public class WhenSearchingPostalAddressByPostcode : UnitTestBase
 {
     private readonly AddressFunctions addressFunctions;
     private readonly IntegrationsOptions integrationsOptions;
-    private const string buckinghamPalacePostcode = "SW1A1AA";
+    private const string flatPostcode = "N227BW";
 
     public WhenSearchingPostalAddressByPostcode()
     {
-        integrationsOptions = new IntegrationsOptions { OrdnanceSurveyEndpoint = "https://api.os.uk/search/places/v1", OrdnanceSurveyApiKey = "abc123" };
+        integrationsOptions = new IntegrationsOptions { CommonAPIEndpoint = "http://localhost:7126" };
         addressFunctions = new AddressFunctions(new OptionsWrapper<IntegrationsOptions>(integrationsOptions), GetMapper());
     }
 
@@ -27,70 +27,10 @@ public class WhenSearchingPostalAddressByPostcode : UnitTestBase
     {
         HttpTest.RespondWithJson(BuildPostcodeResponseJson());
 
-        await addressFunctions.SearchPostalAddressByPostcode(BuildHttpRequestData<object>(default, parameters: buckinghamPalacePostcode), buckinghamPalacePostcode);
+        await addressFunctions.SearchPostalAddressByPostcode(BuildHttpRequestData<object>(default, flatPostcode), flatPostcode);
 
-        HttpTest.ShouldHaveCalled($"{integrationsOptions.OrdnanceSurveyEndpoint}/postcode")
-            .WithQueryParams(new
-            {
-                postcode = buckinghamPalacePostcode,
-                dataset = "DPA",
-                key = integrationsOptions.OrdnanceSurveyApiKey
-            })
-            .WithVerb(HttpMethod.Get);
-    }
-
-    [Fact]
-    public async Task ShouldReturnMatchingAddresses()
-    {
-        var postcodeResponse = BuildPostcodeResponseJson();
-        HttpTest.RespondWithJson(postcodeResponse);
-
-        var response = await addressFunctions.SearchPostalAddressByPostcode(BuildHttpRequestData<object>(default, parameters: buckinghamPalacePostcode), buckinghamPalacePostcode);
-        var responseAddress = await response.ReadAsJsonAsync<BuildingAddressSearchResponse>();
-
-        responseAddress.MaxResults.Should().Be(postcodeResponse.header.maxresults);
-        responseAddress.Offset.Should().Be(postcodeResponse.header.offset);
-        responseAddress.TotalResults.Should().Be(2);
-
-        responseAddress.Results[0].UPRN.Should().Be(postcodeResponse.results[0].DPA.UPRN);
-        responseAddress.Results[0].USRN.Should().Be(postcodeResponse.results[0].DPA.USRN);
-        responseAddress.Results[0].Address.Should().Be(postcodeResponse.results[0].DPA.ADDRESS);
-        responseAddress.Results[0].BuildingName.Should().Be(postcodeResponse.results[0].DPA.SUB_BUILDING_NAME);
-        responseAddress.Results[0].Street.Should().Be(postcodeResponse.results[0].DPA.THOROUGHFARE_NAME);
-        responseAddress.Results[0].Town.Should().Be(postcodeResponse.results[0].DPA.POST_TOWN);
-        responseAddress.Results[0].Postcode.Should().Be(postcodeResponse.results[0].DPA.POSTCODE);
-    }
-
-    [Fact]
-    public async Task ShouldReturnEmptyResultsIfPostcodeIsNotFound()
-    {
-        HttpTest.RespondWith(status: (int)HttpStatusCode.BadRequest);
-
-        var response = await addressFunctions.SearchPostalAddressByPostcode(BuildHttpRequestData<object>(default, parameters: "invalid"), "invalid");
-
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-        var responseAddress = await response.ReadAsJsonAsync<BuildingAddressSearchResponse>();
-        responseAddress.MaxResults.Should().Be(0);
-        responseAddress.Offset.Should().Be(0);
-        responseAddress.TotalResults.Should().Be(0);
-        responseAddress.Results.Should().BeEmpty();
-    }
-
-    [Fact]
-    public async Task ShouldFilterResultsThatAreNotEnglandOrWales()
-    {
-        var postcodeResponse = BuildPostcodeResponseJson();
-        HttpTest.RespondWithJson(postcodeResponse);
-
-        var response = await addressFunctions.SearchBuildingByPostcode(BuildHttpRequestData<object>(default, buckinghamPalacePostcode), buckinghamPalacePostcode);
-        var responseAddress = await response.ReadAsJsonAsync<BuildingAddressSearchResponse>();
-
-        responseAddress.MaxResults.Should().Be(postcodeResponse.header.maxresults);
-        responseAddress.Offset.Should().Be(postcodeResponse.header.offset);
-        responseAddress.TotalResults.Should().Be(2);
-
-        responseAddress.Results.Any(x => x.Country is not ("E" or "W")).Should().BeFalse();
+        HttpTest.ShouldHaveCalled($"{integrationsOptions.CommonAPIEndpoint}/api/SearchPostalAddressByPostcode/{flatPostcode}")
+                .WithVerb(HttpMethod.Get);
     }
 
     private OrdnanceSurveyPostcodeResponse BuildPostcodeResponseJson()

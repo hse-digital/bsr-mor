@@ -34,7 +34,7 @@ public class WhenSearchingBuildingUsingUPRN : UnitTestBase
             {
                 uprn = testUprn,
                 dataset = "LPI",
-                fq = new[] { "CLASSIFICATION_CODE:PP", "COUNTRY_CODE:E" },
+                fq = new[] { "CLASSIFICATION_CODE:PP CLASSIFICATION_CODE:P", "COUNTRY_CODE:E" },
                 key = integrationsOptions.OrdnanceSurveyApiKey
             })
             .WithVerb(HttpMethod.Get);
