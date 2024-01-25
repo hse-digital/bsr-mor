@@ -30,7 +30,6 @@ host.Run();
 static void ConfigureServices(HostBuilderContext builderContext, IServiceCollection serviceCollection)
 {
     serviceCollection.Configure<DynamicsOptions>(builderContext.Configuration.GetSection(DynamicsOptions.Dynamics));
-    serviceCollection.Configure<SwaOptions>(builderContext.Configuration.GetSection(SwaOptions.Swa));
     serviceCollection.Configure<IntegrationsOptions>(builderContext.Configuration.GetSection(IntegrationsOptions.Integrations));
     serviceCollection.Configure<BlobStoreOptions>(builderContext.Configuration.GetSection(BlobStoreOptions.BlobStore));
     serviceCollection.Configure<ScanFileOptions>(builderContext.Configuration.GetSection(ScanFileOptions.Section));
