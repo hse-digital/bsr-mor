@@ -33,16 +33,14 @@ public class DynamicsService : IDynamicsService
     private readonly IMapper mapper;
     private readonly DynamicsModelDefinitionFactory dynamicsModelDefinitionFactory;
     private readonly DynamicsOptions dynamicsOptions;
-    private readonly SwaOptions swaOptions;
     private readonly DynamicsApi dynamicsApi;
 
     public DynamicsService(DynamicsModelDefinitionFactory dynamicsModelDefinitionFactory, IMapper mapper,
-        IOptions<DynamicsOptions> dynamicsOptions, IOptions<SwaOptions> swaOptions, DynamicsApi dynamicsApi) 
+        IOptions<DynamicsOptions> dynamicsOptions, DynamicsApi dynamicsApi) 
     {
         this.dynamicsModelDefinitionFactory = dynamicsModelDefinitionFactory;
         this.mapper = mapper;
         this.dynamicsOptions = dynamicsOptions.Value;
-        this.swaOptions = swaOptions.Value;
         this.dynamicsApi = dynamicsApi;
     }
 
