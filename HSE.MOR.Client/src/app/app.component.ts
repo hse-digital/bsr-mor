@@ -19,7 +19,7 @@ export class AppComponent {
   footerLinks = HelpPagesModule.footerLinks;
   viewCookiesLink!: string;
 
-  appHeaderLink = environment.headerLink;
+  appHeaderLink = environment.production ? "https://www.gov.uk/guidance/submit-a-mandatory-occurrence-notice-and-report" : environment.headerLink;
   govukLogoLink = environment.govukLogoLink;
 
   constructor(private applicationService: ApplicationService,
