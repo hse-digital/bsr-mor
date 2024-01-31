@@ -142,7 +142,9 @@ export class NoticeModel {
   LastName?: string;
   ContactNumber?: string;
   OrganisationName?: string;
+  ActingOrg?: string;
   OrgRole?: string;
+  ActingOrgRole?: string;
   ActionsToKeepSafe?: string;
   IsReportSubmitted?: boolean;
   CheckAnswersModel?: CheckAnswersNoticeModel;
@@ -152,6 +154,7 @@ export class ReportModel {
   Id?: string;
   NoticeReference?: string;
   OrgRole?: string;
+  ActingOrgRole?: string;
   SubmittedNotice?: string;
   FirstName?: string;
   LastName?: string;
@@ -163,6 +166,7 @@ export class ReportModel {
   OccurrenceDiscovered?: string;
   SharedWithOthers?: string;
   OrganisationName?: string;
+  ActingOrg?: string;
   ContactNumber?: string;
   FilesUploaded?: FileUploadModel[];
   YourSupportInfo?: string;
