@@ -219,6 +219,8 @@ export class CheckAnswersNoticeModel {
   ContactNumber?: string;
   OrganisationName?: string;
   OrgRole?: string;
+  ActingOrg?: string;
+  ActingOrgRole?: string;
   AboutBuilding?: string;
   CaseNumber?: string;
   WhatToSubmit?: string;
@@ -229,6 +231,8 @@ export class CheckAnswersReportModel {
   YourName?: string;
   NoticeReference?: string;
   OrgRole?: string;
+  ActingOrg?: string;
+  ActingOrgRole?: string;
   SubmittedNotice?: string;
   IncidentReported?: string;
   AboutIncident?: string;

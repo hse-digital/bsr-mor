@@ -29,7 +29,7 @@ export class ReportActingOrgRoleComponent extends PageComponent<string> {
     applicationService.model.Report!.ActingOrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return true;
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.ActingOrg);
   }
 
   modelValid: boolean = true;

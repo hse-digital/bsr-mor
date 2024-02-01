@@ -11,7 +11,7 @@
 
         <h2 class="govuk-heading-m">About the building</h2>
         <govuk-summary-list *ngIf="isNoticeReference">
-          
+
           <govuk-summary-list-row *ngIf="!isAaboutTheBuilding" key="Building address" (onKeyupEnter)="navigateToAddress('find')" (onClick)="navigateToAddress('find')">{{model.Address}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()">{{model.BcaReference}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()">{{model.HrbNumber}}</govuk-summary-list-row>
@@ -44,6 +44,12 @@
         <govuk-summary-list>
           <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('report-organisation-name')" (onClick)="navigateTo('report-organisation-name')" actionDetails="Organisation" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('report-org-role')" (onClick)="navigateTo('report-org-role')" actionDetails="Organisation role" [showAction]=true>{{model.OrgRole | orgRole }}</govuk-summary-list-row>
+        </govuk-summary-list>
+
+        <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
+        <govuk-summary-list *ngIf="isActingOrganisation">
+          <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('report-acting-org')" (onClick)="navigateTo('report-acting-org')" actionDetails="Organisation" [showAction]=true>{{model.ActingOrg}}</govuk-summary-list-row>
+          <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('report-acting-org-role')" (onClick)="navigateTo('report-acting-org-role')" actionDetails="Organisation role" [showAction]=true>{{model.ActingOrgRole | orgRole }}</govuk-summary-list-row>
         </govuk-summary-list>
 
         <h2 class="govuk-heading-m">About the safety occurrence</h2>

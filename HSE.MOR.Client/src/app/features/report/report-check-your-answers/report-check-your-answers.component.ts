@@ -37,6 +37,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
   isEnteredAddress: boolean = false;
   isProvidedAdress: boolean = false;
   isIdentiyBuilding: boolean = false;
+  isActingOrganisation: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     if (applicationService.model.Report?.CheckAnswersModel!) {
@@ -50,6 +51,8 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.isEnteredAddress = this.isSearchAddress || this.isManual;
     this.isProvidedAdress = this.isBCAAddress || this.isHRBAdress;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);
+    this.isActingOrganisation = (FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.ActingOrg) && FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.ActingOrgRole) && applicationService.model.Report?.OrgRole == "on_behalf")
+      && (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference) || (FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference) && applicationService.model.Report?.SubmittedNotice == "other"))
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.model.WhatToSubmit = applicationService.model.WhatToSubmit;
     this.setValuesToReportModel(applicationService.model?.Report!);
@@ -124,6 +127,8 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.ContactNumber = reportModel.ContactNumber;
     this.model.OrganisationName = reportModel.OrganisationName;
     this.model.OrgRole = reportModel.OrgRole;
+    this.model.ActingOrg = reportModel.ActingOrg;
+    this.model.ActingOrgRole = reportModel.ActingOrgRole;
     this.model.SubmittedNotice = reportModel.SubmittedNotice;
     this.model.NoticeReference = reportModel.NoticeReference;
     if (reportModel.IncidentReported) {

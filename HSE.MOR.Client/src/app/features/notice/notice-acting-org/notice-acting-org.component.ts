@@ -4,6 +4,7 @@ import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { NoticeOrgRoleComponent } from '../notice-org-role/notice-org-role.component';
+import { NoticeActingOrgRoleComponent } from '../notice-acting-org-role/notice-acting-org-role.component';
 
 @Component({
   templateUrl: './notice-acting-org.component.html'
@@ -31,18 +32,16 @@ export class NoticeActingOrgComponent extends PageComponent<string> {
   }
 
   modelValid: boolean = false;
-  ErrorMessage: string = "You need to tell us your organisation";
+  ErrorMessage: string = "You need to tell us the organisation you are acting for";
   ActingOrgnError: boolean = false;
 
   override isValid(): boolean {
     this.ActingOrgnError = false;
     if (!FieldValidations.IsNotNullOrWhitespace(this.model)) {
       this.ActingOrgnError = true;
-    } else if (this.model!.length < 3) {
-      this.ErrorMessage = "You need to enter an organisation that is longer than 2 characters"
-      this.ActingOrgnError = true;
-    } if (this.model!.length > 50) {
-      this.ErrorMessage = "You need to tell us your organisation using fewer words"
+    }
+    if (this.model!.length > 50) {
+      this.ErrorMessage = "You need to tell us the organisation you are acting for using fewer words"
       this.ActingOrgnError = true;
     }
     this.modelValid = !this.ActingOrgnError;
@@ -50,6 +49,6 @@ export class NoticeActingOrgComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(NoticeOrgRoleComponent.route, this.activatedRoute);
+    return this.navigationService.navigateRelative(NoticeActingOrgRoleComponent.route, this.activatedRoute);
   }
 }

@@ -5,6 +5,7 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { ReportDutyHolderCanSubmitComponent } from '../report-duty-holder-can-submit/report-duty-holder-can-submit.component';
 import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
+import { ReportActingOrgComponent } from '../report-acting-org/report-acting-org.component';
 
 @Component({
   templateUrl: './report-org-role.component.html'
@@ -46,6 +47,8 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
   override navigateNext(): Promise<boolean> {
     if (this.model == "other") {
       return this.navigationService.navigateRelative(ReportDutyHolderCanSubmitComponent.route, this.activatedRoute);
+    } else if (this.model == "on_behalf") {
+      return this.navigationService.navigateRelative(ReportActingOrgComponent.route, this.activatedRoute);
     } else {
       return this.navigationService.navigateRelative(TypeIncidentReportedComponent.route, this.activatedRoute);
     }

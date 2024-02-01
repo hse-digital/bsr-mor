@@ -32,7 +32,7 @@ export class NoticeActingOrgRoleComponent extends PageComponent<string> {
     applicationService.model.Notice!.ActingOrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrganisationName);
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrg);
   }
 
   modelValid: boolean = true;
