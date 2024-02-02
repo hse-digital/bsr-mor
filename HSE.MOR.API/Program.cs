@@ -13,6 +13,9 @@ using HSE.MOR.API.BlobStore;
 using HSE.MOR.API.Models.Dynamics;
 using HSE.MOR.API.Services.ScanFiles;
 using HSE.MOR.API.Services.FileStore;
+using HSE.MOR.API.Models.CompaniesHouse;
+using HSE.MOR.API.Models.LocalAuthority;
+using HSE.MOR.API.Services.CompaniesSearch;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults(workerOptions =>
@@ -34,9 +37,14 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     serviceCollection.Configure<BlobStoreOptions>(builderContext.Configuration.GetSection(BlobStoreOptions.BlobStore));
     serviceCollection.Configure<ScanFileOptions>(builderContext.Configuration.GetSection(ScanFileOptions.Section));
     serviceCollection.Configure<SharePointOptions>(builderContext.Configuration.GetSection(SharePointOptions.Section));
+
     serviceCollection.AddSingleton<IBlobClient, BlobStoreClient>();
     serviceCollection.AddTransient<IBlobSASUri, BlobSASUri>();
     serviceCollection.AddTransient<OTPService>();
+
+    serviceCollection.AddTransient<CompanySearchService>();
+    serviceCollection.AddTransient<CompanySearchFactory>();
+
     serviceCollection.AddTransient<IDynamicsService, DynamicsService>();
     serviceCollection.AddTransient<DynamicsModelDefinitionFactory>();
     serviceCollection.AddTransient<DynamicsApi>();
@@ -50,6 +58,8 @@ static void ConfigureServices(HostBuilderContext builderContext, IServiceCollect
     {
         config.AddProfile<OrdnanceSurveyPostcodeResponseProfile>();
         config.AddProfile<MORDynamicsResponseProfile>();
+        config.AddProfile<CompaniesHouseSearchResponseProfile>();
+        config.AddProfile<LocalAuthoritiesSearchResponseProfile>();
 
     }).CreateMapper());
 }

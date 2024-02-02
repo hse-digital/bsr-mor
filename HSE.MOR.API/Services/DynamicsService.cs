@@ -5,6 +5,7 @@ using Flurl.Util;
 using HSE.MOR.API.Extensions;
 using HSE.MOR.API.Models;
 using HSE.MOR.API.Models.Dynamics;
+using HSE.MOR.API.Models.LocalAuthority;
 using HSE.MOR.Domain.DynamicsDefinitions;
 using HSE.MOR.Domain.Entities;
 using Microsoft.Extensions.Options;
@@ -313,6 +314,22 @@ public class DynamicsService : IDynamicsService
         });
 
         return response.value.FirstOrDefault();
+    }
+
+    public Task<DynamicsOrganisationsSearchResponse> SearchLocalAuthorities(string authorityName)
+    {
+        return SearchOrganisations(authorityName, dynamicsOptions.LocalAuthorityTypeId);
+    }
+
+    public Task<DynamicsOrganisationsSearchResponse> SearchSocialHousingOrganisations(string authorityName)
+    {
+        return SearchOrganisations(authorityName, DynamicsOptions.SocialHousingTypeId);
+    }
+
+    private Task<DynamicsOrganisationsSearchResponse> SearchOrganisations(string authorityName, string accountTypeId)
+    {
+        return dynamicsApi.Get<DynamicsOrganisationsSearchResponse>("accounts",
+            new[] { ("$filter", $"_bsr_accounttype_accountid_value eq '{accountTypeId}' and contains(name, '{authorityName.EscapeSingleQuote()}')"), ("$select", "name") });
     }
 
     public async Task<IFlurlResponse> UpdateCaseAsync(string id, DynamicsIncident dynamicsIncident)

@@ -23,7 +23,9 @@ public static class DynamicsAccountType
         ["management-company"] = "92c98d4a-1dad-ed11-83ff-0022481b5e4f",
         ["rmc-or-organisation"] = "20df1269-1dad-ed11-83ff-0022481b5e4f",
         ["rtm-or-organisation"] = "50f0899f-1dad-ed11-83ff-0022481b5e4f",
-        ["other"] = "453982a5-1dad-ed11-83ff-0022481b5e4f"
+        ["other"] = "453982a5-1dad-ed11-83ff-0022481b5e4f",
+        ["company"] = "9cbdaf83-5946-ee11-be6e-6045bdf1e965",
+        ["charity"] = "5f27a889-5946-ee11-be6e-6045bdf1e965",
     };
 }
 
