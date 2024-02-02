@@ -17,9 +17,13 @@ public record Mor(string Id = null) : Entity(Id)
     public string DescribeRiskIncident { get; set; }
     public TimeModel WhenBecomeAware { get; set; }
     public string NoticeOrganisationName { get; set; }
+    public string NoticeActingOrg { get; set; }
     public string ReportOrganisationName { get; set; }
+    public string ReportActingOrg { get; set; }
     public string NoticeOrgRole { get; set; }
+    public string NoticeActingOrgRole { get; set; }
     public string ReportOrgRole { get; set; }
+    public string ReportActingOrgRole { get; set; }
     public string ActionsToKeepSafe { get; set; }
     public string CustomerNoticeReferenceId { get; set; }
     public string IncidentReference { get; set; }
@@ -68,6 +72,14 @@ public record DynamicsMor() : DynamicsEntity<Mor>
     public BuildingType? bsr_howwouldyoudescribethebuilding { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_occurrencedescription { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsr_noticeactingorgname { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsr_noticeactingrole { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsr_reportactingorgname { get; set; }
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    public string bsr_reportactingrole { get; set; }
     public string bsr_briefdescription { get; set; }
     public string bsr_immediateactionstaken { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]

@@ -40,6 +40,7 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             IncidentRiskDetails(entity);
             AddingContactReference(entity);
             UpdateNoticeRportSubmittedDateTime(entity);
+            ActingOrgRole(entity);
 
             return this.dynamicsMor;
         }
@@ -53,6 +54,21 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             else {
                 this.dynamicsMor = dynamicsMor with { bsr_reportsubmittedon = DateTime.UtcNow };
             }
+        }
+
+        private void ActingOrgRole(Mor entity)
+        {
+            if (entity.IsNotice)
+            {
+                this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
+                this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = entity.NoticeActingOrgRole };
+            }
+            else { 
+
+                this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
+                this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = entity.ReportActingOrgRole };
+            }
+            
         }
 
         private void IncidentRiskDetails(Mor entity) {
