@@ -4,7 +4,7 @@ import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { ReportDutyHolderCanSubmitComponent } from '../report-duty-holder-can-submit/report-duty-holder-can-submit.component';
-import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
+import { ReportWhenBecomeAwareComponent } from '../report-when-become-aware/report-when-become-aware.component';
 
 @Component({
   templateUrl: './report-acting-org-role.component.html'
@@ -46,7 +46,7 @@ export class ReportActingOrgRoleComponent extends PageComponent<string> {
     if (this.model == "other") {
       return this.navigationService.navigateRelative(ReportDutyHolderCanSubmitComponent.route, this.activatedRoute);
     } else {
-      return this.navigationService.navigateRelative(TypeIncidentReportedComponent.route, this.activatedRoute);
+      return this.navigationService.navigateRelative(ReportWhenBecomeAwareComponent.route, this.activatedRoute);
     }
 
   }
