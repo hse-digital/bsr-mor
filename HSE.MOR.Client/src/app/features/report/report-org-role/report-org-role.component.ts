@@ -6,6 +6,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { ReportDutyHolderCanSubmitComponent } from '../report-duty-holder-can-submit/report-duty-holder-can-submit.component';
 import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
 import { ReportActingOrgComponent } from '../report-acting-org/report-acting-org.component';
+import { ReportWhenBecomeAwareComponent } from '../report-when-become-aware/report-when-become-aware.component';
 
 @Component({
   templateUrl: './report-org-role.component.html'
@@ -50,7 +51,7 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
     } else if (this.model == "on_behalf") {
       return this.navigationService.navigateRelative(ReportActingOrgComponent.route, this.activatedRoute);
     } else {
-      return this.navigationService.navigateRelative(TypeIncidentReportedComponent.route, this.activatedRoute);
+      return this.navigationService.navigateRelative(ReportWhenBecomeAwareComponent.route, this.activatedRoute);
     }
     
   }

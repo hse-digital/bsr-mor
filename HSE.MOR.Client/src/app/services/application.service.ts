@@ -170,6 +170,7 @@ export class ReportModel {
   ContactNumber?: string;
   FilesUploaded?: FileUploadModel[];
   YourSupportInfo?: string;
+  ReportWhenBecomeAware?: TimeModel;
   CheckAnswersModel?: CheckAnswersReportModel
 }
 
@@ -256,6 +257,7 @@ export class CheckAnswersReportModel {
   BuildingType?: string;
   IdentiyBuilding?: string;
   WhatToSubmit?: string;
+  OccurrenceDateTime?: string;
 }
 
 export class BuildingsInformationResponse {

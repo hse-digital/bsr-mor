@@ -20,6 +20,7 @@ public record Mor(string Id = null) : Entity(Id)
     public string NoticeActingOrg { get; set; }
     public string ReportOrganisationName { get; set; }
     public string ReportActingOrg { get; set; }
+    public TimeModel ReportWhenBecomeAware { get; set; }
     public string NoticeOrgRole { get; set; }
     public string NoticeActingOrgRole { get; set; }
     public string ReportOrgRole { get; set; }
@@ -67,6 +68,7 @@ public record DynamicsMor() : DynamicsEntity<Mor>
     public NoticeRole? bsr_reportsubmittedbyrole { get; set; }
     public string bsr_noticeorganisationname { get; set; }
     public DateTime? bsr_occurrenceidentifiedon { get; set; }
+    public DateTime? bsr_occurrenceidentifiedupdate { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public BuildingCode? bsr_bsr_identifybuildingcode { get; set; }
     public BuildingType? bsr_howwouldyoudescribethebuilding { get; set; }

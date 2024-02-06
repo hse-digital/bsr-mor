@@ -41,6 +41,7 @@
     <Folder Include="src\app\features\report\incident-details\" />
     <Folder Include="src\app\features\report\report-acting-org-role\" />
     <Folder Include="src\app\features\report\report-acting-org\" />
+    <Folder Include="src\app\features\report\report-when-become-aware\" />
     <Folder Include="src\app\features\report\report-submitted\" />
     <Folder Include="src\app\features\report\report-summary\" />
     <Folder Include="src\app\features\report\report-confirmation\" />

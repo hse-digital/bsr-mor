@@ -24,6 +24,7 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             this.dynamicsMor.bsr_reportsubmittedbyrole = RoleSubmittingNotice(entity.ReportOrgRole);
             this.dynamicsMor.bsr_noticeorganisationname = entity.NoticeOrganisationName;
             this.dynamicsMor.bsr_occurrenceidentifiedon = entity.WhenBecomeAware != null ? GetDate(entity.WhenBecomeAware.Year, entity.WhenBecomeAware.Month, entity.WhenBecomeAware.Day, entity.WhenBecomeAware.Hour, entity.WhenBecomeAware.Minute) : null;
+            this.dynamicsMor.bsr_occurrenceidentifiedupdate = entity.ReportWhenBecomeAware != null ? GetDate(entity.ReportWhenBecomeAware.Year, entity.ReportWhenBecomeAware.Month, entity.ReportWhenBecomeAware.Day, entity.ReportWhenBecomeAware.Hour, entity.ReportWhenBecomeAware.Minute) : null;
             this.dynamicsMor.bsr_bsr_identifybuildingcode = entity.BuildingModel != null ? IdentifyBuilding(entity.BuildingModel.IdentifyBuilding) : null;
             if (string.IsNullOrWhiteSpace(entity.NoticeReference))
             {
@@ -58,17 +59,20 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
 
         private void ActingOrgRole(Mor entity)
         {
-            if (entity.IsNotice)
+            if (entity.NoticeOrgRole == "on_behalf" || entity.ReportOrgRole == "on_behalf") 
             {
-                this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
-                this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
-            }
-            else { 
+                if (entity.IsNotice)
+                {
+                    this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
+                    this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
+                }
+                else
+                {
 
-                this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
-                this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
-            }
-            
+                    this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
+                    this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
+                }
+            }                    
         }
 
         private void IncidentRiskDetails(Mor entity) {

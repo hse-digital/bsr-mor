@@ -38,6 +38,7 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.NoticeOrgRole, m => m.MapFrom(m => m.Notice.OrgRole))
             .ForMember(m => m.NoticeActingOrgRole, m => m.MapFrom(m => m.Notice.ActingOrgRole))
             .ForMember(m => m.WhenBecomeAware, m => m.MapFrom(m => m.Notice))
+            .ForMember(m => m.ReportWhenBecomeAware, m => m.MapFrom(m => m.Report))
             .ForMember(m => m.BuildingModel, m => m.MapFrom(m => m.Building))
             .ForMember(m => m.IsNotice, m => m.MapFrom(m => m.WhatToSubmit == "notice" ? true : false));
 
@@ -133,6 +134,13 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.Day, m => m.MapFrom(m => m.WhenBecomeAware.Day))
             .ForMember(m => m.Hour, m => m.MapFrom(m => m.WhenBecomeAware.Hour))
             .ForMember(m => m.Minute, m => m.MapFrom(m => m.WhenBecomeAware.Minute));
+
+        CreateMap<ReportModel, TimeModel>()
+            .ForMember(m => m.Year, m => m.MapFrom(m => m.ReportWhenBecomeAware.Year))
+            .ForMember(m => m.Month, m => m.MapFrom(m => m.ReportWhenBecomeAware.Month))
+            .ForMember(m => m.Day, m => m.MapFrom(m => m.ReportWhenBecomeAware.Day))
+            .ForMember(m => m.Hour, m => m.MapFrom(m => m.ReportWhenBecomeAware.Hour))
+            .ForMember(m => m.Minute, m => m.MapFrom(m => m.ReportWhenBecomeAware.Minute));
 
     }
 }
