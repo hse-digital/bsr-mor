@@ -37,6 +37,7 @@
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\notice\when-become-aware\" />
     <Folder Include="src\app\features\report\incident-details\" />
+    <Folder Include="src\app\features\report\report-when-become-aware\" />
     <Folder Include="src\app\features\report\report-submitted\" />
     <Folder Include="src\app\features\report\report-summary\" />
     <Folder Include="src\app\features\report\report-confirmation\" />

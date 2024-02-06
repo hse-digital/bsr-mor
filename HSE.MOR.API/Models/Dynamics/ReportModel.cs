@@ -1,4 +1,6 @@
 ﻿
+using HSE.MOR.Domain.Entities;
+
 namespace HSE.MOR.API.Models.Dynamics;
 
 public record ReportModel()
@@ -18,6 +20,7 @@ public record ReportModel()
     public string OccurrenceDiscovered { get; set; }
     public string SharedWithOthers { get; set; }
     public string OrganisationName { get; set; }
+    public TimeModel ReportWhenBecomeAware { get; set; }
     public string YourSupportInfo { get; set; }
     public FileUploadModel[] FilesUploaded { get; set; }
 }

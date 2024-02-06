@@ -166,6 +166,7 @@ export class ReportModel {
   ContactNumber?: string;
   FilesUploaded?: FileUploadModel[];
   YourSupportInfo?: string;
+  ReportWhenBecomeAware?: TimeModel;
   CheckAnswersModel?: CheckAnswersReportModel
 }
 

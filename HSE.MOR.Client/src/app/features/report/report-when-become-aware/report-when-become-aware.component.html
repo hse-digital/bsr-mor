@@ -1,0 +1,22 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="this.inputDateHasError" anchorId="input-date-day" [message]="this.dateErrorMessage" />
+    <govuk-error-link *ngIf="this.inputTimeHasError" anchorId="input-time-hour" [message]="this.timeErrorMessage" />
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">About the safety occurrence</span>
+
+  <div class="govuk-!-margin-bottom-5">
+    <govuk-date-input title="When did {{organisationName}} identify the safety occurrence?" titleClass="govuk-label--l" [isPageHeading]="true"
+                      hint="For example, 27 05 2023" [(model)]="inputDateModel" id="report-input-date"
+                      [errorText]="getErrorDescription(this.inputDateHasError, this.dateErrorMessage ?? '')">
+    </govuk-date-input>
+  </div>
+  <govuk-time-input title="Time" titleClass="govuk-label--s" [isPageHeading]="true"
+                    hint="Be as accurate as you can. For example, 09:30 or 15:55" [(model)]="inputTimeModel" id="report-input-time"
+                    [errorText]="getErrorDescription(this.inputTimeHasError, this.timeErrorMessage ?? '')">
+  </govuk-time-input>
+
+
+</govuk-formpage>

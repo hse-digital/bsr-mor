@@ -4,17 +4,17 @@ import { PageComponent } from 'src/app/helpers/page.component';
 import { FieldValidations } from 'src/app/helpers/validators/fieldvalidations';
 import { ApplicationService, TimeModel } from 'src/app/services/application.service';
 import { DateValidator } from '../../../helpers/validators/date-validator';
-import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-incident/briefly-describe-risk-incident.component';
+import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
 
 export type InputDateModel = { day?: string, month?: string, year?: string };
 export type InputTimeModel = { hour?: string, minute?: string };
 
 @Component({
   selector: 'hse-when-become-aware',
-  templateUrl: './when-become-aware.component.html'
+  templateUrl: './report-when-become-aware.component.html'
 })
-export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
-  public static route: string = 'when-become-aware';
+export class ReportWhenBecomeAwareComponent extends PageComponent<TimeModel>  {
+  public static route: string = 'report-when-become-aware';
   static title: string = "When did you identify the risk or incident? - Submit a mandatory occurrence notice and report";
   organisationName?: string;
 
@@ -27,41 +27,41 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   inputDateHasError: boolean = false;
   inputTimeHasError: boolean = false;
   inputIsEmpty?: boolean = false;
-  
+
   override onInit(applicationService: ApplicationService): void {
-    if (!applicationService.model.Notice) {
-      applicationService.model.Notice = {
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {
       };
     }
-    if (!applicationService.model.Notice?.WhenBecomeAware) {
-      applicationService.model.Notice!.WhenBecomeAware = {       
+    if (!applicationService.model.Report?.ReportWhenBecomeAware) {
+      applicationService.model.Report!.ReportWhenBecomeAware = {
       };
     }
-    this.organisationName = applicationService.model.Notice!.OrganisationName ?? "organisation";
-    this.model = applicationService.model.Notice?.WhenBecomeAware;   
-    this.model = { 
-      Day: applicationService.model.Notice?.WhenBecomeAware?.Day,
-      Month: applicationService.model.Notice?.WhenBecomeAware?.Month,
-      Year: applicationService.model.Notice?.WhenBecomeAware?.Year,      
-      Hour: applicationService.model.Notice?.WhenBecomeAware?.Hour,      
-      Minute: applicationService.model.Notice?.WhenBecomeAware?.Minute,      
+    this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
+    this.model = applicationService.model.Report?.ReportWhenBecomeAware;
+    this.model = {
+      Day: applicationService.model.Report?.ReportWhenBecomeAware?.Day,
+      Month: applicationService.model.Report?.ReportWhenBecomeAware?.Month,
+      Year: applicationService.model.Report?.ReportWhenBecomeAware?.Year,
+      Hour: applicationService.model.Report?.ReportWhenBecomeAware?.Hour,
+      Minute: applicationService.model.Report?.ReportWhenBecomeAware?.Minute,
     }
     this.inputDateModel = this.transformToInputDate(this.model);
     this.inputTimeModel = this.transformToInputTime(this.model);
   }
 
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.Notice!.WhenBecomeAware = { 
+    applicationService.model.Notice!.WhenBecomeAware = {
       Day: this.model?.Day,
       Month: this.model?.Month,
-      Year: this.model?.Year,      
-      Hour: this.model?.Hour,      
-      Minute: this.model?.Minute,      
+      Year: this.model?.Year,
+      Hour: this.model?.Hour,
+      Minute: this.model?.Minute,
     }
   }
 
   private transformToDateTimeModel(inputDate?: InputDateModel, inputTime?: InputTimeModel): TimeModel {
-    return  {
+    return {
       Day: inputDate?.day,
       Month: inputDate?.month,
       Year: inputDate?.year,
@@ -73,8 +73,8 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
 
   private transformToInputDate(timeModel: TimeModel): InputDateModel {
     return {
-      day: timeModel?.Day?.toString(), 
-      month: timeModel?.Month?.toString(), 
+      day: timeModel?.Day?.toString(),
+      month: timeModel?.Month?.toString(),
       year: timeModel?.Year?.toString()
     };
   }
@@ -87,11 +87,11 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrgRole);
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.OrgRole);
   }
 
   override isValid(): boolean {
-    this.model = this.transformToDateTimeModel(this.inputDateModel, this.inputTimeModel);    
+    this.model = this.transformToDateTimeModel(this.inputDateModel, this.inputTimeModel);
 
     let dateIsValid = this.isDateValid();
     let timeIsValid = this.isTimeValid();
@@ -126,7 +126,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   private isTimeValid() {
     let isHourValid = FieldValidations.IsWholeNumber(Number(this.model?.Hour)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Hour)) && Number(this.model?.Hour) < 24;
     let isMinuteValid = FieldValidations.IsWholeNumber(Number(this.model?.Minute)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Minute)) && Number(this.model?.Minute) < 60;
-    
+
     this.timeErrorMessage = "";
     if (this.InputTimeModelIsNullOrWhitespace()) {
       this.timeErrorMessage = "You need to tell us the time you were made aware of the occurrence";
@@ -145,7 +145,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   private getDate(model?: TimeModel) {
     let date: Date = new Date();
     date.setDate(Number(this.model?.Day!) ?? -1);
-    date.setMonth(Number(Number(this.model?.Month!)-1) ?? -1);
+    date.setMonth(Number(Number(this.model?.Month!) - 1) ?? -1);
     date.setFullYear(Number(this.model?.Year!) ?? -1);
     return date;
   }
@@ -170,7 +170,7 @@ export class WhenBecomeAwareComponent  extends PageComponent<TimeModel>  {
   }
 
   override async navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(BrieflyDescribeRiskIncidentComponent.route, this.activatedRoute);
+    return this.navigationService.navigateRelative(TypeIncidentReportedComponent.route, this.activatedRoute);
   }
 
 }
