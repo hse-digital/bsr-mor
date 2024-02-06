@@ -26,8 +26,14 @@ export class ReportYourDetailsComponent extends PageComponent<ReportModel> {
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.LastName)) {
       applicationService.model.Report.LastName = "";
     }
-    this.model.FirstName = applicationService.model.Report?.FirstName;
-    this.model.LastName = applicationService.model.Report?.LastName;  
+    if (applicationService.model.Report.SubmittedNotice == "me") {
+      this.model.FirstName = applicationService.model.Report?.FirstName;
+      this.model.LastName = applicationService.model.Report?.LastName;
+    } else {
+      this.model.FirstName = "";
+      this.model.LastName = "";
+    }
+    
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.FirstName = this.model.FirstName;

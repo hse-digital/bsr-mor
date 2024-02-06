@@ -13,6 +13,8 @@ public record NoticeModel()
     public string DescribeRiskIncident { get; set; }
     public TimeModel WhenBecomeAware { get; set; }
     public string OrganisationName { get; set; }
+    public string ActingOrg { get; set; }
     public string OrgRole { get; set; }
+    public string ActingOrgRole { get; set; }
     public string ActionsToKeepSafe { get; set; }
 }

@@ -40,6 +40,7 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             IncidentRiskDetails(entity);
             AddingContactReference(entity);
             UpdateNoticeRportSubmittedDateTime(entity);
+            ActingOrgRole(entity);
 
             return this.dynamicsMor;
         }
@@ -53,6 +54,21 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             else {
                 this.dynamicsMor = dynamicsMor with { bsr_reportsubmittedon = DateTime.UtcNow };
             }
+        }
+
+        private void ActingOrgRole(Mor entity)
+        {
+            if (entity.IsNotice)
+            {
+                this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
+                this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
+            }
+            else { 
+
+                this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
+                this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
+            }
+            
         }
 
         private void IncidentRiskDetails(Mor entity) {
@@ -109,6 +125,21 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
                 case null: return null;
             }
 
+            throw new ArgumentException();
+        }
+
+        private ActingRole? ActingOrgRole(string role)
+        {
+            return role switch
+            {
+                "acc_person" => ActingRole.AccountablePerson,
+                "principal_acc_person" => ActingRole.PrincipalAccountablePerson,
+                "principal_contractor" => ActingRole.PrincipalContractor,
+                "principal_designer" => ActingRole.PrincipalDesigner,
+                "other" => ActingRole.Other,
+                _ => null,
+            };
+            
             throw new ArgumentException();
         }
 

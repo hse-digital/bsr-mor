@@ -33,6 +33,12 @@
     <govuk-summary-list-row key="Organisation role">{{model.OrgRole | orgRole }}</govuk-summary-list-row>
   </govuk-summary-list>
 
+  <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
+  <govuk-summary-list *ngIf="isActingOrganisation">
+    <govuk-summary-list-row key="Organisation">{{model.ActingOrg}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation's role">{{model.ActingOrgRole | orgRole }}</govuk-summary-list-row>
+  </govuk-summary-list>
+
   <h2 class="govuk-heading-m">About safety occurrence</h2>
   <govuk-summary-list>
     <govuk-summary-list-row key="Type of safety occurrence">{{model.IncidentReported}}</govuk-summary-list-row>
@@ -41,7 +47,7 @@
     <govuk-summary-list-row key="Tell us who has been affected or who could be affected, and in what ways">{{model.WhoAffectedByIncident}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Explain what you are doing or planning to do to keep people safe">{{model.IncidentKeepPeopleSafe}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Tell us how {{organisationName}} discovered the safety occurrence">{{model.OccurrenceDiscovered}}</govuk-summary-list-row>
-    <govuk-summary-list-row key="Tell us anything you think should be shared for others to learn from">{{model.SharedWithOthers}}</govuk-summary-list-row>    
+    <govuk-summary-list-row key="Tell us anything you think should be shared for others to learn from">{{model.SharedWithOthers}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Supporting information">{{model.UploadedFileNames}}</govuk-summary-list-row>
   </govuk-summary-list>
   <govuk-body><a class="govuk-link" (click)="printSummary()" role="link"> Print this page </a></govuk-body>

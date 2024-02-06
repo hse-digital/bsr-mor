@@ -1,0 +1,15 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasActingOrgRoleErrors" anchorId="report-acting-org-role-acc-person-input" message="You need to tell us the role of the organisation you are acting for" />
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">Organisation you're acting for</span>
+  <govuk-radio-group aria-required="true" id="radios-report-acting-org-role" class="govuk-!-margin-bottom-4" title="What is {{organisationName}}'s role in submitting this notice?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasActingOrgRoleErrors, 'You need to tell us the role of the organisation you are acting for')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-acting-org-role-acc-person" value="acc_person" label="Accountable person" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-acting-org-role-principal-acc-person" value="principal_acc_person" label="Principal accountable person" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-acting-org-role-principal-contractor" value="principal_contractor" label="Principal contractor" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-acting-org-role-principal-designer" value="principal_designer" label="Principal designer" />
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-role-group" id="report-acting-org-role-other" value="other" label="Other" />
+  </govuk-radio-group>
+</govuk-formpage>

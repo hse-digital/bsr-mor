@@ -22,6 +22,8 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.IncidentKeepPeopleSafe, m => m.MapFrom(m => m.Report.IncidentKeepPeopleSafe))
             .ForMember(m => m.IncidentReported, m => m.MapFrom(m => m.Report.IncidentReported))
             .ForMember(m => m.ReportOrganisationName, m => m.MapFrom(m => m.Report.OrganisationName))
+            .ForMember(m => m.ReportActingOrg, m => m.MapFrom(m => m.Report.ActingOrg))
+            .ForMember(m => m.ReportActingOrgRole, m => m.MapFrom(m => m.Report.ActingOrgRole))
             .ForMember(m => m.ReportOrgRole, m => m.MapFrom(m => m.Report.OrgRole))
             .ForMember(m => m.SharedWithOthers, m => m.MapFrom(m => m.Report.SharedWithOthers))
             .ForMember(m => m.SubmittedNotice, m => m.MapFrom(m => m.Report.SubmittedNotice))
@@ -32,7 +34,9 @@ public class MORDynamicsResponseProfile : Profile
             .ForMember(m => m.DescribeRiskIncident, m => m.MapFrom(m => m.Notice.DescribeRiskIncident))
             .ForMember(m => m.ActionsToKeepSafe, m => m.MapFrom(m => m.Notice.ActionsToKeepSafe))
             .ForMember(m => m.NoticeOrganisationName, m => m.MapFrom(m => m.Notice.OrganisationName))
+            .ForMember(m => m.NoticeActingOrg, m => m.MapFrom(m => m.Notice.ActingOrg))
             .ForMember(m => m.NoticeOrgRole, m => m.MapFrom(m => m.Notice.OrgRole))
+            .ForMember(m => m.NoticeActingOrgRole, m => m.MapFrom(m => m.Notice.ActingOrgRole))
             .ForMember(m => m.WhenBecomeAware, m => m.MapFrom(m => m.Notice))
             .ForMember(m => m.BuildingModel, m => m.MapFrom(m => m.Building))
             .ForMember(m => m.IsNotice, m => m.MapFrom(m => m.WhatToSubmit == "notice" ? true : false));

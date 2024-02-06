@@ -33,6 +33,12 @@
     <govuk-summary-list-row key="Organisation's role">{{model.OrgRole | orgRole}}</govuk-summary-list-row>
   </govuk-summary-list>
 
+  <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
+  <govuk-summary-list *ngIf="isActingOrganisation">
+    <govuk-summary-list-row key="Organisation">{{model.ActingOrg}}</govuk-summary-list-row>
+    <govuk-summary-list-row key="Organisation's role">{{model.ActingOrgRole | orgRole}}</govuk-summary-list-row>
+  </govuk-summary-list>
+
   <h2 class="govuk-heading-m">About the safety occurrence</h2>
   <govuk-summary-list>
     <govuk-summary-list-row key="Notice or Report">Notice</govuk-summary-list-row>
