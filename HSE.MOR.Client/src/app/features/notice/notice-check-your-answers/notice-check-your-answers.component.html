@@ -8,13 +8,13 @@
         <h2 class="govuk-heading-m">About the building</h2>
         <govuk-summary-list>
           <govuk-summary-list-row *ngIf="isEnteredAddress" key="Building address" actionDetails="Building address" (onKeyupEnter)="navigateToAddress('find')" (onClick)="navigateToAddress('find')" [showAction]=true>{{model.Address}}</govuk-summary-list-row>
-          <govuk-summary-list-row *ngIf="isProvidedAdress" key="Building address"  (onKeyupEnter)="navigateToAddress('find')" (onClick)="navigateToAddress('find')" >{{model.Address}}</govuk-summary-list-row>
+          <govuk-summary-list-row *ngIf="isProvidedAdress" key="Building address" (onKeyupEnter)="navigateToAddress('find')" (onClick)="navigateToAddress('find')">{{model.Address}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isBCAAddress" key="BCA reference" actionDetails="BCA reference" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.BcaReference}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isHRBAdress" key="Building HRB number" actionDetails="Building HRB number" (onKeyupEnter)="navigateToAddress()" (onClick)="navigateToAddress()" [showAction]=true>{{model.HrbNumber}}</govuk-summary-list-row>
           <govuk-summary-list-row *ngIf="isAaboutTheBuilding" key="Tell us how to find your building" actionDetails="Tell us how to find your building" (onKeyupEnter)="navigateToAddress('locate-building-address')" (onClick)="navigateToAddress('locate-building-address')" [showAction]=true>{{model.AboutBuilding}}</govuk-summary-list-row>
         </govuk-summary-list>
 
-        <govuk-summary-list *ngIf="isManualAddress || isAaboutTheBuilding">         
+        <govuk-summary-list *ngIf="isManualAddress || isAaboutTheBuilding">
           <govuk-summary-list-row key="Number of floors">{{model.NumberOfFloors}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Building height">{{model.BuildingHeight}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Number of units">{{model.NumberOfUnits}}</govuk-summary-list-row>
@@ -31,6 +31,12 @@
         <govuk-summary-list>
           <govuk-summary-list-row key="Organisation" actionDetails="Organisation" (onKeyupEnter)="navigateTo('notice-organisation-name')" (onClick)="navigateTo('notice-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation's role" actionDetails="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-role')" (onClick)="navigateTo('notice-org-role')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
+        </govuk-summary-list>
+
+        <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
+        <govuk-summary-list *ngIf="isActingOrganisation">
+          <govuk-summary-list-row key="Organisation" actionDetails="Organisation" (onKeyupEnter)="navigateTo('notice-acting-org')" (onClick)="navigateTo('notice-acting-org')" [showAction]=true>{{model.ActingOrg}}</govuk-summary-list-row>
+          <govuk-summary-list-row key="Organisation's role" actionDetails="Organisation's role" (onKeyupEnter)="navigateTo('notice-acting-org-role')" (onClick)="navigateTo('notice-acting-org-role')" [showAction]=true>{{model.ActingOrgRole | orgRole}}</govuk-summary-list-row>
         </govuk-summary-list>
 
         <h2 class="govuk-heading-m">About the safety occurrence</h2>

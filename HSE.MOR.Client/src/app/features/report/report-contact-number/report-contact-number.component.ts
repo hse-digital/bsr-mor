@@ -22,7 +22,12 @@ export class ReportContactNumberComponent extends PageComponent<string> {
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.ContactNumber)) {
       applicationService.model.Report.ContactNumber = "";
     }
-    this.model = applicationService.model.Report?.ContactNumber;
+    if (applicationService.model.Report.SubmittedNotice == "me") {
+      this.model = applicationService.model.Report?.ContactNumber;
+    } else {
+      this.model = "";
+    }
+    
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.ContactNumber = this.model;

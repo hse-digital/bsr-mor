@@ -4,6 +4,7 @@ import { ApplicationService, CheckAnswersNoticeModel } from "../../../services/a
 import { ActivatedRouteSnapshot } from "@angular/router";
 import { AddressType } from '../../../services/address.service';
 import { NoticeConfirmationComponent } from '../notice-confirmation/notice-confirmation.component';
+import { FieldValidations } from '../../../helpers/validators/fieldvalidations';
 
 @Component({
   templateUrl: './notice-summary.component.html'
@@ -21,6 +22,7 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
   addressRouteKey?: string;
   isAddressManual: boolean = false;
   isAboutBuilding: boolean = false;
+  isActingOrganisation: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
@@ -28,6 +30,9 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
     this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
+    this.isActingOrganisation = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrg)
+      && FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrgRole) && applicationService.model.Notice?.OrgRole == "on_behalf";
+
     this.model.Address = applicationService.model.Notice?.CheckAnswersModel?.Address;
     this.model.CaseNumber = applicationService.model.CaseNumber;
     this.model.BcaReference = applicationService.model.Notice?.CheckAnswersModel?.BcaReference;
@@ -47,6 +52,8 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
     this.model.ContactDetails = applicationService.model.Notice?.CheckAnswersModel?.ContactDetails;
     this.model.ContactNumber = applicationService.model.Notice?.CheckAnswersModel?.ContactNumber;
     this.model.OrganisationName = applicationService.model.Notice?.CheckAnswersModel?.OrganisationName;
+    this.model.ActingOrg = applicationService.model.Notice?.CheckAnswersModel?.ActingOrg;
+    this.model.ActingOrgRole = applicationService.model.Notice?.CheckAnswersModel?.ActingOrgRole;
     this.model.OrgRole = applicationService.model.Notice?.CheckAnswersModel?.OrgRole;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
