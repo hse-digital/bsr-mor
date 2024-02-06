@@ -61,12 +61,12 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             if (entity.IsNotice)
             {
                 this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
-                this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = entity.NoticeActingOrgRole };
+                this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
             }
             else { 
 
                 this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
-                this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = entity.ReportActingOrgRole };
+                this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
             }
             
         }
@@ -125,6 +125,22 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
                 case null: return null;
             }
 
+            throw new ArgumentException();
+        }
+
+        private ActingRole? ActingOrgRole(string role)
+        {
+            return role switch
+            {
+                "acc_person" => ActingRole.AccountablePerson,
+                "principal_acc_person" => ActingRole.PrincipalAccountablePerson,
+                "principal_contractor" => ActingRole.PrincipalContractor,
+                "principal_designer" => ActingRole.PrincipalDesigner,
+                "on_behalf" => ActingRole.ActingOnBehalf,
+                "other" => ActingRole.Other,
+                _ => null,
+            };
+            
             throw new ArgumentException();
         }
 

@@ -72,14 +72,12 @@ public record DynamicsMor() : DynamicsEntity<Mor>
     public BuildingType? bsr_howwouldyoudescribethebuilding { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_occurrencedescription { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_noticeactingorgname { get; set; }
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_noticeactingrole { get; set; }
+    public ActingRole? bsr_noticeactingrole { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_reportactingorgname { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
-    public string bsr_reportactingrole { get; set; }
+    public ActingRole? bsr_reportactingrole { get; set; }
     public string bsr_briefdescription { get; set; }
     public string bsr_immediateactionstaken { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
@@ -139,6 +137,16 @@ public enum NoticeRole
     ActingOnBehalf = 760810004,
     Other = 760810005
 
+}
+
+public enum ActingRole
+{
+    AccountablePerson = 760810000,
+    PrincipalAccountablePerson = 760810001,
+    PrincipalContractor = 760810002,
+    PrincipalDesigner = 760810003,
+    ActingOnBehalf = 760810004,
+    Other = 760810005
 }
 
 public enum OccurrenceType
