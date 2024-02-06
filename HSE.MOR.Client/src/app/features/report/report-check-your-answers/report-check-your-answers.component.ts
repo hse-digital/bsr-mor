@@ -142,6 +142,10 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.IncidentKeepPeopleSafe = reportModel.IncidentKeepPeopleSafe;
     this.model.WhoAffectedByIncident = reportModel.WhoAffectedByIncident;
     this.model.OccurrenceDiscovered = reportModel.OccurrenceDiscovered;
+    if (reportModel.ReportWhenBecomeAware)
+    {
+      this.model.OccurrenceDateTime = `${reportModel.ReportWhenBecomeAware!.Day}-${reportModel.ReportWhenBecomeAware!.Month}-${reportModel.ReportWhenBecomeAware!.Year} - ${reportModel.ReportWhenBecomeAware!.Hour}:${reportModel.ReportWhenBecomeAware!.Minute}  ${this.setMeridiem(Number(reportModel.ReportWhenBecomeAware!.Hour!))}`;
+    }
     this.model.SharedWithOthers = reportModel.SharedWithOthers;
     if (reportModel.FilesUploaded) {
       reportModel.FilesUploaded.map(v => {
@@ -164,7 +168,11 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     "fire_spread": "risk of fire spreading",
     "fire_safety": "fire safety",   
     "": ""
-  } 
+  }
+
+  setMeridiem(hour: number) {
+    return hour < 13 ? "am" : "pm";
+  }
 
   returnManualAddress(model: AddressModel): string {
     var addressArray = [];

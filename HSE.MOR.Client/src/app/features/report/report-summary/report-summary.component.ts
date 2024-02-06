@@ -64,7 +64,8 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.IncidentKeepPeopleSafe = applicationService.model.Report?.CheckAnswersModel?.IncidentKeepPeopleSafe;
     this.model.OccurrenceDiscovered = applicationService.model.Report?.CheckAnswersModel?.OccurrenceDiscovered;
     this.model.SharedWithOthers = applicationService.model.Report?.CheckAnswersModel?.SharedWithOthers;
-    this.model.OrgRole = applicationService.model.Report?.CheckAnswersModel?.OrgRole; 
+    this.model.OrgRole = applicationService.model.Report?.CheckAnswersModel?.OrgRole;
+    this.model.OccurrenceDateTime = applicationService.model.Report?.CheckAnswersModel?.OccurrenceDateTime;
     this.model.UploadedFileNames = applicationService.model.Report?.CheckAnswersModel?.UploadedFileNames;
 
   }

@@ -59,17 +59,20 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
 
         private void ActingOrgRole(Mor entity)
         {
-            if (entity.IsNotice)
+            if (entity.NoticeOrgRole == "on_behalf" || entity.ReportOrgRole == "on_behalf") 
             {
-                this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
-                this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
-            }
-            else { 
+                if (entity.IsNotice)
+                {
+                    this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
+                    this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
+                }
+                else
+                {
 
-                this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
-                this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
-            }
-            
+                    this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
+                    this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
+                }
+            }                    
         }
 
         private void IncidentRiskDetails(Mor entity) {

@@ -257,6 +257,7 @@ export class CheckAnswersReportModel {
   BuildingType?: string;
   IdentiyBuilding?: string;
   WhatToSubmit?: string;
+  OccurrenceDateTime?: string;
 }
 
 export class BuildingsInformationResponse {

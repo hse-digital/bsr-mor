@@ -51,7 +51,7 @@ export class ReportWhenBecomeAwareComponent extends PageComponent<TimeModel>  {
   }
 
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    applicationService.model.Notice!.WhenBecomeAware = {
+    applicationService.model.Report!.ReportWhenBecomeAware = {
       Day: this.model?.Day,
       Month: this.model?.Month,
       Year: this.model?.Year,
