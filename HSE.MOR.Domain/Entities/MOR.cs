@@ -145,8 +145,7 @@ public enum ActingRole
     PrincipalAccountablePerson = 760810001,
     PrincipalContractor = 760810002,
     PrincipalDesigner = 760810003,
-    ActingOnBehalf = 760810004,
-    Other = 760810005
+    Other = 760810004,
 }
 
 public enum OccurrenceType

@@ -136,7 +136,6 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
                 "principal_acc_person" => ActingRole.PrincipalAccountablePerson,
                 "principal_contractor" => ActingRole.PrincipalContractor,
                 "principal_designer" => ActingRole.PrincipalDesigner,
-                "on_behalf" => ActingRole.ActingOnBehalf,
                 "other" => ActingRole.Other,
                 _ => null,
             };
