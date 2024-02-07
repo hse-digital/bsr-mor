@@ -23,7 +23,7 @@ export class ReportActingOrgRoleComponent extends PageComponent<string> {
       applicationService.model.Report.ActingOrgRole = "";
     }
     this.model = applicationService.model.Report.ActingOrgRole;
-    this.organisationName = applicationService.model.Report.OrganisationName ?? "organisation";
+    this.organisationName = applicationService.model.Report.ActingOrg ?? "organisation";
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.ActingOrgRole = this.model;
