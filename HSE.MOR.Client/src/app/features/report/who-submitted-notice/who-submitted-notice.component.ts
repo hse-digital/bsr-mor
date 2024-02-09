@@ -25,7 +25,7 @@ export class WhoSubmittedNoticeComponent extends PageComponent<string> {
 
     this.model = applicationService.model.Report?.SubmittedNotice;
   }
-  override async onSave(applicationService: ApplicationService): Promise<void> {
+  override async onSave(applicationService: ApplicationService): Promise<void> {    
     applicationService.model.Report!.SubmittedNotice = this.model;
   }
   canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {

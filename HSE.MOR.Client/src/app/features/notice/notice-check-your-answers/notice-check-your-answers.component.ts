@@ -31,7 +31,7 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false; 
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;   
+    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch || applicationService.model.Building?.Address?.BuildingAddressType == undefined ? true : false;   
     this.isAaboutTheBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.isManualAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isEnteredAddress = this.isSearchAddress || this.isManualAddress;

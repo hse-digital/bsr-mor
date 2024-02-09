@@ -29,6 +29,10 @@ export class NoticeOrgRoleComponent extends PageComponent<string> {
 
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
+    if (this.model != "on_behalf") {
+      applicationService.model.Notice!.ActingOrg = undefined;
+      applicationService.model.Notice!.ActingOrgRole = undefined;
+    }
     applicationService.model.Notice!.OrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {

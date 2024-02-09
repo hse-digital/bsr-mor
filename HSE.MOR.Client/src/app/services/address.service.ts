@@ -59,6 +59,7 @@ export class AddressModel {
   HrbNumber?: string;
   BuildingControlAppId?: string;
   HrbApplicationId?: string;
+  CapturedPostcode?: string;
 }
 
 export enum AddressType {

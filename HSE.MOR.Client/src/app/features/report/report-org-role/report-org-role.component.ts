@@ -7,6 +7,7 @@ import { ReportDutyHolderCanSubmitComponent } from '../report-duty-holder-can-su
 import { TypeIncidentReportedComponent } from '../type-incident-reported/type-incident-reported.component';
 import { ReportActingOrgComponent } from '../report-acting-org/report-acting-org.component';
 import { ReportWhenBecomeAwareComponent } from '../report-when-become-aware/report-when-become-aware.component';
+import { app } from '../../../../../server';
 
 @Component({
   templateUrl: './report-org-role.component.html'
@@ -28,6 +29,10 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
     this.organisationName = applicationService.model.Report.OrganisationName ?? "organisation";
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
+    if (this.model != "on_behalf") {
+      applicationService.model.Report!.ActingOrg = undefined;
+      applicationService.model.Report!.ActingOrgRole = undefined;
+    }
     applicationService.model.Report!.OrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {

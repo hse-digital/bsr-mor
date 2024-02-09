@@ -8,9 +8,12 @@ using HSE.MOR.API.Models.Dynamics;
 using HSE.MOR.Domain.DynamicsDefinitions;
 using HSE.MOR.Domain.Entities;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Reactive;
 using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HSE.MOR.API.Services;
 
@@ -288,6 +291,13 @@ public class DynamicsService : IDynamicsService
         mor.IncidentReference = incidentId;
         var noticeModelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
         var dynamicsMor = noticeModelDefinition.BuildDynamicsEntity(mor);
+        string json = JsonConvert.SerializeObject(dynamicsMor);
+
+        // Generate a temporary file path
+        string tempFilePath = Path.GetTempFileName();
+
+        // Write the JSON to the file
+        File.WriteAllText(tempFilePath, json);
         await UpdateMORAsync(morId, dynamicsMor);
     }
 

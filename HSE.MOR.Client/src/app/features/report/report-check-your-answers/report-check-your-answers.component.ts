@@ -45,7 +45,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     }
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
+    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch || applicationService.model.Building?.Address?.BuildingAddressType == undefined ? true : false;
     this.isManual = applicationService.model.Building?.Address?.IsManual ? true : false;
     this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding ? true : false;
     this.isEnteredAddress = this.isSearchAddress || this.isManual;
@@ -69,7 +69,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     }
     applicationService.model.Report!.CheckAnswersModel = this.model;
     if (applicationService.model.Report.NoticeReference) {
-      applicationService.updateMORApplication();
+      await applicationService.updateMORApplication();
     } else {
       await applicationService.createNewMORReportApplication();
     }  
@@ -100,6 +100,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
       case AddressType.PostcodeSearch: return "report-search-address";
       case AddressType.Manual: return "report-search-address";
       case AddressType.AboutBuilding: return "report-search-address";
+      case undefined: return "report-search-address";
     }
   }
 
@@ -129,6 +130,10 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.OrgRole = reportModel.OrgRole;
     this.model.ActingOrg = reportModel.ActingOrg;
     this.model.ActingOrgRole = reportModel.ActingOrgRole;
+    if (reportModel.ReportWhenBecomeAware) {
+      this.model.OccurrenceDateTime = `${reportModel.ReportWhenBecomeAware!.Day}-${reportModel.ReportWhenBecomeAware!.Month}-${reportModel.ReportWhenBecomeAware!.Year} - ${reportModel.ReportWhenBecomeAware!.Hour}:${reportModel.ReportWhenBecomeAware!.Minute}  ${this.setMeridiem(Number(reportModel.ReportWhenBecomeAware!.Hour!))}`;
+    }
+    
     this.model.SubmittedNotice = reportModel.SubmittedNotice;
     this.model.NoticeReference = reportModel.NoticeReference;
     if (reportModel.IncidentReported) {
@@ -142,10 +147,7 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.IncidentKeepPeopleSafe = reportModel.IncidentKeepPeopleSafe;
     this.model.WhoAffectedByIncident = reportModel.WhoAffectedByIncident;
     this.model.OccurrenceDiscovered = reportModel.OccurrenceDiscovered;
-    if (reportModel.ReportWhenBecomeAware)
-    {
-      this.model.OccurrenceDateTime = `${reportModel.ReportWhenBecomeAware!.Day}-${reportModel.ReportWhenBecomeAware!.Month}-${reportModel.ReportWhenBecomeAware!.Year} - ${reportModel.ReportWhenBecomeAware!.Hour}:${reportModel.ReportWhenBecomeAware!.Minute}  ${this.setMeridiem(Number(reportModel.ReportWhenBecomeAware!.Hour!))}`;
-    }
+    
     this.model.SharedWithOthers = reportModel.SharedWithOthers;
     if (reportModel.FilesUploaded) {
       reportModel.FilesUploaded.map(v => {

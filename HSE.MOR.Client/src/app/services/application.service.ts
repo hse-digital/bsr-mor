@@ -77,29 +77,61 @@ export class ApplicationService {
   }
   async createNewMORReportApplication(): Promise<void> {
     if (!this.model.Id) {
+      if (this.model.WhatToSubmit == "report") {
+        this.ifSameUserDetails();
+      }
       var returnModel = await firstValueFrom(this.httpClient.post<IncidentModel>('api/NewMORCaseAsync', Sanitizer.sanitize(this.model)));
       this.model.Id = returnModel.Id;
       this.model.CaseNumber = returnModel.CaseNumber;
       this.model.MorId = returnModel.MorId;
       this.model.CustomerId = returnModel.CustomerId;
       this.updateLocalStorage();
-      if (FieldValidations.IsNotNullOrWhitespace(this.model.Id) && this.model.Report?.FilesUploaded) {
+      if (FieldValidations.IsNotNullOrWhitespace(this.model.Id) && (this.model.Report?.FilesUploaded && this.model.Report?.FilesUploaded?.length > 0)) {
         this.uploadSharepointModel = {};
         this.uploadSharepointModel.id = this.model.Id;
         this.uploadSharepointModel.ContactId = this.model.CustomerId;
         this.uploadSharepointModel.Email = this.model.EmailAddress;
         this.uploadSharepointModel.FileUploads = this.model.Report.FilesUploaded;
-        this.triggerFileUploadScanandUpload(this.uploadSharepointModel);
+        this.triggerFileUploadScanandUpload(this.uploadSharepointModel);        
       }
     }   
   }
   async updateMORApplication(): Promise<void> {
-    await firstValueFrom(this.httpClient.put<IncidentModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
+    if (this.model.WhatToSubmit == "report") {
+      this.ifSameUserDetails();
+    }
+    var returnModel = await firstValueFrom(this.httpClient.put<IncidentModel>('api/UpdateMORCaseAsync', Sanitizer.sanitize(this.model)));
+    this.model.Id = returnModel.Id;
+    this.model.CaseNumber = returnModel.CaseNumber;
+    this.model.MorId = returnModel.MorId;
+    this.model.CustomerId = returnModel.CustomerId;
+    this.updateLocalStorage();
+    if (FieldValidations.IsNotNullOrWhitespace(this.model.Id) && (this.model.Report?.FilesUploaded && this.model.Report?.FilesUploaded?.length > 0)) {
+      this.uploadSharepointModel = {};
+      this.uploadSharepointModel.id = this.model.Id;
+      this.uploadSharepointModel.ContactId = this.model.CustomerId;
+      this.uploadSharepointModel.Email = this.model.EmailAddress;
+      this.uploadSharepointModel.FileUploads = this.model.Report.FilesUploaded;
+      this.triggerFileUploadScanandUpload(this.uploadSharepointModel);
+    }
     this.updateLocalStorage();
   }
 
   async UploadToSharepoint(model?: UploadSharepointModel): Promise<UploadSharepointModel> {
     return await firstValueFrom(this.httpClient.post<UploadSharepointModel>(`api/PushToSharePointAsync`, Sanitizer.sanitize(model)));
+  }
+
+  ifSameUserDetails() {
+    if (this.model.Report?.SubmittedNotice! == "me") {
+      this.model.Report!.FirstName! = this.model.Report!.SameUserDetails?.FirstName!;
+      this.model.Report!.LastName! = this.model.Report!.SameUserDetails?.LastName!;
+      this.model.Report!.ContactNumber! = this.model.Report!.SameUserDetails?.ContactNumber!;
+      this.model.Report!.OrganisationName! = this.model.Report!.SameUserDetails?.OrganisationName!;
+      this.model.Report!.OrgRole! = this.model.Report!.SameUserDetails?.OrgRole!;
+      this.model.Report!.ActingOrg! = this.model.Report!.SameUserDetails?.ActingOrg!;
+      this.model.Report!.ActingOrgRole! = this.model.Report!.SameUserDetails?.ActingOrgRole!;  
+      this.model.Report!.ReportWhenBecomeAware! = this.model.Report!.SameUserDetails?.ReportWhenBecomeAware!;  
+    }   
   }
 }
 
@@ -171,6 +203,7 @@ export class ReportModel {
   FilesUploaded?: FileUploadModel[];
   YourSupportInfo?: string;
   ReportWhenBecomeAware?: TimeModel;
+  SameUserDetails?: SameUserModel;
   CheckAnswersModel?: CheckAnswersReportModel
 }
 
@@ -180,6 +213,17 @@ export class TimeModel {
   Year?: string;
   Hour?: string;
   Minute?: string;
+}
+
+export class SameUserModel {
+  FirstName?: string;
+  LastName?: string;
+  OrganisationName?: string;
+  ActingOrg?: string;
+  ContactNumber?: string;
+  OrgRole?: string;
+  ActingOrgRole?: string;
+  ReportWhenBecomeAware?: TimeModel;
 }
 
 export class BuildingModel {
