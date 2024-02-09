@@ -34,7 +34,7 @@ export class FindAddressComponent {
   @ViewChildren("summaryError") summaryError?: QueryList<GovukErrorSummaryComponent>;
 
   ngOnInit(): void {
-    this.searchModel = { postcode: this.applicationService.model.Building?.Address?.Postcode }
+    this.searchModel = { postcode: this.applicationService.model.Building?.Address?.CapturedPostcode }
   }
 
   constructor(private addressService: AddressService, private titleService: TitleService) { }
@@ -54,6 +54,7 @@ export class FindAddressComponent {
         } else {
           this.addressResponseBuilding = await this.searchAddress();
           if (this.addressResponseBuilding?.Results.length > 0) {
+            this.removePostcodeSpaces(this.addressResponseBuilding);
             this.onSearchPerformed.emit(this.addressResponseBuilding);
           } else {
             this.onSearchPerformed.emit(new AddressResponseModel());
@@ -85,6 +86,15 @@ export class FindAddressComponent {
     return !this.postcodeHasErrors;
   }
 
+  removePostcodeSpaces(addressResponseBuilding: AddressResponseModel) {
+    addressResponseBuilding.Results.forEach(x => {
+      let postcode = x.Postcode;
+      x.CapturedPostcode = x.Postcode;
+      x.Postcode = x.Postcode?.replace(' ', '');
+      x.Address = x.Address?.replace(postcode!, x.Postcode!);
+    });    
+  }
+
   getErrorDescription(showError: boolean, errorMessage: string): string | undefined {
     return this.postcodeHasErrors && showError ? errorMessage : undefined;
   }
@@ -105,9 +115,10 @@ export class FindAddressComponent {
       this.addressModel.BuildingName = x.bsr_name;
       this.addressModel.Street = x.bsr_addressline1;
       this.addressModel.Town = x.bsr_city;
-      this.addressModel.Postcode = x.bsr_postcode?.replace(' ', '');
+      this.addressModel.Postcode = x.bsr_postcode;
       this.addressModel.BuildingId = x._bsr_buildingid_value ? x._bsr_buildingid_value : undefined;
       this.addressModel.StructureId = x.bsr_blockid ? x.bsr_blockid : undefined;
+      this.addressModel.CapturedPostcode = x.bsr_postcode;
 
       this.addressResponseModel.Results.push(this.addressModel);
     });
@@ -123,6 +134,7 @@ export class FindAddressComponent {
       this.addressModel.Street = x.bsr_address1_line1;
       this.addressModel.Town = x.bsr_address1_city;
       this.addressModel.Postcode = x.bsr_address1_postalcode?.replace(' ', '');
+      this.addressModel.CapturedPostcode = x.bsr_address1_postalcode;
       this.addressResponseModel.Results.push(this.addressModel);
     });
 

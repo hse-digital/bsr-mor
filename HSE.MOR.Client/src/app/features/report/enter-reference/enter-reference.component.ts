@@ -43,6 +43,7 @@ export class EnterReferenceComponent extends PageComponent<string> {
         this.ErrorMessage = this.ErrorReportSubmitted;
       } else {
         this.mapCaseWithNotice(dynamicsIncidentModel, applicationService);
+        this.mapSameUser(dynamicsIncidentModel, applicationService);
         applicationService.model.Report!.NoticeReference = this.model;
       }
       
@@ -93,16 +94,28 @@ export class EnterReferenceComponent extends PageComponent<string> {
     }
     return this.navigationService.navigateRelative(WhoSubmittedNoticeComponent.route, this.activatedRoute);
   }
-
+  mapSameUser(caseModel: IncidentModelDynamics, applicationService: ApplicationService) {
+    if (!applicationService.model.Report) {
+      applicationService.model.Report = {};
+    }
+    if (!applicationService.model.Report.SameUserDetails) {
+      applicationService.model.Report.SameUserDetails = {};
+    }
+    applicationService.model.Report.SameUserDetails.FirstName = caseModel.FirstName;
+    applicationService.model.Report.SameUserDetails.LastName = caseModel.LastName;
+    applicationService.model.Report.SameUserDetails.ContactNumber = caseModel.ContactNumber;
+    applicationService.model.Report.SameUserDetails.OrganisationName = undefined;
+    applicationService.model.Report.SameUserDetails.OrgRole = undefined;
+    applicationService.model.Report.SameUserDetails.ActingOrg = undefined;
+    applicationService.model.Report.SameUserDetails.ActingOrgRole = undefined;
+    applicationService.model.Report.SameUserDetails.ReportWhenBecomeAware = undefined;
+  }
   mapCaseWithNotice(caseModel: IncidentModelDynamics, applicationService: ApplicationService) {
     this.model = caseModel.CaseNumber;
     applicationService.model.Id = caseModel.IncidentId;
     applicationService.model.Report!.Id = caseModel.MorId;
     applicationService.model.CustomerId = caseModel.CustomerId;
     applicationService.model.MorId = caseModel.MorId;
-    applicationService.model.Report!.FirstName = caseModel.FirstName;
-    applicationService.model.Report!.LastName = caseModel.LastName;
-    applicationService.model.Report!.ContactNumber = caseModel.ContactNumber;
     if (caseModel.BuildingModelDynamics) {
       applicationService.model.Building = {};
       applicationService.model.Building.Address = {}

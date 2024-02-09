@@ -9,6 +9,7 @@ using HSE.MOR.API.Models;
 using HSE.MOR.API.Models.OrdnanceSurvey;
 using HSE.MOR.API.Extensions;
 using Flurl;
+using Azure;
 
 namespace HSE.MOR.API.Functions;
 
@@ -37,8 +38,10 @@ public class AddressFunctions
                 .GetAsync();
 
             var stream = await resp.GetStreamAsync();
-
-            return await request.CreateObjectResponseFromStreamAsync(stream);
+            
+            var response = await request.CreateObjectResponseFromStreamAsync(stream);
+            var searchResponse = await response.ReadAsJsonAsync<BuildingAddressSearchResponse>();
+            return await request.CreateObjectResponseAsync(searchResponse);
         }
         catch (Exception ex)
         {
@@ -74,7 +77,9 @@ public class AddressFunctions
 
             var stream = await resp.GetStreamAsync();
 
-            return await request.CreateObjectResponseFromStreamAsync(stream);
+            var response = await request.CreateObjectResponseFromStreamAsync(stream);
+            var searchResponse = await response.ReadAsJsonAsync<BuildingAddressSearchResponse>();
+            return await request.CreateObjectResponseAsync(searchResponse);
         }
         catch (Exception ex)
         {

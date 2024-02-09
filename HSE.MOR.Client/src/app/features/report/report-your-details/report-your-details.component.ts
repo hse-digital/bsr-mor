@@ -4,6 +4,7 @@ import { ApplicationService, ReportModel } from "../../../services/application.s
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { ReportContactNumberComponent } from '../report-contact-number/report-contact-number.component';
+import { app } from '../../../../../server';
 
 @Component({
   templateUrl: './report-your-details.component.html'
@@ -13,7 +14,6 @@ export class ReportYourDetailsComponent extends PageComponent<ReportModel> {
   public static route: string = 'your-details';
   static title: string = "Your details - Submit a mandatory occurrence notice and report";
   override model: ReportModel = new ReportModel();
-
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Report) {
@@ -26,18 +26,12 @@ export class ReportYourDetailsComponent extends PageComponent<ReportModel> {
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report.LastName)) {
       applicationService.model.Report.LastName = "";
     }
-    if (applicationService.model.Report.SubmittedNotice == "me") {
-      this.model.FirstName = applicationService.model.Report?.FirstName;
-      this.model.LastName = applicationService.model.Report?.LastName;
-    } else {
-      this.model.FirstName = "";
-      this.model.LastName = "";
-    }
-    
+    this.model.FirstName = applicationService.model.Report?.FirstName;
+    this.model.LastName = applicationService.model.Report?.LastName;   
   }
-  override async onSave(applicationService: ApplicationService): Promise<void> {
+  override async onSave(applicationService: ApplicationService ): Promise<void> {
     applicationService.model.Report!.FirstName = this.model.FirstName;
-    applicationService.model.Report!.LastName = this.model.LastName;    
+    applicationService.model.Report!.LastName = this.model.LastName;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.BcaReference) || FieldValidations.IsNotNullOrWhitespace(applicationService.model.Building?.Address?.HrbNumber)

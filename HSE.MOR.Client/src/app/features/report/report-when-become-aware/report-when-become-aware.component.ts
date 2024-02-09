@@ -16,7 +16,6 @@ export type InputTimeModel = { hour?: string, minute?: string };
 export class ReportWhenBecomeAwareComponent extends PageComponent<TimeModel>  {
   public static route: string = 'report-when-become-aware';
   static title: string = "When did you identify the risk or incident? - Submit a mandatory occurrence notice and report";
-  organisationName?: string;
 
   inputDateModel?: InputDateModel;
   inputTimeModel?: InputTimeModel;
@@ -37,7 +36,6 @@ export class ReportWhenBecomeAwareComponent extends PageComponent<TimeModel>  {
       applicationService.model.Report!.ReportWhenBecomeAware = {
       };
     }
-    this.organisationName = applicationService.model.Report!.OrganisationName ?? "organisation";
     this.model = applicationService.model.Report?.ReportWhenBecomeAware;
     this.model = {
       Day: applicationService.model.Report?.ReportWhenBecomeAware?.Day,
@@ -124,8 +122,8 @@ export class ReportWhenBecomeAwareComponent extends PageComponent<TimeModel>  {
   }
 
   private isTimeValid() {
-    let isHourValid = FieldValidations.IsWholeNumber(Number(this.model?.Hour)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Hour)) && Number(this.model?.Hour) < 24;
-    let isMinuteValid = FieldValidations.IsWholeNumber(Number(this.model?.Minute)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Minute)) && Number(this.model?.Minute) < 60;
+    let isHourValid = FieldValidations.IsNotNullOrWhitespace(this.model?.Hour) && FieldValidations.IsWholeNumber(Number(this.model?.Hour)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Hour)) && Number(this.model?.Hour) < 24;
+    let isMinuteValid = FieldValidations.IsNotNullOrWhitespace(this.model?.Minute) && FieldValidations.IsWholeNumber(Number(this.model?.Minute)) && FieldValidations.IsAPositiveNumber(Number(this.model?.Minute)) && Number(this.model?.Minute) < 60;
 
     this.timeErrorMessage = "";
     if (this.InputTimeModelIsNullOrWhitespace()) {

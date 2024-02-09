@@ -50,8 +50,10 @@ export class BuildingAddressComponent implements OnInit {
   async updateAddress(address: AddressModel) {
     if (this.addressIndex) {
       this.applicationService.model.Building!.Address = address;
+      this.applicationService.model.Building!.Address.CapturedPostcode = address.CapturedPostcode;
     } else {
       this.applicationService.model.Building!.Address = address;
+      this.applicationService.model.Building!.Address.CapturedPostcode = address.CapturedPostcode;
     }
     this.applicationService.model.Building!.Address.IsManual = address.IsManual;
     await this.applicationService.updateApplication();

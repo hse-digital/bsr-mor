@@ -30,7 +30,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
+    this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch || applicationService.model.Building?.Address?.BuildingAddressType == undefined ? true : false;
     this.isManual = applicationService.model.Building?.Address?.IsManual ? true : false;
     this.isAaboutTheBuilding = applicationService.model.Building?.LocateBuilding ? true : false;
     this.isNoticeReference = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Report?.NoticeReference);       

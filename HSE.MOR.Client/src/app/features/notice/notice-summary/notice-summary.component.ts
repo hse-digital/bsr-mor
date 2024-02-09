@@ -27,7 +27,7 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false;
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;
+    this.isSearchAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch || applicationService.model.Building?.Address?.BuildingAddressType == undefined ? true : false;
     this.isManual = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isAboutBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.isActingOrganisation = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrg)
