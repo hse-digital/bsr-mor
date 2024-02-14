@@ -27,6 +27,7 @@
     <Folder Include="src\app\features\building\is-building\" />
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\briefly-describe-risk-incident\" />
+    <Folder Include="src\app\features\notice\notice-org-type\" />
     <Folder Include="src\app\features\notice\notice-summary\" />
     <Folder Include="src\app\features\notice\notice-confirmation\" />
     <Folder Include="src\app\features\notice\notice-duty-holder-can-submit\" />
