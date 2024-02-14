@@ -15,6 +15,7 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
 
         public override DynamicsMor BuildDynamicsEntity(Mor entity)
         {
+
             this.dynamicsMor = new DynamicsMor();
             this.dynamicsMor.incidentReference = string.IsNullOrWhiteSpace(entity.IncidentReference) ? null : $"/incidents({entity.IncidentReference})";
             this.dynamicsMor.bsr_briefdescription = entity.DescribeRiskIncident;
@@ -23,7 +24,8 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             this.dynamicsMor.bsr_noticesubmittedbyrole = RoleSubmittingNotice(entity.NoticeOrgRole);
             this.dynamicsMor.bsr_reportsubmittedbyrole = RoleSubmittingNotice(entity.ReportOrgRole);
             this.dynamicsMor.bsr_noticeorganisationname = entity.NoticeOrganisationName;
-            this.dynamicsMor.bsr_occurrenceidentifiedon = entity.WhenBecomeAware != null ? GetDate(entity.WhenBecomeAware.Year, entity.WhenBecomeAware.Month, entity.WhenBecomeAware.Day, entity.WhenBecomeAware.Hour, entity.WhenBecomeAware.Minute) : null;
+            this.dynamicsMor.bsr_occurrenceidentifiedon = entity.WhenBecomeAware != null  ? GetDate(entity.WhenBecomeAware.Year ?? "", entity.WhenBecomeAware.Month ?? "", entity.WhenBecomeAware.Day, entity.WhenBecomeAware.Hour ?? "", entity.WhenBecomeAware.Minute ?? "") : null;
+            this.dynamicsMor.bsr_occurrenceidentifiedupdate = entity.ReportWhenBecomeAware != null ? GetDate(entity.ReportWhenBecomeAware.Year ?? "", entity.ReportWhenBecomeAware.Month ?? "", entity.ReportWhenBecomeAware.Day ?? "", entity.ReportWhenBecomeAware.Hour ?? "", entity.ReportWhenBecomeAware.Minute ?? "") : null;
             this.dynamicsMor.bsr_bsr_identifybuildingcode = entity.BuildingModel != null ? IdentifyBuilding(entity.BuildingModel.IdentifyBuilding) : null;
             if (string.IsNullOrWhiteSpace(entity.NoticeReference))
             {
@@ -40,8 +42,13 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             IncidentRiskDetails(entity);
             AddingContactReference(entity);
             UpdateNoticeRportSubmittedDateTime(entity);
+            ActingOrgRole(entity);
 
             return this.dynamicsMor;
+        }
+
+        private bool isSetValueNull(string? value) {
+            return string.IsNullOrWhiteSpace(value) ? true : false;
         }
       
         private void UpdateNoticeRportSubmittedDateTime(Mor entity) 
@@ -53,6 +60,24 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             else {
                 this.dynamicsMor = dynamicsMor with { bsr_reportsubmittedon = DateTime.UtcNow };
             }
+        }
+
+        private void ActingOrgRole(Mor entity)
+        {
+            if (entity.NoticeOrgRole == "on_behalf" || entity.ReportOrgRole == "on_behalf") 
+            {
+                if (entity.IsNotice)
+                {
+                    this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
+                    this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
+                }
+                else
+                {
+
+                    this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
+                    this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
+                }
+            }                    
         }
 
         private void IncidentRiskDetails(Mor entity) {
@@ -112,6 +137,21 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             throw new ArgumentException();
         }
 
+        private ActingRole? ActingOrgRole(string role)
+        {
+            return role switch
+            {
+                "acc_person" => ActingRole.AccountablePerson,
+                "principal_acc_person" => ActingRole.PrincipalAccountablePerson,
+                "principal_contractor" => ActingRole.PrincipalContractor,
+                "principal_designer" => ActingRole.PrincipalDesigner,
+                "other" => ActingRole.Other,
+                _ => null,
+            };
+            
+            throw new ArgumentException();
+        }
+
         private BuildingCode? IdentifyBuilding(string code)
         {
             switch (code)
@@ -156,7 +196,8 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
 
         private DateTime? GetDate(string year, string month, string day, string hour, string minutes)
         {
-            var dateString = $"{year}-{month}-{day}T{hour}:{minutes}:00";
+            int Int32Parse(string value) => string.IsNullOrWhiteSpace(value) ? 0 : Int32.Parse(value);
+            var dateString = $"{Int32Parse(year)}-{Int32Parse(month):00}-{Int32Parse(day):00}T{Int32Parse(hour):00}:{Int32Parse(minutes):00}:00";
             var dateTime = DateTime.UtcNow;
             var isDate = DateTime.TryParse(dateString, new CultureInfo("en-GB"), out dateTime);
             return isDate ? dateTime : null;

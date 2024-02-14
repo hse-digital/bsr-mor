@@ -26,15 +26,19 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
   isAddress: boolean = false;
   isEnteredAddress: boolean = false;
   isProvidedAdress: boolean = false;
+  isActingOrganisation: boolean = false;
 
   override onInit(applicationService: ApplicationService): void {
     this.isBCAAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.BCAReference ? true : false; 
     this.isHRBAdress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.HRBNumber ? true : false;
-    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch ? true : false;   
+    this.isSearchAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.PostcodeSearch || applicationService.model.Building?.Address?.BuildingAddressType == undefined ? true : false;   
     this.isAaboutTheBuilding = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.AboutBuilding ? true : false;
     this.isManualAddress = applicationService.model.Building?.Address?.BuildingAddressType == AddressType.Manual ? true : false;
     this.isEnteredAddress = this.isSearchAddress || this.isManualAddress;
     this.isProvidedAdress = this.isBCAAddress || this.isHRBAdress;
+    this.isActingOrganisation = FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrg)
+      && FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrgRole) && applicationService.model.Notice?.OrgRole == "on_behalf";
+
     this.model.ContactDetails = applicationService.model.EmailAddress;
     this.model.WhatToSubmit = applicationService.model.WhatToSubmit;
     this.setValuesToNoticeModel(applicationService.model?.Notice!);
@@ -105,6 +109,8 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.OccurrenceDateTime = `${noticeModel.WhenBecomeAware!.Day}-${noticeModel.WhenBecomeAware!.Month}-${noticeModel.WhenBecomeAware!.Year} - ${noticeModel.WhenBecomeAware!.Hour}:${noticeModel.WhenBecomeAware!.Minute}  ${this.setMeridiem(Number(noticeModel.WhenBecomeAware!.Hour!))}`;
     this.model.ContactNumber = noticeModel.ContactNumber;
     this.model.OrganisationName = noticeModel.OrganisationName;
+    this.model.ActingOrg = noticeModel.ActingOrg;
+    this.model.ActingOrgRole = noticeModel.ActingOrgRole;
     this.model.OrgRole = noticeModel.OrgRole;
   }
 

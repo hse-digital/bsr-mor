@@ -9,53 +9,47 @@ import { NoticeDutyHolderCanSubmitComponent } from '../notice-duty-holder-can-su
 import { NoticeActingOrgComponent } from '../notice-acting-org/notice-acting-org.component';
 
 @Component({
-  templateUrl: './notice-org-role.component.html'
+  templateUrl: './notice-acting-org-role.component.html'
 })
 
-export class NoticeOrgRoleComponent extends PageComponent<string> {
-  public static route: string = 'notice-org-role';
-  static title: string = "What is organisation's' role in submitting this notice? - Submit a mandatory occurrence notice and report";
+export class NoticeActingOrgRoleComponent extends PageComponent<string> {
+  public static route: string = 'notice-acting-org-role';
+  static title: string = "What is acting organisation's' role in submitting this notice? - Submit a mandatory occurrence notice and report";
   organisationName?: string;
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Notice) {
       applicationService.model.Notice = {};
     }
-    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.OrgRole)) {
-      applicationService.model.Notice.OrgRole = "";
+    if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.ActingOrgRole)) {
+      applicationService.model.Notice.ActingOrgRole = "";
     }
-    this.model = applicationService.model.Notice.OrgRole;
-    this.organisationName = applicationService.model.Notice.OrganisationName ?? "organisation";
+    this.model = applicationService.model.Notice.ActingOrgRole;
+    this.organisationName = applicationService.model.Notice.ActingOrg ?? "organisation";
 
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
-    if (this.model != "on_behalf") {
-      applicationService.model.Notice!.ActingOrg = undefined;
-      applicationService.model.Notice!.ActingOrgRole = undefined;
-    }
-    applicationService.model.Notice!.OrgRole = this.model;
+    applicationService.model.Notice!.ActingOrgRole = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrganisationName);
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrg);
   }
 
   modelValid: boolean = true;
-  hasOrgRoleErrors: boolean = true;
+  hasActingOrgRoleErrors: boolean = true;
 
   isValid(): boolean {
     this.modelValid = !FieldValidations.IsNotNullOrWhitespace(this.model);
-    this.hasOrgRoleErrors = this.modelValid;
+    this.hasActingOrgRoleErrors = this.modelValid;
     return !this.modelValid;
   }
 
   override navigateNext(): Promise<boolean> {
     if (this.model == "other") {
       return this.navigationService.navigateRelative(NoticeDutyHolderCanSubmitComponent.route, this.activatedRoute);
-    } else if (this.model == "on_behalf") {
-      return this.navigationService.navigateRelative(NoticeActingOrgComponent.route, this.activatedRoute);
-    } else {
+    }  else {
       return this.navigationService.navigateRelative(WhenBecomeAwareComponent.route, this.activatedRoute);
     }
-    
+
   }
 }

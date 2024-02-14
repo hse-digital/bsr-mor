@@ -22,6 +22,9 @@ import { PipeModule } from "../../helpers/pipes/pipe.module";
 import { ReportConfirmationComponent } from "./report-confirmation/report-confirmation.component";
 import { ReportSummaryComponent } from "./report-summary/report-summary.component";
 import { ReportSubmittedComponent } from "./report-submitted/report-submitted.component";
+import { ReportActingOrgComponent } from "./report-acting-org/report-acting-org.component";
+import { ReportActingOrgRoleComponent } from "./report-acting-org-role/report-acting-org-role.component";
+import { ReportWhenBecomeAwareComponent } from "./report-when-become-aware/report-when-become-aware.component";
 
 
 const routes = new HseRoutes([
@@ -35,6 +38,9 @@ const routes = new HseRoutes([
   HseRoute.protected(ReportDutyHolderCanSubmitComponent.route, ReportDutyHolderCanSubmitComponent, ReportDutyHolderCanSubmitComponent.title),
   HseRoute.protected(ReportContactNumberComponent.route, ReportContactNumberComponent, ReportContactNumberComponent.title),
   HseRoute.protected(ReportOrgRoleComponent.route, ReportOrgRoleComponent, ReportOrgRoleComponent.title),
+  HseRoute.protected(ReportActingOrgRoleComponent.route, ReportActingOrgRoleComponent, ReportActingOrgRoleComponent.title),
+  HseRoute.protected(ReportActingOrgComponent.route, ReportActingOrgComponent, ReportActingOrgComponent.title),
+  HseRoute.protected(ReportWhenBecomeAwareComponent.route, ReportWhenBecomeAwareComponent, ReportWhenBecomeAwareComponent.title),
   HseRoute.protected(ReportCheckYourAnswersComponent.route, ReportCheckYourAnswersComponent, ReportCheckYourAnswersComponent.title),
   HseRoute.protected(ReportConfirmationComponent.route, ReportConfirmationComponent, ReportConfirmationComponent.title),
   HseRoute.protected(ReportSummaryComponent.route, ReportSummaryComponent, ReportSummaryComponent.title),
@@ -54,10 +60,13 @@ const routes = new HseRoutes([
     ReportDutyHolderCanSubmitComponent,
     ReportContactNumberComponent,
     ReportOrgRoleComponent,
+    ReportActingOrgRoleComponent,
+    ReportActingOrgComponent,
     ReportCheckYourAnswersComponent,
     ReportConfirmationComponent,
     ReportSummaryComponent,
     ReportSubmittedComponent,
+    ReportWhenBecomeAwareComponent,
   ],
   imports: [
     RouterModule.forChild(routes.getRoutes()),

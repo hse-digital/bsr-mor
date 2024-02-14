@@ -23,6 +23,7 @@ export class ReportContactNumberComponent extends PageComponent<string> {
       applicationService.model.Report.ContactNumber = "";
     }
     this.model = applicationService.model.Report?.ContactNumber;
+    
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Report!.ContactNumber = this.model;

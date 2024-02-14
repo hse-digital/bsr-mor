@@ -27,6 +27,8 @@
     <Folder Include="src\app\features\building\is-building\" />
     <Folder Include="src\app\features\home\" />
     <Folder Include="src\app\features\notice\briefly-describe-risk-incident\" />
+    <Folder Include="src\app\features\notice\notice-acting-org-role\" />
+    <Folder Include="src\app\features\notice\notice-acting-org\" />
     <Folder Include="src\app\features\notice\notice-org-type\" />
     <Folder Include="src\app\features\notice\notice-summary\" />
     <Folder Include="src\app\features\notice\notice-confirmation\" />
@@ -38,6 +40,9 @@
     <Folder Include="src\app\features\notice\notice-check-your-answers\" />
     <Folder Include="src\app\features\notice\when-become-aware\" />
     <Folder Include="src\app\features\report\incident-details\" />
+    <Folder Include="src\app\features\report\report-acting-org-role\" />
+    <Folder Include="src\app\features\report\report-acting-org\" />
+    <Folder Include="src\app\features\report\report-when-become-aware\" />
     <Folder Include="src\app\features\report\report-submitted\" />
     <Folder Include="src\app\features\report\report-summary\" />
     <Folder Include="src\app\features\report\report-confirmation\" />
