@@ -7,10 +7,10 @@ namespace HSE.MOR.API.Services.CompaniesSearch;
 
 public class LocalAuthoritySearch : ISearchCompany
 {
-    private readonly DynamicsService dynamicsService;
+    private readonly IDynamicsService dynamicsService;
     private readonly IMapper mapper;
 
-    public LocalAuthoritySearch(DynamicsService dynamicsService, IMapper mapper)
+    public LocalAuthoritySearch(IDynamicsService dynamicsService, IMapper mapper)
     {
         this.dynamicsService = dynamicsService;
         this.mapper = mapper;

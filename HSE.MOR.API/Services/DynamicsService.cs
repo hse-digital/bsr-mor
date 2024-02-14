@@ -27,6 +27,8 @@ public interface IDynamicsService {
     Task<Incident> GetIncidentUsingCaseNumber_Async(string caseNumber);
     Task<Incident> CreateMORCase_Async(IncidentModel model);
     Task<Incident> UpdateMORCase_Async(IncidentModel model);
+    Task<DynamicsOrganisationsSearchResponse> SearchLocalAuthorities(string authorityName);
+    Task<DynamicsOrganisationsSearchResponse> SearchSocialHousingOrganisations(string authorityName);
 }
 
 public class DynamicsService : IDynamicsService

@@ -4,6 +4,7 @@ import { ApplicationService } from "../../../services/application.service";
 import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { NoticeOrgRoleComponent } from '../notice-org-role/notice-org-role.component';
+import { OrganisationService } from '../../../services/organisation.service';
 
 @Component({
   templateUrl: './notice-organisation-name.component.html'
@@ -13,6 +14,9 @@ export class NoticeOrganisationNameComponent extends PageComponent<string> {
   public static route: string = 'notice-organisation-name';
   static title: string = "Tell us your organisation name? - Submit a mandatory occurrence notice and report";
 
+  constructor(activatedRoute: ActivatedRoute, private organisationService: OrganisationService) {
+    super(activatedRoute);
+  }
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Notice) {
@@ -28,6 +32,18 @@ export class NoticeOrganisationNameComponent extends PageComponent<string> {
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
     return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ContactNumber);
+  }
+
+  companies: string[] = [];
+  async searchCompanies(company: string) {
+    if (company?.length > 2) {
+      var response = await this.organisationService.SearchCompany(company, "company");
+      this.companies = response.Companies.map(x => x.Name);
+    }
+  }
+
+  selectCompanyName(company: string) {
+    this.model = company;
   }
 
   modelValid: boolean = false;
