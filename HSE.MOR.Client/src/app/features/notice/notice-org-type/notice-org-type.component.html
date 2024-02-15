@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasOrgTypeErrors" anchorId="notice-org-type-company-input" message="You need to tell us the type of the organisation" />
+  </govuk-error-summary>
 
-</body>
-</html>
+  <span class="govuk-caption-l">Organisation's type</span>
+  <govuk-radio-group aria-required="true" id="radios-notice-org-type" class="govuk-!-margin-bottom-4" title="What is organisation's type in submitting this notice?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasOrgTypeErrors, 'You need to tell us the type of the organisation')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-type-group" id="notice-org-type-company" value="company" label="Company" />
+  </govuk-radio-group>
+</govuk-formpage>

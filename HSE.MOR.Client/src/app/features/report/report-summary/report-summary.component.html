@@ -29,12 +29,14 @@
 
   <h2 class="govuk-heading-m" *ngIf="!isSameUser || !isNoticeReference">About organisation</h2>
   <govuk-summary-list *ngIf="!isSameUser || !isNoticeReference">
+    <govuk-summary-list-row key="Organisation type">{{model.OrgType | orgType }}</govuk-summary-list-row>
     <govuk-summary-list-row key="Organisation">{{model.OrganisationName}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Organisation role">{{model.OrgRole | orgRole }}</govuk-summary-list-row>
   </govuk-summary-list>
 
   <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
   <govuk-summary-list *ngIf="isActingOrganisation">
+    <govuk-summary-list-row key="Organisation type">{{model.ActingOrgType | orgType }}</govuk-summary-list-row>
     <govuk-summary-list-row key="Organisation">{{model.ActingOrg}}</govuk-summary-list-row>
     <govuk-summary-list-row key="Organisation's role">{{model.ActingOrgRole | orgRole }}</govuk-summary-list-row>
   </govuk-summary-list>

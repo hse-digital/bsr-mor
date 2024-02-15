@@ -128,8 +128,10 @@ export class ReportCheckYourAnswersComponent extends PageComponent<CheckAnswersR
     this.model.ContactNumber = reportModel.ContactNumber;
     this.model.OrganisationName = reportModel.OrganisationName;
     this.model.OrgRole = reportModel.OrgRole;
+    this.model.OrgType = reportModel.OrgType;
     this.model.ActingOrg = reportModel.ActingOrg;
     this.model.ActingOrgRole = reportModel.ActingOrgRole;
+    this.model.ActingOrgType = reportModel.ActingOrgType;
     if (reportModel.ReportWhenBecomeAware) {
       this.model.OccurrenceDateTime = `${reportModel.ReportWhenBecomeAware!.Day}-${reportModel.ReportWhenBecomeAware!.Month}-${reportModel.ReportWhenBecomeAware!.Year} - ${reportModel.ReportWhenBecomeAware!.Hour}:${reportModel.ReportWhenBecomeAware!.Minute}  ${this.setMeridiem(Number(reportModel.ReportWhenBecomeAware!.Hour!))}`;
     }

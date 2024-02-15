@@ -1,0 +1,11 @@
+<govuk-formpage saveAndContinueText="Continue" (saveAndContinue)="saveAndContinue()" (saveAndComeBack)="saveAndComeBack()" [hideSaveAndComeBack]="true">
+
+  <govuk-error-summary *ngIf="hasErrors" title="There is a problem" #summaryError>
+    <govuk-error-link *ngIf="hasActingOrgTypeErrors" anchorId="report-acting-org-type-company-input" message="You need to tell us the type of the organisation you are acting for" />
+  </govuk-error-summary>
+
+  <span class="govuk-caption-l">Acting organisation's type</span>
+  <govuk-radio-group aria-required="true" id="radios-report-acting-org-type" class="govuk-!-margin-bottom-4" title="What is organisation's type in submitting this report?" [isPageHeading]="true" [(model)]="model" #field [govukRequired]="field" [errorText]="getErrorDescription(hasActingOrgTypeErrors, 'You need to tell us the type of the organisation you are acting for')">
+    <govuk-radio (onKeyupEnter)="saveAndContinue()" [model]="model" name="report-org-type-group" id="report-acting-org-type-company" value="company" label="Company" />
+  </govuk-radio-group>
+</govuk-formpage>

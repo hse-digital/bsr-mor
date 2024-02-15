@@ -5,6 +5,7 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { ReportOrganisationNameComponent } from '../report-organisation-name/report-organisation-name.component';
 import { PhoneNumberValidator } from '../../../helpers/validators/phone-number-validator';
+import { ReportOrgTypeComponent } from '../report-org-type/report-org-type.component';
 
 @Component({
   templateUrl: './report-contact-number.component.html'
@@ -54,6 +55,6 @@ export class ReportContactNumberComponent extends PageComponent<string> {
   }
 
   override navigateNext(): Promise<boolean> {
-    return this.navigationService.navigateRelative(ReportOrganisationNameComponent.route, this.activatedRoute);
+    return this.navigationService.navigateRelative(ReportOrgTypeComponent.route, this.activatedRoute);
   }
 }

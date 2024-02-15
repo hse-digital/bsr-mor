@@ -55,6 +55,8 @@ export class NoticeSummaryComponent extends PageComponent<CheckAnswersNoticeMode
     this.model.ActingOrg = applicationService.model.Notice?.CheckAnswersModel?.ActingOrg;
     this.model.ActingOrgRole = applicationService.model.Notice?.CheckAnswersModel?.ActingOrgRole;
     this.model.OrgRole = applicationService.model.Notice?.CheckAnswersModel?.OrgRole;
+    this.model.OrgType = applicationService.model.Notice?.CheckAnswersModel?.OrgType;
+    this.model.ActingOrgType = applicationService.model.Notice?.CheckAnswersModel?.ActingOrgType;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     

@@ -7,6 +7,7 @@ import { BrieflyDescribeRiskIncidentComponent } from '../briefly-describe-risk-i
 import { WhenBecomeAwareComponent } from '../when-become-aware/when-become-aware.component';
 import { NoticeDutyHolderCanSubmitComponent } from '../notice-duty-holder-can-submit/notice-duty-holder-can-submit.component';
 import { NoticeActingOrgComponent } from '../notice-acting-org/notice-acting-org.component';
+import { NoticeActingOrgTypeComponent } from '../notice-acting-org-type/notice-acting-org-type.component';
 
 @Component({
   templateUrl: './notice-org-role.component.html'
@@ -52,7 +53,7 @@ export class NoticeOrgRoleComponent extends PageComponent<string> {
     if (this.model == "other") {
       return this.navigationService.navigateRelative(NoticeDutyHolderCanSubmitComponent.route, this.activatedRoute);
     } else if (this.model == "on_behalf") {
-      return this.navigationService.navigateRelative(NoticeActingOrgComponent.route, this.activatedRoute);
+      return this.navigationService.navigateRelative(NoticeActingOrgTypeComponent.route, this.activatedRoute);
     } else {
       return this.navigationService.navigateRelative(WhenBecomeAwareComponent.route, this.activatedRoute);
     }

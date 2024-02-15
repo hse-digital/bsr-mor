@@ -22,9 +22,13 @@ public record Mor(string Id = null) : Entity(Id)
     public string ReportActingOrg { get; set; }
     public TimeModel ReportWhenBecomeAware { get; set; }
     public string NoticeOrgRole { get; set; }
+    public string NoticeOrgType { get; set; }
     public string NoticeActingOrgRole { get; set; }
+    public string NoticeActingOrgType { get; set; }
     public string ReportOrgRole { get; set; }
+    public string ReportOrgType { get; set; }
     public string ReportActingOrgRole { get; set; }
+    public string ReportActingOrgType { get; set; }
     public string ActionsToKeepSafe { get; set; }
     public string CustomerNoticeReferenceId { get; set; }
     public string IncidentReference { get; set; }
@@ -75,6 +79,21 @@ public record DynamicsMor() : DynamicsEntity<Mor>
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_occurrencedescription { get; set; }
     public string bsr_noticeactingorgname { get; set; }
+
+    //organisation type field notice. Change when the field is added to the D365
+    //public string bsr_noticeorganisationtype { get; set; }
+
+    //acting organisation type field notice. Change when the field is added to the D365
+    //public string bsr_noticeactingorganisationtype { get; set; }
+
+    //organisation type field report. Change when the field is added to the D365
+    //[property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    //public string bsr_reportorganisationtype { get; set; }
+
+    //acting organisation type field report. Change when the field is added to the D365
+    //[property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
+    //public string bsr_reportactingorganisationtype { get; set; }
+
     public ActingRole? bsr_noticeactingrole { get; set; }
     [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     public string bsr_reportactingorgname { get; set; }

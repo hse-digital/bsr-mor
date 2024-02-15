@@ -22,6 +22,10 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
             this.dynamicsMor.bsr_immediateactionstaken = entity.ActionsToKeepSafe;
             this.dynamicsMor.bsr_morstage = entity.IsNotice ? MorStage.NoticeSubmitted : MorStage.ReportSubmitted;
             this.dynamicsMor.bsr_noticesubmittedbyrole = RoleSubmittingNotice(entity.NoticeOrgRole);
+            //updated when D365 field is added
+            //this.dynamicsMor.bsr_noticeactingorganisationtype = entity.NoticeOrgType;
+            //updated when D365 field is added
+            //this.dynamicsMor.bsr_reportactingorganisationtype = entity.NoticeOrgType;
             this.dynamicsMor.bsr_reportsubmittedbyrole = RoleSubmittingNotice(entity.ReportOrgRole);
             this.dynamicsMor.bsr_noticeorganisationname = entity.NoticeOrganisationName;
             this.dynamicsMor.bsr_occurrenceidentifiedon = entity.WhenBecomeAware != null  ? GetDate(entity.WhenBecomeAware.Year ?? "", entity.WhenBecomeAware.Month ?? "", entity.WhenBecomeAware.Day, entity.WhenBecomeAware.Hour ?? "", entity.WhenBecomeAware.Minute ?? "") : null;
@@ -69,12 +73,16 @@ namespace HSE.MOR.Domain.DynamicsDefinitions
                 if (entity.IsNotice)
                 {
                     this.dynamicsMor = dynamicsMor with { bsr_noticeactingorgname = entity.NoticeActingOrg };
+                    //change when D365 field is added
+                    //this.dynamicsMor = dynamicsMor with { bsr_noticeactingorganisationtype = entity.NoticeActingOrgType };
                     this.dynamicsMor = dynamicsMor with { bsr_noticeactingrole = ActingOrgRole(entity.NoticeActingOrgRole) };
                 }
                 else
                 {
 
                     this.dynamicsMor = dynamicsMor with { bsr_reportactingorgname = entity.ReportActingOrg };
+                    //change when D365 field is added
+                    //this.dynamicsMor = dynamicsMor with { bsr_reportactingorganisationtype = entity.ReportActingOrgType };
                     this.dynamicsMor = dynamicsMor with { bsr_reportactingrole = ActingOrgRole(entity.ReportActingOrgRole) };
                 }
             }                    

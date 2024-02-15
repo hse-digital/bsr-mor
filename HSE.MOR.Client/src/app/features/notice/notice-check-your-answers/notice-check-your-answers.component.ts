@@ -112,6 +112,8 @@ export class NoticeCheckYourAnswersComponent extends PageComponent<CheckAnswersN
     this.model.ActingOrg = noticeModel.ActingOrg;
     this.model.ActingOrgRole = noticeModel.ActingOrgRole;
     this.model.OrgRole = noticeModel.OrgRole;
+    this.model.OrgType = noticeModel.OrgType;
+    this.model.ActingOrgType = noticeModel.ActingOrgType;
   }
 
   returnManualAddress(model: AddressModel): string {

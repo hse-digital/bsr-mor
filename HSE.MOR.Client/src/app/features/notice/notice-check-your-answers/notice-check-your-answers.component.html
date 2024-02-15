@@ -29,12 +29,14 @@
 
         <h2 class="govuk-heading-m">About the organisation</h2>
         <govuk-summary-list>
+          <govuk-summary-list-row key="Organisation type" actionDetails="Organisation type" (onKeyupEnter)="navigateTo('notice-org-type')" (onClick)="navigateTo('notice-org-type')" [showAction]=true>{{model.OrgType | orgType }}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation" actionDetails="Organisation" (onKeyupEnter)="navigateTo('notice-organisation-name')" (onClick)="navigateTo('notice-organisation-name')" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation's role" actionDetails="Organisation's role" (onKeyupEnter)="navigateTo('notice-org-role')" (onClick)="navigateTo('notice-org-role')" [showAction]=true>{{model.OrgRole | orgRole}}</govuk-summary-list-row>
         </govuk-summary-list>
 
         <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
         <govuk-summary-list *ngIf="isActingOrganisation">
+          <govuk-summary-list-row key="Organisation type" actionDetails="Organisation type" (onKeyupEnter)="navigateTo('notice-acting-org-type')" (onClick)="navigateTo('notice-acting-org-type')" [showAction]=true>{{model.ActingOrgType | orgType }}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation" actionDetails="Organisation" (onKeyupEnter)="navigateTo('notice-acting-org')" (onClick)="navigateTo('notice-acting-org')" [showAction]=true>{{model.ActingOrg}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation's role" actionDetails="Organisation's role" (onKeyupEnter)="navigateTo('notice-acting-org-role')" (onClick)="navigateTo('notice-acting-org-role')" [showAction]=true>{{model.ActingOrgRole | orgRole}}</govuk-summary-list-row>
         </govuk-summary-list>

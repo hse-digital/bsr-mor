@@ -5,6 +5,7 @@ import { FieldValidations } from "../../../helpers/validators/fieldvalidations";
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { NoticeOrgRoleComponent } from '../notice-org-role/notice-org-role.component';
 import { NoticeActingOrgRoleComponent } from '../notice-acting-org-role/notice-acting-org-role.component';
+import { OrganisationService } from '../../../services/organisation.service';
 
 @Component({
   templateUrl: './notice-acting-org.component.html'
@@ -13,7 +14,11 @@ import { NoticeActingOrgRoleComponent } from '../notice-acting-org-role/notice-a
 export class NoticeActingOrgComponent extends PageComponent<string> {
   public static route: string = 'notice-acting-org';
   static title: string = "What is the name of the organisation you're acting for? - Submit a mandatory occurrence notice and report";
+  orgType?: string;
 
+  constructor(activatedRoute: ActivatedRoute, private organisationService: OrganisationService) {
+    super(activatedRoute);
+  }
 
   override onInit(applicationService: ApplicationService): void {
     if (!applicationService.model.Notice) {
@@ -22,13 +27,26 @@ export class NoticeActingOrgComponent extends PageComponent<string> {
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.ActingOrg)) {
       applicationService.model.Notice.ActingOrg = "";
     }
+    this.orgType = applicationService.model.Notice?.ActingOrgType;
     this.model = applicationService.model.Notice?.ActingOrg;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Notice!.ActingOrg = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrgRole) && applicationService.model.Notice?.OrgRole == "on_behalf";
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ActingOrgType);
+  }
+
+  companies: string[] = [];
+  async searchCompanies(company: string) {
+    if (company?.length > 2) {
+      var response = await this.organisationService.SearchCompany(company, this.orgType ?? "company");
+      this.companies = response.Companies.map(x => x.Name);
+    }
+  }
+
+  selectCompanyName(company: string) {
+    this.model = company;
   }
 
   modelValid: boolean = false;

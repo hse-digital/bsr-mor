@@ -106,8 +106,10 @@ export class EnterReferenceComponent extends PageComponent<string> {
     applicationService.model.Report.SameUserDetails.ContactNumber = caseModel.ContactNumber;
     applicationService.model.Report.SameUserDetails.OrganisationName = undefined;
     applicationService.model.Report.SameUserDetails.OrgRole = undefined;
+    applicationService.model.Report.SameUserDetails.OrgType = undefined;
     applicationService.model.Report.SameUserDetails.ActingOrg = undefined;
     applicationService.model.Report.SameUserDetails.ActingOrgRole = undefined;
+    applicationService.model.Report.SameUserDetails.ActingOrgType = undefined;
     applicationService.model.Report.SameUserDetails.ReportWhenBecomeAware = undefined;
   }
   mapCaseWithNotice(caseModel: IncidentModelDynamics, applicationService: ApplicationService) {

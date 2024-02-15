@@ -8,6 +8,7 @@ import { TypeIncidentReportedComponent } from '../type-incident-reported/type-in
 import { ReportActingOrgComponent } from '../report-acting-org/report-acting-org.component';
 import { ReportWhenBecomeAwareComponent } from '../report-when-become-aware/report-when-become-aware.component';
 import { app } from '../../../../../server';
+import { ReportActingOrgTypeComponent } from '../report-acting-org-type/report-acting-org-type.component';
 
 @Component({
   templateUrl: './report-org-role.component.html'
@@ -54,7 +55,7 @@ export class ReportOrgRoleComponent extends PageComponent<string> {
     if (this.model == "other") {
       return this.navigationService.navigateRelative(ReportDutyHolderCanSubmitComponent.route, this.activatedRoute);
     } else if (this.model == "on_behalf") {
-      return this.navigationService.navigateRelative(ReportActingOrgComponent.route, this.activatedRoute);
+      return this.navigationService.navigateRelative(ReportActingOrgTypeComponent.route, this.activatedRoute);
     } else {
       return this.navigationService.navigateRelative(ReportWhenBecomeAwareComponent.route, this.activatedRoute);
     }

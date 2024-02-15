@@ -20,6 +20,8 @@ import { PipeModule } from '../../helpers/pipes/pipe.module';
 import { NoticeSummaryComponent } from './notice-summary/notice-summary.component';
 import { NoticeActingOrgComponent } from './notice-acting-org/notice-acting-org.component';
 import { NoticeActingOrgRoleComponent } from './notice-acting-org-role/notice-acting-org-role.component';
+import { NoticeOrgTypeComponent } from './notice-org-type/notice-org-type.component';
+import { NoticeActingOrgTypeComponent } from './notice-acting-org-type/notice-acting-org-type.component';
 
 const routes = new HseRoutes([
   HseRoute.protected(BrieflyDescribeRiskIncidentComponent.route, BrieflyDescribeRiskIncidentComponent, BrieflyDescribeRiskIncidentComponent.title),
@@ -30,7 +32,9 @@ const routes = new HseRoutes([
   HseRoute.protected(NoticeOrganisationNameComponent.route, NoticeOrganisationNameComponent, NoticeOrganisationNameComponent.title),
   HseRoute.protected(NoticeActingOrgComponent.route, NoticeActingOrgComponent, NoticeActingOrgComponent.title),
   HseRoute.protected(NoticeOrgRoleComponent.route, NoticeOrgRoleComponent, NoticeOrgRoleComponent.title),
+  HseRoute.protected(NoticeOrgTypeComponent.route, NoticeOrgTypeComponent, NoticeOrgTypeComponent.title),
   HseRoute.protected(NoticeActingOrgRoleComponent.route, NoticeActingOrgRoleComponent, NoticeActingOrgRoleComponent.title),
+  HseRoute.protected(NoticeActingOrgTypeComponent.route, NoticeActingOrgTypeComponent, NoticeActingOrgTypeComponent.title),
   HseRoute.protected(NoticeDutyHolderCanSubmitComponent.route, NoticeDutyHolderCanSubmitComponent, NoticeDutyHolderCanSubmitComponent.title),
   HseRoute.protected(NoticeConfirmationComponent.route, NoticeConfirmationComponent, NoticeConfirmationComponent.title),
   HseRoute.protected(NoticeSummaryComponent.route, NoticeSummaryComponent, NoticeSummaryComponent.title),
@@ -48,7 +52,9 @@ const routes = new HseRoutes([
     NoticeActingOrgComponent,
     NoticeCheckYourAnswersComponent,
     NoticeOrgRoleComponent,
+    NoticeOrgTypeComponent,
     NoticeActingOrgRoleComponent,
+    NoticeActingOrgTypeComponent,
     NoticeDutyHolderCanSubmitComponent,
     NoticeConfirmationComponent,
     NoticeSummaryComponent,

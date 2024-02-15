@@ -5,11 +5,12 @@
     <govuk-error-link anchorId="input-report-acting-org" message="{{ErrorMessage}}" />
   </govuk-error-summary>
 
-  <govuk-input [isAriaRequired]="true" id="report-acting-org" label="What is the name of the organisation you're acting for?" labelClass="govuk-label--l" [isPageHeading]=true
-               [(model)]="model" #field [govukRequired]="field" [maxlength]="50"
-               hint="For example, if you're a managing agent this would be the name of your own end client"
-               [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
-               class="govuk-input--width-20 govuk-!-margin-bottom-5"
-               (onKeyupEnter)="saveAndContinue()" />
+  <govuk-input-autocomplete label="What is the name of the organisation you're acting for?" labelClass="govuk-label--l" id="report-acting-org" [isPageHeading]=true
+                            [(model)]="model" #field [govukRequired]="field" [maxlength]="50"
+                            hint="For example, if you're a managing agent this would be the name of your own end client"
+                            [values]="companies" (onDebounce)="searchCompanies($event)" (onSelectedValue)="selectCompanyName($event)"
+                            [errorText]="getErrorDescription(hasErrors, ErrorMessage)"
+                            class="govuk-input--width-20 govuk-!-margin-bottom-5" />
+
 
 </govuk-formpage>

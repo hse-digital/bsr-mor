@@ -13,6 +13,7 @@ import { OrganisationService } from '../../../services/organisation.service';
 export class NoticeOrganisationNameComponent extends PageComponent<string> {
   public static route: string = 'notice-organisation-name';
   static title: string = "Tell us your organisation name? - Submit a mandatory occurrence notice and report";
+  orgType?: string;
 
   constructor(activatedRoute: ActivatedRoute, private organisationService: OrganisationService) {
     super(activatedRoute);
@@ -25,19 +26,20 @@ export class NoticeOrganisationNameComponent extends PageComponent<string> {
     if (!FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice.OrganisationName)) {
       applicationService.model.Notice.OrganisationName = "";
     }
+    this.orgType = applicationService.model.Notice?.OrgType;
     this.model = applicationService.model.Notice?.OrganisationName;
   }
   override async onSave(applicationService: ApplicationService): Promise<void> {
     applicationService.model.Notice!.OrganisationName = this.model;
   }
   override canAccess(applicationService: ApplicationService, routeSnapshot: ActivatedRouteSnapshot): boolean {
-    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.ContactNumber);
+    return FieldValidations.IsNotNullOrWhitespace(applicationService.model.Notice?.OrgType);
   }
 
   companies: string[] = [];
   async searchCompanies(company: string) {
     if (company?.length > 2) {
-      var response = await this.organisationService.SearchCompany(company, "company");
+      var response = await this.organisationService.SearchCompany(company, this.orgType ?? "company");
       this.companies = response.Companies.map(x => x.Name);
     }
   }

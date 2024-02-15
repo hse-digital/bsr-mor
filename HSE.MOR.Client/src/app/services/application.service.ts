@@ -128,8 +128,10 @@ export class ApplicationService {
       this.model.Report!.ContactNumber! = this.model.Report!.SameUserDetails?.ContactNumber!;
       this.model.Report!.OrganisationName! = this.model.Report!.SameUserDetails?.OrganisationName!;
       this.model.Report!.OrgRole! = this.model.Report!.SameUserDetails?.OrgRole!;
+      this.model.Report!.OrgType! = this.model.Report!.SameUserDetails?.OrgType!;
       this.model.Report!.ActingOrg! = this.model.Report!.SameUserDetails?.ActingOrg!;
       this.model.Report!.ActingOrgRole! = this.model.Report!.SameUserDetails?.ActingOrgRole!;  
+      this.model.Report!.ActingOrgType! = this.model.Report!.SameUserDetails?.ActingOrgType!;  
       this.model.Report!.ReportWhenBecomeAware! = this.model.Report!.SameUserDetails?.ReportWhenBecomeAware!;  
     }   
   }
@@ -176,7 +178,9 @@ export class NoticeModel {
   OrganisationName?: string;
   ActingOrg?: string;
   OrgRole?: string;
+  OrgType?: string;
   ActingOrgRole?: string;
+  ActingOrgType?: string;
   ActionsToKeepSafe?: string;
   IsReportSubmitted?: boolean;
   CheckAnswersModel?: CheckAnswersNoticeModel;
@@ -186,7 +190,9 @@ export class ReportModel {
   Id?: string;
   NoticeReference?: string;
   OrgRole?: string;
+  OrgType?: string;
   ActingOrgRole?: string;
+  ActingOrgType?: string;
   SubmittedNotice?: string;
   FirstName?: string;
   LastName?: string;
@@ -222,7 +228,9 @@ export class SameUserModel {
   ActingOrg?: string;
   ContactNumber?: string;
   OrgRole?: string;
+  OrgType?: string;
   ActingOrgRole?: string;
+  ActingOrgType?: string;
   ReportWhenBecomeAware?: TimeModel;
 }
 
@@ -264,8 +272,10 @@ export class CheckAnswersNoticeModel {
   ContactNumber?: string;
   OrganisationName?: string;
   OrgRole?: string;
+  OrgType?: string;
   ActingOrg?: string;
   ActingOrgRole?: string;
+  ActingOrgType?: string;
   AboutBuilding?: string;
   CaseNumber?: string;
   WhatToSubmit?: string;
@@ -276,8 +286,10 @@ export class CheckAnswersReportModel {
   YourName?: string;
   NoticeReference?: string;
   OrgRole?: string;
+  OrgType?: string;
   ActingOrg?: string;
   ActingOrgRole?: string;
+  ActingOrgType?: string;
   SubmittedNotice?: string;
   IncidentReported?: string;
   AboutIncident?: string;

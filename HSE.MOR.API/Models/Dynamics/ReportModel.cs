@@ -11,7 +11,9 @@ public record ReportModel()
     public string ContactNumber { get; set; }
     public string NoticeReference { get; set; }
     public string OrgRole { get; set; }
+    public string OrgType { get; set; }
     public string ActingOrgRole { get; set; }
+    public string ActingOrgType { get; set; }
     public string SubmittedNotice { get; set; }
     public string[] IncidentReported { get; set; }
     public string AboutIncident { get; set; }

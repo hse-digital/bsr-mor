@@ -55,6 +55,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.ContactNumber = applicationService.model.Report?.CheckAnswersModel?.ContactNumber;
     this.model.OrganisationName = applicationService.model.Report?.CheckAnswersModel?.OrganisationName;
     this.model.ActingOrg = applicationService.model.Report?.CheckAnswersModel?.ActingOrg;
+    this.model.ActingOrgType = applicationService.model.Report?.CheckAnswersModel?.ActingOrgType;
     this.model.ActingOrgRole = applicationService.model.Report?.CheckAnswersModel?.ActingOrgRole;
     this.model.NoticeReference = applicationService.model.CaseNumber ?? applicationService.model.Report?.CheckAnswersModel?.NoticeReference;
     this.model.IncidentReported = applicationService.model.Report?.CheckAnswersModel?.IncidentReported;
@@ -65,6 +66,7 @@ export class ReportSummaryComponent extends PageComponent<CheckAnswersReportMode
     this.model.OccurrenceDiscovered = applicationService.model.Report?.CheckAnswersModel?.OccurrenceDiscovered;
     this.model.SharedWithOthers = applicationService.model.Report?.CheckAnswersModel?.SharedWithOthers;
     this.model.OrgRole = applicationService.model.Report?.CheckAnswersModel?.OrgRole;
+    this.model.OrgType = applicationService.model.Report?.CheckAnswersModel?.OrgType;
     this.model.OccurrenceDateTime = applicationService.model.Report?.CheckAnswersModel?.OccurrenceDateTime;
     this.model.UploadedFileNames = applicationService.model.Report?.CheckAnswersModel?.UploadedFileNames;
 

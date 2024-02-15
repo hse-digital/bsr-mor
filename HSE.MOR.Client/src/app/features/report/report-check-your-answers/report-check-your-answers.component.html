@@ -42,12 +42,14 @@
 
         <h2 class="govuk-heading-m" *ngIf="!isSameUser || !isNoticeReference">About organisation</h2>
         <govuk-summary-list *ngIf="!isSameUser || !isNoticeReference">
+          <govuk-summary-list-row key="Organisation type" (onKeyupEnter)="navigateTo('report-org-type')" (onClick)="navigateTo('report-org-type')" actionDetails="Organisation type" [showAction]=true>{{model.OrgType | orgType }}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('report-organisation-name')" (onClick)="navigateTo('report-organisation-name')" actionDetails="Organisation" [showAction]=true>{{model.OrganisationName}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('report-org-role')" (onClick)="navigateTo('report-org-role')" actionDetails="Organisation role" [showAction]=true>{{model.OrgRole | orgRole }}</govuk-summary-list-row>
         </govuk-summary-list>
 
         <h2 class="govuk-heading-m" *ngIf="isActingOrganisation">About the organisation you're acting for</h2>
         <govuk-summary-list *ngIf="isActingOrganisation">
+          <govuk-summary-list-row key="Organisation type" (onKeyupEnter)="navigateTo('report-acting-org-type')" (onClick)="navigateTo('report-acting-org-type')" actionDetails="Organisation type" [showAction]=true>{{model.ActingOrgType | orgType }}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation" (onKeyupEnter)="navigateTo('report-acting-org')" (onClick)="navigateTo('report-acting-org')" actionDetails="Organisation" [showAction]=true>{{model.ActingOrg}}</govuk-summary-list-row>
           <govuk-summary-list-row key="Organisation's role" (onKeyupEnter)="navigateTo('report-acting-org-role')" (onClick)="navigateTo('report-acting-org-role')" actionDetails="Organisation role" [showAction]=true>{{model.ActingOrgRole | orgRole }}</govuk-summary-list-row>
         </govuk-summary-list>

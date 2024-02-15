@@ -25,6 +25,8 @@ import { ReportSubmittedComponent } from "./report-submitted/report-submitted.co
 import { ReportActingOrgComponent } from "./report-acting-org/report-acting-org.component";
 import { ReportActingOrgRoleComponent } from "./report-acting-org-role/report-acting-org-role.component";
 import { ReportWhenBecomeAwareComponent } from "./report-when-become-aware/report-when-become-aware.component";
+import { ReportOrgTypeComponent } from "./report-org-type/report-org-type.component";
+import { ReportActingOrgTypeComponent } from "./report-acting-org-type/report-acting-org-type.component";
 
 
 const routes = new HseRoutes([
@@ -38,7 +40,9 @@ const routes = new HseRoutes([
   HseRoute.protected(ReportDutyHolderCanSubmitComponent.route, ReportDutyHolderCanSubmitComponent, ReportDutyHolderCanSubmitComponent.title),
   HseRoute.protected(ReportContactNumberComponent.route, ReportContactNumberComponent, ReportContactNumberComponent.title),
   HseRoute.protected(ReportOrgRoleComponent.route, ReportOrgRoleComponent, ReportOrgRoleComponent.title),
+  HseRoute.protected(ReportOrgTypeComponent.route, ReportOrgTypeComponent, ReportOrgTypeComponent.title),
   HseRoute.protected(ReportActingOrgRoleComponent.route, ReportActingOrgRoleComponent, ReportActingOrgRoleComponent.title),
+  HseRoute.protected(ReportActingOrgTypeComponent.route, ReportActingOrgTypeComponent, ReportActingOrgTypeComponent.title),
   HseRoute.protected(ReportActingOrgComponent.route, ReportActingOrgComponent, ReportActingOrgComponent.title),
   HseRoute.protected(ReportWhenBecomeAwareComponent.route, ReportWhenBecomeAwareComponent, ReportWhenBecomeAwareComponent.title),
   HseRoute.protected(ReportCheckYourAnswersComponent.route, ReportCheckYourAnswersComponent, ReportCheckYourAnswersComponent.title),
@@ -60,7 +64,9 @@ const routes = new HseRoutes([
     ReportDutyHolderCanSubmitComponent,
     ReportContactNumberComponent,
     ReportOrgRoleComponent,
+    ReportOrgTypeComponent,
     ReportActingOrgRoleComponent,
+    ReportActingOrgTypeComponent,
     ReportActingOrgComponent,
     ReportCheckYourAnswersComponent,
     ReportConfirmationComponent,
