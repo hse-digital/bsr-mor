@@ -291,7 +291,6 @@ public class DynamicsService : IDynamicsService
         mor.IncidentReference = incidentId;
         var noticeModelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
         var dynamicsMor = noticeModelDefinition.BuildDynamicsEntity(mor);
-        
         await UpdateMORAsync(morId, dynamicsMor);
     }
 
