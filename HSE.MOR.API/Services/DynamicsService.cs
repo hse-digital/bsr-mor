@@ -291,13 +291,7 @@ public class DynamicsService : IDynamicsService
         mor.IncidentReference = incidentId;
         var noticeModelDefinition = dynamicsModelDefinitionFactory.GetDefinitionFor<Mor, DynamicsMor>();
         var dynamicsMor = noticeModelDefinition.BuildDynamicsEntity(mor);
-        string json = JsonConvert.SerializeObject(dynamicsMor);
-
-        // Generate a temporary file path
-        string tempFilePath = Path.GetTempFileName();
-
-        // Write the JSON to the file
-        File.WriteAllText(tempFilePath, json);
+        
         await UpdateMORAsync(morId, dynamicsMor);
     }
 
