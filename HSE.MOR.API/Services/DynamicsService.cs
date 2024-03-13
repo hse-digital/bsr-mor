@@ -283,6 +283,14 @@ public class DynamicsService : IDynamicsService
 
             return contact with { Id = contactId };
         }
+        else 
+        {
+            if(existingContact.telephone1 != contact.PhoneNumber)
+            {
+                
+                await UpdateContactAsync(existingContact.contactid, dynamicsContact);
+            }
+        }
         return contact with { Id = existingContact.contactid };
     }
 
