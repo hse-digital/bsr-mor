@@ -275,23 +275,36 @@ public class DynamicsService : IDynamicsService
         var contact = new Contact(firstName, lastName, contactNumber, email);
         var dynamicsContact = modelDefinition.BuildDynamicsEntity(contact);
 
-        var existingContact = await FindExistingContactAsync(contact.FirstName, contact.LastName, contact.Email, contact.PhoneNumber);
-        if (existingContact == null)
+        var existingContactWithEmail = await FindExistingContactWithEmailAsync(contact.FirstName, contact.LastName, contact.Email);
+        if (existingContactWithEmail is { })
         {
-            var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
-            var contactId = ExtractEntityIdFromHeader(response.Headers);
+            var existingContactWithPhoneNumber = await FindExistingContactWithPhoneNumberAsync(contact.FirstName, contact.LastName, contact.PhoneNumber);
+            if (existingContactWithPhoneNumber is { })
+            {
+                var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
+                var contactId = ExtractEntityIdFromHeader(response.Headers);
+                return contact with { Id = contactId };
+            }
+            else 
+            {
+                if (existingContactWithPhoneNumber.emailaddress1 != contact.Email)
+                {
 
-            return contact with { Id = contactId };
+                    await UpdateContactAsync(existingContactWithPhoneNumber.contactid, dynamicsContact);
+                }
+                return contact with { Id = existingContactWithPhoneNumber.contactid };
+            }
         }
         else 
         {
-            if(existingContact.telephone1 != contact.PhoneNumber)
+            if(existingContactWithEmail.telephone1 != contact.PhoneNumber)
             {
                 
-                await UpdateContactAsync(existingContact.contactid, dynamicsContact);
+                await UpdateContactAsync(existingContactWithEmail.contactid, dynamicsContact);
             }
+            return contact with { Id = existingContactWithEmail.contactid };
         }
-        return contact with { Id = existingContact.contactid };
+        
     }
 
     private async Task UpdateMORWithCaseIdAsync(string incidentId, string morId, Mor mor) 
@@ -321,6 +334,28 @@ public class DynamicsService : IDynamicsService
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsContact>>("contacts", new[]
         {
             ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and emailaddress1 eq '{emailAddres.EscapeSingleQuote()}' and contains(telephone1, '{contactNumber.Replace("+", string.Empty).EscapeSingleQuote()}')")
+        });
+
+        return response.value.FirstOrDefault();
+    }
+
+    private async Task<DynamicsContact> FindExistingContactWithEmailAsync(string firstName, string lastName, string email)
+    {
+        var emailAddres = !string.IsNullOrWhiteSpace(email) ? email : string.Empty;
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsContact>>("contacts", new[]
+        {
+            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and emailaddress1 eq '{emailAddres.EscapeSingleQuote()}'")
+        });
+
+        return response.value.FirstOrDefault();
+    }
+
+    private async Task<DynamicsContact> FindExistingContactWithPhoneNumberAsync(string firstName, string lastName, string phoneNumber)
+    {
+        var contactNumber = !string.IsNullOrWhiteSpace(phoneNumber) ? phoneNumber : string.Empty;
+        var response = await dynamicsApi.Get<DynamicsResponse<DynamicsContact>>("contacts", new[]
+        {
+            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and telephone1 eq '{contactNumber.Replace("+", string.Empty).EscapeSingleQuote()}'")
         });
 
         return response.value.FirstOrDefault();
