@@ -276,10 +276,10 @@ public class DynamicsService : IDynamicsService
         var dynamicsContact = modelDefinition.BuildDynamicsEntity(contact);
 
         var existingContactWithEmail = await FindExistingContactWithEmailAsync(contact.FirstName, contact.LastName, contact.Email);
-        if (existingContactWithEmail is { })
+        if (existingContactWithEmail is null)
         {
             var existingContactWithPhoneNumber = await FindExistingContactWithPhoneNumberAsync(contact.FirstName, contact.LastName, contact.PhoneNumber);
-            if (existingContactWithPhoneNumber is { })
+            if (existingContactWithPhoneNumber is null)
             {
                 var response = await dynamicsApi.Create(modelDefinition.Endpoint, dynamicsContact);
                 var contactId = ExtractEntityIdFromHeader(response.Headers);
@@ -355,7 +355,7 @@ public class DynamicsService : IDynamicsService
         var contactNumber = !string.IsNullOrWhiteSpace(phoneNumber) ? phoneNumber : string.Empty;
         var response = await dynamicsApi.Get<DynamicsResponse<DynamicsContact>>("contacts", new[]
         {
-            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and telephone1 eq '{contactNumber.Replace("+", string.Empty).EscapeSingleQuote()}'")
+            ("$filter", $"firstname eq '{firstName.EscapeSingleQuote()}' and lastname eq '{lastName.EscapeSingleQuote()}' and telephone1 eq '{contactNumber.EscapeSingleQuote()}'")
         });
 
         return response.value.FirstOrDefault();
